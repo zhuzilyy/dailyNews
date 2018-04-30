@@ -1,6 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimaryDark">#ff5645</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="light_gray">#dfdfdf</color>
+    <color name="light_gray2">#c2c2c2</color>
+    <color name="light_gray4">#dedede</color>
+    <color name="light_gray5">#ececec</color>
+    <color name="light_gray3">#f4f4f4</color>
+    //**************************
+    <color name="main_red">#ff5645</color>
+    <color name="main_blue">#1aa1f3</color>
+    <color name="bg">#fff</color>
+    <color name="white_alpha_0.5">#44ffffff</color>
+
+    <color name="hard_color">#48495f</color>
+    <color name="item_bg">#FFFFFF</color>
+    <color name="clickspan_color">#00ddb6</color>
+    <color name="dull_blue">#3B4BBF</color>
+    <color name="main_blue_deep">#517ef2</color>
+    <color name="black">#000000</color>
+    <color name="white">#fff</color>
+    <color name="red">#ff0000</color>
+    <color name="yellow">#ffff00</color>
+    <color name="green">#00ff00</color>
+    <color name="gray">#999999</color>
+    <color name="common_line">#ececec</color>
+    <color name="blue_end">#8ec8fa</color>
+    <color name="orange">#ffac38</color>
+    <color name="orange_end">#fcd399</color>
+    <color name="purple">#a27cdb</color>
+    <color name="purple_end">#c2aee1</color>
+    <color name="pink">#fc6a68</color>
+    <color name="pink_end">#f7b4b3</color>
+    <color name="dark_gray">#3d3d3d</color>
+    <color name="taohong">#d4237a</color>
 </resources>

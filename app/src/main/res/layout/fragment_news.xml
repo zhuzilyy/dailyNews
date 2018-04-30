@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/light_gray"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:background="@color/main_red"
+        android:gravity="center_vertical"
+        android:layout_height="50dp">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="每日速报"
+            android:textColor="@color/white"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:src="@mipmap/toptitle_icon"
+            />
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:background="@drawable/shape_coner_white"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_10"
+            >
+            <ImageView
+                android:id="@+id/newsfdj"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@mipmap/search_icon"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dp_10"
+                />
+            <!--手机号-->
+            <com.qianyi.dailynews.views.ClearEditText
+                android:layout_toRightOf="@+id/newsfdj"
+                android:id="@+id/et_newsearch"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="20dp"
+                android:background="@null"
+                android:hint="请输入关键字"
+                android:singleLine="true"
+                android:textColorHint="@color/gray"
+                android:textCursorDrawable="@null"
+                android:textSize="14sp" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tablayout"
+        app:tabTextAppearance="@style/TabLayoutTextStyle"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        app:tabTextColor="#000"
+        app:tabIndicatorHeight="0dp"
+        android:background="@color/white"
+        app:tabSelectedTextColor="#d81e06"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#AAEBEBEB"/>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</LinearLayout>
