@@ -1,13 +1,24 @@
 package com.qianyi.dailynews.fragment;
 
+import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.orhanobut.logger.Logger;
 import com.qianyi.dailynews.R;
 import com.qianyi.dailynews.base.BaseFragment;
+import com.qianyi.dailynews.ui.WebviewActivity;
+import com.qianyi.dailynews.utils.Utils;
 import com.qianyi.dailynews.utils.loader.GlideImageLoader;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
@@ -16,12 +27,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * Created by Administrator on 2018/4/30.
  */
 
-public class InvitationFragment extends BaseFragment {
+public class InvitationFragment extends BaseFragment implements View.OnClickListener{
     private View newsView;
     @BindView(R.id.tv_title)
     public TextView title;
@@ -33,6 +45,27 @@ public class InvitationFragment extends BaseFragment {
     public Banner banner;
     private List<String> images;
 
+    @BindView(R.id.ll_FriendIncome)
+    public LinearLayout ll_FriendIncome;
+    @BindView(R.id.ll_FriendNum)
+    public LinearLayout ll_FriendNum;
+    @BindView(R.id.ll_MyInvitationCode)
+    public LinearLayout ll_MyInvitationCode;
+    @BindView(R.id.ll_DailySharing)
+    public LinearLayout ll_DailySharing;
+    @BindView(R.id.ll_ShowIncome)
+    public LinearLayout ll_ShowIncome;
+    @BindView(R.id.ll_WakeUpFriends)
+    public LinearLayout ll_WakeUpFriends;
+    @BindView(R.id.tv_myCode)
+    public TextView tv_myCode;
+    private PopupWindow pw_share;
+    private View view_share;
+    @BindView(R.id.ll_invitation)
+    public LinearLayout ll_invitation;
+
+
+
     @Override
     protected View getResLayout(LayoutInflater inflater, ViewGroup container) {
         newsView =  inflater.inflate(R.layout.fragment_invitation, null);
@@ -41,6 +74,8 @@ public class InvitationFragment extends BaseFragment {
 
     @Override
     protected void initViews() {
+        view_share=LayoutInflater.from(getActivity()).inflate(R.layout.pw_share,null);
+
         images= new ArrayList<>();
         images.add("http://pic3.zhimg.com/f665508fc07c122a7d79670600ca6c9e.jpg");
         images.add("http://pic3.zhimg.com//144edd4fa57e8b0b9c70bfea5c6b5dee.jpg");
@@ -73,5 +108,82 @@ public class InvitationFragment extends BaseFragment {
     @Override
     protected void initListener() {
 
+    }
+    @OnClick({R.id.tv_right,R.id.ll_FriendIncome,R.id.ll_FriendNum,R.id.ll_MyInvitationCode,
+            R.id.ll_ShowIncome,R.id.ll_WakeUpFriends,})
+    @Override
+    public void onClick(View v) {
+        switch(v.getId()){
+            case R.id.tv_right:
+                Intent intent = new Intent(getActivity(), WebviewActivity.class);
+                intent.putExtra("title","邀请规则");
+                intent.putExtra("url","http://www.baidu.com");
+                startActivity(intent);
+                break;
+            case R.id.ll_FriendIncome:
+                //好友收入
+                Toast.makeText(mActivity, "好友收入", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.ll_FriendNum:
+                //好友数量
+                Toast.makeText(mActivity, "好友数量", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.ll_MyInvitationCode:
+                //我的邀请码 赋值到剪贴板
+                String myCode = tv_myCode.getText().toString().trim();
+                try {
+                    Utils.copy(myCode,getActivity());
+                    Toast.makeText(mActivity, "已复制", Toast.LENGTH_SHORT).show();
+                }catch (Exception e){
+                    Logger.i(e.getMessage());
+                }
+                break;
+            case R.id.ll_DailySharing:
+                //每日分享
+                Toast.makeText(mActivity, "每日分享", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.ll_ShowIncome:
+                //晒收入
+                shwoSharePw();
+                break;
+            case R.id.ll_WakeUpFriends:
+                //唤醒好友
+                Toast.makeText(mActivity, "唤醒好友", Toast.LENGTH_SHORT).show();
+                break;
+            default:
+                break;
+        }
+
+
+    }
+
+    private void shwoSharePw() {
+        pw_share = new PopupWindow(getActivity());
+        pw_share.setContentView(view_share);
+        pw_share.setWidth(LinearLayout.LayoutParams.MATCH_PARENT);
+        pw_share.setHeight(LinearLayout.LayoutParams.WRAP_CONTENT);
+        pw_share.setTouchable(true);
+        pw_share.setFocusable(true);
+        pw_share.setBackgroundDrawable(new BitmapDrawable());
+        pw_share.setAnimationStyle(R.style.AnimBottom);
+        pw_share.showAtLocation(ll_invitation, Gravity.BOTTOM, 0, 0);
+        // 设置pw弹出时候的背景颜色的变化
+        backgroundAlpha(0.5f);
+        pw_share.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                backgroundAlpha(1f);
+            }
+        });
+    }
+    /**
+     * 设置添加屏幕的背景透明度
+     *
+     * @param
+     */
+    public void backgroundAlpha(float bgAlpha) {
+        WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
+        lp.alpha = bgAlpha;
+        getActivity().getWindow().setAttributes(lp);
     }
 }

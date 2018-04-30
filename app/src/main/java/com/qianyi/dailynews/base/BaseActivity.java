@@ -93,7 +93,7 @@ public abstract class BaseActivity extends FragmentActivity {
         if (getClass().getName().equals(MainActivity.class.getName())){
             if (isExit == false) {
                 isExit = true; // 准备退出
-                Toast.makeText(this, "再按一次，退到后台", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "再按一次，退出程序", Toast.LENGTH_SHORT).show();
                 tExit = new Timer();
                 tExit.schedule(new TimerTask() {
                     @Override
@@ -102,7 +102,8 @@ public abstract class BaseActivity extends FragmentActivity {
                     }
                 },2000); // 如果2秒钟内没有按下返回键，则启动定时器取消掉刚才执行的任务
             } else {
-                moveTaskToBack(true);
+               // moveTaskToBack(true);
+                finish();
             }
         }else {
             finish();

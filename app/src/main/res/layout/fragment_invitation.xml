@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:id="@+id/ll_invitation"
     android:background="@color/white"
 
     >
@@ -161,6 +162,8 @@
                 android:layout_marginLeft="@dimen/dp_10"
                 android:layout_marginRight="@dimen/dp_10"
                 android:gravity="center_vertical"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 android:orientation="horizontal"
                 >
                 <com.qianyi.dailynews.views.ClearEditText
@@ -168,6 +171,7 @@
                     android:layout_weight="1"
                     android:background="@null"
                     android:hint="填写好友邀请码"
+
                     android:textColorHint="@color/black"
                     android:textSize="14sp"
                     android:layout_marginRight="@dimen/dp_10"
@@ -193,6 +197,7 @@
                 >
                 <!--好友收入-->
                 <LinearLayout
+                    android:id="@+id/ll_FriendIncome"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="56dp"
@@ -216,6 +221,7 @@
                 </LinearLayout>
                 <!--好友数量-->
                 <LinearLayout
+                    android:id="@+id/ll_FriendNum"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="56dp"
@@ -239,6 +245,7 @@
                 </LinearLayout>
                 <!--我的邀请码-->
                 <LinearLayout
+                    android:id="@+id/ll_MyInvitationCode"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="56dp"
@@ -255,6 +262,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
                         <TextView
+                            android:id="@+id/tv_myCode"
                             android:layout_marginTop="@dimen/dp_5"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -289,6 +297,7 @@
                 >
                 <!--每日分享-->
                 <LinearLayout
+                    android:id="@+id/ll_DailySharing"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:orientation="vertical"
@@ -311,6 +320,7 @@
                 </LinearLayout>
                 <!--晒收入-->
                 <LinearLayout
+                    android:id="@+id/ll_ShowIncome"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:orientation="vertical"
@@ -333,6 +343,7 @@
                 </LinearLayout>
                 <!--唤醒好友-->
                 <LinearLayout
+                    android:id="@+id/ll_WakeUpFriends"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:orientation="vertical"
