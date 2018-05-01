@@ -67,7 +67,7 @@
                                 android:textColor="@color/white"
                                 />
                             <TextView
-
+                                android:id="@+id/tv_InvitationCode"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="123456"
@@ -75,6 +75,7 @@
                                 android:textColor="@color/white"
                                 />
                             <TextView
+                                android:id="@+id/tv_copy"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="复制"
@@ -101,8 +102,9 @@
                     </LinearLayout>
                     <!--提现-->
                     <LinearLayout
+                        android:id="@+id/ll_tixian"
                         android:layout_width="80dp"
-                        android:layout_height="30dp"
+                        android:layout_height="35dp"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:background="@mipmap/reference_icon"
@@ -233,6 +235,7 @@
                 >
                 <!--填写邀请码-->
                 <RelativeLayout
+                    android:id="@+id/re_WriteCode"
                     android:layout_width="match_parent"
                     android:layout_height="45dp">
                     <TextView
@@ -273,6 +276,7 @@
                     />
                 <!--赚钱中心-->
                 <RelativeLayout
+                    android:id="@+id/re_MoneyCenter"
                     android:layout_width="match_parent"
                     android:layout_height="45dp">
                     <TextView
@@ -313,6 +317,7 @@
                     />
                 <!--任务中心-->
                 <RelativeLayout
+                    android:id="@+id/re_MissionCentre"
                     android:layout_width="match_parent"
                     android:layout_height="45dp">
                     <TextView
@@ -353,6 +358,7 @@
                     />
                 <!--账户明细-->
                 <RelativeLayout
+                    android:id="@+id/re_AccountDetails"
                     android:layout_width="match_parent"
                     android:layout_height="45dp">
                     <TextView
@@ -393,6 +399,7 @@
                     />
                 <!--消息中心-->
                 <RelativeLayout
+                    android:id="@+id/re_MessageCentre"
                     android:layout_width="match_parent"
                     android:layout_height="45dp">
                     <TextView
@@ -433,6 +440,7 @@
                     />
                 <!--帮助与反馈-->
                 <RelativeLayout
+                    android:id="@+id/re_HelpBack"
                     android:layout_width="match_parent"
                     android:layout_height="45dp">
                     <TextView
@@ -473,6 +481,7 @@
                     />
                 <!--设置-->
                 <RelativeLayout
+                    android:id="@+id/re_Settings"
                     android:layout_width="match_parent"
                     android:layout_height="45dp">
                     <TextView

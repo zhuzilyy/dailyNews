@@ -18,6 +18,8 @@ import com.orhanobut.logger.Logger;
 import com.qianyi.dailynews.R;
 import com.qianyi.dailynews.base.BaseFragment;
 import com.qianyi.dailynews.ui.WebviewActivity;
+import com.qianyi.dailynews.ui.invitation.activity.DailySharingAcitity;
+import com.qianyi.dailynews.ui.invitation.activity.WakeFriendsActivity;
 import com.qianyi.dailynews.utils.Utils;
 import com.qianyi.dailynews.utils.loader.GlideImageLoader;
 import com.youth.banner.Banner;
@@ -110,7 +112,7 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
 
     }
     @OnClick({R.id.tv_right,R.id.ll_FriendIncome,R.id.ll_FriendNum,R.id.ll_MyInvitationCode,
-            R.id.ll_ShowIncome,R.id.ll_WakeUpFriends,})
+            R.id.ll_DailySharing,R.id.ll_ShowIncome,R.id.ll_WakeUpFriends,})
     @Override
     public void onClick(View v) {
         switch(v.getId()){
@@ -140,7 +142,8 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
                 break;
             case R.id.ll_DailySharing:
                 //每日分享
-                Toast.makeText(mActivity, "每日分享", Toast.LENGTH_SHORT).show();
+                Intent intent_dailyshare = new Intent(getActivity(), DailySharingAcitity.class);
+                startActivity(intent_dailyshare);
                 break;
             case R.id.ll_ShowIncome:
                 //晒收入
@@ -148,7 +151,8 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
                 break;
             case R.id.ll_WakeUpFriends:
                 //唤醒好友
-                Toast.makeText(mActivity, "唤醒好友", Toast.LENGTH_SHORT).show();
+                Intent intent_wakefriend = new Intent(getActivity(), WakeFriendsActivity.class);
+                startActivity(intent_wakefriend);
                 break;
             default:
                 break;

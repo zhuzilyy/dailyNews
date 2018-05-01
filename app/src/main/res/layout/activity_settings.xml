@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+    <include layout="@layout/layout_title"/>
+    <!--手机号-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:paddingRight="@dimen/dp_15"
+        android:paddingLeft="@dimen/dp_10"
+        android:layout_height="55dp">
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="手机号"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:gravity="center"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="18341446590"
+            android:textSize="16sp"
+            android:layout_alignParentRight="true"
+            android:textColor="@color/black"
+            android:gravity="center"
+            />
+
+
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_0.5"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
+        android:background="@color/light_gray5"/>
+    <!--绑定微信-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:paddingRight="@dimen/dp_15"
+        android:paddingLeft="@dimen/dp_10"
+        android:layout_height="55dp">
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="绑定微信"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:gravity="center"
+            />
+        <Button
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            android:text="去绑定"
+            android:background="@drawable/shape_coner25_white"
+            android:layout_alignParentRight="true"
+            android:textColor="@color/main_red"
+           android:layout_centerVertical="true"
+            />
+
+
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_0.5"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
+        android:background="@color/light_gray5"/>
+    <!--修改密码-->
+    <RelativeLayout
+        android:id="@+id/re_ModifyPassword"
+        android:layout_width="match_parent"
+        android:paddingRight="@dimen/dp_15"
+        android:paddingLeft="@dimen/dp_10"
+        android:layout_height="55dp">
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="修改密码"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:gravity="center"
+            />
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/huinext_icon"
+            />
+
+
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_0.5"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
+        android:background="@color/light_gray5"/>
+
+
+</LinearLayout>

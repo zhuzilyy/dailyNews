@@ -45,6 +45,37 @@
         <!--WebView 页面-->
         <activity android:name=".ui.WebviewActivity"
             android:screenOrientation="portrait"/>
+        <!--唤醒好友-->
+        <activity android:name=".ui.invitation.activity.WakeFriendsActivity"
+            android:screenOrientation="portrait"/>
+        <!--每日分享-->
+        <activity android:name=".ui.invitation.activity.DailySharingAcitity"
+            android:screenOrientation="portrait"/>
+        <!--填写邀请码-->
+        <activity android:name=".ui.Mine.activity.WriteInvitationActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            />
+        <!--设置-->
+        <activity android:name=".ui.Mine.activity.SettingsActivity"
+            android:screenOrientation="portrait"
+            />
+        <!--修改密码-->
+        <activity android:name=".ui.Mine.activity.ModifyPasswordActivity"
+            android:screenOrientation="portrait"
+            />
+        <!--赚钱中心-->
+        <activity android:name=".ui.Mine.activity.MakeMoneyCenterActivity"
+            android:screenOrientation="portrait"
+            />
+        <!--账户明细-->
+        <activity android:name=".ui.Mine.activity.AccountDetailsActivity"
+            android:screenOrientation="portrait"
+            />
+        <!--home 搜索-->
+        <activity android:name=".ui.news.activity.SearchActivity"
+            android:screenOrientation="portrait"
+            />
     </application>
 
 </manifest>

@@ -8,6 +8,7 @@
     android:background="@color/light_gray"
     >
     <LinearLayout
+
         android:layout_width="match_parent"
         android:orientation="horizontal"
         android:background="@color/main_red"
@@ -23,6 +24,7 @@
             android:src="@mipmap/toptitle_icon"
             />
         <RelativeLayout
+            android:id="@+id/re_home_search"
             android:layout_width="0dp"
             android:layout_height="30dp"
             android:layout_weight="1"
@@ -39,15 +41,16 @@
                 android:layout_marginLeft="@dimen/dp_10"
                 />
             <!--手机号-->
-            <com.qianyi.dailynews.views.ClearEditText
+            <TextView
                 android:layout_toRightOf="@+id/newsfdj"
-                android:id="@+id/et_newsearch"
+                android:id="@+id/tv_newsearch"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="20dp"
                 android:background="@null"
                 android:hint="请输入关键字"
+                android:gravity="center_vertical"
                 android:singleLine="true"
                 android:textColorHint="@color/gray"
                 android:textCursorDrawable="@null"

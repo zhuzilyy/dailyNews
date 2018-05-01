@@ -3,11 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://D:\Android\StudioContent3.0\dailyNews\app\app.iml" filepath="D:\Android\StudioContent3.0\dailyNews\app\app.iml" />
       <module fileurl="file://D:\Android\Studio3.0\dailyNews\app\app.iml" filepath="D:\Android\Studio3.0\dailyNews\app\app.iml" />
       <module fileurl="file://$PROJECT_DIR$/dailyNews.iml" filepath="$PROJECT_DIR$/dailyNews.iml" />
       <module fileurl="file://D:\Android\Studio3.0\dailyNews\dailyNews.iml" filepath="D:\Android\Studio3.0\dailyNews\dailyNews.iml" />
-      <module fileurl="file://D:\Android\StudioContent3.0\dailyNews\dailyNews.iml" filepath="D:\Android\StudioContent3.0\dailyNews\dailyNews.iml" />
     </modules>
   </component>
 </project>
