@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:orientation="vertical"
+    android:background="@color/white"
     android:layout_height="match_parent">
     <ScrollView
         android:layout_width="match_parent"
@@ -549,6 +550,105 @@
                 </RelativeLayout>
 
             </LinearLayout>
+            <!--新手任务-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+                <!--title-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    >
+                    <View
+                        android:layout_width="5dp"
+                        android:layout_marginLeft="@dimen/dp_10"
+                        android:layout_height="25dp"
+                        android:background="@color/main_red"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="新手任务"
+                        android:textSize="16sp"
+                        android:textColor="@color/main_red"
+                        android:layout_marginLeft="@dimen/dp_10"
+                        />
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_0.5"
+                    android:background="@color/light_gray5"
+                    />
+                <!--绑定微信-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingLeft="@dimen/dp_20"
+                    android:gravity="center_vertical"
+                    >
+                    <!--001-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:orientation="horizontal"
+                        >
+                        <TextView
+                            android:layout_centerVertical="true"
+                            android:layout_width="0dp"
+                            android:layout_weight="3"
+                            android:gravity="center_vertical"
+                            android:layout_height="match_parent"
+                            android:text="微信绑定"
+                            android:textSize="14sp"
+                            android:textColor="@color/black"
+                            />
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="2"
+                            android:gravity="center_vertical|right"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal"
+                            >
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:text="100金币"
+                                android:textColor="@color/goldcolor"
+                                android:gravity="center"
+                                android:layout_marginRight="@dimen/dp_10"
+                                />
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_marginRight="@dimen/dp_10"
+                                android:src="@mipmap/gold_icon"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                />
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_marginRight="@dimen/dp_10"
+                                android:src="@mipmap/huinext_icon"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                />
+
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+                    <!--002-->
+                    
+                </LinearLayout>
+            </LinearLayout>
+
 
 
         </LinearLayout>
