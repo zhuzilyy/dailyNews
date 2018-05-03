@@ -15,6 +15,7 @@ import com.qianyi.dailynews.base.BaseFragment;
 import com.qianyi.dailynews.ui.Mine.activity.AccountDetailsActivity;
 import com.qianyi.dailynews.ui.Mine.activity.MakeMoneyCenterActivity;
 import com.qianyi.dailynews.ui.Mine.activity.SettingsActivity;
+import com.qianyi.dailynews.ui.Mine.activity.TaskCenterActivity;
 import com.qianyi.dailynews.ui.Mine.activity.WriteInvitationActivity;
 import com.qianyi.dailynews.ui.WebviewActivity;
 import com.qianyi.dailynews.utils.Utils;
@@ -96,7 +97,8 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 break;
             case R.id.re_MissionCentre:
                 //任务中心
-                Toast.makeText(mActivity, "任务中心", Toast.LENGTH_SHORT).show();
+                Intent intent_taskcenter = new Intent(getActivity(), TaskCenterActivity.class);
+                startActivity(intent_taskcenter);
                 break;
             case R.id.re_AccountDetails:
                 //账户明细

@@ -76,6 +76,10 @@
         <activity android:name=".ui.news.activity.SearchActivity"
             android:screenOrientation="portrait"
             />
+        <!--任务中心-->
+        <activity android:name=".ui.Mine.activity.TaskCenterActivity"
+            android:screenOrientation="portrait"
+            />
     </application>
 
 </manifest>
