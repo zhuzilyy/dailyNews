@@ -23,7 +23,7 @@
                 <!--title-->
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="40dp">
+                    android:layout_height="50dp">
                     <ImageView
                         android:layout_width="20dp"
                         android:layout_height="20dp"
@@ -550,7 +550,7 @@
                 </RelativeLayout>
 
             </LinearLayout>
-            <!--新手任务-->
+            <!--*********************新手任务***********************-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -559,7 +559,7 @@
                 <!--title-->
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="50dp"
                     android:orientation="horizontal"
                     android:gravity="center_vertical"
                     >
@@ -593,8 +593,9 @@
                     >
                     <!--001-->
                     <LinearLayout
+                        android:id="@+id/ll_bandwx001"
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
+                        android:layout_height="50dp"
                         android:orientation="horizontal"
                         >
                         <TextView
@@ -631,8 +632,8 @@
                                 android:layout_centerVertical="true"
                                 />
                             <ImageView
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
+                                android:layout_width="16dp"
+                                android:layout_height="16dp"
                                 android:layout_marginRight="@dimen/dp_10"
                                 android:src="@mipmap/huinext_icon"
                                 android:layout_alignParentRight="true"
@@ -645,9 +646,868 @@
 
                     </LinearLayout>
                     <!--002-->
-                    
+                    <LinearLayout
+                        android:visibility="gone"
+                        android:id="@+id/ll_bandwx002"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        >
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="2"
+                            android:layout_height="wrap_content"
+                            android:text="的链接分离式结构老司机经理过来是根据娄山关路放假了时间个类似废旧塑料的副驾驶来个距离是开关机放假了手机发了发老司机父类看浪费时间李放斐林试剂公司结构升龙国际搜二级公司附件四六级"
+                            />
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            >
+                            <Button
+                                android:layout_width="wrap_content"
+                                android:layout_height="30dp"
+                                android:text="去阅读"
+                                android:textColor="@color/white"
+                                android:background="@drawable/shape_coner30_gold"
+
+                                />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_0.5"
+                    android:background="@color/light_gray5"
+                    />
+                <!--一元提现-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingLeft="@dimen/dp_20"
+                    android:gravity="center_vertical"
+                    >
+                    <!--001-->
+                    <LinearLayout
+                        android:id="@+id/ll_oneYuan001"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:orientation="horizontal"
+                        >
+                        <TextView
+                            android:layout_centerVertical="true"
+                            android:layout_width="0dp"
+                            android:layout_weight="3"
+                            android:gravity="center_vertical"
+                            android:layout_height="match_parent"
+                            android:text="一元提现"
+                            android:textSize="14sp"
+                            android:textColor="@color/black"
+                            />
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="2"
+                            android:gravity="center_vertical|right"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal"
+                            >
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:text="100金币"
+                                android:textColor="@color/goldcolor"
+                                android:gravity="center"
+                                android:layout_marginRight="@dimen/dp_10"
+                                />
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_marginRight="@dimen/dp_10"
+                                android:src="@mipmap/gold_icon"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                />
+                            <ImageView
+                                android:layout_width="16dp"
+                                android:layout_height="16dp"
+                                android:layout_marginRight="@dimen/dp_10"
+                                android:src="@mipmap/huinext_icon"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                />
+
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+                    <!--002-->
+                    <LinearLayout
+                        android:visibility="gone"
+                        android:id="@+id/ll_oneYuan002"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        >
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="2"
+                            android:layout_height="wrap_content"
+                            android:text="的链接分离式结构老司机经理过来是根据娄山关路放假了时间个类似废旧塑料的副驾驶来个距离是开关机放假了手机发了发老司机父类看浪费时间李放斐林试剂公司结构升龙国际搜二级公司附件四六级"
+                            />
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            >
+                            <Button
+                                android:layout_width="wrap_content"
+                                android:layout_height="30dp"
+                                android:text="去阅读"
+                                android:textColor="@color/white"
+                                android:background="@drawable/shape_coner30_gold"
+
+                                />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_0.5"
+                    android:background="@color/light_gray5"
+                    />
+                <!--问卷调查-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingLeft="@dimen/dp_20"
+                    android:gravity="center_vertical"
+                    >
+                    <!--001-->
+                    <LinearLayout
+                        android:id="@+id/ll_Questionnaire001"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:orientation="horizontal"
+                        >
+                        <TextView
+                            android:layout_centerVertical="true"
+                            android:layout_width="0dp"
+                            android:layout_weight="3"
+                            android:gravity="center_vertical"
+                            android:layout_height="match_parent"
+                            android:text="问卷调查"
+                            android:textSize="14sp"
+                            android:textColor="@color/black"
+                            />
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="2"
+                            android:gravity="center_vertical|right"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal"
+                            >
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:text="100金币"
+                                android:textColor="@color/goldcolor"
+                                android:gravity="center"
+                                android:layout_marginRight="@dimen/dp_10"
+                                />
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_marginRight="@dimen/dp_10"
+                                android:src="@mipmap/gold_icon"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                />
+                            <ImageView
+                                android:layout_width="16dp"
+                                android:layout_height="16dp"
+                                android:layout_marginRight="@dimen/dp_10"
+                                android:src="@mipmap/huinext_icon"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                />
+
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+                    <!--002-->
+                    <LinearLayout
+                        android:visibility="gone"
+                        android:id="@+id/ll_Questionnaire002"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        >
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="2"
+                            android:layout_height="wrap_content"
+                            android:text="的链接分离式结构老司机经理过来是根据娄山关路放假了时间个类似废旧塑料的副驾驶来个距离是开关机放假了手机发了发老司机父类看浪费时间李放斐林试剂公司结构升龙国际搜二级公司附件四六级"
+                            />
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            >
+                            <Button
+                                android:layout_width="wrap_content"
+                                android:layout_height="30dp"
+                                android:text="去阅读"
+                                android:textColor="@color/white"
+                                android:background="@drawable/shape_coner30_gold"
+
+                                />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_0.5"
+                    android:background="@color/light_gray5"
+                    />
+                <!--答题奖励-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingLeft="@dimen/dp_20"
+                    android:gravity="center_vertical"
+                    >
+                    <!--001-->
+                    <LinearLayout
+                        android:id="@+id/ll_answerAward001"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:orientation="horizontal"
+                        >
+                        <TextView
+                            android:layout_centerVertical="true"
+                            android:layout_width="0dp"
+                            android:layout_weight="3"
+                            android:gravity="center_vertical"
+                            android:layout_height="match_parent"
+                            android:text="答题奖励"
+                            android:textSize="14sp"
+                            android:textColor="@color/black"
+                            />
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="2"
+                            android:gravity="center_vertical|right"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal"
+                            >
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:text="100金币"
+                                android:textColor="@color/goldcolor"
+                                android:gravity="center"
+                                android:layout_marginRight="@dimen/dp_10"
+                                />
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_marginRight="@dimen/dp_10"
+                                android:src="@mipmap/gold_icon"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                />
+                            <ImageView
+                                android:layout_width="16dp"
+                                android:layout_height="16dp"
+                                android:layout_marginRight="@dimen/dp_10"
+                                android:src="@mipmap/huinext_icon"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                />
+
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+                    <!--002-->
+                    <LinearLayout
+                        android:visibility="gone"
+                        android:id="@+id/ll_answerAward002"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        >
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="2"
+                            android:layout_height="wrap_content"
+                            android:text="的链接分离式结构老司机经理过来是根据娄山关路放假了时间个类似废旧塑料的副驾驶来个距离是开关机放假了手机发了发老司机父类看浪费时间李放斐林试剂公司结构升龙国际搜二级公司附件四六级"
+                            />
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            >
+                            <Button
+                                android:layout_width="wrap_content"
+                                android:layout_height="30dp"
+                                android:text="去阅读"
+                                android:textColor="@color/white"
+                                android:background="@drawable/shape_coner30_gold"
+
+                                />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
+            <!--*********************日常任务***********************-->
+            <LinearLayout
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+                <!--title-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    >
+                    <View
+                        android:layout_width="5dp"
+                        android:layout_marginLeft="@dimen/dp_10"
+                        android:layout_height="25dp"
+                        android:background="@color/main_red"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="日常任务"
+                        android:textSize="16sp"
+                        android:textColor="@color/main_red"
+                        android:layout_marginLeft="@dimen/dp_10"
+                        />
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_0.5"
+                    android:background="@color/light_gray5"
+                    />
+                <!--邀请好友-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingLeft="@dimen/dp_20"
+                    android:gravity="center_vertical"
+                    >
+                    <!--001-->
+                    <LinearLayout
+                        android:id="@+id/ll_inviteFriends001"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:orientation="horizontal"
+                        >
+                        <TextView
+                            android:layout_centerVertical="true"
+                            android:layout_width="0dp"
+                            android:layout_weight="3"
+                            android:gravity="center_vertical"
+                            android:layout_height="match_parent"
+                            android:text="邀请好友"
+                            android:textSize="14sp"
+                            android:textColor="@color/black"
+                            />
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="2"
+                            android:gravity="center_vertical|right"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal"
+                            >
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:text="100金币"
+                                android:textColor="@color/goldcolor"
+                                android:gravity="center"
+                                android:layout_marginRight="@dimen/dp_10"
+                                />
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_marginRight="@dimen/dp_10"
+                                android:src="@mipmap/gold_icon"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                />
+                            <ImageView
+                                android:layout_width="16dp"
+                                android:layout_height="16dp"
+                                android:layout_marginRight="@dimen/dp_10"
+                                android:src="@mipmap/huinext_icon"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                />
+
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+                    <!--002-->
+                    <LinearLayout
+                        android:visibility="gone"
+                        android:id="@+id/ll_inviteFriends002"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        >
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="2"
+                            android:layout_height="wrap_content"
+                            android:text="的链接分离式结构老司机经理过来是根据娄山关路放假了时间个类似废旧塑料的副驾驶来个距离是开关机放假了手机发了发老司机父类看浪费时间李放斐林试剂公司结构升龙国际搜二级公司附件四六级"
+                            />
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            >
+                            <Button
+                                android:layout_width="wrap_content"
+                                android:layout_height="30dp"
+                                android:text="去阅读"
+                                android:textColor="@color/white"
+                                android:background="@drawable/shape_coner30_gold"
+
+                                />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_0.5"
+                    android:background="@color/light_gray5"
+                    />
+                <!--阅读奖励-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingLeft="@dimen/dp_20"
+                    android:gravity="center_vertical"
+                    >
+                    <!--001-->
+                    <LinearLayout
+                        android:id="@+id/ll_readingAward001"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:orientation="horizontal"
+                        >
+                        <TextView
+                            android:layout_centerVertical="true"
+                            android:layout_width="0dp"
+                            android:layout_weight="3"
+                            android:gravity="center_vertical"
+                            android:layout_height="match_parent"
+                            android:text="阅读奖励"
+                            android:textSize="14sp"
+                            android:textColor="@color/black"
+                            />
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="2"
+                            android:gravity="center_vertical|right"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal"
+                            >
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:text="100金币"
+                                android:textColor="@color/goldcolor"
+                                android:gravity="center"
+                                android:layout_marginRight="@dimen/dp_10"
+                                />
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_marginRight="@dimen/dp_10"
+                                android:src="@mipmap/gold_icon"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                />
+                            <ImageView
+                                android:layout_width="16dp"
+                                android:layout_height="16dp"
+                                android:layout_marginRight="@dimen/dp_10"
+                                android:src="@mipmap/huinext_icon"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                />
+
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+                    <!--002-->
+                    <LinearLayout
+                        android:visibility="gone"
+                        android:id="@+id/ll_readingAward002"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        >
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="2"
+                            android:layout_height="wrap_content"
+                            android:text="的链接分离式结构老司机经理过来是根据娄山关路放假了时间个类似废旧塑料的副驾驶来个距离是开关机放假了手机发了发老司机父类看浪费时间李放斐林试剂公司结构升龙国际搜二级公司附件四六级"
+                            />
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            >
+                            <Button
+                                android:layout_width="wrap_content"
+                                android:layout_height="30dp"
+                                android:text="去阅读"
+                                android:textColor="@color/white"
+                                android:background="@drawable/shape_coner30_gold"
+
+                                />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_0.5"
+                    android:background="@color/light_gray5"
+                    />
+                <!--分享奖励-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingLeft="@dimen/dp_20"
+                    android:gravity="center_vertical"
+                    >
+                    <!--001-->
+                    <LinearLayout
+                        android:id="@+id/ll_shareRewards001"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:orientation="horizontal"
+                        >
+                        <TextView
+                            android:layout_centerVertical="true"
+                            android:layout_width="0dp"
+                            android:layout_weight="3"
+                            android:gravity="center_vertical"
+                            android:layout_height="match_parent"
+                            android:text="分享奖励"
+                            android:textSize="14sp"
+                            android:textColor="@color/black"
+                            />
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="2"
+                            android:gravity="center_vertical|right"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal"
+                            >
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:text="100金币"
+                                android:textColor="@color/goldcolor"
+                                android:gravity="center"
+                                android:layout_marginRight="@dimen/dp_10"
+                                />
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_marginRight="@dimen/dp_10"
+                                android:src="@mipmap/gold_icon"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                />
+                            <ImageView
+                                android:layout_width="16dp"
+                                android:layout_height="16dp"
+                                android:layout_marginRight="@dimen/dp_10"
+                                android:src="@mipmap/huinext_icon"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                />
+
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+                    <!--002-->
+                    <LinearLayout
+                        android:visibility="gone"
+                        android:id="@+id/ll_shareRewards002"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        >
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="2"
+                            android:layout_height="wrap_content"
+                            android:text="的链接分离式结构老司机经理过来是根据娄山关路放假了时间个类似废旧塑料的副驾驶来个距离是开关机放假了手机发了发老司机父类看浪费时间李放斐林试剂公司结构升龙国际搜二级公司附件四六级"
+                            />
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            >
+                            <Button
+                                android:layout_width="wrap_content"
+                                android:layout_height="30dp"
+                                android:text="去阅读"
+                                android:textColor="@color/white"
+                                android:background="@drawable/shape_coner30_gold"
+
+                                />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_0.5"
+                    android:background="@color/light_gray5"
+                    />
+                <!--晒收入-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingLeft="@dimen/dp_20"
+                    android:gravity="center_vertical"
+                    >
+                    <!--001-->
+                    <LinearLayout
+                        android:id="@+id/ll_sunIncome001"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:orientation="horizontal"
+                        >
+                        <TextView
+                            android:layout_centerVertical="true"
+                            android:layout_width="0dp"
+                            android:layout_weight="3"
+                            android:gravity="center_vertical"
+                            android:layout_height="match_parent"
+                            android:text="晒收入"
+                            android:textSize="14sp"
+                            android:textColor="@color/black"
+                            />
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="2"
+                            android:gravity="center_vertical|right"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal"
+                            >
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:text="100金币"
+                                android:textColor="@color/goldcolor"
+                                android:gravity="center"
+                                android:layout_marginRight="@dimen/dp_10"
+                                />
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_marginRight="@dimen/dp_10"
+                                android:src="@mipmap/gold_icon"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                />
+                            <ImageView
+                                android:layout_width="16dp"
+                                android:layout_height="16dp"
+                                android:layout_marginRight="@dimen/dp_10"
+                                android:src="@mipmap/huinext_icon"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                />
+
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+                    <!--002-->
+                    <LinearLayout
+                        android:visibility="gone"
+                        android:id="@+id/ll_sunIncome002"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        >
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="2"
+                            android:layout_height="wrap_content"
+                            android:text="的链接分离式结构老司机经理过来是根据娄山关路放假了时间个类似废旧塑料的副驾驶来个距离是开关机放假了手机发了发老司机父类看浪费时间李放斐林试剂公司结构升龙国际搜二级公司附件四六级"
+                            />
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            >
+                            <Button
+                                android:layout_width="wrap_content"
+                                android:layout_height="30dp"
+                                android:text="去阅读"
+                                android:textColor="@color/white"
+                                android:background="@drawable/shape_coner30_gold"
+
+                                />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </LinearLayout>
+                <!--评论奖励-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingLeft="@dimen/dp_20"
+                    android:gravity="center_vertical"
+                    >
+                    <!--001-->
+                    <LinearLayout
+                        android:id="@+id/ll_commentAward001"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:orientation="horizontal"
+                        >
+                        <TextView
+                            android:layout_centerVertical="true"
+                            android:layout_width="0dp"
+                            android:layout_weight="3"
+                            android:gravity="center_vertical"
+                            android:layout_height="match_parent"
+                            android:text="评论奖励"
+                            android:textSize="14sp"
+                            android:textColor="@color/black"
+                            />
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="2"
+                            android:gravity="center_vertical|right"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal"
+                            >
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:text="100金币"
+                                android:textColor="@color/goldcolor"
+                                android:gravity="center"
+                                android:layout_marginRight="@dimen/dp_10"
+                                />
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_marginRight="@dimen/dp_10"
+                                android:src="@mipmap/gold_icon"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                />
+                            <ImageView
+                                android:layout_width="16dp"
+                                android:layout_height="16dp"
+                                android:layout_marginRight="@dimen/dp_10"
+                                android:src="@mipmap/huinext_icon"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                />
+
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+                    <!--002-->
+                    <LinearLayout
+                        android:visibility="gone"
+                        android:id="@+id/ll_commentAward002"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        >
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="2"
+                            android:layout_height="wrap_content"
+                            android:text="的链接分离式结构老司机经理过来是根据娄山关路放假了时间个类似废旧塑料的副驾驶来个距离是开关机放假了手机发了发老司机父类看浪费时间李放斐林试剂公司结构升龙国际搜二级公司附件四六级"
+                            />
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            >
+                            <Button
+                                android:layout_width="wrap_content"
+                                android:layout_height="30dp"
+                                android:text="去阅读"
+                                android:textColor="@color/white"
+                                android:background="@drawable/shape_coner30_gold"
+
+                                />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"/>
+                </LinearLayout>
+            </LinearLayout>
+
 
 
 
