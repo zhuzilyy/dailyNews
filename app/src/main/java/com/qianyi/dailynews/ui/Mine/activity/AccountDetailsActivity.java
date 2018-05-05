@@ -1,5 +1,6 @@
 package com.qianyi.dailynews.ui.Mine.activity;
 
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -18,14 +19,16 @@ import com.qianyi.dailynews.ui.Mine.fragment.WithdrawalsFragment;
 import java.util.ArrayList;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * Created by Administrator on 2018/5/1.
  */
 
-public class AccountDetailsActivity extends BaseActivity {
+public class AccountDetailsActivity extends BaseActivity implements View.OnClickListener {
     @BindView(R.id.iv_back) public ImageView back;
     @BindView(R.id.tv_title) public TextView title;
+    @BindView(R.id.tv_right) public TextView tv_right;
     @BindView(R.id.tab) public TabLayout tab;
     @BindView(R.id.viewpager) public ViewPager viewpager;
     public MyPageAdapter myPageAdapter;
@@ -37,8 +40,9 @@ public class AccountDetailsActivity extends BaseActivity {
                 finish();
             }
         });
-
+        tv_right.setText("提现状态");
         title.setText("账户明细");
+        tv_right.setVisibility(View.VISIBLE);
 
         myPageAdapter = new MyPageAdapter(getSupportFragmentManager());
         ArrayList<Fragment> datas = new ArrayList<Fragment>();
@@ -76,5 +80,21 @@ public class AccountDetailsActivity extends BaseActivity {
     @Override
     protected void setStatusBarColor() {
 
+    }
+    @OnClick({R.id.tv_right})
+    @Override
+    public void onClick(View view) {
+        switch(view.getId()){
+            case R.id.tv_right:
+                Intent intent_presentStatue = new Intent(AccountDetailsActivity.this,PresentStatusActivity.class);
+                startActivity(intent_presentStatue);
+
+            break;
+
+            default:
+            break;
+
+
+        }
     }
 }

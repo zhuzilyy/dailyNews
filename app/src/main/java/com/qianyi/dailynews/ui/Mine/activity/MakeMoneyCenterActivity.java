@@ -1,5 +1,6 @@
 package com.qianyi.dailynews.ui.Mine.activity;
 
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -16,14 +17,16 @@ import com.qianyi.dailynews.ui.Mine.fragment.HighRebateFragment;
 import java.util.ArrayList;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * Created by Administrator on 2018/5/1.
  */
 
-public class MakeMoneyCenterActivity extends BaseActivity {
+public class MakeMoneyCenterActivity extends BaseActivity implements View.OnClickListener{
     @BindView(R.id.iv_back) public ImageView back;
     @BindView(R.id.tv_title) public TextView title;
+    @BindView(R.id.tv_right) public TextView tv_right;
     @BindView(R.id.tab) public TabLayout tab;
     @BindView(R.id.viewpager) public ViewPager viewpager;
     public MyPageAdapter myPageAdapter;
@@ -35,8 +38,9 @@ public class MakeMoneyCenterActivity extends BaseActivity {
                 finish();
             }
         });
-
         title.setText("赚钱中心");
+        tv_right.setVisibility(View.VISIBLE);
+        tv_right.setText("任务记录");
 
         myPageAdapter = new MyPageAdapter(getSupportFragmentManager());
         ArrayList<Fragment> datas = new ArrayList<Fragment>();
@@ -73,5 +77,20 @@ public class MakeMoneyCenterActivity extends BaseActivity {
     @Override
     protected void setStatusBarColor() {
 
+    }
+    @OnClick({R.id.tv_right})
+    @Override
+    public void onClick(View view) {
+        switch(view.getId()){
+            case R.id.tv_right:
+                Intent intent_taskrecord = new Intent(MakeMoneyCenterActivity.this,TaskRecordActivity.class);
+                startActivity(intent_taskrecord);
+            break;
+
+            default:
+            break;
+
+
+        }
     }
 }

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.view.KeyEvent;
@@ -35,7 +36,13 @@ public abstract class BaseActivity extends FragmentActivity {
     private boolean isExit=false;
 
     @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        //super.onSaveInstanceState(outState, outPersistentState);
+    }
+
+    @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         initConfigure();
     }
