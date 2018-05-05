@@ -1,5 +1,6 @@
 package com.qianyi.dailynews.fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -38,6 +39,11 @@ public class NewsFragment extends BaseFragment implements View.OnClickListener {
     protected View getResLayout(LayoutInflater inflater, ViewGroup container) {
         newsView =  inflater.inflate(R.layout.fragment_news, null);
         return newsView;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
     }
 
     @Override

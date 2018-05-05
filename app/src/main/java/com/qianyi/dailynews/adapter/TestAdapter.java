@@ -18,7 +18,7 @@ public class TestAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return 20;
+        return 60;
     }
 
     @Override

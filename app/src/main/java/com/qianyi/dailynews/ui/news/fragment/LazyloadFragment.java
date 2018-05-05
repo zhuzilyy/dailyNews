@@ -1,5 +1,7 @@
 package com.qianyi.dailynews.ui.news.fragment;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -15,10 +17,18 @@ public abstract class LazyloadFragment extends Fragment {
     protected View rootView;
     private boolean isInitView = false;
     private boolean isVisible = false;
+    protected Activity mActivity;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        this.mActivity = (Activity) context;
+    }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         rootView = inflater.inflate(setContentView(), container, false);
         init();
         isInitView = true;
