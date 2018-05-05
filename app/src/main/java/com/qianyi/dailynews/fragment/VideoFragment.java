@@ -91,9 +91,9 @@ public class VideoFragment extends BaseFragment implements PullToRefreshView.OnH
                     @Override
                     public void run() {
                         mPullToRefreshView.onHeaderRefreshComplete();
+                        mPullToRefreshView.onFooterRefreshComplete(true);
                     }
                 });
-
             }
         }, 2000);
     }
