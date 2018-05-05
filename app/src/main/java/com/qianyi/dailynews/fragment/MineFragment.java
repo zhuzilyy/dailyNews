@@ -91,7 +91,6 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 break;
             case R.id.re_MoneyCenter:
                 //赚钱中心
-
                 Intent intent_makemoney = new Intent(getActivity(), MakeMoneyCenterActivity.class);
                 startActivity(intent_makemoney);
                 break;
