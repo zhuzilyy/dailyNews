@@ -1,11 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="收缩"
-        />
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <!--填写好友邀请码-->
+        <LinearLayout
+            android:layout_marginTop="15dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="36dp"
+            android:background="@drawable/shape_coner_gray"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_10"
+            android:gravity="center_vertical"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:orientation="horizontal"
+            >
+            <ImageView
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:src="@mipmap/search_icon"
+                android:layout_marginLeft="@dimen/dp_15"
+                />
+            <com.qianyi.dailynews.views.ClearEditText
+                android:id="@+id/newsSearch_etc"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:background="@null"
+                android:imeOptions="actionSearch"
+                android:hint="请输入关键字"
+                android:textColorHint="@color/gray"
+                android:textSize="14sp"
+                android:singleLine="true"
+                android:layout_marginRight="@dimen/dp_10"
+                android:layout_marginLeft="@dimen/dp_15"
+                android:layout_height="match_parent" />
 
-</android.support.constraint.ConstraintLayout>
+
+        </LinearLayout>
+        <TextView
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="取消"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/dp_10"
+            android:textSize="18sp"
+            android:layout_marginRight="@dimen/dp_15"
+            android:textColor="@color/main_red"
+            />
+
+    </LinearLayout>
+
+
+</LinearLayout>

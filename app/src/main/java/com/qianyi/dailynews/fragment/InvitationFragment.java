@@ -1,6 +1,7 @@
 package com.qianyi.dailynews.fragment;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -13,8 +14,8 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.orhanobut.logger.Logger;
+import com.paradoxie.autoscrolltextview.VerticalTextview;
 import com.qianyi.dailynews.R;
 import com.qianyi.dailynews.base.BaseFragment;
 import com.qianyi.dailynews.ui.WebviewActivity;
@@ -65,6 +66,8 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
     private View view_share;
     @BindView(R.id.ll_invitation)
     public LinearLayout ll_invitation;
+    //上下滚动
+    @BindView(R.id.autotext) public VerticalTextview autotext;
 
 
 
@@ -99,8 +102,43 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
         //banner.setBannerTitles(titles);//设置标题源
         banner.start();
 
+        //设置上下跑马灯
+
+
+        ArrayList<String> titleList =new ArrayList<>();
+        titleList.add("【用户123***254125】开宝箱获得1000金币");
+        titleList.add("【用户158***4150】收徒250人");
+        titleList.add("【用户168***8520】日本投降了");
+
+        autotext.setTextList(titleList);//加入显示内容,集合类型
+        autotext.setText(14, 5, Color.BLACK);//设置属性,具体跟踪源码
+        autotext.setTextStillTime(6000);//设置停留时长间隔
+        autotext.setAnimTime(300);//设置进入和退出的时间间隔
+        autotext.setPadding(5,5,0,5);
+        //对单条文字的点击监听
+        autotext.setOnItemClickListener(new VerticalTextview.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                // TO DO
+            }
+        });
+
+
 
     }
+    //开始滚动
+    @Override
+    public void onResume() {
+        super.onResume();
+        autotext.startAutoScroll();
+    }
+    //停止滚动
+    @Override
+    public void onPause() {
+        super.onPause();
+        autotext.stopAutoScroll();
+    }
+
 
     @Override
     protected void initData() {
