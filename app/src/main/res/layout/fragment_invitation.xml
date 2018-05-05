@@ -171,7 +171,6 @@
                     android:layout_weight="1"
                     android:background="@null"
                     android:hint="填写好友邀请码"
-
                     android:textColorHint="@color/black"
                     android:textSize="14sp"
                     android:layout_marginRight="@dimen/dp_10"

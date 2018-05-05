@@ -16,6 +16,7 @@ import com.qianyi.dailynews.ui.Mine.activity.AccountDetailsActivity;
 import com.qianyi.dailynews.ui.Mine.activity.MakeMoneyCenterActivity;
 import com.qianyi.dailynews.ui.Mine.activity.SettingsActivity;
 import com.qianyi.dailynews.ui.Mine.activity.TaskCenterActivity;
+import com.qianyi.dailynews.ui.Mine.activity.WithdrawalsActivity;
 import com.qianyi.dailynews.ui.Mine.activity.WriteInvitationActivity;
 import com.qianyi.dailynews.ui.WebviewActivity;
 import com.qianyi.dailynews.utils.Utils;
@@ -123,7 +124,8 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 break;
             case R.id.ll_tixian:
                 //提现
-                Toast.makeText(mActivity, "提现", Toast.LENGTH_SHORT).show();
+                Intent intent_withdrawals = new Intent(getActivity(), WithdrawalsActivity.class);
+                startActivity(intent_withdrawals);
                 break;
             case R.id.tv_copy:
                 String code = tv_InvitationCode.getText().toString().trim();

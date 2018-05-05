@@ -29,7 +29,7 @@
                         android:layout_height="20dp"
                         android:src="@mipmap/back"
                         android:layout_marginLeft="@dimen/dp_10"
-                        android:layout_marginTop="@dimen/dp_10"
+                        android:layout_centerVertical="true"
                         />
                     <TextView
                         android:layout_width="wrap_content"
@@ -46,21 +46,21 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <TextView
+                        android:id="@+id/tv_SignInRules"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="签到规则"
                         android:textSize="16sp"
                         android:textColor="@color/white"
-                        android:layout_marginTop="@dimen/dp_10"
                         android:layout_marginLeft="@dimen/dp_10"
                         />
                     <TextView
+                        android:id="@+id/tv_ProfitMakingStrategy"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="赚钱攻略"
                         android:textSize="16sp"
                         android:textColor="@color/white"
-                        android:layout_marginTop="@dimen/dp_10"
                         android:layout_marginRight="@dimen/dp_10"
                         android:layout_alignParentRight="true"
                         />
@@ -652,6 +652,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
+                        android:paddingBottom="@dimen/dp_10"
                         >
                         <TextView
                             android:layout_width="0dp"
@@ -666,9 +667,10 @@
                             android:gravity="center"
                             >
                             <Button
+                                android:id="@+id/btn_bandwx"
                                 android:layout_width="wrap_content"
                                 android:layout_height="30dp"
-                                android:text="去阅读"
+                                android:text="去绑定"
                                 android:textColor="@color/white"
                                 android:background="@drawable/shape_coner30_gold"
 
@@ -752,6 +754,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
+                        android:paddingBottom="@dimen/dp_10"
                         >
                         <TextView
                             android:layout_width="0dp"
@@ -766,9 +769,10 @@
                             android:gravity="center"
                             >
                             <Button
+                                android:id="@+id/btn_oneyuan"
                                 android:layout_width="wrap_content"
                                 android:layout_height="30dp"
-                                android:text="去阅读"
+                                android:text="去完成"
                                 android:textColor="@color/white"
                                 android:background="@drawable/shape_coner30_gold"
 
@@ -852,6 +856,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
+                        android:paddingBottom="@dimen/dp_10"
                         >
                         <TextView
                             android:layout_width="0dp"
@@ -866,9 +871,10 @@
                             android:gravity="center"
                             >
                             <Button
+                                android:id="@+id/btn_Questionnaire"
                                 android:layout_width="wrap_content"
                                 android:layout_height="30dp"
-                                android:text="去阅读"
+                                android:text="去填写"
                                 android:textColor="@color/white"
                                 android:background="@drawable/shape_coner30_gold"
 
@@ -952,6 +958,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
+                        android:paddingBottom="@dimen/dp_10"
                         >
                         <TextView
                             android:layout_width="0dp"
@@ -966,9 +973,10 @@
                             android:gravity="center"
                             >
                             <Button
+                                android:id="@+id/btn_answerAward"
                                 android:layout_width="wrap_content"
                                 android:layout_height="30dp"
-                                android:text="去阅读"
+                                android:text="去答题"
                                 android:textColor="@color/white"
                                 android:background="@drawable/shape_coner30_gold"
 
@@ -1081,6 +1089,7 @@
                         android:id="@+id/ll_inviteFriends002"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:paddingBottom="@dimen/dp_10"
                         android:orientation="horizontal"
                         >
                         <TextView
@@ -1096,9 +1105,10 @@
                             android:gravity="center"
                             >
                             <Button
+                                android:id="@+id/btn_inviteFriends"
                                 android:layout_width="wrap_content"
                                 android:layout_height="30dp"
-                                android:text="去阅读"
+                                android:text="去邀请"
                                 android:textColor="@color/white"
                                 android:background="@drawable/shape_coner30_gold"
 
@@ -1182,6 +1192,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
+                        android:paddingBottom="@dimen/dp_10"
                         >
                         <TextView
                             android:layout_width="0dp"
@@ -1196,6 +1207,7 @@
                             android:gravity="center"
                             >
                             <Button
+                                android:id="@+id/btn_readingAward"
                                 android:layout_width="wrap_content"
                                 android:layout_height="30dp"
                                 android:text="去阅读"
@@ -1282,6 +1294,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
+                        android:paddingBottom="@dimen/dp_10"
                         >
                         <TextView
                             android:layout_width="0dp"
@@ -1296,9 +1309,10 @@
                             android:gravity="center"
                             >
                             <Button
+                                android:id="@+id/btn_share"
                                 android:layout_width="wrap_content"
                                 android:layout_height="30dp"
-                                android:text="去阅读"
+                                android:text="去分享"
                                 android:textColor="@color/white"
                                 android:background="@drawable/shape_coner30_gold"
 
@@ -1380,6 +1394,7 @@
                         android:visibility="gone"
                         android:id="@+id/ll_sunIncome002"
                         android:layout_width="match_parent"
+                        android:paddingBottom="@dimen/dp_10"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         >
@@ -1396,9 +1411,10 @@
                             android:gravity="center"
                             >
                             <Button
+                                android:id="@+id/btn_sunincome"
                                 android:layout_width="wrap_content"
                                 android:layout_height="30dp"
-                                android:text="去阅读"
+                                android:text="晒收入"
                                 android:textColor="@color/white"
                                 android:background="@drawable/shape_coner30_gold"
 
@@ -1476,6 +1492,7 @@
                         android:id="@+id/ll_commentAward002"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:paddingBottom="@dimen/dp_10"
                         android:orientation="horizontal"
                         >
                         <TextView
@@ -1491,9 +1508,10 @@
                             android:gravity="center"
                             >
                             <Button
+                                android:id="@+id/btn_commentAward"
                                 android:layout_width="wrap_content"
                                 android:layout_height="30dp"
-                                android:text="去阅读"
+                                android:text="去评论"
                                 android:textColor="@color/white"
                                 android:background="@drawable/shape_coner30_gold"
 
