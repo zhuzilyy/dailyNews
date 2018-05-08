@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.Window;
 import android.view.WindowManager;
@@ -31,7 +32,7 @@ import butterknife.Unbinder;
  * Created by Administrator on 2018/1/25.
  */
 
-public abstract class BaseActivity extends FragmentActivity {
+public abstract class BaseActivity extends AppCompatActivity {
     public static List<Activity> activities=new ArrayList<>();
     Unbinder unbinder;
     private boolean isExit=false;

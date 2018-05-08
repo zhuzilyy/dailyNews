@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <com.qianyi.dailynews.ui.video.view.MyJCVideoPlayerStandard
+        android:id="@+id/player"
+        android:layout_width="match_parent"
+        android:layout_height="210dp"
+        />
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="20dp"
+            android:src="@mipmap/back"
+            android:scaleType="fitCenter"
+            android:layout_width="20dp"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+        <TextView
+            android:layout_marginTop="10dp"
+            android:maxLines="2"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:text="我们一直用GitHub作为免费的远程仓库,如果是个人的开源项目,放到GitHub上是完全没有问题"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <RelativeLayout
+            android:paddingBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textSize="14sp"
+                android:textColor="@color/dark_gray"
+                android:text="重庆新闻"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_alignParentRight="true"
+                android:textSize="14sp"
+                android:textColor="@color/dark_gray"
+                android:text="24次播放"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+    </LinearLayout>
+    <!--推荐-->
+    <LinearLayout
+        android:layout_marginTop="12dp"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:paddingTop="3dp"
+            android:paddingBottom="3dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <View
+                android:background="@color/red"
+                android:layout_width="5dp"
+                android:layout_height="20dp"/>
+            <TextView
+                android:layout_marginLeft="10dp"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:text="精彩推荐"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <ListView
+            android:listSelector="@android:color/transparent"
+            android:overScrollMode="never"
+            android:divider="@null"
+            android:id="@+id/lv_recommend"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>
