@@ -90,7 +90,6 @@ public class NewsAdapter extends BaseAdapter {
                 switch(newsEntities.get(i).getCategory()){
                     case "0":
                         //广告的cell:01
-
                     break;
                     case "1":
                         //广告的cell:02
