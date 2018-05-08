@@ -24,7 +24,6 @@ public class NewsAdapter extends BaseAdapter {
 
         for (int i = 1; i <=60 ; i++) {
             if(i%6==1){
-
                 testNewsEntity entity = new NewsAdapter.testNewsEntity("news","0");
                 newsEntities.add(entity);
             }else if(i%6==2){
