@@ -60,7 +60,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
             }
-
             @Override
             public void afterTextChanged(Editable editable) {
                 if(!TextUtils.isEmpty(editable.toString())){

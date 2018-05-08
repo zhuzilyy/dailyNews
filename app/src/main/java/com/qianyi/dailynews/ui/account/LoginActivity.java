@@ -5,4 +5,5 @@ package com.qianyi.dailynews.ui.account;
  */
 
 public class LoginActivity {
+
 }

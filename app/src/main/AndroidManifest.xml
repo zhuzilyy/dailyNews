@@ -32,7 +32,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:name=".application.MyApplication"
-        android:theme="@style/AppTheme">
+        android:theme="@style/MyAppTheme">
         <!--登录界面-->
         <activity android:name=".ui.account.activity.LoginActivity"
             android:screenOrientation="portrait"
@@ -108,7 +108,13 @@
         <activity android:name=".ui.Mine.activity.PresentStatusActivity"
             android:screenOrientation="portrait"
             />
-
+        <!--视频播放-->
+        <activity android:name=".ui.video.VideoPlayingActivity"
+            android:alwaysRetainTaskState="true"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:exported="false"
+            android:hardwareAccelerated="true"
+            android:launchMode="singleTask"
+            />
     </application>
-
 </manifest>
