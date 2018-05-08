@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#211654"
+    android:background="@color/white"
     >
     <com.qianyi.dailynews.views.PullToRefreshView
         android:orientation="vertical"
@@ -13,6 +13,9 @@
         android:layout_height="match_parent">
         <ListView
             android:id="@+id/listview"
+            android:scrollbars="none"
+            android:paddingLeft="@dimen/dp_5"
+            android:paddingRight="@dimen/dp_5"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
     </com.qianyi.dailynews.views.PullToRefreshView>

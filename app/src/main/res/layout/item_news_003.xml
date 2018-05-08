@@ -3,6 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:orientation="vertical"
+    android:paddingTop="@dimen/dp_10"
+    android:paddingBottom="@dimen/dp_10"
     android:layout_height="wrap_content">
     <!--标题-->
     <TextView
@@ -10,45 +12,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/black"
-        android:textSize="17sp"
+        android:textSize="16sp"
+        android:maxLines="2"
         android:text="住校小积分可使肌肤开发商开发尽快回王府解放军势力诶回复我就诶发咖啡壶为发我二姐佛"
         />
-    <!--3张图片-->
+
+    <!--bottom-->
     <LinearLayout
         android:layout_marginTop="@dimen/dp_10"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:orientation="horizontal"
-        >
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:src="@color/main_red"
-            />
-        <View
-            android:layout_width="2dp"
-            android:layout_height="match_parent"/>
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:src="@color/main_red"
-            />
-        <View
-            android:layout_width="2dp"
-            android:layout_height="match_parent"/>
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:src="@color/main_red"
-            />
-    </LinearLayout>
-    <!--bottom-->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="30dp"
         android:gravity="center_vertical"
         android:paddingLeft="@dimen/dp_5"
         >
@@ -84,6 +57,7 @@
             android:textSize="12sp"
             android:textColor="@color/black"
             />
+
 
     </LinearLayout>
 

@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentActivity;
 import android.view.KeyEvent;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 
@@ -134,6 +135,13 @@ public abstract class BaseActivity extends FragmentActivity {
                 activities.get(i).finish();
             }
 
+        }
+    }
+    /*隐藏软键盘*/
+    void hintKeyboard(Activity context) {
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (inputMethodManager.isActive()) {
+            inputMethodManager.hideSoftInputFromWindow(context.getCurrentFocus().getWindowToken(), 0);
         }
     }
 

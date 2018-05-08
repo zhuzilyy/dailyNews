@@ -3,6 +3,7 @@ package com.qianyi.dailynews.ui.Mine.activity;
 import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -63,13 +64,19 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
     //签到规则
     @BindView(R.id.tv_SignInRules) public TextView tv_SignInRules;
 
+    @BindView(R.id.back) public ImageView back;
 
 
 
     private List<LinearLayout> OtherLineralayout=new ArrayList<>();
     @Override
     protected void initViews() {
-
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     @Override
