@@ -19,6 +19,7 @@ import com.paradoxie.autoscrolltextview.VerticalTextview;
 import com.qianyi.dailynews.R;
 import com.qianyi.dailynews.base.BaseFragment;
 import com.qianyi.dailynews.ui.WebviewActivity;
+import com.qianyi.dailynews.ui.invitation.activity.ApprenticeActivity;
 import com.qianyi.dailynews.ui.invitation.activity.DailySharingAcitity;
 import com.qianyi.dailynews.ui.invitation.activity.WakeFriendsActivity;
 import com.qianyi.dailynews.utils.Utils;
@@ -162,11 +163,13 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
                 break;
             case R.id.ll_FriendIncome:
                 //好友收入
-                Toast.makeText(mActivity, "好友收入", Toast.LENGTH_SHORT).show();
+                Intent intent1 = new Intent(getActivity(), ApprenticeActivity.class);
+                startActivity(intent1);
                 break;
             case R.id.ll_FriendNum:
                 //好友数量
-                Toast.makeText(mActivity, "好友数量", Toast.LENGTH_SHORT).show();
+                Intent intent2 = new Intent(getActivity(), ApprenticeActivity.class);
+                startActivity(intent2);
                 break;
             case R.id.ll_MyInvitationCode:
                 //我的邀请码 赋值到剪贴板
