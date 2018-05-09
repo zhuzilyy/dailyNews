@@ -1,4 +1,4 @@
-package com.qianyi.dailynews.ui.Mine.activity;
+package com.qianyi.dailynews.ui.mine.activity;
 
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
@@ -10,11 +10,9 @@ import android.widget.TextView;
 
 import com.qianyi.dailynews.R;
 import com.qianyi.dailynews.base.BaseActivity;
-import com.qianyi.dailynews.ui.Mine.adapter.MyPageAdapter;
-import com.qianyi.dailynews.ui.Mine.fragment.EasyMoneyFragment;
-import com.qianyi.dailynews.ui.Mine.fragment.GoldCoinFragment;
-import com.qianyi.dailynews.ui.Mine.fragment.HighRebateFragment;
-import com.qianyi.dailynews.ui.Mine.fragment.WithdrawalsFragment;
+import com.qianyi.dailynews.ui.mine.adapter.MyPageAdapter;
+import com.qianyi.dailynews.ui.mine.fragment.EasyMoneyFragment;
+import com.qianyi.dailynews.ui.mine.fragment.HighRebateFragment;
 
 import java.util.ArrayList;
 
@@ -25,7 +23,7 @@ import butterknife.OnClick;
  * Created by Administrator on 2018/5/1.
  */
 
-public class AccountDetailsActivity extends BaseActivity implements View.OnClickListener {
+public class MakeMoneyCenterActivity extends BaseActivity implements View.OnClickListener{
     @BindView(R.id.iv_back) public ImageView back;
     @BindView(R.id.tv_title) public TextView title;
     @BindView(R.id.tv_right) public TextView tv_right;
@@ -40,25 +38,24 @@ public class AccountDetailsActivity extends BaseActivity implements View.OnClick
                 finish();
             }
         });
-        tv_right.setText("提现状态");
-        title.setText("账户明细");
+        title.setText("赚钱中心");
         tv_right.setVisibility(View.VISIBLE);
+        tv_right.setText("任务记录");
 
         myPageAdapter = new MyPageAdapter(getSupportFragmentManager());
         ArrayList<Fragment> datas = new ArrayList<Fragment>();
-        datas.add(new GoldCoinFragment());
-        datas.add(new WithdrawalsFragment());
+        datas.add(new HighRebateFragment());
+        datas.add(new EasyMoneyFragment());
         myPageAdapter.setData(datas);
 
         ArrayList<String> titles = new ArrayList<String>();
-        titles.add("金币");
-        titles.add("提现");
+        titles.add("高额返利");
+        titles.add("轻松赚钱");
         myPageAdapter.setTitles(titles);
 
         viewpager.setAdapter(myPageAdapter);
         // 将ViewPager与TabLayout相关联
         tab.setupWithViewPager(viewpager);
-
     }
 
     @Override
@@ -68,7 +65,7 @@ public class AccountDetailsActivity extends BaseActivity implements View.OnClick
 
     @Override
     protected void getResLayout() {
-        setContentView(R.layout.activity_account_details);
+        setContentView(R.layout.activity_makemoneycenter);
 
     }
 
@@ -86,9 +83,8 @@ public class AccountDetailsActivity extends BaseActivity implements View.OnClick
     public void onClick(View view) {
         switch(view.getId()){
             case R.id.tv_right:
-                Intent intent_presentStatue = new Intent(AccountDetailsActivity.this,PresentStatusActivity.class);
-                startActivity(intent_presentStatue);
-
+                Intent intent_taskrecord = new Intent(MakeMoneyCenterActivity.this,TaskRecordActivity.class);
+                startActivity(intent_taskrecord);
             break;
 
             default:

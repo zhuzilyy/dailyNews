@@ -1,4 +1,4 @@
-package com.qianyi.dailynews.ui.Mine.fragment;
+package com.qianyi.dailynews.ui.mine.fragment;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;

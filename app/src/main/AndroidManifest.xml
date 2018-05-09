@@ -37,10 +37,7 @@
         <activity android:name=".ui.account.activity.LoginActivity"
             android:screenOrientation="portrait"
             >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+
         </activity>
         <!--主界面-->
         <activity android:name=".MainActivity"
@@ -51,7 +48,7 @@
             android:windowSoftInputMode="adjustPan"
             />
         <!--提现-->
-        <activity android:name=".ui.Mine.activity.WithdrawalsActivity"
+        <activity android:name=".ui.mine.activity.WithdrawalsActivity"
             android:windowSoftInputMode="adjustPan"
             />
         <!--忘记密码-->
@@ -68,23 +65,23 @@
         <activity android:name=".ui.invitation.activity.DailySharingAcitity"
             android:screenOrientation="portrait"/>
         <!--填写邀请码-->
-        <activity android:name=".ui.Mine.activity.WriteInvitationActivity"
+        <activity android:name=".ui.mine.activity.WriteInvitationActivity"
             android:screenOrientation="portrait"
             />
         <!--设置-->
-        <activity android:name=".ui.Mine.activity.SettingsActivity"
+        <activity android:name=".ui.mine.activity.SettingsActivity"
             android:screenOrientation="portrait"
             />
         <!--修改密码-->
-        <activity android:name=".ui.Mine.activity.ModifyPasswordActivity"
+        <activity android:name=".ui.mine.activity.ModifyPasswordActivity"
             android:screenOrientation="portrait"
             />
         <!--赚钱中心-->
-        <activity android:name=".ui.Mine.activity.MakeMoneyCenterActivity"
+        <activity android:name=".ui.mine.activity.MakeMoneyCenterActivity"
             android:screenOrientation="portrait"
             />
         <!--账户明细-->
-        <activity android:name=".ui.Mine.activity.AccountDetailsActivity"
+        <activity android:name=".ui.mine.activity.AccountDetailsActivity"
             android:screenOrientation="portrait"
             />
         <!--home 搜索-->
@@ -92,19 +89,19 @@
             android:screenOrientation="portrait"
             />
         <!--任务中心-->
-        <activity android:name=".ui.Mine.activity.TaskCenterActivity"
+        <activity android:name=".ui.mine.activity.TaskCenterActivity"
             android:screenOrientation="portrait"
             />
         <!--提现说明-->
-        <activity android:name=".ui.Mine.activity.WithdrawalsDetailsActivity"
+        <activity android:name=".ui.mine.activity.WithdrawalsDetailsActivity"
             android:screenOrientation="portrait"
             />
         <!--任务记录-->
-        <activity android:name=".ui.Mine.activity.TaskRecordActivity"
+        <activity android:name=".ui.mine.activity.TaskRecordActivity"
             android:screenOrientation="portrait"
             />
         <!--提现状态-->
-        <activity android:name=".ui.Mine.activity.PresentStatusActivity"
+        <activity android:name=".ui.mine.activity.PresentStatusActivity"
             android:screenOrientation="portrait"
             />
         <!--徒弟收入-->
@@ -123,5 +120,18 @@
             android:hardwareAccelerated="true"
             android:launchMode="singleTask"
             />
+        <!--引导界面-->
+        <activity android:name=".ui.account.activity.WelcomeActiity"
+            android:screenOrientation="portrait"
+            />
+        <!--欢迎界面-->
+        <activity android:name=".ui.account.activity.SplashActivity"
+            android:screenOrientation="portrait"
+            >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 </manifest>
