@@ -13,6 +13,8 @@ import com.qianyi.dailynews.views.PullToRefreshView;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import butterknife.BindView;
+
 public class PageFragment extends LazyloadFragment implements PullToRefreshView.OnHeaderRefreshListener, PullToRefreshView.OnFooterRefreshListener{
 
     public PullToRefreshView mPullToRefreshView;

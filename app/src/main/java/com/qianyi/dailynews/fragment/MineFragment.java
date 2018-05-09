@@ -12,12 +12,13 @@ import android.widget.Toast;
 import com.orhanobut.logger.Logger;
 import com.qianyi.dailynews.R;
 import com.qianyi.dailynews.base.BaseFragment;
-import com.qianyi.dailynews.ui.mine.activity.AccountDetailsActivity;
-import com.qianyi.dailynews.ui.mine.activity.MakeMoneyCenterActivity;
-import com.qianyi.dailynews.ui.mine.activity.SettingsActivity;
-import com.qianyi.dailynews.ui.mine.activity.TaskCenterActivity;
-import com.qianyi.dailynews.ui.mine.activity.WithdrawalsActivity;
-import com.qianyi.dailynews.ui.mine.activity.WriteInvitationActivity;
+import com.qianyi.dailynews.ui.Mine.activity.AccountDetailsActivity;
+import com.qianyi.dailynews.ui.Mine.activity.MakeMoneyCenterActivity;
+import com.qianyi.dailynews.ui.Mine.activity.MessageActivity;
+import com.qianyi.dailynews.ui.Mine.activity.SettingsActivity;
+import com.qianyi.dailynews.ui.Mine.activity.TaskCenterActivity;
+import com.qianyi.dailynews.ui.Mine.activity.WithdrawalsActivity;
+import com.qianyi.dailynews.ui.Mine.activity.WriteInvitationActivity;
 import com.qianyi.dailynews.ui.WebviewActivity;
 import com.qianyi.dailynews.utils.Utils;
 
@@ -108,7 +109,8 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 break;
             case R.id.re_MessageCentre:
                 //消息中心
-                Toast.makeText(mActivity, "消息中心", Toast.LENGTH_SHORT).show();
+                Intent intent_msg = new Intent(getActivity(), MessageActivity.class);
+                startActivity(intent_msg);
                 break;
             case R.id.re_HelpBack:
                 //帮助与反馈
