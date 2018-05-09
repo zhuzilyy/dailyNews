@@ -1,4 +1,4 @@
-package com.qianyi.dailynews.ui.mine.activity;
+package com.qianyi.dailynews.ui.Mine.activity;
 
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
@@ -10,9 +10,9 @@ import android.widget.TextView;
 
 import com.qianyi.dailynews.R;
 import com.qianyi.dailynews.base.BaseActivity;
-import com.qianyi.dailynews.ui.mine.adapter.MyPageAdapter;
-import com.qianyi.dailynews.ui.mine.fragment.EasyMoneyFragment;
-import com.qianyi.dailynews.ui.mine.fragment.HighRebateFragment;
+import com.qianyi.dailynews.ui.Mine.adapter.MyPageAdapter;
+import com.qianyi.dailynews.ui.Mine.fragment.EasyMoneyFragment;
+import com.qianyi.dailynews.ui.Mine.fragment.HighRebateFragment;
 
 import java.util.ArrayList;
 

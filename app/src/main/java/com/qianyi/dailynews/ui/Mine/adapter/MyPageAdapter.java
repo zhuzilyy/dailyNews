@@ -1,4 +1,4 @@
-package com.qianyi.dailynews.ui.mine.adapter;
+package com.qianyi.dailynews.ui.Mine.adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

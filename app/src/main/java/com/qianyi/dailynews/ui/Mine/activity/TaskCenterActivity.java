@@ -1,4 +1,4 @@
-package com.qianyi.dailynews.ui.mine.activity;
+package com.qianyi.dailynews.ui.Mine.activity;
 
 import android.content.Intent;
 import android.view.View;

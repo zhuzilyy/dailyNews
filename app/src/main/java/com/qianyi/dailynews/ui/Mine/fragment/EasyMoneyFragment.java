@@ -1,7 +1,5 @@
-package com.qianyi.dailynews.ui.mine.fragment;
+package com.qianyi.dailynews.ui.Mine.fragment;
 
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,10 +7,8 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.qianyi.dailynews.R;
-import com.qianyi.dailynews.adapter.NewsAdapter;
 import com.qianyi.dailynews.base.BaseFragment;
 import com.qianyi.dailynews.ui.Mine.adapter.EaseMoneyAdapter;
-import com.qianyi.dailynews.ui.invitation.activity.ApprenticeActivity;
 import com.qianyi.dailynews.views.PullToRefreshView;
 
 import java.util.Timer;

@@ -1,4 +1,4 @@
-package com.qianyi.dailynews.ui.mine.activity;
+package com.qianyi.dailynews.ui.Mine.activity;
 
 import com.qianyi.dailynews.R;
 import com.qianyi.dailynews.base.BaseActivity;

@@ -1,4 +1,4 @@
-package com.qianyi.dailynews.ui.mine.fragment;
+package com.qianyi.dailynews.ui.Mine.fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,10 +11,10 @@ import com.qianyi.dailynews.base.BaseFragment;
  * Created by Administrator on 2018/5/1.
  */
 
-public class GoldCoinFragment extends BaseFragment {
+public class EasyMoney_RecordFragment extends BaseFragment {
     @Override
     protected View getResLayout(LayoutInflater inflater, ViewGroup container) {
-        return inflater.inflate(R.layout.fragment_gold_coin,null);
+        return inflater.inflate(R.layout.fragment_easy_record_money,null);
     }
 
     @Override

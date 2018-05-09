@@ -48,7 +48,7 @@
             android:windowSoftInputMode="adjustPan"
             />
         <!--提现-->
-        <activity android:name=".ui.mine.activity.WithdrawalsActivity"
+        <activity android:name=".ui.Mine.activity.WithdrawalsActivity"
             android:windowSoftInputMode="adjustPan"
             />
         <!--忘记密码-->
@@ -65,23 +65,23 @@
         <activity android:name=".ui.invitation.activity.DailySharingAcitity"
             android:screenOrientation="portrait"/>
         <!--填写邀请码-->
-        <activity android:name=".ui.mine.activity.WriteInvitationActivity"
+        <activity android:name=".ui.Mine.activity.WriteInvitationActivity"
             android:screenOrientation="portrait"
             />
         <!--设置-->
-        <activity android:name=".ui.mine.activity.SettingsActivity"
+        <activity android:name=".ui.Mine.activity.SettingsActivity"
             android:screenOrientation="portrait"
             />
         <!--修改密码-->
-        <activity android:name=".ui.mine.activity.ModifyPasswordActivity"
+        <activity android:name=".ui.Mine.activity.ModifyPasswordActivity"
             android:screenOrientation="portrait"
             />
         <!--赚钱中心-->
-        <activity android:name=".ui.mine.activity.MakeMoneyCenterActivity"
+        <activity android:name=".ui.Mine.activity.MakeMoneyCenterActivity"
             android:screenOrientation="portrait"
             />
         <!--账户明细-->
-        <activity android:name=".ui.mine.activity.AccountDetailsActivity"
+        <activity android:name=".ui.Mine.activity.AccountDetailsActivity"
             android:screenOrientation="portrait"
             />
         <!--home 搜索-->
@@ -89,19 +89,19 @@
             android:screenOrientation="portrait"
             />
         <!--任务中心-->
-        <activity android:name=".ui.mine.activity.TaskCenterActivity"
+        <activity android:name=".ui.Mine.activity.TaskCenterActivity"
             android:screenOrientation="portrait"
             />
         <!--提现说明-->
-        <activity android:name=".ui.mine.activity.WithdrawalsDetailsActivity"
+        <activity android:name=".ui.Mine.activity.WithdrawalsDetailsActivity"
             android:screenOrientation="portrait"
             />
         <!--任务记录-->
-        <activity android:name=".ui.mine.activity.TaskRecordActivity"
+        <activity android:name=".ui.Mine.activity.TaskRecordActivity"
             android:screenOrientation="portrait"
             />
         <!--提现状态-->
-        <activity android:name=".ui.mine.activity.PresentStatusActivity"
+        <activity android:name=".ui.Mine.activity.PresentStatusActivity"
             android:screenOrientation="portrait"
             />
         <!--徒弟收入-->
