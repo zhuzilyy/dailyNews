@@ -35,6 +35,13 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
     private boolean pwd_b = false;
     @Override
     protected void initViews() {
+        String account =login_account_cet.getText().toString().trim();
+        String pwd = login_pwd_cet.getText().toString().trim();
+        if(!TextUtils.isEmpty(account)&&!TextUtils.isEmpty(pwd)){
+            login_login_btn.setEnabled(true);
+        }else {
+            login_login_btn.setEnabled(false);
+        }
 
     }
 
@@ -63,9 +70,19 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
             @Override
             public void afterTextChanged(Editable editable) {
                 if(!TextUtils.isEmpty(editable.toString())){
+                    if(TextUtils.isEmpty(login_pwd_cet.getText().toString().trim())){
+                        pwd_b=false;
+                    }else {
+                        pwd_b=true;
+                    }
                     account_b = true;
                     isLoginEnable(account_b,pwd_b);
                 }else if (TextUtils.isEmpty(editable.toString())){
+                    if(TextUtils.isEmpty(login_pwd_cet.getText().toString().trim())){
+                        pwd_b=false;
+                    }else {
+                        pwd_b=true;
+                    }
                     account_b = false;
                     isLoginEnable(account_b,pwd_b);
                 }
@@ -86,9 +103,19 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
             @Override
             public void afterTextChanged(Editable editable) {
                 if(!TextUtils.isEmpty(editable.toString())){
+                    if(TextUtils.isEmpty(login_account_cet.getText().toString().trim())){
+                        account_b=false;
+                    }else {
+                        account_b=true;
+                    }
                     pwd_b = true;
                     isLoginEnable(account_b,pwd_b);
                 }else if(TextUtils.isEmpty(editable.toString())) {
+                    if(TextUtils.isEmpty(login_account_cet.getText().toString().trim())){
+                        account_b=false;
+                    }else {
+                        account_b=true;
+                    }
                     pwd_b = false;
                     isLoginEnable(account_b,pwd_b);
                 }
