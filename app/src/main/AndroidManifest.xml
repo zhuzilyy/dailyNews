@@ -70,7 +70,6 @@
         <!--填写邀请码-->
         <activity android:name=".ui.Mine.activity.WriteInvitationActivity"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
             />
         <!--设置-->
         <activity android:name=".ui.Mine.activity.SettingsActivity"
@@ -110,6 +109,10 @@
             />
         <!--徒弟收入-->
         <activity android:name=".ui.invitation.activity.ApprenticeActivity"
+            android:screenOrientation="portrait"
+            />
+        <!--消息中心-->
+        <activity android:name=".ui.Mine.activity.MessageActivity"
             android:screenOrientation="portrait"
             />
         <!--视频播放-->
