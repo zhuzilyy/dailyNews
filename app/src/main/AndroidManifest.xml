@@ -108,6 +108,10 @@
         <activity android:name=".ui.Mine.activity.PresentStatusActivity"
             android:screenOrientation="portrait"
             />
+        <!--徒弟收入-->
+        <activity android:name=".ui.invitation.activity.ApprenticeActivity"
+            android:screenOrientation="portrait"
+            />
         <!--视频播放-->
         <activity android:name=".ui.video.VideoPlayingActivity"
             android:alwaysRetainTaskState="true"

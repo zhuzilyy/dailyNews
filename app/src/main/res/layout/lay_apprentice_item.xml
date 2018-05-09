@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    >
+
+    <LinearLayout
+        android:id="@+id/apprentic_item_ll"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:layout_marginRight="@dimen/dp_10"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:orientation="horizontal"
+        >
+        <LinearLayout
+            android:layout_width="0dp"
+            android:gravity="center"
+            android:layout_height="match_parent"
+            android:layout_weight="0.6"
+            >
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/apprentic_item_head"
+                android:layout_width="40dp"
+                android:gravity="center"
+                android:layout_height="40dp"
+
+                android:src="@mipmap/logo"
+
+                />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/apprentic_item_account"
+            android:layout_width="0dp"
+            android:textSize="14sp"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:singleLine="true"
+            android:layout_height="match_parent"
+            android:layout_weight="1.2"
+            android:text="13256555865"
+            />
+        <TextView
+            android:id="@+id/apprentic_item_nick"
+            android:layout_width="0dp"
+            android:singleLine="true"
+            android:gravity="center"
+            android:textSize="14sp"
+
+            android:textColor="@color/black"
+            android:layout_height="match_parent"
+            android:layout_weight="1.2"
+            android:text="by"
+            />
+        <TextView
+            android:id="@+id/apprentic_item_money"
+            android:layout_width="0dp"
+            android:gravity="center"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:singleLine="true"
+            android:text="10000"
+            />
+
+
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_0.5"
+        android:background="@color/light_gray"
+        />
+
+</LinearLayout>
