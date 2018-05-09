@@ -15,9 +15,9 @@ import butterknife.ButterKnife;
  * Created by Administrator on 2018/5/5.
  */
 
-public class TestAdapter extends BaseAdapter {
+public class VideoAdapter extends BaseAdapter {
     private Context context;
-    public TestAdapter(Context context) {
+    public VideoAdapter(Context context) {
         this.context = context;
     }
 

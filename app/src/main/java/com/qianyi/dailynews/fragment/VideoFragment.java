@@ -10,7 +10,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.qianyi.dailynews.R;
-import com.qianyi.dailynews.adapter.TestAdapter;
+import com.qianyi.dailynews.adapter.VideoAdapter;
 import com.qianyi.dailynews.base.BaseFragment;
 import com.qianyi.dailynews.ui.video.VideoPlayingActivity;
 import com.qianyi.dailynews.views.PullToRefreshView;
@@ -34,7 +34,7 @@ public class VideoFragment extends BaseFragment implements PullToRefreshView.OnH
     @BindView(R.id.listview)
     ListView listview;
     private View newsView;
-    private TestAdapter testAdapter;
+    private VideoAdapter videoAdapter;
     @Override
     protected View getResLayout(LayoutInflater inflater, ViewGroup container) {
         newsView =  inflater.inflate(R.layout.fragment_video, null);
@@ -47,8 +47,8 @@ public class VideoFragment extends BaseFragment implements PullToRefreshView.OnH
     }
     @Override
     protected void initData() {
-        testAdapter=new TestAdapter(getActivity());
-        listview.setAdapter(testAdapter);
+        videoAdapter =new VideoAdapter(getActivity());
+        listview.setAdapter(videoAdapter);
     }
 
     @Override
