@@ -108,8 +108,8 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 break;
             case R.id.re_MessageCentre:
                 //消息中心
-               /* Intent intent_msg = new Intent(getActivity(), com.qianyi.dailynews.ui.Mine.activity.MessageActivity.class);
-                startActivity(intent_msg);*/
+                Intent intent_msg = new Intent(getActivity(), com.qianyi.dailynews.ui.Mine.activity.MessageActivity.class);
+                startActivity(intent_msg);
                 break;
             case R.id.re_HelpBack:
                 //帮助与反馈
