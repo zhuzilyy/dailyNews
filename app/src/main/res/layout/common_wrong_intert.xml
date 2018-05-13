@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_vertical"
+    android:id="@+id/no_internet_rl"
+    android:visibility="gone">
+    <ImageView
+        android:id="@+id/no_internet_iv"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:src="@mipmap/img_common_no_intert"
+        android:layout_centerHorizontal="true"/>
+    <TextView
+        android:id="@+id/no_internet_wrong"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="哎呀! 出错了"
+        android:layout_below="@+id/no_internet_iv"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="23dp"
+        android:textSize="18sp"
+        android:textColor="#424242"/>
+
+    <TextView
+        android:id="@+id/no_internet_wrong_why"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="失败原因：网络错误"
+        android:layout_below="@+id/no_internet_wrong"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:textSize="14sp"
+        android:textColor="#999999"/>
+    <TextView
+        android:id="@+id/reload"
+        android:layout_width="131dp"
+        android:layout_height="39dp"
+        android:text="重新加载"
+        android:layout_below="@+id/no_internet_wrong_why"
+        android:layout_centerHorizontal="true"
+        android:textColor="#ffffff"
+        android:layout_marginTop="35dp"
+        android:background="@drawable/common_internet_reload_selected"
+        android:gravity="center"/>
+
+</RelativeLayout>

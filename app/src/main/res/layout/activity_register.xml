@@ -61,9 +61,11 @@
                             android:src="@mipmap/phone_icon"
 
                             />
-
                         <com.qianyi.dailynews.views.ClearEditText
-                            android:id="@+id/register_account_cet"
+                            android:maxLength="11"
+                            android:singleLine="true"
+                            android:inputType="number"
+                            android:id="@+id/et_account"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_marginRight="@dimen/dp_10"
@@ -74,7 +76,6 @@
                             android:textColor="@color/black"
                             android:textColorHint="@color/gray"
                             android:textSize="16sp"
-
                             />
 
                     </LinearLayout>
@@ -87,16 +88,17 @@
                         android:layout_marginTop="@dimen/dp_20"
                         android:background="@drawable/shape_stroke_gray"
                         android:gravity="center_vertical">
-
                         <ImageView
                             android:layout_width="25dp"
                             android:layout_height="25dp"
                             android:layout_marginLeft="@dimen/dp_15"
                             android:src="@mipmap/lock_icon"
-
                             />
 
                         <com.qianyi.dailynews.views.ClearEditText
+                            android:maxLength="6"
+                            android:inputType="number"
+                            android:singleLine="true"
                             android:id="@+id/register_code_cet"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
@@ -108,9 +110,7 @@
                             android:textColor="@color/black"
                             android:textColorHint="@color/gray"
                             android:textSize="16sp"
-
                             />
-
                         <View
                             android:layout_width="@dimen/dp_1"
                             android:layout_height="match_parent"
@@ -125,12 +125,23 @@
                             android:gravity="center"
                             android:orientation="horizontal">
 
-                            <TextView
+                            <Button
+                                android:background="@null"
+                                android:id="@+id/btn_getCode"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:gravity="center"
+                                android:text="发送验证码"
+                                android:textColor="@color/gray"
+                                android:textSize="12sp" />
+                         <!--   <TextView
+                                android:id="@+id/tv_sendConfirmCode"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="发送验证码"
                                 android:textColor="@color/gray"
-                                android:textSize="14sp" />
+                                android:textSize="14sp" />-->
                         </LinearLayout>
 
                     </LinearLayout>
@@ -149,10 +160,10 @@
                             android:layout_height="25dp"
                             android:layout_marginLeft="@dimen/dp_15"
                             android:src="@mipmap/lock_icon"
-
                             />
-
                         <com.qianyi.dailynews.views.ClearEditText
+                            android:inputType="textPassword"
+                            android:singleLine="true"
                             android:id="@+id/register_pwd_cet"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
@@ -164,9 +175,7 @@
                             android:textColor="@color/black"
                             android:textColorHint="@color/gray"
                             android:textSize="16sp"
-
                             />
-
                     </LinearLayout>
                     <!--确认密码-->
                     <LinearLayout
@@ -183,10 +192,10 @@
                             android:layout_height="25dp"
                             android:layout_marginLeft="@dimen/dp_15"
                             android:src="@mipmap/lock_icon"
-
                             />
-
                         <com.qianyi.dailynews.views.ClearEditText
+                            android:inputType="textPassword"
+                            android:singleLine="true"
                             android:id="@+id/register_confirmpwd_cet"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
@@ -198,12 +207,14 @@
                             android:textColor="@color/black"
                             android:textColorHint="@color/gray"
                             android:textSize="16sp"
-
                             />
 
                     </LinearLayout>
 
                     <com.qianyi.dailynews.views.ClearEditText
+                        android:id="@+id/et_inviteCode"
+                        android:singleLine="true"
+                        android:inputType="number"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:layout_marginLeft="40dp"
@@ -214,7 +225,6 @@
                         android:textColor="@color/black"
                         android:textColorHint="@color/gray"
                         android:textSize="14sp" />
-
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
@@ -224,18 +234,16 @@
 
                     <!--注册-->
                     <Button
-                        android:id="@+id/register_register_btn"
+                        android:id="@+id/btn_register"
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
                         android:layout_marginLeft="40dp"
                         android:layout_marginRight="40dp"
                         android:layout_marginTop="25dp"
                         android:background="@drawable/shape_selector_login"
-                        android:enabled="false"
                         android:text="注册"
                         android:textColor="@color/white"
                         android:textSize="16sp" />
-
                 </LinearLayout>
             </RelativeLayout>
         </LinearLayout>

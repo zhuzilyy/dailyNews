@@ -49,6 +49,9 @@
                     android:src="@mipmap/phone_icon"
                     />
                 <com.qianyi.dailynews.views.ClearEditText
+                    android:singleLine="true"
+                    android:inputType="number"
+                    android:maxLength="11"
                     android:id="@+id/login_account_cet"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -57,7 +60,7 @@
                     android:background="@null"
                     android:hint="请输入手机号"
                     android:paddingLeft="@dimen/dp_10"
-                    android:text="123456"
+                    android:text="15524108390"
                     android:textColor="@color/black"
                     android:textColorHint="@color/gray"
                     android:textSize="16sp"
@@ -79,10 +82,10 @@
                     android:layout_height="25dp"
                     android:layout_marginLeft="@dimen/dp_15"
                     android:src="@mipmap/lock_icon"
-
                     />
-
                 <com.qianyi.dailynews.views.ClearEditText
+                    android:inputType="textPassword"
+                    android:singleLine="true"
                     android:id="@+id/login_pwd_cet"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -91,7 +94,7 @@
                     android:background="@null"
                     android:hint="请输入密码"
                     android:paddingLeft="@dimen/dp_10"
-                    android:text="123456"
+                    android:text="111111"
                     android:textColor="@color/black"
                     android:textColorHint="@color/gray"
                     android:textSize="16sp"

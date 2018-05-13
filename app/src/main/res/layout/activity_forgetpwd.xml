@@ -53,6 +53,9 @@
 
                     />
                 <com.qianyi.dailynews.views.ClearEditText
+                    android:singleLine="true"
+                    android:maxLength="11"
+                    android:inputType="number"
                     android:id="@+id/forgetpwd_account_cet"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -64,7 +67,6 @@
                     android:textColorHint="@color/gray"
                     android:textSize="16sp"
                     android:paddingLeft="@dimen/dp_10"
-
                     />
 
             </LinearLayout>
@@ -86,6 +88,8 @@
 
                     />
                 <com.qianyi.dailynews.views.ClearEditText
+                    android:inputType="textPassword"
+                    android:singleLine="true"
                     android:id="@+id/forgetpwd_pwd_cet"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -97,7 +101,6 @@
                     android:textColorHint="@color/gray"
                     android:textSize="16sp"
                     android:paddingLeft="@dimen/dp_10"
-
                     />
 
             </LinearLayout>
@@ -120,6 +123,9 @@
                     />
 
                 <com.qianyi.dailynews.views.ClearEditText
+                    android:maxLength="6"
+                    android:inputType="number"
+                    android:singleLine="true"
                     android:id="@+id/register_code_cet"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -147,19 +153,28 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:orientation="horizontal">
+                    <Button
+                        android:background="@null"
+                        android:id="@+id/btn_getCode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center"
+                        android:text="发送验证码"
+                        android:textColor="@color/gray"
+                        android:textSize="12sp" />
 
-                    <TextView
+                  <!--  <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="发送验证码"
                         android:textColor="@color/gray"
-                        android:textSize="14sp" />
+                        android:textSize="14sp" />-->
                 </LinearLayout>
 
             </LinearLayout>
             <!--登录-->
             <Button
-                android:enabled="false"
                 android:id="@+id/forgetpwd_forgetpwd_btn"
                 android:layout_marginTop="25dp"
                 android:layout_width="match_parent"

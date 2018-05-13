@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -12,24 +13,39 @@ import android.widget.Toast;
 
 import com.qianyi.dailynews.MainActivity;
 import com.qianyi.dailynews.R;
+import com.qianyi.dailynews.api.ApiAccount;
+import com.qianyi.dailynews.api.ApiConstant;
 import com.qianyi.dailynews.base.BaseActivity;
+import com.qianyi.dailynews.callback.RequestCallBack;
 import com.qianyi.dailynews.views.ClearEditText;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import okhttp3.Call;
+import okhttp3.Response;
 
 /**
  * Created by Administrator on 2018/5/1.
  */
 
 public class LoginActivity extends BaseActivity implements View.OnClickListener{
-    @BindView(R.id.login_close_iv) public ImageView login_close_iv;
-    @BindView(R.id.login_account_cet) public ClearEditText login_account_cet;
-    @BindView(R.id.login_pwd_cet) public ClearEditText login_pwd_cet;
-    @BindView(R.id.login_login_btn) public Button login_login_btn;
-    @BindView(R.id.login_forgetpwd_tv) public TextView login_forgetpwd_tv;
-    @BindView(R.id.login_register_tv) public TextView login_register_tv;
-    @BindView(R.id.login_wxlogin_iv) public ImageView login_wxlogin_iv;
+    @BindView(R.id.login_close_iv)
+    public ImageView login_close_iv;
+    @BindView(R.id.login_account_cet)
+    public ClearEditText login_account_cet;
+    @BindView(R.id.login_pwd_cet)
+    public ClearEditText login_pwd_cet;
+    @BindView(R.id.login_login_btn)
+    public Button login_login_btn;
+    @BindView(R.id.login_forgetpwd_tv)
+    public TextView login_forgetpwd_tv;
+    @BindView(R.id.login_register_tv)
+    public TextView login_register_tv;
+    @BindView(R.id.login_wxlogin_iv)
+    public ImageView login_wxlogin_iv;
 
     private boolean account_b = false;
     private boolean pwd_b = false;
@@ -42,7 +58,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
         }else {
             login_login_btn.setEnabled(false);
         }
-
     }
 
     @Override
@@ -158,10 +173,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                     Toast.makeText(this, "请输入密码", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
-
+                login(account,pwd);
                 break;
             case R.id.login_forgetpwd_tv:
                 //忘记密码
@@ -176,11 +188,39 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
             case R.id.login_wxlogin_iv:
                 //微信登录
                 break;
-
             default:
             break;
 
 
         }
+    }
+    //登录的方法
+    private void login(String account, String pwd) {
+        ApiAccount.login(ApiConstant.LOGIN, account, pwd, new RequestCallBack<String>() {
+            @Override
+            public void onSuccess(final Call call, Response response, final String s) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            JSONObject jsonObject=new JSONObject(s);
+                            String code = jsonObject.getString("code");
+                            String return_msg = jsonObject.getString("return_msg");
+                            Toast.makeText(LoginActivity.this, return_msg, Toast.LENGTH_SHORT).show();
+                            if (code.equals(ApiConstant.SUCCESS_CODE)){
+                               jumpActivity(LoginActivity.this, MainActivity.class);
+                               finish();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
+            @Override
+            public void onEror(Call call, int statusCode, Exception e) {
+
+            }
+        });
     }
 }

@@ -61,7 +61,7 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
         firstData();
     }
     private void firstData() {
-        Toast.makeText(mActivity, "百元要刷新....", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(mActivity, "百元要刷新....", Toast.LENGTH_SHORT).show();
         mPullToRefreshView.setEnablePullTorefresh(true);
         Timer timer=new Timer();
         timer.schedule(new TimerTask() {
