@@ -175,7 +175,6 @@
                     android:orientation="horizontal"
                     android:gravity="center"
                     >
-
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -189,7 +188,6 @@
                         android:text="200"
                         android:textColor="@color/goldcolor"
                         android:textSize="16sp"
-
                         />
                     <TextView
                         android:layout_width="wrap_content"
@@ -200,6 +198,7 @@
                         />
                 </LinearLayout>
                 <Button
+                    android:id="@+id/btn_onekey_shoutu"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
                     android:text="一键收徒"
@@ -210,7 +209,6 @@
                     android:layout_marginRight="25dp"
                     android:background="@drawable/shape_coner30_red"
                     />
-
             </LinearLayout>
             <!--好友收入，好友数量，我的邀请码-->
             <View

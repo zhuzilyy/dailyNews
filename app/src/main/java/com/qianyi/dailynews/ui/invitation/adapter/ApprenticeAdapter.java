@@ -11,6 +11,8 @@ import android.widget.TextView;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.qianyi.dailynews.R;
 
+import butterknife.BindView;
+
 
 /**
  * Created by Administrator on 2018/4/4.
@@ -89,15 +91,18 @@ public class ApprenticeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         return 15;//获取数据的个数
     }
 
-
     //自定义ViewHolder，用于加载图片
     class MyViewHolder extends RecyclerView.ViewHolder {
-        private RoundedImageView head;
-        private TextView account;
-        private TextView nick;
-        private TextView money;
-        private LinearLayout apprentic_item_ll;
-
+        @BindView(R.id.apprentic_item_head)
+        public RoundedImageView head;
+        @BindView(R.id.apprentic_item_account)
+        public TextView account;
+        @BindView(R.id.apprentic_item_nick)
+        public TextView nick;
+        @BindView(R.id.apprentic_item_money)
+        public TextView money;
+        @BindView(R.id.apprentic_item_ll)
+        public LinearLayout apprentic_item_ll;
 
 
         public MyViewHolder(View view) {
