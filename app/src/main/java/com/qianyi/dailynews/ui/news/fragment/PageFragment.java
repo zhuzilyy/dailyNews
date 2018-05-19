@@ -1,6 +1,8 @@
 package com.qianyi.dailynews.ui.news.fragment;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Log;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -8,8 +10,11 @@ import android.widget.Toast;
 import com.qianyi.dailynews.R;
 import com.qianyi.dailynews.adapter.NewsAdapter;
 import com.qianyi.dailynews.adapter.NewsAdapter;
+import com.qianyi.dailynews.fragment.NewsFragment;
+import com.qianyi.dailynews.ui.news.bean.NewsTitleBean;
 import com.qianyi.dailynews.views.PullToRefreshView;
 
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -20,6 +25,17 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
     public PullToRefreshView mPullToRefreshView;
     public ListView listview;
     private NewsAdapter newsAdapter;
+    private List<NewsTitleBean.NewsTitleData.NewsTypeRes> newsTypeRes ;
+
+
+    public PageFragment (){
+
+    }
+
+    @SuppressLint("ValidFragment")
+    public PageFragment(List<NewsTitleBean.NewsTitleData.NewsTypeRes> newsTypeRes) {
+        this.newsTypeRes= newsTypeRes;
+    }
 
     @Override
     public int setContentView() {
@@ -43,10 +59,14 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
 
     }
 
+
+
+
     @Override
     public void lazyLoad() {
-        Toast.makeText(mActivity, "lazyload....", Toast.LENGTH_SHORT).show();
-        firstData();
+        int position = NewsFragment.CurrentNewsTitle;
+        Toast.makeText(mActivity, "NewsFragment.CurrentNewsTitle==" +NewsFragment.CurrentNewsTitle, Toast.LENGTH_SHORT).show();
+        firstData(position);
 
     }
 
@@ -58,10 +78,10 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
 
     @Override
     public void onHeaderRefresh(PullToRefreshView view) {
-        firstData();
+        firstData(NewsFragment.CurrentNewsTitle);
     }
-    private void firstData() {
-        //Toast.makeText(mActivity, "百元要刷新....", Toast.LENGTH_SHORT).show();
+    private void firstData(int position) {
+
         mPullToRefreshView.setEnablePullTorefresh(true);
         Timer timer=new Timer();
         timer.schedule(new TimerTask() {
@@ -70,6 +90,10 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
                 mActivity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+
+
+
+
                         mPullToRefreshView.onHeaderRefreshComplete();
                     }
                 });

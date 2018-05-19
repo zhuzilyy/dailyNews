@@ -6,21 +6,31 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.qianyi.dailynews.R;
+import com.qianyi.dailynews.api.ApiConstant;
+import com.qianyi.dailynews.api.ApiNews;
 import com.qianyi.dailynews.base.BaseFragment;
+import com.qianyi.dailynews.callback.RequestCallBack;
 import com.qianyi.dailynews.ui.news.activity.SearchActivity;
 import com.qianyi.dailynews.ui.news.adapter.FmPagerAdapter;
+import com.qianyi.dailynews.ui.news.bean.NewsTitleBean;
 import com.qianyi.dailynews.ui.news.fragment.PageFragment;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import okhttp3.Call;
+import okhttp3.Response;
 
 /**
  * Created by Administrator on 2018/4/30.
@@ -30,11 +40,12 @@ public class NewsFragment extends BaseFragment implements View.OnClickListener {
     private View newsView;
     @BindView(R.id.tablayout)
     public TabLayout tabLayout;
-    private String[] topics = new String[]{"推荐","热点","北京","视频","社会","图片","娱乐","娱乐","百元","电影","内涵段子","今日头条","中国新歌声"};
     @BindView(R.id.viewpager)
     public ViewPager viewPager;
     private ArrayList<Fragment> fragments = new ArrayList<>();
+    public PageFragment pageFragment = new PageFragment();
     @BindView(R.id.re_home_search) public RelativeLayout re_home_search;
+    public static int CurrentNewsTitle = 0;
     @Override
     protected View getResLayout(LayoutInflater inflater, ViewGroup container) {
         newsView =  inflater.inflate(R.layout.fragment_news, null);
@@ -48,22 +59,72 @@ public class NewsFragment extends BaseFragment implements View.OnClickListener {
 
     @Override
     protected void initViews() {
-        viewPager.setOffscreenPageLimit(3);
-        for(int i=0;i<topics.length;i++){
-            tabLayout.addTab(tabLayout.newTab());
-            fragments.add(new PageFragment());
-        }
-        viewPager.setAdapter(new FmPagerAdapter(fragments,getActivity().getSupportFragmentManager()));
-        tabLayout.setupWithViewPager(viewPager);
-        tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
 
-        for (int j = 0; j < topics.length; j++) {
-            tabLayout.getTabAt(j).setText(topics[j]);
-        }
     }
 
     @Override
     protected void initData() {
+
+        ApiNews.GetNewsTitles(ApiConstant.NEWS_TITLES, new RequestCallBack<String>() {
+            @Override
+            public void onSuccess(Call call, Response response, String s) {
+                Gson gson = new Gson();
+                NewsTitleBean newsTitleBean = gson.fromJson(s,NewsTitleBean.class);
+                if(newsTitleBean!=null){
+                   String code = newsTitleBean.getCode();
+                   if("0000".equals(code)){
+                       NewsTitleBean.NewsTitleData newsTitleData = newsTitleBean.getData();
+                       if(newsTitleData!=null){
+                          List<NewsTitleBean.NewsTitleData.NewsTypeRes> newsTypeRes = newsTitleData.getNewsTypeRes();
+                          if(newsTypeRes.size()>0){
+                              //赋值数据
+                              viewPager.setOffscreenPageLimit(3);
+                              for(int i=0;i<newsTypeRes.size();i++){
+                                  tabLayout.addTab(tabLayout.newTab());
+                                  fragments.add(new PageFragment(newsTypeRes));
+                              }
+                              viewPager.setAdapter(new FmPagerAdapter(fragments,getActivity().getSupportFragmentManager()));
+                              tabLayout.setupWithViewPager(viewPager);
+                              tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+
+                              for (int j = 0; j < newsTypeRes.size(); j++) {
+                                  tabLayout.getTabAt(j).setText(newsTypeRes.get(j).getCatValue());
+                              }
+
+                              //tab选择
+                              tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+                                  @Override
+                                  public void onTabSelected(TabLayout.Tab tab) {
+                                      int position =tab.getPosition();
+                                      CurrentNewsTitle = position;
+                                  }
+
+                                  @Override
+                                  public void onTabUnselected(TabLayout.Tab tab) {
+
+                                  }
+
+                                  @Override
+                                  public void onTabReselected(TabLayout.Tab tab) {
+
+                                  }
+                              });
+
+
+
+                          }
+
+                       }
+                   }
+                }
+
+            }
+
+            @Override
+            public void onEror(Call call, int statusCode, Exception e) {
+                Log.i("sss",e.getMessage());
+            }
+        });
 
     }
 

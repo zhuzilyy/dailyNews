@@ -1,6 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'android.keystore'
+            keyPassword '031424'
+            storeFile file('D:/Android/keystore/android.keystore')
+            storePassword '031424'
+        }
+    }
     compileSdkVersion 26
     defaultConfig {
         applicationId "com.qianyi.dailynews"
@@ -16,9 +24,8 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-
     dexOptions {
-       // incremental true
+        // incremental true
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_7
