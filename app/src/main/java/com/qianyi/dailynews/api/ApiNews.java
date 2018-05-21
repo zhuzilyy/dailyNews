@@ -7,25 +7,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
-<<<<<<< HEAD
- * Created by Administrator on 2018/5/15.
-=======
  * Created by Administrator on 2018/5/19.
->>>>>>> origin/master
  */
 
 public class ApiNews {
     /**
-<<<<<<< HEAD
-     * 新闻
-     * @param callback
-     */
-    public static void getNews(String url,String userId,RequestCallBack<String> callback){
-        Map<String,String> params=new HashMap<>();
-        params.put("userId",userId );
-        OkHttpManager.getInstance().postRequest(url,params,callback);
-    }
-=======
      * 获取新闻标题
      * @param callback
      */
@@ -48,5 +34,5 @@ public class ApiNews {
         OkHttpManager.getInstance().postRequest(url,params,callback);
     }
     //=======以下辛振宇=================================================================
->>>>>>> origin/master
+
 }

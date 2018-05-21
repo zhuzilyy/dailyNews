@@ -64,8 +64,7 @@ public class NewsFragment extends BaseFragment implements View.OnClickListener {
 
     @Override
     protected void initData() {
-
-        ApiNews.GetNewsTitles(ApiConstant.NEWS_TITLES, new RequestCallBack<String>() {
+       /* ApiNews.GetNewsTitles(ApiConstant.NEWS_TITLES, new RequestCallBack<String>() {
             @Override
             public void onSuccess(Call call, Response response, String s) {
                 Gson gson = new Gson();
@@ -124,7 +123,7 @@ public class NewsFragment extends BaseFragment implements View.OnClickListener {
             public void onEror(Call call, int statusCode, Exception e) {
                 Log.i("sss",e.getMessage());
             }
-        });
+        });*/
 
     }
 
