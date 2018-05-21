@@ -34,7 +34,7 @@
                         android:layout_centerInParent="true"
                         android:layout_width="86dp"
                         android:layout_height="86dp"
-                        android:src="@color/green"
+                        android:src="@mipmap/smallweixin_icon"
                         />
                 </RelativeLayout>
 
