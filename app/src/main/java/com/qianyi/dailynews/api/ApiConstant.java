@@ -16,4 +16,6 @@ public class ApiConstant {
     public static final String FORGETPWD_CONFIRM_CODE= BASE_URL+"/api/user/sendForgetCode";
     //修改密码
     public static final String UPDATE_PWD= BASE_URL+"/api/user/updatePasswd";
+    //新闻
+    public static final String NEWS= BASE_URL+"/api/news/home";
 }

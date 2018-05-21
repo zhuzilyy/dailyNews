@@ -21,7 +21,6 @@ public class NewsAdapter extends BaseAdapter {
     private Context context;
     private List<testNewsEntity> newsEntities =new ArrayList<>();
     public NewsAdapter(Context context) {
-
         for (int i = 1; i <=60 ; i++) {
             if(i%6==1){
                 testNewsEntity entity = new NewsAdapter.testNewsEntity("news","0");

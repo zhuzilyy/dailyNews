@@ -55,9 +55,9 @@ public class ApiAccount {
      * 修改密码
      * @param callback
      */
-    public static void updatePwd(String url,String phone,String newPasswd,String code,RequestCallBack<String> callback){
+    public static void updatePwd(String url,String userName,String newPasswd,String code,RequestCallBack<String> callback){
         Map<String,String> params=new HashMap<>();
-        params.put("phone",phone);
+        params.put("userName",userName);
         params.put("newPasswd",newPasswd);
         params.put("code",code);
         OkHttpManager.getInstance().postRequest(url,params,callback);

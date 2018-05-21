@@ -13,6 +13,7 @@ import com.qianyi.dailynews.api.ApiAccount;
 import com.qianyi.dailynews.api.ApiConstant;
 import com.qianyi.dailynews.base.BaseActivity;
 import com.qianyi.dailynews.callback.RequestCallBack;
+import com.qianyi.dailynews.dialog.CustomLoadingDialog;
 import com.qianyi.dailynews.utils.ToastUtils;
 import com.qianyi.dailynews.views.ClearEditText;
 import com.qianyi.dailynews.views.MyCountDownTimer;
@@ -43,9 +44,10 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     @BindView(R.id.et_inviteCode)
     ClearEditText et_inviteCode;
     private MyCountDownTimer timer;
+    private CustomLoadingDialog customLoadingDialog;
     @Override
     protected void initViews() {
-
+        customLoadingDialog=new CustomLoadingDialog(this);
     }
 
     @Override
@@ -124,10 +126,12 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     }
     //注册
     private void register(String account,  String pwd, String confrimCode,String inviteCode) {
+        customLoadingDialog.show();
         ApiAccount.register(ApiConstant.REGISTER, account, pwd, confrimCode, inviteCode, new RequestCallBack<String>() {
             @Override
             public void onSuccess(Call call, Response response, final String s) {
-               runOnUiThread(new Runnable() {
+                customLoadingDialog.dismiss();
+                runOnUiThread(new Runnable() {
                    @Override
                    public void run() {
                        try {
@@ -147,6 +151,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             }
             @Override
             public void onEror(Call call, int statusCode, Exception e) {
+                customLoadingDialog.dismiss();
                 ToastUtils.show(RegisterActivity.this,"网络错误");
             }
         });
@@ -154,9 +159,11 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
     //获取验证码
     private void getConfirmCode(String phoneNumber) {
+        customLoadingDialog.show();
         ApiAccount.getConfirmCode(ApiConstant.CONFIRMCODE, phoneNumber, new RequestCallBack<String>() {
             @Override
             public void onSuccess(Call call, final Response response, final String s) {
+                customLoadingDialog.dismiss();
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -172,6 +179,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             }
             @Override
             public void onEror(Call call, int statusCode, Exception e) {
+                customLoadingDialog.dismiss();
                 ToastUtils.show(RegisterActivity.this,"网络错误");
             }
         });

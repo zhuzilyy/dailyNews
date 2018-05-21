@@ -20,6 +20,7 @@ import com.qianyi.dailynews.api.ApiConstant;
 import com.qianyi.dailynews.api.ApiVideo;
 import com.qianyi.dailynews.base.BaseFragment;
 import com.qianyi.dailynews.callback.RequestCallBack;
+import com.qianyi.dailynews.dialog.CustomLoadingDialog;
 import com.qianyi.dailynews.fragment.bean.VideoBean;
 import com.qianyi.dailynews.fragment.bean.VideoInfo;
 import com.qianyi.dailynews.ui.video.VideoPlayingActivity;
@@ -57,6 +58,7 @@ public class VideoFragment extends BaseFragment implements PullToRefreshView.OnH
     private VideoAdapter videoAdapter;
     private List<VideoInfo> infoList;
     private boolean isRefresh;
+    private CustomLoadingDialog customLoadingDialog;
     @Override
     protected View getResLayout(LayoutInflater inflater, ViewGroup container) {
         newsView =  inflater.inflate(R.layout.fragment_video, null);
@@ -67,6 +69,8 @@ public class VideoFragment extends BaseFragment implements PullToRefreshView.OnH
         infoList=new ArrayList<>();
         iv_back.setVisibility(View.GONE);
         tv_title.setText("视频");
+        customLoadingDialog=new CustomLoadingDialog(getActivity());
+        customLoadingDialog.show();
     }
     @Override
     protected void initData() {
@@ -86,6 +90,7 @@ public class VideoFragment extends BaseFragment implements PullToRefreshView.OnH
         ApiVideo.getVideoList(ApiConstant.VIDEO_LIST, page, ApiConstant.PAGE_SIZE, new RequestCallBack<String>() {
             @Override
             public void onSuccess(Call call, Response response, final String s) {
+                customLoadingDialog.dismiss();
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -123,6 +128,7 @@ public class VideoFragment extends BaseFragment implements PullToRefreshView.OnH
             }
             @Override
             public void onEror(Call call, int statusCode, Exception e) {
+                customLoadingDialog.dismiss();
                 mPullToRefreshView.setVisibility(View.GONE);
                 no_data_rl.setVisibility(View.GONE);
                 no_internet_rl.setVisibility(View.VISIBLE);

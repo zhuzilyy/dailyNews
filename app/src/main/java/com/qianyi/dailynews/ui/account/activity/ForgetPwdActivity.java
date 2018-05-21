@@ -12,6 +12,7 @@ import com.qianyi.dailynews.api.ApiAccount;
 import com.qianyi.dailynews.api.ApiConstant;
 import com.qianyi.dailynews.base.BaseActivity;
 import com.qianyi.dailynews.callback.RequestCallBack;
+import com.qianyi.dailynews.dialog.CustomLoadingDialog;
 import com.qianyi.dailynews.utils.ToastUtils;
 import com.qianyi.dailynews.views.ClearEditText;
 import com.qianyi.dailynews.views.MyCountDownTimer;
@@ -38,9 +39,10 @@ public class ForgetPwdActivity extends BaseActivity implements View.OnClickListe
     @BindView(R.id.register_code_cet)
     ClearEditText et_confrimCode;
     private MyCountDownTimer timer;
+    private CustomLoadingDialog customLoadingDialog;
     @Override
     protected void initViews() {
-
+        customLoadingDialog=new CustomLoadingDialog(this);
     }
     @Override
     protected void initData() {
@@ -110,9 +112,11 @@ public class ForgetPwdActivity extends BaseActivity implements View.OnClickListe
         }
     }
     private void findPwd(String account,String pwd,String confirmCode) {
+        customLoadingDialog.show();
         ApiAccount.updatePwd(ApiConstant.UPDATE_PWD, account, pwd, confirmCode, new RequestCallBack<String>() {
             @Override
             public void onSuccess(Call call, Response response, final String s) {
+                customLoadingDialog.dismiss();
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -133,15 +137,18 @@ public class ForgetPwdActivity extends BaseActivity implements View.OnClickListe
             }
             @Override
             public void onEror(Call call, int statusCode, Exception e) {
+                customLoadingDialog.dismiss();
                 ToastUtils.show(ForgetPwdActivity.this,"网络错误");
             }
         });
     }
     //获取验证码
     private void getConfirmCode(String phoneNumber) {
+        customLoadingDialog.show();
         ApiAccount.getForgetPwdConfirmCode(ApiConstant.FORGETPWD_CONFIRM_CODE, phoneNumber, new RequestCallBack<String>() {
             @Override
             public void onSuccess(Call call, final Response response, final String s) {
+                customLoadingDialog.dismiss();
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -157,6 +164,7 @@ public class ForgetPwdActivity extends BaseActivity implements View.OnClickListe
             }
             @Override
             public void onEror(Call call, int statusCode, Exception e) {
+                customLoadingDialog.dismiss();
                 ToastUtils.show(ForgetPwdActivity.this,"网络错误");
             }
         });

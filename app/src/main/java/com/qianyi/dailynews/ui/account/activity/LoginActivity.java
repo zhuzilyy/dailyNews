@@ -17,6 +17,8 @@ import com.qianyi.dailynews.api.ApiAccount;
 import com.qianyi.dailynews.api.ApiConstant;
 import com.qianyi.dailynews.base.BaseActivity;
 import com.qianyi.dailynews.callback.RequestCallBack;
+import com.qianyi.dailynews.dialog.CustomLoadingDialog;
+import com.qianyi.dailynews.utils.SPUtils;
 import com.qianyi.dailynews.views.ClearEditText;
 
 import org.json.JSONException;
@@ -49,6 +51,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
 
     private boolean account_b = false;
     private boolean pwd_b = false;
+    private CustomLoadingDialog customLoadingDialog;
     @Override
     protected void initViews() {
         String account =login_account_cet.getText().toString().trim();
@@ -58,6 +61,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
         }else {
             login_login_btn.setEnabled(false);
         }
+        customLoadingDialog=new CustomLoadingDialog(this);
     }
 
     @Override
@@ -196,21 +200,41 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
     }
     //登录的方法
     private void login(String account, String pwd) {
+        customLoadingDialog.show();
         ApiAccount.login(ApiConstant.LOGIN, account, pwd, new RequestCallBack<String>() {
             @Override
             public void onSuccess(final Call call, Response response, final String s) {
+                Log.i("tag",s);
+                customLoadingDialog.dismiss();
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         try {
-                            JSONObject jsonObject=new JSONObject(s);
-                            String code = jsonObject.getString("code");
-                            String return_msg = jsonObject.getString("return_msg");
-                            Toast.makeText(LoginActivity.this, return_msg, Toast.LENGTH_SHORT).show();
-                            if (code.equals(ApiConstant.SUCCESS_CODE)){
-                               jumpActivity(LoginActivity.this, MainActivity.class);
-                               finish();
-                            }
+                                JSONObject jsonObject=new JSONObject(s);
+                                String code = jsonObject.getString("code");
+                                String return_msg = jsonObject.getString("return_msg");
+                                JSONObject data = jsonObject.getJSONObject("data");
+                                String user_id=data.getString("user_id");
+                                String phone=data.getString("phone");
+                                String head_portrait=data.getString("head_portrait");
+                                String gold=data.getString("gold");
+                                String my_invite_code=data.getString("my_invite_code");
+                                String balance=data.getString("balance");
+                                String earnings=data.getString("earnings");
+                                SPUtils.put(LoginActivity.this,"user_id",user_id);
+                                SPUtils.put(LoginActivity.this,"phone",phone);
+                                SPUtils.put(LoginActivity.this,"head_portrait",head_portrait);
+                                SPUtils.put(LoginActivity.this,"gold",gold);
+                                SPUtils.put(LoginActivity.this,"my_invite_code",my_invite_code);
+                                SPUtils.put(LoginActivity.this,"balance",balance);
+                                SPUtils.put(LoginActivity.this,"earnings",earnings);
+                                Toast.makeText(LoginActivity.this, return_msg, Toast.LENGTH_SHORT).show();
+                                if (code.equals(ApiConstant.SUCCESS_CODE)){
+                                    Intent intent=new Intent(LoginActivity.this, MainActivity.class);
+                                    intent.putExtra("user_id",user_id);
+                                    startActivity(intent);
+                                    finish();
+                                }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -219,7 +243,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
             }
             @Override
             public void onEror(Call call, int statusCode, Exception e) {
-
+                customLoadingDialog.dismiss();
             }
         });
     }
