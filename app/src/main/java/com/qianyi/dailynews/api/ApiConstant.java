@@ -19,5 +19,6 @@ public class ApiConstant {
     //获取新闻title
     public static final String NEWS_TITLES = BASE_URL+"/api/news/types";
     //获取新闻条目
-    public static final String NEWS_CONTENTS = BASE_URL+"";
+    public static final String NEWS_CONTENTS = BASE_URL+"/api/news/home";
+    //==========辛振宇==========================================
 }
