@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -64,12 +65,13 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
     @BindView(R.id.tv_myCode)
     public TextView tv_myCode;
     private PopupWindow pw_share;
-    private View view_share;
+    private PopupWindow pw_onekeyshoutu;
+    private View view_share,view_onekeyshoutu;
     @BindView(R.id.ll_invitation)
     public LinearLayout ll_invitation;
     //上下滚动
     @BindView(R.id.autotext) public VerticalTextview autotext;
-
+    @BindView(R.id.btn_onekey_shoutu) public Button btn_onekey_shoutu;
 
 
     @Override
@@ -81,6 +83,7 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
     @Override
     protected void initViews() {
         view_share=LayoutInflater.from(getActivity()).inflate(R.layout.pw_share,null);
+        view_onekeyshoutu = LayoutInflater.from(getActivity()).inflate(R.layout.pw_onekeyshoutu,null);
 
         images= new ArrayList<>();
         images.add("http://pic3.zhimg.com/f665508fc07c122a7d79670600ca6c9e.jpg");
@@ -151,10 +154,14 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
 
     }
     @OnClick({R.id.tv_right,R.id.ll_FriendIncome,R.id.ll_FriendNum,R.id.ll_MyInvitationCode,
-            R.id.ll_DailySharing,R.id.ll_ShowIncome,R.id.ll_WakeUpFriends,})
+            R.id.ll_DailySharing,R.id.ll_ShowIncome,R.id.ll_WakeUpFriends,R.id.btn_onekey_shoutu})
     @Override
     public void onClick(View v) {
         switch(v.getId()){
+            case R.id.btn_onekey_shoutu:
+                //一键收徒
+                showOneKeyShouTu();
+                break;
             case R.id.tv_right:
                 Intent intent = new Intent(getActivity(), WebviewActivity.class);
                 intent.putExtra("title","邀请规则");
@@ -200,6 +207,30 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
         }
 
 
+    }
+
+    /***
+     * 弹出一键收徒的弹窗
+     */
+    private void showOneKeyShouTu() {
+
+        pw_onekeyshoutu = new PopupWindow(getActivity());
+        pw_onekeyshoutu.setContentView(view_onekeyshoutu);
+        pw_onekeyshoutu.setWidth(LinearLayout.LayoutParams.MATCH_PARENT);
+        pw_onekeyshoutu.setHeight(LinearLayout.LayoutParams.WRAP_CONTENT);
+        pw_onekeyshoutu.setTouchable(true);
+        pw_onekeyshoutu.setFocusable(true);
+        pw_onekeyshoutu.setBackgroundDrawable(new BitmapDrawable());
+        pw_onekeyshoutu.setAnimationStyle(R.style.AnimBottom);
+        pw_onekeyshoutu.showAtLocation(ll_invitation, Gravity.BOTTOM, 0, 0);
+        // 设置pw弹出时候的背景颜色的变化
+        backgroundAlpha(0.5f);
+        pw_onekeyshoutu.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                backgroundAlpha(1f);
+            }
+        });
     }
 
     private void shwoSharePw() {

@@ -1,6 +1,7 @@
 package com.qianyi.dailynews.ui.news.activity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -10,6 +11,11 @@ import com.qianyi.dailynews.R;
 import com.qianyi.dailynews.base.BaseActivity;
 import com.qianyi.dailynews.ui.WebviewActivity;
 import com.qianyi.dailynews.views.ClearEditText;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.BindView;
 
@@ -46,10 +52,27 @@ public class SearchActivity extends BaseActivity {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if(EditorInfo.IME_ACTION_SEARCH == actionId){
-                    Intent intent = new Intent(SearchActivity.this, WebviewActivity.class);
-                    intent.putExtra("title","搜索");
-                    intent.putExtra("url","http://www.baidu.com");
-                    startActivity(intent);
+//                    Intent intent = new Intent(SearchActivity.this, WebviewActivity.class);
+//                    intent.putExtra("title","搜索");
+//                    intent.putExtra("url","http://www.baidu.com");
+//                    startActivity(intent);
+
+                    String st = newsSearch_etc.getText().toString();
+                    Uri uri = null;
+                    try {
+                        uri = Uri.parse("http://www.baidu.com/s?&ie=utf-8&oe=UTF-8&wd=" + URLEncoder.encode(st,"UTF-8"));
+                    } catch (UnsupportedEncodingException e1) {
+                        e1.printStackTrace();
+                    }
+                    final Intent it = new Intent(Intent.ACTION_VIEW, uri);
+                    Timer timer = new Timer();
+                    TimerTask task = new TimerTask() {
+                        @Override
+                        public void run() {
+                            startActivity(it);
+                        }
+                    };
+                    timer.schedule(task, 0);
                 }
                 return false;
             }

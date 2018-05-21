@@ -81,7 +81,7 @@
             android:textColor="@color/black"
             android:textStyle="bold"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="0.6"
             android:text="头像"
 
             />
@@ -92,7 +92,7 @@
             android:textStyle="bold"
             android:textColor="@color/black"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="1.2"
             android:text="账号"
             />
         <TextView
@@ -101,7 +101,7 @@
             android:textSize="16sp"
             android:textColor="@color/black"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="1.2"
             android:text="昵称"
             android:textStyle="bold"
             />
