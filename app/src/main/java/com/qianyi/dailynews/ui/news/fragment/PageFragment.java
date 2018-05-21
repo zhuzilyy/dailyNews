@@ -1,5 +1,6 @@
 package com.qianyi.dailynews.ui.news.fragment;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -8,8 +9,10 @@ import android.widget.Toast;
 import com.qianyi.dailynews.R;
 import com.qianyi.dailynews.adapter.NewsAdapter;
 import com.qianyi.dailynews.adapter.NewsAdapter;
+import com.qianyi.dailynews.ui.news.bean.NewsTitleBean;
 import com.qianyi.dailynews.views.PullToRefreshView;
 
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -20,6 +23,13 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
     public PullToRefreshView mPullToRefreshView;
     public ListView listview;
     private NewsAdapter newsAdapter;
+    public PageFragment() {
+        super();
+    }
+    @SuppressLint("ValidFragment")
+    public PageFragment(List<NewsTitleBean.NewsTitleData.NewsTypeRes> newsTypeRes) {
+        super();
+    }
 
     @Override
     public int setContentView() {
