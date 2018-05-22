@@ -53,8 +53,16 @@ public class NewsContentBean {
         public void setNewsByType(List<NewsByType> newsByType) {
             this.newsByType = newsByType;
         }
+        public List<AdavertContent> getAdvertArray() {
+            return advertArray;
+        }
+
+        public void setAdvertArray(List<AdavertContent> advertArray) {
+            this.advertArray = advertArray;
+        }
 
         private List<NewsByType> newsByType;
+        private List<AdavertContent> advertArray;
 
         public class NewsByType{
             public List<NewsContentInfo> getNewsInfoArray() {
@@ -65,16 +73,10 @@ public class NewsContentBean {
                 this.newsInfoArray = newsInfoArray;
             }
 
-            public List<AdavertContent> getAdvertArray() {
-                return advertArray;
-            }
 
-            public void setAdvertArray(List<AdavertContent> advertArray) {
-                this.advertArray = advertArray;
-            }
 
             private List<NewsContentInfo> newsInfoArray;
-            private List<AdavertContent> advertArray;
+
 
             public class NewsContentInfo{
                 public String getId() {
@@ -166,79 +168,80 @@ public class NewsContentBean {
                 private String viewCount;
                 private String content;
                 private String ifRead;
-                private String newsTyps;
+                private String newsType;
 
                 public String getNewsTyps() {
-                    return newsTyps;
+                    return newsType;
                 }
 
-                public void setNewsTyps(String newsTyps) {
-                    this.newsTyps = newsTyps;
+                public void setNewsTyps(String newsType) {
+                    this.newsType = newsType;
                 }
 
                 private List<String> imgsUrl;
 
             }
 
-            public class AdavertContent{
-                private String id;
-                private String title;
-                private String url;
-                private String readNum;
-                private List<String> imgs;
 
-                public String getAdType() {
-                    return adType;
-                }
 
-                public void setAdType(String adType) {
-                    this.adType = adType;
-                }
 
-                private String adType;
+        }
+        public class AdavertContent{
+            private String id;
+            private String title;
+            private String url;
+            private String readNum;
+            private List<String> imgs;
 
-                public String getId() {
-                    return id;
-                }
-
-                public void setId(String id) {
-                    this.id = id;
-                }
-
-                public String getTitle() {
-                    return title;
-                }
-
-                public void setTitle(String title) {
-                    this.title = title;
-                }
-
-                public String getUrl() {
-                    return url;
-                }
-
-                public void setUrl(String url) {
-                    this.url = url;
-                }
-
-                public String getReadNum() {
-                    return readNum;
-                }
-
-                public void setReadNum(String readNum) {
-                    this.readNum = readNum;
-                }
-
-                public List<String> getImgs() {
-                    return imgs;
-                }
-
-                public void setImgs(List<String> imgs) {
-                    this.imgs = imgs;
-                }
+            public String getAdType() {
+                return adType;
             }
 
+            public void setAdType(String adType) {
+                this.adType = adType;
+            }
 
+            private String adType;
+
+            public String getId() {
+                return id;
+            }
+
+            public void setId(String id) {
+                this.id = id;
+            }
+
+            public String getTitle() {
+                return title;
+            }
+
+            public void setTitle(String title) {
+                this.title = title;
+            }
+
+            public String getUrl() {
+                return url;
+            }
+
+            public void setUrl(String url) {
+                this.url = url;
+            }
+
+            public String getReadNum() {
+                return readNum;
+            }
+
+            public void setReadNum(String readNum) {
+                this.readNum = readNum;
+            }
+
+            public List<String> getImgs() {
+                return imgs;
+            }
+
+            public void setImgs(List<String> imgs) {
+                this.imgs = imgs;
+            }
         }
 
 

@@ -10,6 +10,7 @@
         android:orientation="vertical"
         >
         <TextView
+            android:id="@+id/ad_001_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="@dimen/dp_10"
@@ -20,8 +21,10 @@
             android:textColor="@color/black"
             />
         <ImageView
+            android:id="@+id/ad_001_bigpic"
             android:layout_width="match_parent"
             android:layout_height="140dp"
+            android:scaleType="centerCrop"
             android:src="@color/main_red"/>
         <LinearLayout
             android:layout_width="match_parent"

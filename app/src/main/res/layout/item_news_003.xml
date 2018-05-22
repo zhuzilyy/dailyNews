@@ -8,6 +8,7 @@
     android:layout_height="wrap_content">
     <!--标题-->
     <TextView
+        android:id="@+id/news001_content"
         android:layout_marginTop="@dimen/dp_10"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -26,6 +27,7 @@
         android:paddingLeft="@dimen/dp_5"
         >
         <TextView
+            android:id="@+id/news001_award"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="阅读奖励"
@@ -33,6 +35,7 @@
             android:textColor="@color/red"
             />
         <TextView
+            android:id="@+id/news001_publishman"
             android:layout_marginLeft="@dimen/dp_10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -42,6 +45,7 @@
             android:textColor="@color/black"
             />
         <TextView
+            android:id="@+id/news001_posttime"
             android:layout_marginLeft="@dimen/dp_10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -50,6 +54,7 @@
             android:textColor="@color/black"
             />
         <TextView
+            android:id="@+id/news001_read"
             android:layout_marginLeft="@dimen/dp_10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
