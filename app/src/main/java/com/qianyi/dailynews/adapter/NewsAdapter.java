@@ -197,6 +197,7 @@ public class NewsAdapter extends BaseAdapter {
             AdCell002Holder  cell002Holder = (AdCell002Holder) view.getTag();
             cell002Holder.ad002_content.setText(item.getTitle());
             Glide.with(context).load(item.getImgs().get(0)).into(cell002Holder.ad002_bigpic);
+
         }
         if(AD_THREE_PIC == itemType){
             AdCell003Holder  cell003Holder = (AdCell003Holder) view.getTag();
