@@ -26,6 +26,7 @@
             android:layout_height="wrap_content" />
     </RelativeLayout>
         <TextView
+            android:id="@+id/tv_desc"
             android:layout_marginTop="10dp"
             android:maxLines="2"
             android:textStyle="bold"
@@ -45,10 +46,11 @@
             <TextView
                 android:textSize="14sp"
                 android:textColor="@color/dark_gray"
-                android:text="重庆新闻"
+                android:text="速报新闻"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView
+                android:id="@+id/tv_viewCount"
                 android:layout_alignParentRight="true"
                 android:textSize="14sp"
                 android:textColor="@color/dark_gray"
