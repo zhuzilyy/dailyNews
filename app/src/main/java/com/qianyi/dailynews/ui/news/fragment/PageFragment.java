@@ -100,23 +100,24 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
                         if(TextUtils.isEmpty(userid)){
                                 return;
                         }
-
+                        Log.i("tag","url"+ApiConstant.NEWS_CONTENTS);
+                        Log.i("tag",userid+"==userid==");
+                        Log.i("tag",newsTypeRes.get(position).getCatId()+"==getCatId==");
+                        Log.i("tag",page+"==page==");
+                        Log.i("tag",userid+"==userid==");
                         ApiNews.GetNewsContent(ApiConstant.NEWS_CONTENTS, userid, newsTypeRes.get(position).getCatId(), page, 10, 1, 10, new RequestCallBack<String>() {
                             @Override
                             public void onSuccess(Call call, Response response, String s) {
                                 Log.i("ttt","s"+s);
                             }
-
                             @Override
                             public void onEror(Call call, int statusCode, Exception e) {
                                 Log.i("ttt","e"+e.getMessage());
                             }
                         });
-
                         mPullToRefreshView.onHeaderRefreshComplete();
                     }
                 });
-
             }
         }, 2000);
         //请求成功

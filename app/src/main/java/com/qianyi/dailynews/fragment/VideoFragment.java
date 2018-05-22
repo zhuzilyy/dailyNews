@@ -143,6 +143,10 @@ public class VideoFragment extends BaseFragment implements PullToRefreshView.OnH
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent=new Intent(getActivity(),VideoPlayingActivity.class);
+                VideoInfo videoInfo = infoList.get(i);
+                intent.putExtra("videoUrl",videoInfo.getVideoUrls().get(0));
+                intent.putExtra("viewCount",videoInfo.getViewCount());
+                intent.putExtra("title",videoInfo.getTitle());
                 startActivity(intent);
             }
         });
@@ -160,42 +164,4 @@ public class VideoFragment extends BaseFragment implements PullToRefreshView.OnH
         page++;
         getData(page);
     }
-    /*private void firstData() {
-        mPullToRefreshView.setEnablePullTorefresh(true);
-        Timer timer=new Timer();
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        mPullToRefreshView.onHeaderRefreshComplete();
-                    }
-                });
-
-            }
-        }, 2000);
-        //请求成功
-       *//* if (list.size() < Integer.parseInt(Constants.PAGE_SIZE_STR)) {
-            mPullToRefreshView.onFooterRefreshComplete(true);
-        }else{
-            mPullToRefreshView.onFooterRefreshComplete(false);
-        }*//*
-    }
-    private void moreData() {
-        mPullToRefreshView.setEnablePullTorefresh(true);
-        Timer timer=new Timer();
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        mPullToRefreshView.onHeaderRefreshComplete();
-                        mPullToRefreshView.onFooterRefreshComplete(false);
-                    }
-                });
-            }
-        }, 2000);
-    }*/
 }

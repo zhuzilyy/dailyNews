@@ -1,10 +1,12 @@
 package com.qianyi.dailynews.ui.video;
 
+import android.content.Intent;
 import android.os.Build;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.qianyi.dailynews.R;
@@ -27,11 +29,23 @@ public class VideoPlayingActivity extends BaseActivity {
     MyJCVideoPlayerStandard videoPlayerStandard;
     @BindView(R.id.lv_recommend)
     ListView lv_recommend;
+    @BindView(R.id.tv_desc)
+    TextView tv_desc;
+    @BindView(R.id.tv_viewCount)
+    TextView tv_viewCount;
     private RecommendAdapter recommendAdapter;
+    private Intent intent;
+    private String videoUrl,viewCount,title;
     @Override
     protected void initViews() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             setTranslucentStatus();
+        }
+        intent=getIntent();
+        if (intent!=null){
+            videoUrl=intent.getStringExtra("videoUrl");
+            viewCount=intent.getStringExtra("viewCount");
+            title=intent.getStringExtra("title");
         }
     }
     //沉浸式管理
@@ -44,12 +58,13 @@ public class VideoPlayingActivity extends BaseActivity {
     }
     @Override
     protected void initData() {
+        tv_desc.setText(title);
+        tv_viewCount.setText(viewCount+"次播放");
         Glide.with(this).load(R.mipmap.video_test).into(videoPlayerStandard.thumbImageView);
         JCVideoPlayer.setJcUserAction(new MyUserActionStandard());
-        videoPlayerStandard.setUp("http://video.jiecao.fm/8/16/%E4%BF%AF%E5%8D%A7%E6%92%91.mp4"
+        videoPlayerStandard.setUp(videoUrl
                 , JCVideoPlayerStandard.SCREEN_LAYOUT_NORMAL,"");
         videoPlayerStandard.startVideo();
-
         recommendAdapter=new RecommendAdapter(VideoPlayingActivity.this);
         lv_recommend.setAdapter(recommendAdapter);
     }
