@@ -25,12 +25,12 @@ public class ApiNews {
      */
     public static void GetNewsContent(String url,String userId,String catId,int page,int pageSize,int adPage,int adPageSize , RequestCallBack<String> callback){
         Map<String,String> params=new HashMap<>();
-        params.put("userId ",userId );
-        params.put("catId ",catId );
-        params.put("page ",page +"");
-        params.put("pageSize ",pageSize+"" );
-        params.put("adPage ",adPage+"" );
-        params.put("adPageSize ",adPageSize+"" );
+        params.put("userId",userId );
+        params.put("catId",catId );
+        params.put("page",page +"");
+        params.put("pageSize",pageSize+"" );
+        params.put("adPage",adPage+"" );
+        params.put("adPageSize",adPageSize+"" );
         OkHttpManager.getInstance().postRequest(url,params,callback);
     }
     //=======以下辛振宇=================================================================
