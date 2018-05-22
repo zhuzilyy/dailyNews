@@ -68,6 +68,7 @@
                 </RelativeLayout>
                 <!--签到按钮-->
                 <Button
+                    android:id="@+id/btn_sign"
                     android:layout_marginTop="30dp"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"

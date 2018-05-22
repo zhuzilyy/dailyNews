@@ -8,15 +8,24 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.qianyi.dailynews.R;
+import com.qianyi.dailynews.api.ApiConstant;
+import com.qianyi.dailynews.api.ApiMine;
 import com.qianyi.dailynews.base.BaseActivity;
+import com.qianyi.dailynews.callback.RequestCallBack;
+import com.qianyi.dailynews.dialog.CustomLoadingDialog;
+import com.qianyi.dailynews.ui.Mine.bean.SignBean;
 import com.qianyi.dailynews.ui.WebviewActivity;
+import com.qianyi.dailynews.utils.SPUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import okhttp3.Call;
+import okhttp3.Response;
 
 /**
  * Created by Administrator on 2018/5/3.
@@ -65,10 +74,9 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
     @BindView(R.id.tv_SignInRules) public TextView tv_SignInRules;
 
     @BindView(R.id.back) public ImageView back;
-
-
-
     private List<LinearLayout> OtherLineralayout=new ArrayList<>();
+    private String userId;
+    private CustomLoadingDialog customLoadingDialog;
     @Override
     protected void initViews() {
         back.setOnClickListener(new View.OnClickListener() {
@@ -77,8 +85,9 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
                 finish();
             }
         });
+        userId= (String) SPUtils.get(TaskCenterActivity.this,"user_id","");
+        customLoadingDialog=new CustomLoadingDialog(this);
     }
-
     @Override
     protected void initData() {
         //将点击显示的条目添加进集合
@@ -112,7 +121,7 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
             R.id.ll_inviteFriends001,R.id.ll_readingAward001,R.id.ll_shareRewards001,R.id.ll_sunIncome001,R.id.ll_commentAward001,
     R.id.btn_bandwx,R.id.btn_oneyuan,R.id.btn_Questionnaire,R.id.btn_answerAward,R.id.btn_inviteFriends,
             R.id.btn_readingAward,R.id.btn_share,R.id.btn_sunincome,R.id.btn_commentAward,
-    R.id.tv_ProfitMakingStrategy,R.id.tv_SignInRules})
+    R.id.tv_ProfitMakingStrategy,R.id.tv_SignInRules,R.id.btn_sign})
     @Override
     public void onClick(View view) {
         switch(view.getId()){
@@ -250,14 +259,36 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
                 //去评论
                 Toast.makeText(this, "去评论", Toast.LENGTH_SHORT).show();
                 break;
-
-            default:
-            break;
-
-
+            case R.id.btn_sign:
+                sign();
+                break;
 
         }
 
+    }
+    //签到
+    private void sign() {
+        customLoadingDialog.show();
+        ApiMine.sign(ApiConstant.SIGN, userId, new RequestCallBack<String>() {
+            @Override
+            public void onSuccess(Call call, Response response, final String s) {
+                customLoadingDialog.dismiss();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Gson gson=new Gson();
+                        SignBean signBean = gson.fromJson(s, SignBean.class);
+                        String message = signBean.getData().getMessage();
+                        Toast.makeText(TaskCenterActivity.this, message, Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+            @Override
+            public void onEror(Call call, int statusCode, Exception e) {
+                customLoadingDialog.dismiss();
+                Toast.makeText(TaskCenterActivity.this, "网络错误签到失败", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void closeOtherAll(LinearLayout ll){

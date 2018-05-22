@@ -81,7 +81,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             case R.id.btn_getCode:
                 String phoneNumber = et_account.getText().toString().trim();
                 if (!TextUtils.isEmpty(phoneNumber)) {
-                    if (phoneNumber.matches("^[1][34758][0-9]{9}$")) {
+                    if (phoneNumber.matches("^[1][3467589][0-9]{9}$")) {
                         timer = new MyCountDownTimer(60000, 1000, (Button) view);
                         timer.start();
                         // 向服务器请求验证码
