@@ -8,6 +8,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 
+import com.google.gson.Gson;
 import com.qianyi.dailynews.R;
 import com.qianyi.dailynews.adapter.NewsAdapter;
 import com.qianyi.dailynews.api.ApiAccount;
@@ -15,6 +16,7 @@ import com.qianyi.dailynews.api.ApiConstant;
 import com.qianyi.dailynews.api.ApiNews;
 import com.qianyi.dailynews.callback.RequestCallBack;
 import com.qianyi.dailynews.fragment.NewsFragment;
+import com.qianyi.dailynews.ui.news.bean.NewsContentBean;
 import com.qianyi.dailynews.ui.news.bean.NewsTitleBean;
 import com.qianyi.dailynews.utils.SPUtils;
 import com.qianyi.dailynews.views.PullToRefreshView;
@@ -29,22 +31,23 @@ import java.util.TimerTask;
 import okhttp3.Call;
 import okhttp3.Response;
 
-public class PageFragment extends LazyloadFragment implements PullToRefreshView.OnHeaderRefreshListener, PullToRefreshView.OnFooterRefreshListener{
+public class PageFragment extends LazyloadFragment implements PullToRefreshView.OnHeaderRefreshListener, PullToRefreshView.OnFooterRefreshListener {
 
     public PullToRefreshView mPullToRefreshView;
     public ListView listview;
     private NewsAdapter newsAdapter;
     private List<NewsTitleBean.NewsTitleData.NewsTypeRes> newsTypeRes;
 
-    private int page=1;
+    private int page = 1;
 
 
     public PageFragment() {
         super();
     }
+
     @SuppressLint("ValidFragment")
     public PageFragment(List<NewsTitleBean.NewsTitleData.NewsTypeRes> newsTypeRes) {
-       this.newsTypeRes = newsTypeRes;
+        this.newsTypeRes = newsTypeRes;
 
     }
 
@@ -62,7 +65,7 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
     public void init() {
         listview = rootView.findViewById(R.id.listview);
         mPullToRefreshView = rootView.findViewById(R.id.pulltorefreshView);
-        newsAdapter=new NewsAdapter(getActivity());
+        newsAdapter = new NewsAdapter(getActivity());
         listview.setAdapter(newsAdapter);
 
         mPullToRefreshView.setmOnHeaderRefreshListener(this);
@@ -73,7 +76,7 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
     @Override
     public void lazyLoad() {
         firstData(NewsFragment.CurrentNewsTitle);
-        Toast.makeText(mActivity, ""+NewsFragment.CurrentNewsTitle, Toast.LENGTH_SHORT).show();
+        Toast.makeText(mActivity, "" + NewsFragment.CurrentNewsTitle, Toast.LENGTH_SHORT).show();
 
     }
 
@@ -87,18 +90,19 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
     public void onHeaderRefresh(PullToRefreshView view) {
         firstData(NewsFragment.CurrentNewsTitle);
     }
+
     private void firstData(final int position) {
         mPullToRefreshView.setEnablePullTorefresh(true);
-        Timer timer=new Timer();
+        Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
                 mActivity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                       String userid = (String) SPUtils.get(getActivity(),"user_id","");
-                        if(TextUtils.isEmpty(userid)){
-                                return;
+                        String userid = (String) SPUtils.get(getActivity(), "user_id", "");
+                        if (TextUtils.isEmpty(userid)) {
+                            return;
                         }
                         Log.i("tag","url"+ApiConstant.NEWS_CONTENTS);
                         Log.i("tag",userid+"==userid==");
@@ -108,11 +112,35 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
                         ApiNews.GetNewsContent(ApiConstant.NEWS_CONTENTS, userid, newsTypeRes.get(position).getCatId(), page, 10, 1, 10, new RequestCallBack<String>() {
                             @Override
                             public void onSuccess(Call call, Response response, String s) {
-                                Log.i("ttt","s"+s);
+                                Log.i("ttt", "s" + s);
+                                Gson gson = new Gson();
+                                NewsContentBean contentBean = gson.fromJson(s, NewsContentBean.class);
+                                if (contentBean != null) {
+                                    String code = contentBean.getCode();
+                                    if ("0000".equals(code)) {
+                                        NewsContentBean.NewsContentData contentData = contentBean.getData();
+                                        if (contentData != null) {
+                                            List<NewsContentBean.NewsContentData.NewsByType> newsByTypes = contentData.getNewsByType();
+                                            if (newsByTypes.size() > 0) {
+                                                List<NewsContentBean.NewsContentData.NewsByType.AdavertContent> adavertContents = newsByTypes.get(0).getAdvertArray();
+                                                List<NewsContentBean.NewsContentData.NewsByType.NewsContentInfo> newsContentInfos = newsByTypes.get(0).getNewsInfoArray();
+
+                                                if(adavertContents.size()>0||newsContentInfos.size()>0){
+
+                                                }
+
+                                            }
+
+
+                                        }
+                                    }
+                                }
+
+
                             }
                             @Override
                             public void onEror(Call call, int statusCode, Exception e) {
-                                Log.i("ttt","e"+e.getMessage());
+                                Log.i("ttt", "e" + e.getMessage());
                             }
                         });
                         mPullToRefreshView.onHeaderRefreshComplete();
@@ -128,9 +156,10 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
         }*/
 
     }
+
     private void moreData() {
         mPullToRefreshView.setEnablePullTorefresh(true);
-        Timer timer=new Timer();
+        Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
