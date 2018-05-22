@@ -133,6 +133,7 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
                                                     Log.i("sss",newsBeans.size()+"");
                                                 }
 
+
                                             }
 
 
