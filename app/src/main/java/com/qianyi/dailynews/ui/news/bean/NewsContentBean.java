@@ -166,6 +166,16 @@ public class NewsContentBean {
                 private String viewCount;
                 private String content;
                 private String ifRead;
+                private String newsTyps;
+
+                public String getNewsTyps() {
+                    return newsTyps;
+                }
+
+                public void setNewsTyps(String newsTyps) {
+                    this.newsTyps = newsTyps;
+                }
+
                 private List<String> imgsUrl;
 
             }
@@ -176,6 +186,16 @@ public class NewsContentBean {
                 private String url;
                 private String readNum;
                 private List<String> imgs;
+
+                public String getAdType() {
+                    return adType;
+                }
+
+                public void setAdType(String adType) {
+                    this.adType = adType;
+                }
+
+                private String adType;
 
                 public String getId() {
                     return id;

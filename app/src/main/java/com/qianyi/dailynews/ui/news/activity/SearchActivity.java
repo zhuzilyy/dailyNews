@@ -52,11 +52,6 @@ public class SearchActivity extends BaseActivity {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if(EditorInfo.IME_ACTION_SEARCH == actionId){
-//                    Intent intent = new Intent(SearchActivity.this, WebviewActivity.class);
-//                    intent.putExtra("title","搜索");
-//                    intent.putExtra("url","http://www.baidu.com");
-//                    startActivity(intent);
-
                     String st = newsSearch_etc.getText().toString();
                     Uri uri = null;
                     try {

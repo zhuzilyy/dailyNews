@@ -12,6 +12,7 @@ import android.util.Log;
 
 import com.orhanobut.logger.Logger;
 import com.qianyi.dailynews.application.MyApplication;
+import com.qianyi.dailynews.ui.account.entity.LoginBean;
 
 import org.apache.commons.codec.binary.Base64;
 
@@ -180,7 +181,7 @@ public class Utils {
      * @param user
      * @param context
      */
-  /*  public static void saveUser(LoginBean.LoginData.LoginInfo user, Context context) {
+    public static void saveUser(LoginBean.LoginData user, Context context) {
         SharedPreferences preferences = context.getSharedPreferences("User",MODE_PRIVATE);
 
         // 创建字节输出流
@@ -206,15 +207,15 @@ public class Utils {
             Log.i("xxx","user存储失败"+e);
         }
 
-    }*/
+    }
 
     /****
      * 从share中读取User
      * @return
      */
 
-  /*  public static LoginBean.LoginData.LoginInfo readUser(Context context) {
-        LoginBean.LoginData.LoginInfo user = null;
+    public static LoginBean.LoginData readUser(Context context) {
+        LoginBean.LoginData user = null;
         Log.i("xxx","context@=="+context);
         SharedPreferences preferences =context.getSharedPreferences("User",MODE_PRIVATE);
 
@@ -231,7 +232,7 @@ public class Utils {
             ObjectInputStream bis = new ObjectInputStream(bais);
             try {
                 //读取对象
-                user = (LoginBean.LoginData.LoginInfo) bis.readObject();
+                user = (LoginBean.LoginData) bis.readObject();
             } catch (ClassNotFoundException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -245,7 +246,7 @@ public class Utils {
             Log.i("xxx","有读取势必=="+e);
         }
         return user;
-    }*/
+    }
     /****
      * 清空sharedPreference中保存的用户信息
      * @param context
