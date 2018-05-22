@@ -60,7 +60,7 @@
                     android:background="@null"
                     android:hint="请输入手机号"
                     android:paddingLeft="@dimen/dp_10"
-                    android:text="15524108390"
+                    android:text="15702475380"
                     android:textColor="@color/black"
                     android:textColorHint="@color/gray"
                     android:textSize="16sp"
@@ -94,13 +94,11 @@
                     android:background="@null"
                     android:hint="请输入密码"
                     android:paddingLeft="@dimen/dp_10"
-                    android:text="111111"
+                    android:text="031424"
                     android:textColor="@color/black"
                     android:textColorHint="@color/gray"
                     android:textSize="16sp"
-
                     />
-
             </LinearLayout>
             <!--忘记密码，注册-->
             <RelativeLayout
@@ -109,7 +107,6 @@
                 android:layout_marginLeft="38dp"
                 android:layout_marginRight="38dp"
                 android:layout_marginTop="18dp">
-
                 <TextView
                     android:id="@+id/login_forgetpwd_tv"
                     android:layout_width="wrap_content"
@@ -117,7 +114,6 @@
                     android:text="忘记密码？"
                     android:textColor="@color/gray"
                     android:textSize="14sp" />
-
                 <TextView
                     android:id="@+id/login_register_tv"
                     android:layout_width="wrap_content"

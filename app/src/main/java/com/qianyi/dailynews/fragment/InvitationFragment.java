@@ -3,6 +3,7 @@ package com.qianyi.dailynews.fragment;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,14 +16,23 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.gson.Gson;
 import com.orhanobut.logger.Logger;
 import com.paradoxie.autoscrolltextview.VerticalTextview;
 import com.qianyi.dailynews.R;
+import com.qianyi.dailynews.api.ApiConstant;
+import com.qianyi.dailynews.api.ApiInvite;
 import com.qianyi.dailynews.base.BaseFragment;
+import com.qianyi.dailynews.callback.RequestCallBack;
+import com.qianyi.dailynews.dialog.CustomLoadingDialog;
+import com.qianyi.dailynews.fragment.bean.BannerImgInfo;
+import com.qianyi.dailynews.fragment.bean.InviteBean;
 import com.qianyi.dailynews.ui.WebviewActivity;
 import com.qianyi.dailynews.ui.invitation.activity.ApprenticeActivity;
 import com.qianyi.dailynews.ui.invitation.activity.DailySharingAcitity;
 import com.qianyi.dailynews.ui.invitation.activity.WakeFriendsActivity;
+import com.qianyi.dailynews.utils.ToastUtils;
 import com.qianyi.dailynews.utils.Utils;
 import com.qianyi.dailynews.utils.loader.GlideImageLoader;
 import com.youth.banner.Banner;
@@ -33,6 +43,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import okhttp3.Call;
+import okhttp3.Response;
 
 /**
  * Created by Administrator on 2018/4/30.
@@ -70,10 +82,11 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
     @BindView(R.id.ll_invitation)
     public LinearLayout ll_invitation;
     //上下滚动
-    @BindView(R.id.autotext) public VerticalTextview autotext;
-    @BindView(R.id.btn_onekey_shoutu) public Button btn_onekey_shoutu;
-
-
+    @BindView(R.id.autotext)
+    public VerticalTextview autotext;
+    @BindView(R.id.btn_onekey_shoutu)
+    public Button btn_onekey_shoutu;
+    private CustomLoadingDialog customLoadingDialog;
     @Override
     protected View getResLayout(LayoutInflater inflater, ViewGroup container) {
         newsView =  inflater.inflate(R.layout.fragment_invitation, null);
@@ -84,19 +97,62 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
     protected void initViews() {
         view_share=LayoutInflater.from(getActivity()).inflate(R.layout.pw_share,null);
         view_onekeyshoutu = LayoutInflater.from(getActivity()).inflate(R.layout.pw_onekeyshoutu,null);
-
-        images= new ArrayList<>();
-        images.add("http://pic3.zhimg.com/f665508fc07c122a7d79670600ca6c9e.jpg");
-        images.add("http://pic3.zhimg.com//144edd4fa57e8b0b9c70bfea5c6b5dee.jpg");
-        images.add("http://pic4.zhimg.com/ea2e46e40b74da68960775b1cbcfd3bb.jpg");
-        images.add("http://pic1.zhimg.com/9213def521eb908e37c15016c9d0ed24.jpg");
-        images.add("http://pic3.zhimg.com/32e1aaa65945ec773d3ffdf614c0b07e.jpg");
-
-
         title.setText("邀请");
         back.setVisibility(View.GONE);
         rightTv.setText("邀请规则");
         rightTv.setVisibility(View.VISIBLE);
+
+        customLoadingDialog=new CustomLoadingDialog(getActivity());
+
+    }
+    //开始滚动
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+    //停止滚动
+    @Override
+    public void onPause() {
+        super.onPause();
+        autotext.stopAutoScroll();
+    }
+    @Override
+    protected void initData() {
+        getData();
+    }
+    //获取数据
+    private void getData() {
+        customLoadingDialog.show();
+        ApiInvite.getBanner(ApiConstant.INVITE, new RequestCallBack<String>() {
+            @Override
+            public void onSuccess(Call call, Response response, final String s) {
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        customLoadingDialog.dismiss();
+                        Gson gson=new Gson();
+                        InviteBean inviteBean = gson.fromJson(s, InviteBean.class);
+                        String code = inviteBean.getCode();
+                        if (code.equals(ApiConstant.SUCCESS_CODE)){
+                            List<BannerImgInfo> imgBannerArray = inviteBean.getData().getImgBannerArray();
+                            List<String> charBannerArray = inviteBean.getData().getCharBannerArray();
+                            setValue(imgBannerArray,charBannerArray);
+                        }
+                    }
+                });
+            }
+            @Override
+            public void onEror(Call call, int statusCode, Exception e) {
+                customLoadingDialog.dismiss();
+            }
+        });
+    }
+    //赋值
+    private void setValue(List<BannerImgInfo> imgBannerArray, List<String> charBannerArray) {
+        images= new ArrayList<>();
+        for (int i = 0; i <imgBannerArray.size() ; i++) {
+            images.add(imgBannerArray.get(i).getUrl());
+        }
         //设置banner
         banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);//设置圆形指示器与标题
         banner.setIndicatorGravity(BannerConfig.RIGHT);//设置指示器位置
@@ -107,48 +163,24 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
         banner.start();
 
         //设置上下跑马灯
-
-
         ArrayList<String> titleList =new ArrayList<>();
-        titleList.add("【用户123***254125】开宝箱获得1000金币");
-        titleList.add("【用户158***4150】收徒250人");
-        titleList.add("【用户168***8520】日本投降了");
-
+        for (int i = 0; i <charBannerArray.size() ; i++) {
+            titleList.add(charBannerArray.get(i));
+        }
         autotext.setTextList(titleList);//加入显示内容,集合类型
         autotext.setText(14, 5, Color.BLACK);//设置属性,具体跟踪源码
         autotext.setTextStillTime(6000);//设置停留时长间隔
-        autotext.setAnimTime(300);//设置进入和退出的时间间隔
+        autotext.setAnimTime(300);//设置进入和退出的时间间隔`
         autotext.setPadding(5,5,0,5);
+        autotext.startAutoScroll();
         //对单条文字的点击监听
         autotext.setOnItemClickListener(new VerticalTextview.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                // TO DO
+
             }
         });
-
-
-
     }
-    //开始滚动
-    @Override
-    public void onResume() {
-        super.onResume();
-        autotext.startAutoScroll();
-    }
-    //停止滚动
-    @Override
-    public void onPause() {
-        super.onPause();
-        autotext.stopAutoScroll();
-    }
-
-
-    @Override
-    protected void initData() {
-
-    }
-
     @Override
     protected void initListener() {
 

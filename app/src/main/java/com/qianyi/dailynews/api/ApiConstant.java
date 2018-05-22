@@ -20,6 +20,14 @@ public class ApiConstant {
     public static final String NEWS_TITLES = BASE_URL+"/api/news/types";
     //获取新闻条目
     public static final String NEWS_CONTENTS = BASE_URL+"/api/news/home";
+    //邀请
+    public static final String INVITE = BASE_URL+"/api/news/getBanner";
+    //签到
+    public static final String SIGN = BASE_URL+"/api/sign/do";
+    //获取金币
+    public static final String  GOLD_COIN= BASE_URL+"/api/account/detail/page";
+    //提现
+    public static final String  WITHDRAWAWAL= BASE_URL+"/api/account/detail/page";
     //==========辛振宇==========================================
 
 

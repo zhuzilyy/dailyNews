@@ -70,7 +70,6 @@ public class VideoFragment extends BaseFragment implements PullToRefreshView.OnH
         iv_back.setVisibility(View.GONE);
         tv_title.setText("视频");
         customLoadingDialog=new CustomLoadingDialog(getActivity());
-        customLoadingDialog.show();
     }
     @Override
     protected void initData() {
@@ -79,6 +78,7 @@ public class VideoFragment extends BaseFragment implements PullToRefreshView.OnH
             no_data_rl.setVisibility(View.GONE);
             no_internet_rl.setVisibility(View.VISIBLE);
         }else{
+            customLoadingDialog.show();
             getData(page);
             videoAdapter =new VideoAdapter(getActivity(),infoList);
             listview.setAdapter(videoAdapter);
