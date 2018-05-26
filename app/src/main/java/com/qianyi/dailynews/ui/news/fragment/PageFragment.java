@@ -16,6 +16,8 @@ import com.qianyi.dailynews.api.ApiConstant;
 import com.qianyi.dailynews.api.ApiNews;
 import com.qianyi.dailynews.callback.RequestCallBack;
 import com.qianyi.dailynews.fragment.NewsFragment;
+import com.qianyi.dailynews.ui.Mine.activity.AccountDetailsActivity;
+import com.qianyi.dailynews.ui.news.bean.NewsBean;
 import com.qianyi.dailynews.ui.news.bean.NewsContentBean;
 import com.qianyi.dailynews.ui.news.bean.NewsTitleBean;
 import com.qianyi.dailynews.utils.SPUtils;
@@ -24,6 +26,7 @@ import com.qianyi.dailynews.views.PullToRefreshView;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -39,6 +42,7 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
     private List<NewsTitleBean.NewsTitleData.NewsTypeRes> newsTypeRes;
 
     private int page = 1;
+    private List<NewsBean> bigList = new ArrayList<>();
 
 
     public PageFragment() {
@@ -65,7 +69,7 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
     public void init() {
         listview = rootView.findViewById(R.id.listview);
         mPullToRefreshView = rootView.findViewById(R.id.pulltorefreshView);
-        newsAdapter = new NewsAdapter(getActivity());
+        newsAdapter = new NewsAdapter(getActivity(),bigList);
         listview.setAdapter(newsAdapter);
 
         mPullToRefreshView.setmOnHeaderRefreshListener(this);
@@ -104,12 +108,12 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
                         if (TextUtils.isEmpty(userid)) {
                             return;
                         }
-                        Log.i("tag","url"+ApiConstant.NEWS_CONTENTS);
-                        Log.i("tag",userid+"==userid==");
-                        Log.i("tag",newsTypeRes.get(position).getCatId()+"==getCatId==");
-                        Log.i("tag",page+"==page==");
-                        Log.i("tag",userid+"==userid==");
-                        ApiNews.GetNewsContent(ApiConstant.NEWS_CONTENTS, userid, newsTypeRes.get(position).getCatId(), page, 10, 1, 10, new RequestCallBack<String>() {
+                        Log.i("tag", "url" + ApiConstant.NEWS_CONTENTS);
+                        Log.i("tag", userid + "==userid==");
+                        Log.i("tag", newsTypeRes.get(position).getCatId() + "==getCatId==");
+                        Log.i("tag", page + "==page==");
+                        Log.i("tag", userid + "==userid==");
+                        ApiNews.GetNewsContent(ApiConstant.NEWS_CONTENTS, userid, "news_house", page, 10, 1, 10, new RequestCallBack<String>() {
                             @Override
                             public void onSuccess(Call call, Response response, String s) {
                                 Log.i("ttt", "s" + s);
@@ -122,22 +126,23 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
                                         if (contentData != null) {
                                             List<NewsContentBean.NewsContentData.NewsByType> newsByTypes = contentData.getNewsByType();
                                             if (newsByTypes.size() > 0) {
-                                                List<NewsContentBean.NewsContentData.NewsByType.AdavertContent> adavertContents = newsByTypes.get(0).getAdvertArray();
+                                                List<NewsContentBean.NewsContentData.AdavertContent> adavertContents = contentData.getAdvertArray();
                                                 List<NewsContentBean.NewsContentData.NewsByType.NewsContentInfo> newsContentInfos = newsByTypes.get(0).getNewsInfoArray();
 
-                                                if(adavertContents.size()>0||newsContentInfos.size()>0){
+                                                if (adavertContents.size() > 0 || newsContentInfos.size() > 0) {
+                                                    List<NewsBean> newsBeans = dowithNews(adavertContents, newsContentInfos);
+                                                    bigList.clear();
+                                                    bigList.addAll(newsBeans);
+                                                    newsAdapter.notifyDataSetChanged();
+
 
                                                 }
-
                                             }
-
-
                                         }
                                     }
                                 }
-
-
                             }
+
                             @Override
                             public void onEror(Call call, int statusCode, Exception e) {
                                 Log.i("ttt", "e" + e.getMessage());
@@ -155,6 +160,96 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
             mPullToRefreshView.onFooterRefreshComplete(false);
         }*/
 
+    }
+
+    /**
+     * 将新闻和广告按11排列
+     *
+     * @param adavertContents
+     * @param newsContentInfos
+     * @return
+     */
+    private List<NewsBean> dowithNews(List<NewsContentBean.NewsContentData.AdavertContent> adavertContents, List<NewsContentBean.NewsContentData.NewsByType.NewsContentInfo> newsContentInfos) {
+        List<NewsBean> newsBeanList = new ArrayList<>();
+        boolean isNews = adavertContents.size() > 0 ? true : false;
+        boolean isAd = isNews == true ? false : true;
+        int size = (adavertContents.size() + newsContentInfos.size());
+        for (int i = 1; i <= size; i++) {
+            if (isNews) {
+                if ((newsContentInfos.size() > 0)) {
+                    for (int j = 0; j < newsContentInfos.size(); j++) {
+                        NewsBean newsBean = new NewsBean();
+                        NewsContentBean.NewsContentData.NewsByType.NewsContentInfo news = newsContentInfos.get(j);
+                        newsBean.setId(news.getId());
+                        newsBean.setPublishDate(news.getPublishDate());
+                        newsBean.setPosterScreenName(news.getPosterScreenName());
+                        newsBean.setUrl(news.getUrl());
+                        newsBean.setTitle(news.getTitle());
+                        newsBean.setPosterId(news.getPosterId());
+                        newsBean.setViewCount(news.getViewCount());
+                        newsBean.setContent(news.getContent());
+                        newsBean.setImgsUrl(news.getImgsUrl());
+                        newsBean.setIfRead(news.getIfRead());
+                        newsBean.setNewsType(news.getNewsTyps());
+                        newsBeanList.add(newsBean);
+                        newsContentInfos.remove(0);
+                        break;
+                    }
+
+                    if (i % 4 == 0) {
+                        isAd = true;
+                        isNews = false;
+                    }
+                    continue;
+                } else {
+                    isAd = true;
+                    isNews = false;
+                }
+            } else if (isAd) {
+                if ((adavertContents.size() > 0)) {
+                    for (int j = 0; j < adavertContents.size(); j++) {
+                        NewsBean newsBean = new NewsBean();
+                        NewsContentBean.NewsContentData.AdavertContent ad = adavertContents.get(j);
+                        newsBean.setId(ad.getId());
+                        newsBean.setTitle(ad.getTitle());
+                        newsBean.setUrl(ad.getUrl());
+                        newsBean.setReadNum(ad.getReadNum());
+                        newsBean.setImgs(ad.getImgs());
+                        newsBean.setAdType(ad.getAdType());
+                        newsBeanList.add(newsBean);
+                        adavertContents.remove(0);
+                        break;
+                    }
+                    isAd = false;
+                    isNews = true;
+                    continue;
+                } else {
+                    for (int j = 0; j < newsContentInfos.size(); j++) {
+                        NewsBean newsBean = new NewsBean();
+                        NewsContentBean.NewsContentData.NewsByType.NewsContentInfo news = newsContentInfos.get(j);
+                        newsBean.setId(news.getId());
+                        newsBean.setPublishDate(news.getPublishDate());
+                        newsBean.setPosterScreenName(news.getPosterScreenName());
+                        newsBean.setUrl(news.getUrl());
+                        newsBean.setTitle(news.getTitle());
+                        newsBean.setPosterId(news.getPosterId());
+                        newsBean.setViewCount(news.getViewCount());
+                        newsBean.setContent(news.getContent());
+                        newsBean.setImgsUrl(news.getImgsUrl());
+                        newsBean.setIfRead(news.getIfRead());
+                        newsBean.setNewsType(news.getNewsTyps());
+                        newsBeanList.add(newsBean);
+                        newsContentInfos.remove(0);
+                        break;
+                    }
+                    isAd = false;
+                    isNews = true;
+
+                }
+            }
+
+        }
+        return newsBeanList;
     }
 
     private void moreData() {

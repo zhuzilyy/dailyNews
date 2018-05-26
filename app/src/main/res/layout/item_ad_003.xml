@@ -6,6 +6,7 @@
     android:layout_height="wrap_content">
     <!--标题-->
     <TextView
+        android:id="@+id/ad_003_content"
         android:layout_marginTop="@dimen/dp_10"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -21,6 +22,19 @@
         android:orientation="horizontal"
         >
         <ImageView
+            android:id="@+id/ad_003_pic001"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:layout_weight="1"
+            android:src="@color/main_red"
+            />
+        <View
+            android:layout_width="2dp"
+            android:layout_height="match_parent"/>
+        <ImageView
+            android:id="@+id/ad_003_pic002"
+            android:scaleType="centerCrop"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -30,16 +44,9 @@
             android:layout_width="2dp"
             android:layout_height="match_parent"/>
         <ImageView
+            android:id="@+id/ad_003_pic003"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:src="@color/main_red"
-            />
-        <View
-            android:layout_width="2dp"
-            android:layout_height="match_parent"/>
-        <ImageView
-            android:layout_width="0dp"
+            android:scaleType="centerCrop"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:src="@color/main_red"
