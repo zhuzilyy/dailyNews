@@ -118,7 +118,6 @@
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:exported="false"
             android:hardwareAccelerated="true"
-            android:launchMode="singleTask"
             />
         <!--引导界面-->
         <activity android:name=".ui.account.activity.WelcomeActiity"

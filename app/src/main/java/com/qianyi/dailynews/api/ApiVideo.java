@@ -21,5 +21,13 @@ public class ApiVideo {
         params.put("pageSize",pageSize);
         OkHttpManager.getInstance().postRequest(url,params,callback);
     }
-    //=======以下辛振宇===============================
+    /**
+     * 视频详情页
+     * @param callback
+     */
+    public static void videoDetail(String url,String pageSize, RequestCallBack<String> callback){
+        Map<String,String> params=new HashMap<>();
+        params.put("pageSize",pageSize);
+        OkHttpManager.getInstance().postRequest(url,params,callback);
+    }
 }

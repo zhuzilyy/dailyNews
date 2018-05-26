@@ -27,6 +27,8 @@ public class ApiConstant {
     //获取金币
     public static final String  GOLD_COIN= BASE_URL+"/api/account/detail/page";
     //提现
-    public static final String  WITHDRAWAWAL= BASE_URL+"/api/account/detail/page";
+    public static final String  WITHDRAWAWAL= BASE_URL+"/api/account/withdraw/page";
+    //视频详情
+    public static final String  VIDEO_DETAIL= BASE_URL+"/api/videos/getWonderfulVideo";
     //==========辛振宇==========================================
 }

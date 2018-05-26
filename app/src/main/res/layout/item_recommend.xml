@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:paddingBottom="10dp"
+    android:paddingTop="10dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <RelativeLayout
@@ -10,6 +11,7 @@
         android:layout_width="0dp"
         android:layout_height="90dp">
         <TextView
+            android:id="@+id/tv_title"
             android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp"
             android:ellipsize="end"
@@ -30,6 +32,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView
+                android:id="@+id/tv_viewCount"
                 android:layout_marginRight="10dp"
                 android:textSize="13sp"
                 android:layout_alignParentRight="true"
@@ -45,6 +48,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content">
         <ImageView
+            android:id="@+id/iv_videoCover"
             android:layout_centerInParent="true"
             android:scaleType="fitXY"
             android:src="@mipmap/video_test"

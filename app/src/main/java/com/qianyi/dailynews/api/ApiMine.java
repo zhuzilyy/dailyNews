@@ -31,4 +31,16 @@ public class ApiMine {
         params.put("pageSize",pageSize);
         OkHttpManager.getInstance().postRequest(url,params,callback);
     }
+    /**
+     * 提现状态
+     * @param callback
+     */
+    public static void withdrawal(String url,String userId,int curPage,String pageSize,String state,RequestCallBack<String> callback){
+        Map<String,String> params=new HashMap<>();
+        params.put("userId",userId);
+        params.put("curPage",curPage+"");
+        params.put("pageSize",pageSize);
+        params.put("state","");
+        OkHttpManager.getInstance().postRequest(url,params,callback);
+    }
 }
