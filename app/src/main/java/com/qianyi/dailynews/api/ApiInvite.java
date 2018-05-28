@@ -18,4 +18,13 @@ public class ApiInvite {
     public static void getBanner(String url,RequestCallBack<String> callback){
         OkHttpManager.getInstance().postRequest(url,null,callback);
     }
+    /**
+     * 邀请详情
+     * @param callback
+     */
+    public static void inviteDetail(String url,String userId,RequestCallBack<String> callback){
+        Map<String,String> params=new HashMap<>();
+        params.put("userId",userId);
+        OkHttpManager.getInstance().postRequest(url,params,callback);
+    }
 }

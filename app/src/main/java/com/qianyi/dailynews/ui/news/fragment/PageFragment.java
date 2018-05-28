@@ -79,7 +79,7 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
 
     @Override
     public void lazyLoad() {
-        firstData(NewsFragment.CurrentNewsTitle);
+        //firstData(NewsFragment.CurrentNewsTitle);
         Toast.makeText(mActivity, "" + NewsFragment.CurrentNewsTitle, Toast.LENGTH_SHORT).show();
 
     }
@@ -92,7 +92,7 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
 
     @Override
     public void onHeaderRefresh(PullToRefreshView view) {
-        firstData(NewsFragment.CurrentNewsTitle);
+        //firstData(NewsFragment.CurrentNewsTitle);
     }
 
     private void firstData(final int position) {
