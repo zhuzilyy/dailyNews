@@ -6,6 +6,8 @@ import android.content.Context;
 
 import org.xutils.x;
 
+import cn.jpush.android.api.JPushInterface;
+
 /**
  * Created by NEUNB on 2018/3/19.
  */
@@ -19,6 +21,8 @@ public class MyApplication extends Application {
         myApplication=this;
         //注册微信
         registToWX();
+        JPushInterface.setDebugMode(true);
+        JPushInterface.init(this);
 
     }
     /**

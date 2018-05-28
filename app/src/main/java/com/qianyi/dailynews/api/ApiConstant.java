@@ -30,6 +30,8 @@ public class ApiConstant {
     public static final String  WITHDRAWAWAL= BASE_URL+"/api/account/withdraw/page";
     //视频详情
     public static final String  VIDEO_DETAIL= BASE_URL+"/api/videos/getWonderfulVideo";
+    //邀请详情
+    public static final String  INVITE_DETAIL= BASE_URL+"/api/news/getInviteInfo";
     //==========辛振宇==========================================
 
 
