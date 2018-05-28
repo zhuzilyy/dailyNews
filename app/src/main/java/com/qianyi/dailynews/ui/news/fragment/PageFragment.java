@@ -134,8 +134,6 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
                                                     bigList.clear();
                                                     bigList.addAll(newsBeans);
                                                     newsAdapter.notifyDataSetChanged();
-
-
                                                 }
                                             }
                                         }
