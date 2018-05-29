@@ -80,14 +80,14 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
     @Override
     public void lazyLoad() {
         firstData(NewsFragment.CurrentNewsTitle);
-        Toast.makeText(mActivity, "" + NewsFragment.CurrentNewsTitle, Toast.LENGTH_SHORT).show();
+     //   Toast.makeText(mActivity, "" + NewsFragment.CurrentNewsTitle, Toast.LENGTH_SHORT).show();
 
     }
 
 
     @Override
     public void onFooterRefresh(PullToRefreshView view) {
-        moreData();
+        moreData(NewsFragment.CurrentNewsTitle);
     }
 
     @Override
@@ -113,7 +113,7 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
                         Log.i("tag", newsTypeRes.get(position).getCatId() + "==getCatId==");
                         Log.i("tag", page + "==page==");
                         Log.i("tag", userid + "==userid==");
-                        ApiNews.GetNewsContent(ApiConstant.NEWS_CONTENTS, userid, "news_house", page, 10, 1, 10, new RequestCallBack<String>() {
+                        ApiNews.GetNewsContent(ApiConstant.NEWS_CONTENTS, userid, newsTypeRes.get(NewsFragment.CurrentNewsTitle).getCatId(), page, 10, page, 10, new RequestCallBack<String>() {
                             @Override
                             public void onSuccess(Call call, Response response, String s) {
                                 Log.i("ttt", "s" + s);
@@ -152,7 +152,7 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
                     }
                 });
             }
-        }, 2000);
+        }, 250);
         //请求成功
        /* if (list.size() < Integer.parseInt(Constants.PAGE_SIZE_STR)) {
             mPullToRefreshView.onFooterRefreshComplete(true);
@@ -160,6 +160,75 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
             mPullToRefreshView.onFooterRefreshComplete(false);
         }*/
 
+    }
+
+    private void moreData(final int position) {
+        page++;
+        mPullToRefreshView.setEnablePullTorefresh(true);
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                mActivity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mActivity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                String userid = (String) SPUtils.get(getActivity(), "user_id", "");
+                                if (TextUtils.isEmpty(userid)) {
+                                    return;
+                                }
+                                Log.i("tag", "url" + ApiConstant.NEWS_CONTENTS);
+                                Log.i("tag", userid + "==userid==");
+                                Log.i("tag", newsTypeRes.get(position).getCatId() + "==getCatId==");
+                                Log.i("tag", page + "==page==");
+                                Log.i("tag", userid + "==userid==");
+                                ApiNews.GetNewsContent(ApiConstant.NEWS_CONTENTS, userid, newsTypeRes.get(NewsFragment.CurrentNewsTitle).getCatId(), page, 10, page, 10, new RequestCallBack<String>() {
+                                    @Override
+                                    public void onSuccess(Call call, Response response, String s) {
+                                        Log.i("ttt", "s" + s);
+                                        Gson gson = new Gson();
+                                        NewsContentBean contentBean = gson.fromJson(s, NewsContentBean.class);
+                                        if (contentBean != null) {
+                                            String code = contentBean.getCode();
+                                            if ("0000".equals(code)) {
+                                                NewsContentBean.NewsContentData contentData = contentBean.getData();
+                                                if (contentData != null) {
+                                                    List<NewsContentBean.NewsContentData.NewsByType> newsByTypes = contentData.getNewsByType();
+                                                    if (newsByTypes.size() > 0) {
+                                                        List<NewsContentBean.NewsContentData.AdavertContent> adavertContents = contentData.getAdvertArray();
+                                                        List<NewsContentBean.NewsContentData.NewsByType.NewsContentInfo> newsContentInfos = newsByTypes.get(0).getNewsInfoArray();
+
+                                                        if (adavertContents.size() > 0 || newsContentInfos.size() > 0) {
+                                                            List<NewsBean> newsBeans = dowithNews(adavertContents, newsContentInfos);
+                                                            bigList.addAll(newsBeans);
+                                                            newsAdapter.notifyDataSetChanged();
+
+
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onEror(Call call, int statusCode, Exception e) {
+                                        Log.i("ttt", "e" + e.getMessage());
+                                    }
+                                });
+                                mPullToRefreshView.onHeaderRefreshComplete();
+                            }
+                        });
+
+
+                        mPullToRefreshView.onHeaderRefreshComplete();
+                        mPullToRefreshView.onFooterRefreshComplete(false);
+                    }
+                });
+            }
+        }, 250);
     }
 
     /**
@@ -171,7 +240,7 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
      */
     private List<NewsBean> dowithNews(List<NewsContentBean.NewsContentData.AdavertContent> adavertContents, List<NewsContentBean.NewsContentData.NewsByType.NewsContentInfo> newsContentInfos) {
         List<NewsBean> newsBeanList = new ArrayList<>();
-        boolean isNews = adavertContents.size() > 0 ? true : false;
+        boolean isNews = newsContentInfos.size() > 0 ? true : false;
         boolean isAd = isNews == true ? false : true;
         int size = (adavertContents.size() + newsContentInfos.size());
         for (int i = 1; i <= size; i++) {
@@ -252,20 +321,5 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
         return newsBeanList;
     }
 
-    private void moreData() {
-        mPullToRefreshView.setEnablePullTorefresh(true);
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                mActivity.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        mPullToRefreshView.onHeaderRefreshComplete();
-                        mPullToRefreshView.onFooterRefreshComplete(false);
-                    }
-                });
-            }
-        }, 2000);
-    }
+
 }
