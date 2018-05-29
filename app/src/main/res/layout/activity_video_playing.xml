@@ -87,12 +87,11 @@
         <ListView
             android:listSelector="@android:color/transparent"
             android:overScrollMode="never"
-            android:divider="@null"
+            android:divider="@color/common_line"
+            android:dividerHeight="0.5dp"
             android:id="@+id/lv_recommend"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
-
+        <include layout="@layout/common_no_data"/>
     </LinearLayout>
-
-
 </LinearLayout>

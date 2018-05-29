@@ -32,11 +32,15 @@ import com.qianyi.dailynews.ui.WebviewActivity;
 import com.qianyi.dailynews.ui.invitation.activity.ApprenticeActivity;
 import com.qianyi.dailynews.ui.invitation.activity.DailySharingAcitity;
 import com.qianyi.dailynews.ui.invitation.activity.WakeFriendsActivity;
+import com.qianyi.dailynews.utils.SPUtils;
 import com.qianyi.dailynews.utils.ToastUtils;
 import com.qianyi.dailynews.utils.Utils;
 import com.qianyi.dailynews.utils.loader.GlideImageLoader;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,6 +80,10 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
     public LinearLayout ll_WakeUpFriends;
     @BindView(R.id.tv_myCode)
     public TextView tv_myCode;
+    @BindView(R.id.tv_income)
+    public TextView tv_income;
+    @BindView(R.id.tv_friendCount)
+    public TextView tv_friendCount;
     private PopupWindow pw_share;
     private PopupWindow pw_onekeyshoutu;
     private View view_share,view_onekeyshoutu;
@@ -87,6 +95,7 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
     @BindView(R.id.btn_onekey_shoutu)
     public Button btn_onekey_shoutu;
     private CustomLoadingDialog customLoadingDialog;
+    private String userId;
     @Override
     protected View getResLayout(LayoutInflater inflater, ViewGroup container) {
         newsView =  inflater.inflate(R.layout.fragment_invitation, null);
@@ -101,8 +110,8 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
         back.setVisibility(View.GONE);
         rightTv.setText("邀请规则");
         rightTv.setVisibility(View.VISIBLE);
-
         customLoadingDialog=new CustomLoadingDialog(getActivity());
+        userId= (String) SPUtils.get(getActivity(),"user_id","");
 
     }
     //开始滚动
@@ -119,6 +128,31 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
     @Override
     protected void initData() {
         getData();
+        getInviteData();
+    }
+    //获取邀请数据的值
+    private void getInviteData() {
+        ApiInvite.inviteDetail(ApiConstant.INVITE_DETAIL, userId, new RequestCallBack<String>() {
+            @Override
+            public void onSuccess(Call call, Response response, String s) {
+                try {
+                    JSONObject jsonObject=new JSONObject(s);
+                    JSONObject data = jsonObject.getJSONObject("data");
+                    String income = data.getString("income");
+                    String inviteCount = data.getString("inviteCount");
+                    String myInviteCode = data.getString("myInviteCode");
+                    tv_income.setText(income+"金币");
+                    tv_friendCount.setText(inviteCount+"个");
+                    tv_myCode.setText(myInviteCode);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            @Override
+            public void onEror(Call call, int statusCode, Exception e) {
+
+            }
+        });
     }
     //获取数据
     private void getData() {

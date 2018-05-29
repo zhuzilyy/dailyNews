@@ -8,6 +8,8 @@ public class GoldCoinData {
     private String name;
     private String time;
     private String cnt;
+    private String state;
+    private String type;
     public String getName() {
         return name;
     }

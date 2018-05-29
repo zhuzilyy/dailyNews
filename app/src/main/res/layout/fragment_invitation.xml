@@ -240,10 +240,11 @@
                         android:textSize="14sp"
                         />
                     <TextView
+                        android:id="@+id/tv_income"
                         android:layout_marginTop="@dimen/dp_5"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="860金币"
+                        android:text="--"
                         android:textSize="12sp"
                         android:textColor="@color/main_red"
                         />
@@ -271,10 +272,11 @@
                         android:textSize="14sp"
                         />
                     <TextView
+                        android:id="@+id/tv_friendCount"
                         android:layout_marginTop="@dimen/dp_5"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="5个"
+                        android:text="--"
                         android:textSize="12sp"
                         android:textColor="@color/main_red"
                         />
@@ -310,7 +312,7 @@
                             android:layout_marginTop="@dimen/dp_5"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="123456 "
+                            android:text="--"
                             android:layout_marginLeft="@dimen/dp_20"
                             android:textSize="12sp"
                             android:textColor="@color/main_red"
@@ -456,10 +458,7 @@
                 android:layout_height="30dp"
                 android:background="#00ff0000"
                 />
-
-
         </LinearLayout>
-
     </ScrollView>
 
 </LinearLayout>
