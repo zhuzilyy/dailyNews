@@ -37,7 +37,6 @@
         <activity android:name=".ui.account.activity.LoginActivity"
             android:screenOrientation="portrait"
             >
-
         </activity>
         <!--主界面-->
         <activity android:name=".MainActivity"
@@ -146,5 +145,9 @@
                 <category android:name="com.chuangsheng.finance" />
             </intent-filter>
         </receiver>
+        <!--新闻详情界面-->
+        <activity android:name=".ui.news.activity.NewsDetailsActivity"
+            android:screenOrientation="portrait"
+            />
     </application>
 </manifest>

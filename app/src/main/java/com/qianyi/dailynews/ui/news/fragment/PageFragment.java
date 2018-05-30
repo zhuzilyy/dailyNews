@@ -2,8 +2,11 @@ package com.qianyi.dailynews.ui.news.fragment;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -17,6 +20,7 @@ import com.qianyi.dailynews.api.ApiNews;
 import com.qianyi.dailynews.callback.RequestCallBack;
 import com.qianyi.dailynews.fragment.NewsFragment;
 import com.qianyi.dailynews.ui.Mine.activity.AccountDetailsActivity;
+import com.qianyi.dailynews.ui.news.activity.NewsDetailsActivity;
 import com.qianyi.dailynews.ui.news.bean.NewsBean;
 import com.qianyi.dailynews.ui.news.bean.NewsContentBean;
 import com.qianyi.dailynews.ui.news.bean.NewsTitleBean;
@@ -74,6 +78,17 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
 
         mPullToRefreshView.setmOnHeaderRefreshListener(this);
         mPullToRefreshView.setmOnFooterRefreshListener(this);
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(getActivity(),NewsDetailsActivity.class);
+                intent.putExtra("title",bigList.get(i).getTitle());
+                intent.putExtra("url",bigList.get(i).getUrl());
+                getActivity().startActivity(intent);
+            }
+        });
+
+
 
     }
 
