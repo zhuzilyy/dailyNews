@@ -67,6 +67,7 @@
         android:layout_height="@dimen/dp_0.5"
         android:background="@color/gray"/>
     <ScrollView
+        android:id="@+id/sc"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <LinearLayout
@@ -82,8 +83,9 @@
                 android:indeterminateOnly="false"
                 android:max="100"
                 android:progressDrawable="@drawable/progress_bar_states" />
-            <!--url-->
+            <!--top-webview-->
            <RelativeLayout
+               android:id="@+id/top_web_re"
                android:layout_width="match_parent"
                android:layout_height="match_parent">
                <com.qianyi.dailynews.ui.news.views.NoScrollWebView
@@ -99,6 +101,7 @@
                    android:background="@drawable/shape_grand_white"
                    >
                    <TextView
+                       android:visibility="gone"
                        android:id="@+id/tv_news_more"
                        android:layout_marginRight="35dp"
                        android:layout_alignParentBottom="true"
@@ -114,6 +117,88 @@
 
                </RelativeLayout>
            </RelativeLayout>
+            <!--bottom-webview-->
+            <WebView
+                android:visibility="gone"
+                android:id="@+id/bottom_web"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="@color/light_gray5"
+                />
+            <!--相关推荐-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+                <!--title-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/dp_10"
+                    >
+                    <View
+                        android:layout_width="6dp"
+                        android:layout_height="match_parent"
+                      android:layout_marginTop="@dimen/dp_10"
+                        android:layout_marginBottom="@dimen/dp_10"
+                        android:background="@color/red"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="相关推荐"
+                        android:textSize="16sp"
+                        android:textColor="@color/black"
+                        android:layout_marginLeft="@dimen/dp_10"
+                        />
+                </LinearLayout>
+                <!--Listview相关推荐-->
+                <com.qianyi.dailynews.ui.news.views.MySingListView
+                    android:id="@+id/lv_"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_10"
+                    android:background="@color/light_gray5"/>
+                <!--Listview评论-->
+                <!--title-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/dp_10"
+                    >
+                    <View
+                        android:layout_width="6dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:layout_marginBottom="@dimen/dp_10"
+                        android:background="@color/red"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="热门评论"
+                        android:textSize="16sp"
+                        android:textColor="@color/black"
+                        android:layout_marginLeft="@dimen/dp_10"
+                        />
+                </LinearLayout>
+                <com.qianyi.dailynews.ui.news.views.MySingListView
+                    android:id="@+id/lv_comment"
+                    android:dividerHeight="0dp"
+                    android:divider="#00ffffff"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+
+            </LinearLayout>
+
 
 
 

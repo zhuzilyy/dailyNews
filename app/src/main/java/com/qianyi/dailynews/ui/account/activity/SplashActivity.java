@@ -78,13 +78,14 @@ public class SplashActivity extends BaseActivity {
      * 跳转下一个页面
      */
     private void jumpNextPage() {
-        // 判断之前有没有显示过新手引导
+        jumpActivity(SplashActivity.this,WelcomeActiity.class);
+        /*// 判断之前有没有显示过新手引导
         boolean isFirst = (boolean) SPUtils.get(this, "isFirst", false);
         if (isFirst){
             jumpActivity(SplashActivity.this,WelcomeActiity.class);
         }else{
             jumpActivity(SplashActivity.this,LoginActivity.class);
-        }
+        }*/
         finish();
     }
     @Override

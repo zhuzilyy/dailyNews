@@ -84,6 +84,7 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
                 Intent intent = new Intent(getActivity(),NewsDetailsActivity.class);
                 intent.putExtra("title",bigList.get(i).getTitle());
                 intent.putExtra("url",bigList.get(i).getUrl());
+                intent.putExtra("id",bigList.get(i).getId());
                 getActivity().startActivity(intent);
             }
         });

@@ -32,6 +32,8 @@ public class ApiConstant {
     public static final String  VIDEO_DETAIL= BASE_URL+"/api/videos/getWonderfulVideo";
     //邀请详情
     public static final String  INVITE_DETAIL= BASE_URL+"/api/news/getInviteInfo";
+    //新闻热门评论
+    public static final String  NEWS_COMMENT= BASE_URL+"/api/news/getComment";
     //==========辛振宇==========================================
 
 
