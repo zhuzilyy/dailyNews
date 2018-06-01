@@ -122,6 +122,10 @@
         <activity android:name=".ui.account.activity.WelcomeActiity"
             android:screenOrientation="portrait"
             />
+        <!--全部评论-->
+        <activity android:name=".ui.news.activity.MoreCommActivity"
+            android:screenOrientation="portrait"
+            />
         <!--欢迎界面-->
         <activity android:name=".ui.account.activity.SplashActivity"
             android:screenOrientation="portrait"

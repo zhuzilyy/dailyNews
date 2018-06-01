@@ -1,10 +1,12 @@
 package com.qianyi.dailynews.ui.news.activity;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 
 
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.WebChromeClient;
@@ -150,9 +152,24 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
      * 赋值热门评论
      * @param newsCommentRes
      */
-    private void setCommentData(List<CommentBean.CommentData.NewsCommentRes> newsCommentRes) {
-        commentAdapterNews =new HotCommentAdapterNews(NewsDetailsActivity.this);
+    private void setCommentData(final List<CommentBean.CommentData.NewsCommentRes> newsCommentRes) {
+        commentAdapterNews =new HotCommentAdapterNews(NewsDetailsActivity.this,newsCommentRes);
         lv_comment.setAdapter(commentAdapterNews);
+       if(newsCommentRes.size()>5){
+           View footer= LayoutInflater.from(NewsDetailsActivity.this).inflate(R.layout.lay_news_comm_footer,null);
+           lv_comment.addFooterView(footer);
+           footer.findViewById(R.id.footer_more).setOnClickListener(new View.OnClickListener() {
+               @Override
+               public void onClick(View v) {
+
+                   //Toast.makeText(NewsDetailsActivity.this, "加载更多", Toast.LENGTH_SHORT).show();
+                   Intent intent=new Intent(NewsDetailsActivity.this,MoreCommActivity.class);
+                   intent.putExtra("newsID",newsId);
+                   startActivity(intent);
+
+               }
+           });
+       }
 
 
     }

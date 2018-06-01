@@ -14,26 +14,24 @@ import com.makeramen.roundedimageview.RoundedImageView;
 import com.qianyi.dailynews.R;
 import com.qianyi.dailynews.ui.news.bean.CommentBean;
 
-import org.apache.http.params.CoreConnectionPNames;
-
 import java.util.List;
 
 /**
  * Created by Administrator on 2018/5/31.
  */
 
-public class HotCommentAdapterNews extends BaseAdapter {
+public class AllCommentAdapter extends BaseAdapter {
     private Context mContext;
     private List<CommentBean.CommentData.NewsCommentRes> newsCommentRes;
 
-    public HotCommentAdapterNews(Context mContext, List<CommentBean.CommentData.NewsCommentRes> newsCommentRes) {
+    public AllCommentAdapter(Context mContext, List<CommentBean.CommentData.NewsCommentRes> newsCommentRes) {
         this.mContext = mContext;
         this.newsCommentRes = newsCommentRes;
     }
 
     @Override
     public int getCount() {
-        return newsCommentRes.size()>5?5:newsCommentRes.size();
+        return newsCommentRes.size();
     }
 
     @Override

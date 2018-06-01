@@ -18,6 +18,7 @@
             android:layout_weight="1"
             >
             <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/newsComm_head"
                 android:layout_width="55dp"
                 android:layout_height="55dp"
                 android:src="@mipmap/touxiang"
@@ -37,6 +38,7 @@
                 android:layout_height="wrap_content">
                 <!--用户名-->
                 <TextView
+                    android:id="@+id/newsComm_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="double_y"
@@ -45,6 +47,7 @@
                     />
                 <!--点赞-->
                 <LinearLayout
+                    android:id="@+id/newsComm_zan_ll"
                     android:layout_marginRight="@dimen/dp_20"
                     android:layout_alignParentRight="true"
                     android:layout_width="wrap_content"
@@ -53,6 +56,7 @@
                     android:gravity="center"
                     >
                     <TextView
+                        android:id="@+id/newsComm_zan_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="10"
@@ -60,6 +64,7 @@
                         android:textColor="@color/red"
                         />
                     <ImageView
+                        android:id="@+id/newsComm_zan_iv"
                         android:layout_marginLeft="@dimen/dp_10"
                         android:layout_width="18dp"
                         android:layout_height="18dp"
@@ -70,6 +75,7 @@
             </RelativeLayout>
             <!--评论内容-->
             <TextView
+                android:id="@+id/newsComm_content"
                 android:layout_marginTop="@dimen/dp_5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -79,6 +85,7 @@
                 android:text="家里的几个老师几个老师就废了设计费是就废了设计费解放路上解放路是解放路上解放路解放路上解放路是就废了设计费放假了设计费附件四垃圾分类副经理级放假了积分放假了文件积分可是米饭"
                 />
             <TextView
+                android:id="@+id/newsComm_time"
                 android:layout_marginTop="@dimen/dp_10"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
