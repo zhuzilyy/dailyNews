@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:paddingBottom="@dimen/dp_10"
+        android:paddingTop="@dimen/dp_10"
+        android:layout_width="match_parent"
+        android:layout_height="120dp">
+        <!--标题-->
+        <LinearLayout
+            android:paddingLeft="@dimen/dp_10"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            >
+            <TextView
+                android:id="@+id/news002_content"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:textColor="@color/black"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:textSize="17sp"
+                android:layout_marginTop="@dimen/dp_5"
+                android:text="烦死了房间里时间了话费卡就是个附近可使肌肤范师傅返回ifhi会费和覅 佛法发挥为if发黑粉"
+                android:layout_weight="2"/>
+            <LinearLayout
+                android:gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:orientation="horizontal"
+                android:layout_weight="1"
+                >
+
+                <TextView
+                    android:id="@+id/news002_publishman"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="柏圆发布"
+                    android:textSize="12sp"
+                    android:maxLength="6"
+                    android:textColor="@color/black"
+                    />
+
+                <TextView
+                    android:id="@+id/news002_read"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2252次阅读"
+                    android:maxLength="6"
+                    android:textSize="12sp"
+                    android:textColor="@color/black"
+                    />
+            </LinearLayout>
+
+        </LinearLayout>
+        <!--1张图片-->
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.3"
+            >
+            <ImageView
+                android:id="@+id/news002_pic"
+                android:layout_width="match_parent"
+                android:scaleType="centerCrop"
+                android:layout_height="match_parent"
+                android:padding="5dp"
+                android:src="@color/main_red"
+                />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

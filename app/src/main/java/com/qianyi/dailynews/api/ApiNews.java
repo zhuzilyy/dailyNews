@@ -33,6 +33,23 @@ public class ApiNews {
         params.put("adPageSize",adPageSize+"" );
         OkHttpManager.getInstance().postRequest(url,params,callback);
     }
+
+
+    /**
+     * 获取新闻详情里的热门评论
+     * @param callback
+     */
+    public static void GetNewsCommend(String url,String userId,String newsId,int page,int pageSize,int pageLevel2,int pageSizeLevel2 , RequestCallBack<String> callback){
+        Map<String,String> params=new HashMap<>();
+        params.put("userId",userId );
+        params.put("newsId",newsId );
+        params.put("page",page +"");
+        params.put("pageSize",pageSize+"" );
+        params.put("pageLevel2",pageLevel2+"" );
+        params.put("pageSizeLevel2",pageSizeLevel2+"" );
+        OkHttpManager.getInstance().postRequest(url,params,callback);
+    }
+
     //=======以下辛振宇=================================================================
 
 }
