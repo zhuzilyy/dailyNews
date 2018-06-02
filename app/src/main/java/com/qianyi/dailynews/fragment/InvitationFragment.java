@@ -1,6 +1,8 @@
 package com.qianyi.dailynews.fragment;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.util.Log;
@@ -36,8 +38,14 @@ import com.qianyi.dailynews.utils.SPUtils;
 import com.qianyi.dailynews.utils.ToastUtils;
 import com.qianyi.dailynews.utils.Utils;
 import com.qianyi.dailynews.utils.loader.GlideImageLoader;
+import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
+import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
+import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
+import com.tencent.mm.sdk.openapi.IWXAPI;
+import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
+import com.youth.banner.listener.OnBannerListener;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -96,6 +104,9 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
     public Button btn_onekey_shoutu;
     private CustomLoadingDialog customLoadingDialog;
     private String userId;
+    private LinearLayout ll_friendCircle,ll_qq,ll_wechat,ll_weibo;
+    private IWXAPI mWxApi;
+    private List<String> charBannerArray;
     @Override
     protected View getResLayout(LayoutInflater inflater, ViewGroup container) {
         newsView =  inflater.inflate(R.layout.fragment_invitation, null);
@@ -104,7 +115,12 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
 
     @Override
     protected void initViews() {
+        charBannerArray=new ArrayList<>();
         view_share=LayoutInflater.from(getActivity()).inflate(R.layout.pw_share,null);
+        ll_friendCircle=view_share.findViewById(R.id.ll_friendCircle);
+        ll_qq=view_share.findViewById(R.id.ll_QQ);
+        ll_wechat=view_share.findViewById(R.id.ll_wechat);
+        ll_weibo=view_share.findViewById(R.id.ll_weibo);
         view_onekeyshoutu = LayoutInflater.from(getActivity()).inflate(R.layout.pw_onekeyshoutu,null);
         title.setText("邀请");
         back.setVisibility(View.GONE);
@@ -113,6 +129,9 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
         customLoadingDialog=new CustomLoadingDialog(getActivity());
         userId= (String) SPUtils.get(getActivity(),"user_id","");
 
+        mWxApi = WXAPIFactory.createWXAPI(getActivity(), ApiConstant.APP_ID, false);
+        // 将该app注册到微信
+        mWxApi.registerApp(ApiConstant.APP_ID);
     }
     //开始滚动
     @Override
@@ -169,7 +188,7 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
                         String code = inviteBean.getCode();
                         if (code.equals(ApiConstant.SUCCESS_CODE)){
                             List<BannerImgInfo> imgBannerArray = inviteBean.getData().getImgBannerArray();
-                            List<String> charBannerArray = inviteBean.getData().getCharBannerArray();
+                            charBannerArray= inviteBean.getData().getCharBannerArray();
                             setValue(imgBannerArray,charBannerArray);
                         }
                     }
@@ -207,6 +226,23 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
         autotext.setAnimTime(300);//设置进入和退出的时间间隔`
         autotext.setPadding(5,5,0,5);
         autotext.startAutoScroll();
+    }
+    @Override
+    protected void initListener() {
+        ll_friendCircle.setOnClickListener(this);
+        ll_qq.setOnClickListener(this);
+        ll_wechat.setOnClickListener(this);
+        ll_weibo.setOnClickListener(this);
+        //banner点击事件
+        banner.setOnBannerListener(new OnBannerListener() {
+            @Override
+            public void OnBannerClick(int position) {
+                Intent intent=new Intent(getActivity(),WebviewActivity.class);
+                intent.putExtra("url",charBannerArray.get(position));
+                intent.putExtra("title","详情");
+                startActivity(intent);
+            }
+        });
         //对单条文字的点击监听
         autotext.setOnItemClickListener(new VerticalTextview.OnItemClickListener() {
             @Override
@@ -214,9 +250,6 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
 
             }
         });
-    }
-    @Override
-    protected void initListener() {
 
     }
     @OnClick({R.id.tv_right,R.id.ll_FriendIncome,R.id.ll_FriendNum,R.id.ll_MyInvitationCode,
@@ -268,11 +301,55 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
                 Intent intent_wakefriend = new Intent(getActivity(), WakeFriendsActivity.class);
                 startActivity(intent_wakefriend);
                 break;
-            default:
+            case R.id.ll_friendCircle:
+                shareFriendCircle();
+                break;
+            case R.id.ll_QQ:
+                break;
+            case R.id.ll_weibo:
+                break;
+            case R.id.ll_wechat:
+                shareFriends();
                 break;
         }
-
-
+    }
+    //分享到微信
+    private void shareFriends() {
+        WXWebpageObject webpage = new WXWebpageObject();
+        webpage.webpageUrl = "http://www.gaokaoygzy.cn/download";
+        WXMediaMessage msg = new WXMediaMessage(webpage);
+        msg.title ="阳光志愿";
+        msg.description ="阳光志愿" ;
+        Bitmap bmp = BitmapFactory.decodeResource(getResources(),R.mipmap.logo);
+        Bitmap thumbBmp = Bitmap.createScaledBitmap(bmp, 100, 100, true);
+        msg.setThumbImage(thumbBmp);
+        bmp.recycle();
+        SendMessageToWX.Req req = new SendMessageToWX.Req();
+        req.transaction = buildTransaction("webpage");
+        req.message = msg;
+        // req.scene = sendtype==0?SendMessageToWX.Req.WXSceneSession:SendMessageToWX.Req.WXSceneTimeline;
+        req.scene = SendMessageToWX.Req.WXSceneSession;
+        mWxApi.sendReq(req);
+    }
+    private void shareFriendCircle() {
+        WXWebpageObject webpage = new WXWebpageObject();
+        webpage.webpageUrl = "http://www.gaokaoygzy.cn/download";
+        WXMediaMessage msg = new WXMediaMessage(webpage);
+        msg.title ="阳光志愿";
+        msg.description ="阳光志愿" ;
+        Bitmap bmp = BitmapFactory.decodeResource(getResources(),R.mipmap.logo);
+        Bitmap thumbBmp = Bitmap.createScaledBitmap(bmp, 100, 100, true);
+        msg.setThumbImage(thumbBmp);
+        bmp.recycle();
+        SendMessageToWX.Req req = new SendMessageToWX.Req();
+        req.transaction = buildTransaction("webpage");
+        req.message = msg;
+        // req.scene = sendtype==0?SendMessageToWX.Req.WXSceneSession:SendMessageToWX.Req.WXSceneTimeline;
+        req.scene = SendMessageToWX.Req.WXSceneTimeline;
+        mWxApi.sendReq(req);
+    }
+    public static String buildTransaction(final String type) {
+        return (type == null) ? String.valueOf(System.currentTimeMillis()) : type + System.currentTimeMillis();
     }
 
     /***
