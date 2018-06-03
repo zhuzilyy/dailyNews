@@ -40,6 +40,7 @@
     <color name="orange2">#ff4e0b</color>
     <color name="goldcolor">#f6c739</color>
     <color name="divider_line">#ececec</color>
+    <color name="transparent">#00000000</color>
 
 
 </resources>

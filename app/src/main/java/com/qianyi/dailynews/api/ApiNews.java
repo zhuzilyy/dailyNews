@@ -50,6 +50,32 @@ public class ApiNews {
         OkHttpManager.getInstance().postRequest(url,params,callback);
     }
 
+    /**
+     * 发表评论
+     * @param callback
+     */
+    public static void PublishNewsCommend(String url,String userId,String newsId,int page,String parentId ,String level,String comment , RequestCallBack<String> callback){
+        Map<String,String> params=new HashMap<>();
+        params.put("userId",userId );
+        params.put("newsId",newsId );
+        params.put("page",page +"");
+        params.put("parentId",parentId );
+        params.put("level",level);
+        params.put("comment",comment);
+        OkHttpManager.getInstance().postRequest(url,params,callback);
+    }
+    /**
+     * 评论点赞
+     * @param callback
+     */
+    public static void CommLike(String url,String commentId ,String userId , RequestCallBack<String> callback){
+        Map<String,String> params=new HashMap<>();
+        params.put("commentId ",commentId );
+        params.put("userId ",userId  );
+        OkHttpManager.getInstance().postRequest(url,params,callback);
+    }
+
+
     //=======以下辛振宇=================================================================
 
 }

@@ -34,6 +34,10 @@ public class ApiConstant {
     public static final String  INVITE_DETAIL= BASE_URL+"/api/news/getInviteInfo";
     //新闻热门评论
     public static final String  NEWS_COMMENT= BASE_URL+"/api/news/getComment";
+    //发表热门评论
+    public static final String  PUBLISH_NEWS_COMMENT= BASE_URL+"/api/news/setComment";
+    //评论点赞
+    public static final String  COMMENT_LIKE= BASE_URL+"/api/news/likeComment";
     //==========辛振宇==========================================
 
 

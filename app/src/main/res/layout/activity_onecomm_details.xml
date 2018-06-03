@@ -11,28 +11,28 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         >
-    <com.qianyi.dailynews.views.PullToRefreshView
-        android:orientation="vertical"
-        android:id="@+id/pulltorefreshView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <ListView
-            android:id="@+id/listview"
-            android:scrollbars="none"
-            android:paddingLeft="@dimen/dp_5"
-            android:paddingRight="@dimen/dp_5"
-            android:divider="#00ffffff"
-            android:dividerHeight="0dp"
+        <com.qianyi.dailynews.views.PullToRefreshView
+            android:orientation="vertical"
+            android:id="@+id/pulltorefreshView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingBottom="55dp"
-            />
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="55dp"/>
-    </com.qianyi.dailynews.views.PullToRefreshView>
-    <include layout="@layout/common_no_data"/>
-    <include layout="@layout/common_wrong_intert"/>
+            android:layout_height="match_parent">
+            <ListView
+                android:id="@+id/listview"
+                android:scrollbars="none"
+                android:paddingLeft="@dimen/dp_5"
+                android:paddingRight="@dimen/dp_5"
+                android:divider="#00ffffff"
+                android:dividerHeight="0dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingBottom="55dp"
+                />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="55dp"/>
+        </com.qianyi.dailynews.views.PullToRefreshView>
+        <include layout="@layout/common_no_data"/>
+        <include layout="@layout/common_wrong_intert"/>
     </LinearLayout>
 
     <!--评论弹框-->

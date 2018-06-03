@@ -126,6 +126,10 @@
         <activity android:name=".ui.news.activity.MoreCommActivity"
             android:screenOrientation="portrait"
             />
+        <!--一条评论的详情-->
+        <activity android:name=".ui.news.activity.OneCommDetailsActivity"
+            android:screenOrientation="portrait"
+            />
         <!--欢迎界面-->
         <activity android:name=".ui.account.activity.SplashActivity"
             android:screenOrientation="portrait"

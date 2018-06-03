@@ -1,211 +1,261 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_height="match_parent">
-    <!--title-->
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="45dp">
-        <ImageView
-            android:id="@+id/iv_back"
-            android:layout_width="20dp"
-            android:layout_centerVertical="true"
-            android:layout_height="20dp"
-            android:layout_marginLeft="@dimen/dp_10"
-            android:src="@mipmap/back_icon"
-            />
-        <TextView
-            android:id="@+id/tv_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="新闻详情"
-            android:textSize="16sp"
-            android:textColor="@color/black"
-            android:layout_centerInParent="true"
-            />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+        <!--title-->
         <RelativeLayout
-            android:id="@+id/re_money"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="20dp"
-            >
-
+            android:layout_width="match_parent"
+            android:layout_height="45dp">
             <ImageView
-                android:id="@+id/iv_money"
+                android:id="@+id/iv_back"
+                android:layout_width="20dp"
                 android:layout_centerVertical="true"
-                android:layout_toLeftOf="@+id/tv_money"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginRight="-15dp"
-                android:src="@mipmap/earning_icon"
-
+                android:layout_height="20dp"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:src="@mipmap/back_icon"
                 />
-              <TextView
-                  android:id="@+id/tv_money"
-                  android:textColor="@color/white"
-                  android:paddingTop="@dimen/dp_2"
-                  android:paddingBottom="@dimen/dp_2"
-                  android:paddingLeft="@dimen/dp_6"
-                  android:paddingRight="@dimen/dp_6"
-                  android:layout_alignTop="@+id/iv_money"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:text="+255"
-                  android:textSize="12sp"
-                  android:layout_marginTop="-5dp"
-                  android:background="@drawable/shape_coner_red"
-                  android:layout_alignParentRight="true"
-                  />
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="新闻详情"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:layout_centerInParent="true"
+                />
+            <RelativeLayout
+                android:id="@+id/re_money"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="20dp"
+                >
+
+                <ImageView
+                    android:id="@+id/iv_money"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/tv_money"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginRight="-15dp"
+                    android:src="@mipmap/earning_icon"
+
+                    />
+                <TextView
+                    android:id="@+id/tv_money"
+                    android:textColor="@color/white"
+                    android:paddingTop="@dimen/dp_2"
+                    android:paddingBottom="@dimen/dp_2"
+                    android:paddingLeft="@dimen/dp_6"
+                    android:paddingRight="@dimen/dp_6"
+                    android:layout_alignTop="@+id/iv_money"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="+255"
+                    android:textSize="12sp"
+                    android:layout_marginTop="-5dp"
+                    android:background="@drawable/shape_coner_red"
+                    android:layout_alignParentRight="true"
+                    />
+            </RelativeLayout>
         </RelativeLayout>
-    </RelativeLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_0.5"
-        android:background="@color/gray"/>
-    <ScrollView
-        android:id="@+id/sc"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <LinearLayout
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_0.5"
+            android:background="@color/gray"/>
+        <ScrollView
+            android:id="@+id/sc"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            >
-            <ProgressBar
-                android:id="@+id/pb_webview"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="fill_parent"
-                android:layout_height="5dip"
-                android:indeterminateOnly="false"
-                android:max="100"
-                android:progressDrawable="@drawable/progress_bar_states" />
-            <!--top-webview-->
-           <RelativeLayout
-               android:id="@+id/top_web_re"
-               android:layout_width="match_parent"
-               android:layout_height="match_parent">
-               <com.qianyi.dailynews.ui.news.views.NoScrollWebView
-                   android:id="@+id/news_webview"
-                   android:layout_width="match_parent"
-                   android:layout_height="400dp"/>
-
-               <RelativeLayout
-                   android:id="@+id/re_newsmore"
-                   android:layout_width="match_parent"
-                   android:layout_height="100dp"
-                   android:layout_alignParentBottom="true"
-                   android:background="@drawable/shape_grand_white"
-                   >
-                   <TextView
-                       android:visibility="gone"
-                       android:id="@+id/tv_news_more"
-                       android:layout_marginRight="35dp"
-                       android:layout_alignParentBottom="true"
-                       android:layout_marginBottom="@dimen/dp_10"
-                       android:layout_marginLeft="35dp"
-                       android:layout_width="match_parent"
-                       android:layout_height="40dp"
-                       android:text="点击查看全部"
-                       android:textColor="@color/white"
-                       android:background="@drawable/shape_coner_red"
-                       android:gravity="center"
-                       />
-
-               </RelativeLayout>
-           </RelativeLayout>
-            <!--bottom-webview-->
-            <WebView
-                android:visibility="gone"
-                android:id="@+id/bottom_web"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="10dp"
-                android:background="@color/light_gray5"
-                />
-            <!--相关推荐-->
+            android:paddingBottom="70dp">
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="vertical"
                 >
-                <!--title-->
-                <LinearLayout
+                <ProgressBar
+                    android:id="@+id/pb_webview"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="5dip"
+                    android:indeterminateOnly="false"
+                    android:max="100"
+                    android:progressDrawable="@drawable/progress_bar_states" />
+                <!--top-webview-->
+                <RelativeLayout
+                    android:id="@+id/top_web_re"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:gravity="center_vertical"
-                    android:paddingLeft="@dimen/dp_10"
-                    >
-                    <View
-                        android:layout_width="6dp"
-                        android:layout_height="match_parent"
-                      android:layout_marginTop="@dimen/dp_10"
-                        android:layout_marginBottom="@dimen/dp_10"
-                        android:background="@color/red"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="相关推荐"
-                        android:textSize="16sp"
-                        android:textColor="@color/black"
-                        android:layout_marginLeft="@dimen/dp_10"
-                        />
-                </LinearLayout>
-                <!--Listview相关推荐-->
-                <com.qianyi.dailynews.ui.news.views.MySingListView
-                    android:id="@+id/lv_"
+                    android:layout_height="match_parent">
+                    <com.qianyi.dailynews.ui.news.views.NoScrollWebView
+                        android:id="@+id/news_webview"
+                        android:layout_width="match_parent"
+                        android:layout_height="400dp"/>
+
+                    <RelativeLayout
+                        android:id="@+id/re_newsmore"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:layout_alignParentBottom="true"
+                        android:background="@drawable/shape_grand_white"
+                        >
+                        <TextView
+                            android:visibility="gone"
+                            android:id="@+id/tv_news_more"
+                            android:layout_marginRight="35dp"
+                            android:layout_alignParentBottom="true"
+                            android:layout_marginBottom="@dimen/dp_10"
+                            android:layout_marginLeft="35dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:text="点击查看全部"
+                            android:textColor="@color/white"
+                            android:background="@drawable/shape_coner_red"
+                            android:gravity="center"
+                            />
+
+                    </RelativeLayout>
+                </RelativeLayout>
+                <!--bottom-webview-->
+                <WebView
+                    android:visibility="gone"
+                    android:id="@+id/bottom_web"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    />
+                    android:layout_height="wrap_content"/>
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_10"
-                    android:background="@color/light_gray5"/>
-                <!--Listview评论-->
-                <!--title-->
+                    android:layout_height="10dp"
+                    android:background="@color/light_gray5"
+                    />
+                <!--相关推荐-->
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:gravity="center_vertical"
-                    android:paddingLeft="@dimen/dp_10"
-                    >
-                    <View
-                        android:layout_width="6dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="@dimen/dp_10"
-                        android:layout_marginBottom="@dimen/dp_10"
-                        android:background="@color/red"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="热门评论"
-                        android:textSize="16sp"
-                        android:textColor="@color/black"
-                        android:layout_marginLeft="@dimen/dp_10"
-                        />
-                </LinearLayout>
-                <com.qianyi.dailynews.ui.news.views.MySingListView
-                    android:id="@+id/lv_comment"
-                    android:dividerHeight="0dp"
-                    android:divider="#00ffffff"
-                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    />
+                    android:orientation="vertical"
+                    >
+                    <!--title-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="@dimen/dp_10"
+                        >
+                        <View
+                            android:layout_width="6dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="@dimen/dp_10"
+                            android:layout_marginBottom="@dimen/dp_10"
+                            android:background="@color/red"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="相关推荐"
+                            android:textSize="16sp"
+                            android:textColor="@color/black"
+                            android:layout_marginLeft="@dimen/dp_10"
+                            />
+                    </LinearLayout>
+                    <!--Listview相关推荐-->
+                    <com.qianyi.dailynews.ui.news.views.MySingListView
+                        android:id="@+id/lv_"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_10"
+                        android:background="@color/light_gray5"/>
+                    <!--Listview评论-->
+                    <!--title-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="@dimen/dp_10"
+                        >
+                        <View
+                            android:layout_width="6dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="@dimen/dp_10"
+                            android:layout_marginBottom="@dimen/dp_10"
+                            android:background="@color/red"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="热门评论"
+                            android:textSize="16sp"
+                            android:textColor="@color/black"
+                            android:layout_marginLeft="@dimen/dp_10"
+                            />
+                    </LinearLayout>
+                    <com.qianyi.dailynews.ui.news.views.MySingListView
+                        android:id="@+id/lv_comment"
+                        android:dividerHeight="0dp"
+                        android:divider="#00ffffff"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"/>
+
+                </LinearLayout>
+
+
+
 
             </LinearLayout>
 
 
 
+        </ScrollView>
+    </LinearLayout>
+    <!--评论弹框-->
+    <RelativeLayout
+        android:id="@+id/re_comm"
+        android:background="@color/white"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:visibility="visible"
+        android:layout_height="55dp">
+        <LinearLayout
+
+            android:layout_centerInParent="true"
+
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginRight="25dp"
+            android:layout_marginLeft="25dp"
+            android:background="@drawable/comm_bg"
+            android:gravity="center_vertical"
+            android:paddingLeft="20dp"
+            >
+            <ImageView
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:src="@mipmap/writtecomm"
+                />
+            <TextView
+                android:layout_marginLeft="12dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="写评论"
+                android:textSize="12sp"
+                android:textColor="@color/black"
+                />
+
 
         </LinearLayout>
 
+    </RelativeLayout>
 
 
-    </ScrollView>
 
-</LinearLayout>
+</RelativeLayout>
