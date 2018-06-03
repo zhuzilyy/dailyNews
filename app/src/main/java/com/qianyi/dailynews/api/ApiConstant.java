@@ -5,6 +5,8 @@ package com.qianyi.dailynews.api;
  */
 
 public class ApiConstant {
+    public static final String APP_ID="APP_ID";
+    public static final String APP_SECRET="APP_SECRET";
     public static final String BASE_URL="http://47.104.73.127:8080/news-0.0.1";
     public static final String PAGE_SIZE="10";
     public static final String SUCCESS_CODE="0000";

@@ -5,7 +5,7 @@ android {
         config {
             keyAlias 'android.keystore'
             keyPassword '031424'
-            storeFile file('D:/Android/keystore/android.keystore')
+            storeFile file('C:/Program Files/Java/jdk1.7.0_67/bin/android.keystore')
             storePassword '031424'
         }
     }
@@ -79,6 +79,9 @@ dependencies {
     //上下滚动
     compile 'com.github.paradoxie:AutoVerticalTextview:0.1'
     implementation project(':jcvideoplayer-lib')
-    compile 'cn.jiguang.sdk:jpush:3.1.1'  // 此处以JPush 3.1.1 版本为例。
-    compile 'cn.jiguang.sdk:jcore:1.1.9'  // 此处以JCore 1.1.9 版本为例。
+    compile 'cn.jiguang.sdk:jpush:3.1.1'
+    // 此处以JPush 3.1.1 版本为例。
+    compile 'cn.jiguang.sdk:jcore:1.1.9'
+    // 此处以JCore 1.1.9 版本为例。
+    implementation files('libs/libammsdk.jar')
 }
