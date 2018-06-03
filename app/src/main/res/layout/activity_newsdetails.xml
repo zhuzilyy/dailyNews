@@ -165,6 +165,8 @@
                     <!--Listview相关推荐-->
                     <com.qianyi.dailynews.ui.news.views.MySingListView
                         android:id="@+id/lv_"
+                        android:layout_marginLeft="@dimen/dp_10"
+                        android:layout_marginRight="@dimen/dp_10"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         />

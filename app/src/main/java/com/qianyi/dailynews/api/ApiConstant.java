@@ -40,6 +40,10 @@ public class ApiConstant {
     public static final String  PUBLISH_NEWS_COMMENT= BASE_URL+"/api/news/setComment";
     //评论点赞
     public static final String  COMMENT_LIKE= BASE_URL+"/api/news/likeComment";
+    //获取相关推荐
+    public static final String  NEWS_WONDERFUL_REMMOND= BASE_URL+"/api/news/getWonderfulNews";
+    //获取相一条新闻的详情
+    public static final String  NEWS_ONE= BASE_URL+"/api/news/getCommentDetail";
     //==========辛振宇==========================================
 
 

@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.qianyi.dailynews.R;
+import com.qianyi.dailynews.adapter.NewsAdapter;
 import com.qianyi.dailynews.api.ApiConstant;
 import com.qianyi.dailynews.api.ApiNews;
 import com.qianyi.dailynews.base.BaseActivity;
@@ -28,11 +29,14 @@ import com.qianyi.dailynews.ui.news.adapter.HotCommentAdapterNews;
 import com.qianyi.dailynews.ui.news.adapter.NewsDetailsAdapter;
 import com.qianyi.dailynews.ui.news.bean.CommPublishBean;
 import com.qianyi.dailynews.ui.news.bean.CommentBean;
+import com.qianyi.dailynews.ui.news.bean.NewsBean;
+import com.qianyi.dailynews.ui.news.bean.NewsContentBean;
 import com.qianyi.dailynews.ui.news.views.KeyMapDailog;
 import com.qianyi.dailynews.ui.news.views.MySingListView;
 import com.qianyi.dailynews.utils.SPUtils;
 import com.qianyi.dailynews.utils.WebviewUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -63,16 +67,17 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
     @BindView(R.id.re_comm) public RelativeLayout re_comm;
     public KeyMapDailog dialog;
     private View footer;
-
-
     private NewsDetailsAdapter adapter;
     private HotCommentAdapterNews commentAdapterNews;
+
+    //相关推荐
+    private NewsAdapter newsAdapter;
 
     //***********************************
     private String titleStr;
     private String urlStr;
     private WebSettings webSettings;
-    private String newsId="";
+    public static String newsId="";
     private int page=1;
     private int pageSize=10;
     private int pageLevel2=1;//二级评论的也是
@@ -91,9 +96,6 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
         }
 
 
-        adapter=new NewsDetailsAdapter(NewsDetailsActivity.this);
-        lv.setAdapter(adapter);
-
 
 
     }
@@ -103,9 +105,141 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
         // 加载webview
         loadingWebview(news_webview);
         loadingWebview(bottom_web);
+        //获取相关推荐
+        getRecommend();
         //获取热门评论
         getCommend();
     }
+
+    /****
+     * 获得相关推荐
+     */
+    private void getRecommend() {
+        ApiNews.GetRemmond(ApiConstant.NEWS_WONDERFUL_REMMOND, 5+"", 5+"", new RequestCallBack<String>() {
+            @Override
+            public void onSuccess(Call call, Response response, String s) {
+                Log.i("ss",s);
+                Gson gson = new Gson();
+                NewsContentBean contentBean = gson.fromJson(s, NewsContentBean.class);
+                if (contentBean != null) {
+                    String code = contentBean.getCode();
+                    if ("0000".equals(code)) {
+                        NewsContentBean.NewsContentData contentData = contentBean.getData();
+                        if (contentData != null) {
+                            List<NewsContentBean.NewsContentData.NewsByType> newsByTypes = contentData.getNewsByType();
+                            if (newsByTypes.size() > 0) {
+                                List<NewsContentBean.NewsContentData.AdavertContent> adavertContents = contentData.getAdvertArray();
+                                List<NewsContentBean.NewsContentData.NewsByType.NewsContentInfo> newsContentInfos = newsByTypes.get(0).getNewsInfoArray();
+
+                                if (adavertContents.size() > 0 || newsContentInfos.size() > 0) {
+                                    List<NewsBean> newsBeans = dowithNews(adavertContents, newsContentInfos);
+                                    newsAdapter=new NewsAdapter(NewsDetailsActivity.this,newsBeans);
+                                    lv.setAdapter(newsAdapter);
+
+                                }
+                            }
+                        }
+                    }
+                }
+
+            }
+
+            @Override
+            public void onEror(Call call, int statusCode, Exception e) {
+                Log.i("ss",e.getMessage());
+            }
+        });
+    }
+    /**
+     * 将新闻和广告按11排列
+     *
+     * @param adavertContents
+     * @param newsContentInfos
+     * @return
+     */
+    private List<NewsBean> dowithNews(List<NewsContentBean.NewsContentData.AdavertContent> adavertContents, List<NewsContentBean.NewsContentData.NewsByType.NewsContentInfo> newsContentInfos) {
+        List<NewsBean> newsBeanList = new ArrayList<>();
+        boolean isNews = newsContentInfos.size() > 0 ? true : false;
+        boolean isAd = isNews == true ? false : true;
+        int size = (adavertContents.size() + newsContentInfos.size());
+        for (int i = 1; i <= size; i++) {
+            if (isNews) {
+                if ((newsContentInfos.size() > 0)) {
+                    for (int j = 0; j < newsContentInfos.size(); j++) {
+                        NewsBean newsBean = new NewsBean();
+                        NewsContentBean.NewsContentData.NewsByType.NewsContentInfo news = newsContentInfos.get(j);
+                        newsBean.setId(news.getId());
+                        newsBean.setPublishDate(news.getPublishDate());
+                        newsBean.setPosterScreenName(news.getPosterScreenName());
+                        newsBean.setUrl(news.getUrl());
+                        newsBean.setTitle(news.getTitle());
+                        newsBean.setPosterId(news.getPosterId());
+                        newsBean.setViewCount(news.getViewCount());
+                        newsBean.setContent(news.getContent());
+                        newsBean.setImgsUrl(news.getImgsUrl());
+                        newsBean.setIfRead(news.getIfRead());
+                        newsBean.setNewsType(news.getNewsTyps());
+                        newsBeanList.add(newsBean);
+                        newsContentInfos.remove(0);
+                        break;
+                    }
+
+                    if (i % 4 == 0) {
+                        isAd = true;
+                        isNews = false;
+                    }
+                    continue;
+                } else {
+                    isAd = true;
+                    isNews = false;
+                }
+            } else if (isAd) {
+                if ((adavertContents.size() > 0)) {
+                    for (int j = 0; j < adavertContents.size(); j++) {
+                        NewsBean newsBean = new NewsBean();
+                        NewsContentBean.NewsContentData.AdavertContent ad = adavertContents.get(j);
+                        newsBean.setId(ad.getId());
+                        newsBean.setTitle(ad.getTitle());
+                        newsBean.setUrl(ad.getUrl());
+                        newsBean.setReadNum(ad.getReadNum());
+                        newsBean.setImgs(ad.getImgs());
+                        newsBean.setAdType(ad.getAdType());
+                        newsBeanList.add(newsBean);
+                        adavertContents.remove(0);
+                        break;
+                    }
+                    isAd = false;
+                    isNews = true;
+                    continue;
+                } else {
+                    for (int j = 0; j < newsContentInfos.size(); j++) {
+                        NewsBean newsBean = new NewsBean();
+                        NewsContentBean.NewsContentData.NewsByType.NewsContentInfo news = newsContentInfos.get(j);
+                        newsBean.setId(news.getId());
+                        newsBean.setPublishDate(news.getPublishDate());
+                        newsBean.setPosterScreenName(news.getPosterScreenName());
+                        newsBean.setUrl(news.getUrl());
+                        newsBean.setTitle(news.getTitle());
+                        newsBean.setPosterId(news.getPosterId());
+                        newsBean.setViewCount(news.getViewCount());
+                        newsBean.setContent(news.getContent());
+                        newsBean.setImgsUrl(news.getImgsUrl());
+                        newsBean.setIfRead(news.getIfRead());
+                        newsBean.setNewsType(news.getNewsTyps());
+                        newsBeanList.add(newsBean);
+                        newsContentInfos.remove(0);
+                        break;
+                    }
+                    isAd = false;
+                    isNews = true;
+
+                }
+            }
+
+        }
+        return newsBeanList;
+    }
+
 
     /***
      * 获取热门评论

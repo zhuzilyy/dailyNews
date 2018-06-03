@@ -157,6 +157,7 @@ public class HotCommentAdapterNews extends BaseAdapter {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(mContext, OneCommDetailsActivity.class);
+                    intent.putExtra("commId",commentRes.getId());
                     mContext.startActivity(intent);
                 }
             });

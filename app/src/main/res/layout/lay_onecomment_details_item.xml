@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:paddingTop="@dimen/dp_10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="100dp"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/dp_20"
+        >
+        <!--头像-->
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            >
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/newsComm_head"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:src="@mipmap/touxiang"
+                app:riv_corner_radius="30dp"
+                android:layout_centerHorizontal="true"
+                />
+
+        </RelativeLayout>
+        <!--其他-->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="4"
+            android:orientation="vertical"
+            android:layout_height="match_parent">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <!--用户名-->
+                <TextView
+                    android:id="@+id/newsComm_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="double_y"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    />
+                <!--点赞-->
+                <LinearLayout
+                    android:visibility="visible"
+                    android:id="@+id/newsComm_zan_ll"
+                    android:layout_marginRight="@dimen/dp_20"
+                    android:layout_alignParentRight="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    >
+                    <TextView
+                        android:id="@+id/newsComm_zan_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="10"
+                        android:textSize="14sp"
+                        android:textColor="@color/red"
+                        />
+                    <ImageView
+                        android:id="@+id/newsComm_zan_iv"
+                        android:layout_marginLeft="@dimen/dp_10"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:src="@mipmap/like_icon"
+                        />
+                </LinearLayout>
+
+            </RelativeLayout>
+            <!--评论内容-->
+            <TextView
+                android:id="@+id/newsComm_content"
+                android:layout_marginTop="@dimen/dp_5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/gray"
+                android:textSize="14sp"
+                android:layout_marginRight="@dimen/dp_15"
+                android:text="家里的几个老师几个老师就废了设计费是就废了设计费解放路上解放路是解放路上解放路解放路上解放路是就废了设计费放假了设计费附件四垃圾分类副经理级放假了积分放假了文件积分可是米饭"
+                />
+            <LinearLayout
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                >
+                <TextView
+                    android:id="@+id/newsComm_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2018-10-10 20:20:20"
+                    android:textSize="12sp"
+                    />
+            </LinearLayout>
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="10dp"
+                android:background="#00ffffff"/>
+
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+</LinearLayout>
