@@ -59,15 +59,80 @@
         </RelativeLayout>
 
     </LinearLayout>
-    <android.support.design.widget.TabLayout
-        android:id="@+id/tablayout"
-        app:tabTextAppearance="@style/TabLayoutTextStyle"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        app:tabTextColor="#000"
-        app:tabIndicatorHeight="0dp"
-        android:background="@color/white"
-        app:tabSelectedTextColor="#d81e06"/>
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tablayout"
+            app:tabTextAppearance="@style/TabLayoutTextStyle"
+            android:layout_width="0dp"
+            android:layout_weight="6"
+            android:layout_height="40dp"
+            app:tabTextColor="#000"
+            app:tabIndicatorHeight="0dp"
+            android:background="@color/white"
+            app:tabSelectedTextColor="#d81e06"/>
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/ll_redNumber"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_height="match_parent"
+
+            android:background="@color/white"
+            >
+            <View
+                android:layout_width="@dimen/dp_0.5"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_8"
+                android:layout_marginBottom="@dimen/dp_8"
+                android:background="@color/light_gray5"
+                android:layout_marginRight="@dimen/dp_5"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                >
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:gravity="center"
+
+                    android:layout_height="match_parent">
+                    <ImageView
+                        android:id="@+id/iv_redpackage"
+                        android:layout_width="20dp"
+                        android:layout_height="24dp"
+                        android:src="@mipmap/red_package"
+                        />
+                    <TextView
+                        android:id="@+id/tv_redNumber"
+                        android:layout_alignTop="@+id/iv_redpackage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="-8dp"
+                        android:layout_toRightOf="@+id/iv_redpackage"
+                        android:layout_marginLeft="-10dp"
+                        android:text="3/15"
+                        android:paddingBottom="@dimen/dp_1"
+                        android:paddingTop="@dimen/dp_1"
+                        android:textColor="@color/white"
+                        android:paddingRight="@dimen/dp_5"
+                        android:paddingLeft="@dimen/dp_5"
+                        android:textSize="10sp"
+                        android:background="@drawable/shape_coner_red"
+                        />
+                </RelativeLayout>
+
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
 
     <View
         android:layout_width="match_parent"

@@ -11,12 +11,12 @@ import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.qianyi.dailynews.R;
@@ -72,6 +72,7 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
 
     //相关推荐
     private NewsAdapter newsAdapter;
+    private List<NewsBean> bigCommendList=new ArrayList<>();
 
     //***********************************
     private String titleStr;
@@ -90,16 +91,10 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
             webSettings=news_webview.getSettings();
             WebviewUtil.setWebview(news_webview, webSettings);
             news_webview.loadUrl(urlStr);
-
             WebviewUtil.setWebview(bottom_web,webSettings);
             bottom_web.loadUrl(urlStr);
         }
-
-
-
-
     }
-
     @Override
     protected void initData() {
         // 加载webview
@@ -110,7 +105,6 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
         //获取热门评论
         getCommend();
     }
-
     /****
      * 获得相关推荐
      */
@@ -125,25 +119,34 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
                     String code = contentBean.getCode();
                     if ("0000".equals(code)) {
                         NewsContentBean.NewsContentData contentData = contentBean.getData();
-                        if (contentData != null) {
+                        if (contentData != null){
                             List<NewsContentBean.NewsContentData.NewsByType> newsByTypes = contentData.getNewsByType();
                             if (newsByTypes.size() > 0) {
                                 List<NewsContentBean.NewsContentData.AdavertContent> adavertContents = contentData.getAdvertArray();
                                 List<NewsContentBean.NewsContentData.NewsByType.NewsContentInfo> newsContentInfos = newsByTypes.get(0).getNewsInfoArray();
-
                                 if (adavertContents.size() > 0 || newsContentInfos.size() > 0) {
                                     List<NewsBean> newsBeans = dowithNews(adavertContents, newsContentInfos);
-                                    newsAdapter=new NewsAdapter(NewsDetailsActivity.this,newsBeans);
+                                    bigCommendList.clear();
+                                    bigCommendList.addAll(newsBeans);
+                                    newsAdapter=new NewsAdapter(NewsDetailsActivity.this,bigCommendList, "0");
                                     lv.setAdapter(newsAdapter);
-
+                                    lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                        @Override
+                                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                            Intent intent=new Intent(NewsDetailsActivity.this,NewsDetailsActivity.class);
+                                            intent.putExtra("title",bigCommendList.get(position).getTitle());
+                                            intent.putExtra("url",bigCommendList.get(position).getUrl());
+                                            intent.putExtra("id",bigCommendList.get(position).getId());
+                                            startActivity(intent);
+                                            finish();
+                                        }
+                                    });
                                 }
                             }
                         }
                     }
                 }
-
             }
-
             @Override
             public void onEror(Call call, int statusCode, Exception e) {
                 Log.i("ss",e.getMessage());
@@ -183,8 +186,7 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
                         newsContentInfos.remove(0);
                         break;
                     }
-
-                    if (i % 4 == 0) {
+                    if (0 == 0) {
                         isAd = true;
                         isNews = false;
                     }
@@ -232,15 +234,11 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
                     }
                     isAd = false;
                     isNews = true;
-
                 }
             }
-
         }
         return newsBeanList;
     }
-
-
     /***
      * 获取热门评论
      */
@@ -266,24 +264,16 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
                         if(newsCommentRes!=null&&newsCommentRes.size()>0.){
                             //赋值热门评论
                             setCommentData(newsCommentRes);
-
                         }
-
                     }
                 }
-
             }
-
             @Override
             public void onEror(Call call, int statusCode, Exception e) {
-                Log.i("SS",e.getMessage());
+              //  Log.i("SS",e.getMessage());
             }
         });
-
-
-
     }
-
     /***
      * 赋值热门评论
      * @param newsCommentRes
@@ -300,26 +290,19 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
            footer.findViewById(R.id.footer_more).setOnClickListener(new View.OnClickListener() {
                @Override
                public void onClick(View v) {
-
                    Intent intent=new Intent(NewsDetailsActivity.this,MoreCommActivity.class);
                    intent.putExtra("newsID",newsId);
                    startActivity(intent);
-
                }
            });
        }
-
         //发表评论
         commentAdapterNews.setOnCommPublishListener(new HotCommentAdapterNews.CommPublishListener() {
             @Override
             public void commPublish(String id) {
                 PublishComm(id);
             }
-
-
         });
-
-
     }
 
     @Override
@@ -368,26 +351,19 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
                // sc.scrollTo(0,0);
                 sc.fullScroll(View.FOCUS_UP);
                // sc.smoothScrollTo(0, 0);
-
                 break;
             case R.id.re_comm:
                 //发表一级评论
                 PublishFristComm();
                 break;
-
-
             default:
             break;
-
-
         }
     }
-
     /***
      * 发表一级评论
      */
     private void PublishFristComm() {
-
         dialog = new KeyMapDailog("发表评论：", new KeyMapDailog.SendBackListener() {
             @Override
             public void sendBack(final String inputText) {
@@ -418,12 +394,7 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
                                         }
                                    }
                                 }
-
-
-
-
                             }
-
                             @Override
                             public void onEror(Call call, int statusCode, Exception e) {
                                 dialog.hideProgressdialog();
@@ -431,21 +402,17 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
                                 Log.i("ss",e.getMessage());
                             }
                         });
-
-
                     }
                 }, 250);
             }
         });
         dialog.show(getSupportFragmentManager(), "dialog");
     }
-
     /***
      * 发表2级评论
      * @param id
      */
     private void PublishComm(final String id) {
-
         dialog = new KeyMapDailog("发表评论：", new KeyMapDailog.SendBackListener() {
             @Override
             public void sendBack(final String inputText) {
@@ -475,11 +442,7 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
                                         }
                                     }
                                 }
-
-
-
                             }
-
                             @Override
                             public void onEror(Call call, int statusCode, Exception e) {
                                 dialog.hideProgressdialog();
@@ -487,8 +450,6 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
                                     Log.i("ss",e.getMessage());
                             }
                         });
-
-
                     }
                 }, 250);
             }

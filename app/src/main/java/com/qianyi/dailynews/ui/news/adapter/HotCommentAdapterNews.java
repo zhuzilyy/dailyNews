@@ -95,7 +95,7 @@ public class HotCommentAdapterNews extends BaseAdapter {
 
         //一级评论
         Glide.with(mContext).load(commentRes.getHeadPortrait()).placeholder(R.mipmap.headportrait_icon).into(head);
-        name.setText(commentRes.getName());
+        name.setText(commentRes.getName()==null?commentRes.getUserName():commentRes.getUserName());
         content.setText(commentRes.getComment());
         time.setText(commentRes.getTime());
         zan_tv.setText(commentRes.getLike());

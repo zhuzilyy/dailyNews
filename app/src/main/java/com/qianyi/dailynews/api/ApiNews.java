@@ -98,6 +98,16 @@ public class ApiNews {
         OkHttpManager.getInstance().postRequest(url,params,callback);
     }
 
+    /**
+     * 获取新闻奖励数量
+     * @param callback
+     */
+    public static void GetNewsAward(String url,String userId , RequestCallBack<String> callback){
+        Map<String,String> params=new HashMap<>();
+        params.put("userId",userId);
+        OkHttpManager.getInstance().postRequest(url,params,callback);
+    }
+
 
     //=======以下辛振宇=================================================================
 
