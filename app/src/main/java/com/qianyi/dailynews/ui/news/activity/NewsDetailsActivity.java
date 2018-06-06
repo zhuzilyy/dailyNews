@@ -1,41 +1,42 @@
 package com.qianyi.dailynews.ui.news.activity;
 
 import android.content.Intent;
-import android.support.v7.widget.RecyclerView;
+import android.os.Handler;
 import android.text.TextUtils;
 
 
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.AdapterView;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.qianyi.dailynews.R;
+import com.qianyi.dailynews.adapter.NewsAdapter;
 import com.qianyi.dailynews.api.ApiConstant;
 import com.qianyi.dailynews.api.ApiNews;
 import com.qianyi.dailynews.base.BaseActivity;
 import com.qianyi.dailynews.callback.RequestCallBack;
-import com.qianyi.dailynews.ui.account.entity.LoginBean;
 import com.qianyi.dailynews.ui.news.adapter.HotCommentAdapterNews;
 import com.qianyi.dailynews.ui.news.adapter.NewsDetailsAdapter;
+import com.qianyi.dailynews.ui.news.bean.CommPublishBean;
 import com.qianyi.dailynews.ui.news.bean.CommentBean;
-import com.qianyi.dailynews.ui.news.views.ListViewForScorollView;
+import com.qianyi.dailynews.ui.news.bean.NewsBean;
+import com.qianyi.dailynews.ui.news.bean.NewsContentBean;
+import com.qianyi.dailynews.ui.news.views.KeyMapDailog;
 import com.qianyi.dailynews.ui.news.views.MySingListView;
 import com.qianyi.dailynews.utils.SPUtils;
-import com.qianyi.dailynews.utils.Utils;
 import com.qianyi.dailynews.utils.WebviewUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -61,16 +62,23 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
     @BindView(R.id.lv_) public MySingListView lv;
     @BindView(R.id.lv_comment) public MySingListView lv_comment;
     @BindView(R.id.sc) public ScrollView sc;
-
-
+    //****************************
+    //评论
+    @BindView(R.id.re_comm) public RelativeLayout re_comm;
+    public KeyMapDailog dialog;
+    private View footer;
     private NewsDetailsAdapter adapter;
     private HotCommentAdapterNews commentAdapterNews;
+
+    //相关推荐
+    private NewsAdapter newsAdapter;
+    private List<NewsBean> bigCommendList=new ArrayList<>();
 
     //***********************************
     private String titleStr;
     private String urlStr;
     private WebSettings webSettings;
-    private String newsId="";
+    public static String newsId="";
     private int page=1;
     private int pageSize=10;
     private int pageLevel2=1;//二级评论的也是
@@ -83,28 +91,154 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
             webSettings=news_webview.getSettings();
             WebviewUtil.setWebview(news_webview, webSettings);
             news_webview.loadUrl(urlStr);
-
             WebviewUtil.setWebview(bottom_web,webSettings);
             bottom_web.loadUrl(urlStr);
         }
-
-
-        adapter=new NewsDetailsAdapter(NewsDetailsActivity.this);
-        lv.setAdapter(adapter);
-
-
-
     }
-
     @Override
     protected void initData() {
         // 加载webview
         loadingWebview(news_webview);
         loadingWebview(bottom_web);
+        //获取相关推荐
+        getRecommend();
         //获取热门评论
         getCommend();
     }
-
+    /****
+     * 获得相关推荐
+     */
+    private void getRecommend() {
+        ApiNews.GetRemmond(ApiConstant.NEWS_WONDERFUL_REMMOND, 5+"", 5+"", new RequestCallBack<String>() {
+            @Override
+            public void onSuccess(Call call, Response response, String s) {
+                Log.i("ss",s);
+                Gson gson = new Gson();
+                NewsContentBean contentBean = gson.fromJson(s, NewsContentBean.class);
+                if (contentBean != null) {
+                    String code = contentBean.getCode();
+                    if ("0000".equals(code)) {
+                        NewsContentBean.NewsContentData contentData = contentBean.getData();
+                        if (contentData != null){
+                            List<NewsContentBean.NewsContentData.NewsByType> newsByTypes = contentData.getNewsByType();
+                            if (newsByTypes.size() > 0) {
+                                List<NewsContentBean.NewsContentData.AdavertContent> adavertContents = contentData.getAdvertArray();
+                                List<NewsContentBean.NewsContentData.NewsByType.NewsContentInfo> newsContentInfos = newsByTypes.get(0).getNewsInfoArray();
+                                if (adavertContents.size() > 0 || newsContentInfos.size() > 0) {
+                                    List<NewsBean> newsBeans = dowithNews(adavertContents, newsContentInfos);
+                                    bigCommendList.clear();
+                                    bigCommendList.addAll(newsBeans);
+                                    newsAdapter=new NewsAdapter(NewsDetailsActivity.this,bigCommendList, "0");
+                                    lv.setAdapter(newsAdapter);
+                                    lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                        @Override
+                                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                            Intent intent=new Intent(NewsDetailsActivity.this,NewsDetailsActivity.class);
+                                            intent.putExtra("title",bigCommendList.get(position).getTitle());
+                                            intent.putExtra("url",bigCommendList.get(position).getUrl());
+                                            intent.putExtra("id",bigCommendList.get(position).getId());
+                                            startActivity(intent);
+                                            finish();
+                                        }
+                                    });
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            @Override
+            public void onEror(Call call, int statusCode, Exception e) {
+                Log.i("ss",e.getMessage());
+            }
+        });
+    }
+    /**
+     * 将新闻和广告按11排列
+     *
+     * @param adavertContents
+     * @param newsContentInfos
+     * @return
+     */
+    private List<NewsBean> dowithNews(List<NewsContentBean.NewsContentData.AdavertContent> adavertContents, List<NewsContentBean.NewsContentData.NewsByType.NewsContentInfo> newsContentInfos) {
+        List<NewsBean> newsBeanList = new ArrayList<>();
+        boolean isNews = newsContentInfos.size() > 0 ? true : false;
+        boolean isAd = isNews == true ? false : true;
+        int size = (adavertContents.size() + newsContentInfos.size());
+        for (int i = 1; i <= size; i++) {
+            if (isNews) {
+                if ((newsContentInfos.size() > 0)) {
+                    for (int j = 0; j < newsContentInfos.size(); j++) {
+                        NewsBean newsBean = new NewsBean();
+                        NewsContentBean.NewsContentData.NewsByType.NewsContentInfo news = newsContentInfos.get(j);
+                        newsBean.setId(news.getId());
+                        newsBean.setPublishDate(news.getPublishDate());
+                        newsBean.setPosterScreenName(news.getPosterScreenName());
+                        newsBean.setUrl(news.getUrl());
+                        newsBean.setTitle(news.getTitle());
+                        newsBean.setPosterId(news.getPosterId());
+                        newsBean.setViewCount(news.getViewCount());
+                        newsBean.setContent(news.getContent());
+                        newsBean.setImgsUrl(news.getImgsUrl());
+                        newsBean.setIfRead(news.getIfRead());
+                        newsBean.setNewsType(news.getNewsTyps());
+                        newsBeanList.add(newsBean);
+                        newsContentInfos.remove(0);
+                        break;
+                    }
+                    if (0 == 0) {
+                        isAd = true;
+                        isNews = false;
+                    }
+                    continue;
+                } else {
+                    isAd = true;
+                    isNews = false;
+                }
+            } else if (isAd) {
+                if ((adavertContents.size() > 0)) {
+                    for (int j = 0; j < adavertContents.size(); j++) {
+                        NewsBean newsBean = new NewsBean();
+                        NewsContentBean.NewsContentData.AdavertContent ad = adavertContents.get(j);
+                        newsBean.setId(ad.getId());
+                        newsBean.setTitle(ad.getTitle());
+                        newsBean.setUrl(ad.getUrl());
+                        newsBean.setReadNum(ad.getReadNum());
+                        newsBean.setImgs(ad.getImgs());
+                        newsBean.setAdType(ad.getAdType());
+                        newsBeanList.add(newsBean);
+                        adavertContents.remove(0);
+                        break;
+                    }
+                    isAd = false;
+                    isNews = true;
+                    continue;
+                } else {
+                    for (int j = 0; j < newsContentInfos.size(); j++) {
+                        NewsBean newsBean = new NewsBean();
+                        NewsContentBean.NewsContentData.NewsByType.NewsContentInfo news = newsContentInfos.get(j);
+                        newsBean.setId(news.getId());
+                        newsBean.setPublishDate(news.getPublishDate());
+                        newsBean.setPosterScreenName(news.getPosterScreenName());
+                        newsBean.setUrl(news.getUrl());
+                        newsBean.setTitle(news.getTitle());
+                        newsBean.setPosterId(news.getPosterId());
+                        newsBean.setViewCount(news.getViewCount());
+                        newsBean.setContent(news.getContent());
+                        newsBean.setImgsUrl(news.getImgsUrl());
+                        newsBean.setIfRead(news.getIfRead());
+                        newsBean.setNewsType(news.getNewsTyps());
+                        newsBeanList.add(newsBean);
+                        newsContentInfos.remove(0);
+                        break;
+                    }
+                    isAd = false;
+                    isNews = true;
+                }
+            }
+        }
+        return newsBeanList;
+    }
     /***
      * 获取热门评论
      */
@@ -130,24 +264,16 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
                         if(newsCommentRes!=null&&newsCommentRes.size()>0.){
                             //赋值热门评论
                             setCommentData(newsCommentRes);
-
                         }
-
                     }
                 }
-
             }
-
             @Override
             public void onEror(Call call, int statusCode, Exception e) {
-                Log.i("SS",e.getMessage());
+              //  Log.i("SS",e.getMessage());
             }
         });
-
-
-
     }
-
     /***
      * 赋值热门评论
      * @param newsCommentRes
@@ -156,22 +282,27 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
         commentAdapterNews =new HotCommentAdapterNews(NewsDetailsActivity.this,newsCommentRes);
         lv_comment.setAdapter(commentAdapterNews);
        if(newsCommentRes.size()>5){
-           View footer= LayoutInflater.from(NewsDetailsActivity.this).inflate(R.layout.lay_news_comm_footer,null);
+           if(!lv_comment.removeFooterView(footer)){
+               lv_comment.removeFooterView(footer);
+           }
+           footer= LayoutInflater.from(NewsDetailsActivity.this).inflate(R.layout.lay_news_comm_footer,null);
            lv_comment.addFooterView(footer);
            footer.findViewById(R.id.footer_more).setOnClickListener(new View.OnClickListener() {
                @Override
                public void onClick(View v) {
-
-                   //Toast.makeText(NewsDetailsActivity.this, "加载更多", Toast.LENGTH_SHORT).show();
                    Intent intent=new Intent(NewsDetailsActivity.this,MoreCommActivity.class);
                    intent.putExtra("newsID",newsId);
                    startActivity(intent);
-
                }
            });
        }
-
-
+        //发表评论
+        commentAdapterNews.setOnCommPublishListener(new HotCommentAdapterNews.CommPublishListener() {
+            @Override
+            public void commPublish(String id) {
+                PublishComm(id);
+            }
+        });
     }
 
     @Override
@@ -205,7 +336,7 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
             }
         });
     }
-    @OnClick({R.id.iv_back,R.id.tv_news_more})
+    @OnClick({R.id.iv_back,R.id.tv_news_more,R.id.re_comm})
     @Override
     public void onClick(View view) {
         switch(view.getId()){
@@ -220,13 +351,109 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
                // sc.scrollTo(0,0);
                 sc.fullScroll(View.FOCUS_UP);
                // sc.smoothScrollTo(0, 0);
-
                 break;
-
+            case R.id.re_comm:
+                //发表一级评论
+                PublishFristComm();
+                break;
             default:
             break;
-
-
         }
+    }
+    /***
+     * 发表一级评论
+     */
+    private void PublishFristComm() {
+        dialog = new KeyMapDailog("发表评论：", new KeyMapDailog.SendBackListener() {
+            @Override
+            public void sendBack(final String inputText) {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        String userid = (String) SPUtils.get(NewsDetailsActivity.this,"user_id","");
+                        if(TextUtils.isEmpty(userid)){
+                            return;
+                        }
+                        if(TextUtils.isEmpty(newsId)){
+                            return;
+                        }
+                        ApiNews.PublishNewsCommend(ApiConstant.PUBLISH_NEWS_COMMENT, userid, newsId, 1, 0+"", 1+"", inputText, new RequestCallBack<String>() {
+                            @Override
+                            public void onSuccess(Call call, Response response, String s) {
+                                dialog.hideProgressdialog();
+                                dialog.dismiss();
+                                Log.i("ss",s);
+                                Gson gson=new Gson();
+                                CommPublishBean bean=gson.fromJson(s,CommPublishBean.class);
+                                if(bean!=null){
+                                   String code= bean.getCode();
+                                   if("0000".equals(code)){
+                                        CommPublishBean.CommPublisData data=bean.getData();
+                                        if(data!=null){
+                                            getCommend();
+                                        }
+                                   }
+                                }
+                            }
+                            @Override
+                            public void onEror(Call call, int statusCode, Exception e) {
+                                dialog.hideProgressdialog();
+                                dialog.dismiss();
+                                Log.i("ss",e.getMessage());
+                            }
+                        });
+                    }
+                }, 250);
+            }
+        });
+        dialog.show(getSupportFragmentManager(), "dialog");
+    }
+    /***
+     * 发表2级评论
+     * @param id
+     */
+    private void PublishComm(final String id) {
+        dialog = new KeyMapDailog("发表评论：", new KeyMapDailog.SendBackListener() {
+            @Override
+            public void sendBack(final String inputText) {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        String userid = (String) SPUtils.get(NewsDetailsActivity.this,"user_id","");
+                        if(TextUtils.isEmpty(userid)){
+                            return;
+                        }
+                        if(TextUtils.isEmpty(newsId)){
+                            return;
+                        }
+                        ApiNews.PublishNewsCommend(ApiConstant.PUBLISH_NEWS_COMMENT, userid, newsId, 1, id, 2+"", inputText, new RequestCallBack<String>() {
+                            @Override
+                            public void onSuccess(Call call, Response response, String s) {
+                                dialog.hideProgressdialog();
+                                dialog.dismiss();
+                                Gson gson=new Gson();
+                                CommPublishBean bean=gson.fromJson(s,CommPublishBean.class);
+                                if(bean!=null){
+                                    String code= bean.getCode();
+                                    if("0000".equals(code)){
+                                        CommPublishBean.CommPublisData data=bean.getData();
+                                        if(data!=null){
+                                            getCommend();
+                                        }
+                                    }
+                                }
+                            }
+                            @Override
+                            public void onEror(Call call, int statusCode, Exception e) {
+                                dialog.hideProgressdialog();
+                                dialog.dismiss();
+                                    Log.i("ss",e.getMessage());
+                            }
+                        });
+                    }
+                }, 250);
+            }
+        });
+        dialog.show(getSupportFragmentManager(), "dialog");
     }
 }

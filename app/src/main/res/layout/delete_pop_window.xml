@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="@dimen/dp_15"
+    android:paddingRight="@dimen/dp_15"
+    android:orientation="vertical" >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="不敢兴趣的原因"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="14sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <Button
+            android:id="@+id/button1"
+            android:background="@drawable/shape_stroke_gray"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/dp_5"
+            android:paddingBottom="@dimen/dp_5"
+            android:paddingRight="@dimen/dp_10"
+            android:paddingLeft="@dimen/dp_10"
+            android:text="看过了"
+            android:textSize="12sp" />
+        <Button
+            android:layout_marginLeft="@dimen/dp_10"
+            android:id="@+id/button2"
+            android:layout_width="0dp"
+            android:background="@drawable/shape_stroke_gray"
+            android:layout_weight="1.5"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/dp_5"
+            android:paddingBottom="@dimen/dp_5"
+            android:paddingRight="@dimen/dp_10"
+            android:paddingLeft="@dimen/dp_10"
+            android:text="不喜欢该作者的内容"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <Button
+            android:id="@+id/button4"
+            android:layout_width="0dp"
+            android:background="@drawable/shape_stroke_gray"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/dp_5"
+            android:paddingBottom="@dimen/dp_5"
+            android:paddingRight="@dimen/dp_10"
+            android:paddingLeft="@dimen/dp_10"
+            android:text="内容太水了"
+            android:textSize="12sp" />
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="0dp"
+            android:background="@drawable/shape_stroke_gray"
+            android:layout_weight="1.5"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/dp_5"
+            android:paddingBottom="@dimen/dp_5"
+            android:paddingRight="@dimen/dp_10"
+            android:paddingLeft="@dimen/dp_10"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:text="不喜欢该类型的文章"
+            android:textSize="12sp" />
+
+
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="20dp"/>
+
+
+
+
+</LinearLayout>

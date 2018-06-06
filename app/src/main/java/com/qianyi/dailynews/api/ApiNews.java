@@ -50,6 +50,65 @@ public class ApiNews {
         OkHttpManager.getInstance().postRequest(url,params,callback);
     }
 
+    /**
+     * 发表评论
+     * @param callback
+     */
+    public static void PublishNewsCommend(String url,String userId,String newsId,int page,String parentId ,String level,String comment , RequestCallBack<String> callback){
+        Map<String,String> params=new HashMap<>();
+        params.put("userId",userId );
+        params.put("newsId",newsId );
+        params.put("page",page +"");
+        params.put("parentId",parentId );
+        params.put("level",level);
+        params.put("comment",comment);
+        OkHttpManager.getInstance().postRequest(url,params,callback);
+    }
+    /**
+     * 评论点赞
+     * @param callback
+     */
+    public static void CommLike(String url,String commentId ,String userId , RequestCallBack<String> callback){
+        Map<String,String> params=new HashMap<>();
+        params.put("commentId ",commentId );
+        params.put("userId ",userId  );
+        OkHttpManager.getInstance().postRequest(url,params,callback);
+    }
+    /**
+     * 获取新闻相关推荐
+     * @param callback
+     */
+    public static void GetRemmond(String url,String newsPageSize ,String adPageSize , RequestCallBack<String> callback){
+        Map<String,String> params=new HashMap<>();
+        params.put("newsPageSize",newsPageSize);
+        params.put("adPageSize",adPageSize);
+        OkHttpManager.getInstance().postRequest(url,params,callback);
+    }
+
+    /**
+     * 获取一条新闻
+     * @param callback
+     */
+    public static void GetOneNewsDetails(String url,String commentId  ,String userId ,String page  ,String pageSize  , RequestCallBack<String> callback){
+        Map<String,String> params=new HashMap<>();
+        params.put("commentId",commentId );
+        params.put("userId",userId);
+        params.put("page",page);
+        params.put("pageSize",pageSize );
+        OkHttpManager.getInstance().postRequest(url,params,callback);
+    }
+
+    /**
+     * 获取新闻奖励数量
+     * @param callback
+     */
+    public static void GetNewsAward(String url,String userId , RequestCallBack<String> callback){
+        Map<String,String> params=new HashMap<>();
+        params.put("userId",userId);
+        OkHttpManager.getInstance().postRequest(url,params,callback);
+    }
+
+
     //=======以下辛振宇=================================================================
 
 }

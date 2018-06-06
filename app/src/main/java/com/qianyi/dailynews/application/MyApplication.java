@@ -4,7 +4,11 @@ import android.app.Application;
 import android.content.Context;
 
 
+import com.qianyi.dailynews.ui.news.bean.NewsTitleBean;
+
 import org.xutils.x;
+
+import java.util.List;
 
 import cn.jpush.android.api.JPushInterface;
 
@@ -14,6 +18,7 @@ import cn.jpush.android.api.JPushInterface;
 
 public class MyApplication extends Application {
     private static MyApplication myApplication;
+    public static List<NewsTitleBean.NewsTitleData.NewsTypeRes> newsTypeRes;
     @Override
     public void onCreate() {
         super.onCreate();

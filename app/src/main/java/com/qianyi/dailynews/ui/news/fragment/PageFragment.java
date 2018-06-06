@@ -1,22 +1,31 @@
 package com.qianyi.dailynews.ui.news.fragment;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.Toast;
 
 
 import com.google.gson.Gson;
+import com.orhanobut.logger.Logger;
 import com.qianyi.dailynews.R;
 import com.qianyi.dailynews.adapter.NewsAdapter;
 import com.qianyi.dailynews.api.ApiAccount;
 import com.qianyi.dailynews.api.ApiConstant;
 import com.qianyi.dailynews.api.ApiNews;
+import com.qianyi.dailynews.application.MyApplication;
 import com.qianyi.dailynews.callback.RequestCallBack;
 import com.qianyi.dailynews.fragment.NewsFragment;
 import com.qianyi.dailynews.ui.Mine.activity.AccountDetailsActivity;
@@ -43,7 +52,7 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
     public PullToRefreshView mPullToRefreshView;
     public ListView listview;
     private NewsAdapter newsAdapter;
-    private List<NewsTitleBean.NewsTitleData.NewsTypeRes> newsTypeRes;
+    //private List<NewsTitleBean.NewsTitleData.NewsTypeRes> newsTypeRes;
 
     private int page = 1;
     private List<NewsBean> bigList = new ArrayList<>();
@@ -53,11 +62,11 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
         super();
     }
 
-    @SuppressLint("ValidFragment")
-    public PageFragment(List<NewsTitleBean.NewsTitleData.NewsTypeRes> newsTypeRes) {
-        this.newsTypeRes = newsTypeRes;
-
-    }
+//    @SuppressLint("ValidFragment")
+//    public PageFragment(List<NewsTitleBean.NewsTitleData.NewsTypeRes> newsTypeRes) {
+//        this.newsTypeRes = newsTypeRes;
+//
+//    }
 
     @Override
     public int setContentView() {
@@ -73,7 +82,7 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
     public void init() {
         listview = rootView.findViewById(R.id.listview);
         mPullToRefreshView = rootView.findViewById(R.id.pulltorefreshView);
-        newsAdapter = new NewsAdapter(getActivity(),bigList);
+        newsAdapter = new NewsAdapter(getActivity(),bigList,"1");
         listview.setAdapter(newsAdapter);
 
         mPullToRefreshView.setmOnHeaderRefreshListener(this);
@@ -88,17 +97,77 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
                 getActivity().startActivity(intent);
             }
         });
+        /***
+         * 删除某条新闻
+         */
+        newsAdapter.setDeleteNewsListener(new NewsAdapter.DeleteNewsListener() {
+            @Override
+            public void deleteNews(final String id, View v) {
+                final Dialog dialog = new Dialog(getActivity());
+                View vv=LayoutInflater.from(getActivity()).inflate(R.layout.delete_pop_window,null);
+                dialog.setContentView(vv);
+                vv.findViewById(R.id.button1).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                       deleteNewsOne(id);
+                       dialog.dismiss();
+                    }
+                });
+                vv.findViewById(R.id.button2).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                         deleteNewsOne(id);
+                            dialog.dismiss();
+                    }
+                });
+                vv.findViewById(R.id.button3).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                         deleteNewsOne(id);
+                            dialog.dismiss();
+                    }
+                });
+                vv.findViewById(R.id.button4).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                         deleteNewsOne(id);
+                            dialog.dismiss();
+                    }
+                });
+
+                dialog.show();
+            }
+        });
 
 
+
+    }
+
+    /***
+     * 删除该条新闻
+     * @param id
+     */
+    private void deleteNewsOne(String id) {
+
+        for (int i = 0; i <bigList.size() ; i++) {
+            if(bigList.get(i).getId().equals(id)){
+                bigList.remove(i);
+                newsAdapter.notifyDataSetChanged();
+            }
+        }
 
     }
 
     @Override
     public void lazyLoad() {
+
+
         firstData(NewsFragment.CurrentNewsTitle);
      //   Toast.makeText(mActivity, "" + NewsFragment.CurrentNewsTitle, Toast.LENGTH_SHORT).show();
 
     }
+
+
 
 
     @Override
@@ -126,10 +195,16 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
                         }
                         Log.i("tag", "url" + ApiConstant.NEWS_CONTENTS);
                         Log.i("tag", userid + "==userid==");
-                        Log.i("tag", newsTypeRes.get(position).getCatId() + "==getCatId==");
+                        Log.i("tag", MyApplication.newsTypeRes.get(position).getCatId() + "==getCatId==");
                         Log.i("tag", page + "==page==");
                         Log.i("tag", userid + "==userid==");
-                        ApiNews.GetNewsContent(ApiConstant.NEWS_CONTENTS, userid, newsTypeRes.get(NewsFragment.CurrentNewsTitle).getCatId(), page, 10, page, 10, new RequestCallBack<String>() {
+                        Logger.i("url" + ApiConstant.NEWS_CONTENTS);
+                        Logger.i(userid + "==userid==");
+                        Logger.i(MyApplication.newsTypeRes.get(position).getCatId() + "==getCatId==");
+                        Logger.i(page + "==page==");
+                        Logger.i(userid + "==userid==");
+
+                        ApiNews.GetNewsContent(ApiConstant.NEWS_CONTENTS, userid, MyApplication.newsTypeRes.get(NewsFragment.CurrentNewsTitle).getCatId(), page, 10, page, 10, new RequestCallBack<String>() {
                             @Override
                             public void onSuccess(Call call, Response response, String s) {
                                 Log.i("ttt", "s" + s);
@@ -197,10 +272,10 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
                                 }
                                 Log.i("tag", "url" + ApiConstant.NEWS_CONTENTS);
                                 Log.i("tag", userid + "==userid==");
-                                Log.i("tag", newsTypeRes.get(position).getCatId() + "==getCatId==");
+                                Log.i("tag", MyApplication.newsTypeRes.get(position).getCatId() + "==getCatId==");
                                 Log.i("tag", page + "==page==");
                                 Log.i("tag", userid + "==userid==");
-                                ApiNews.GetNewsContent(ApiConstant.NEWS_CONTENTS, userid, newsTypeRes.get(NewsFragment.CurrentNewsTitle).getCatId(), page, 10, page, 10, new RequestCallBack<String>() {
+                                ApiNews.GetNewsContent(ApiConstant.NEWS_CONTENTS, userid, MyApplication.newsTypeRes.get(NewsFragment.CurrentNewsTitle).getCatId(), page, 10, page, 10, new RequestCallBack<String>() {
                                     @Override
                                     public void onSuccess(Call call, Response response, String s) {
                                         Log.i("ttt", "s" + s);
@@ -245,6 +320,54 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
             }
         }, 250);
     }
+
+
+
+
+    /*private void showPopupWindow(View view) {
+
+        // 一个自定义的布局，作为显示的内容
+        View contentView = LayoutInflater.from(getActivity()).inflate(
+                R.layout.delete_pop_window, null);
+        // 设置按钮的点击事件
+        Button button = contentView.findViewById(R.id.button1);
+        button.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity(), "button is pressed",
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        final PopupWindow popupWindow = new PopupWindow(contentView, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
+        popupWindow.setTouchable(true);
+
+        popupWindow.setTouchInterceptor(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                Log.i("mengdd", "onTouch : ");
+
+                return false;
+                // 这里如果返回true的话，touch事件将被拦截
+                // 拦截后 PopupWindow的onTouchEvent不被调用，这样点击外部区域无法dismiss
+            }
+        });
+
+        // 如果不设置PopupWindow的背景，无论是点击外部区域还是Back键都无法dismiss弹框
+        // 我觉得这里是API的一个bug
+        popupWindow.setBackgroundDrawable(getResources().getDrawable(
+                R.drawable.selectmenu_bg_downward));
+
+        // 设置好参数之后再show
+        popupWindow.showAsDropDown(view,10,10,Gravity.RIGHT);
+
+
+
+    }*/
+
 
     /**
      * 将新闻和广告按11排列

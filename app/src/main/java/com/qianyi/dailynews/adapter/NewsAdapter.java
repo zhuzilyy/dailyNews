@@ -2,7 +2,6 @@ package com.qianyi.dailynews.adapter;
 
 import android.content.Context;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +13,6 @@ import com.bumptech.glide.Glide;
 import com.qianyi.dailynews.R;
 import com.qianyi.dailynews.ui.news.bean.NewsBean;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -31,11 +29,25 @@ public class NewsAdapter extends BaseAdapter {
     private int NEWS_THREE_PIC = 3;
     private int NEWS_RIGHT_PIC = 4;
     private int NEWS_NOPIC = 5;
+    private DeleteNewsListener deleteNewsListener;
+    private String type;
 
-    public NewsAdapter(Context context, List<NewsBean> newsBeans) {
+    public NewsAdapter(Context context, List<NewsBean> newsBeans, String type) {
         this.context = context;
         this.newsBeans = newsBeans;
+        this.type=type;
     }
+    //******************************
+
+    public interface DeleteNewsListener{
+        void deleteNews(String id,View v);
+    }
+
+    public void setDeleteNewsListener(DeleteNewsListener l){
+        deleteNewsListener = l;
+    }
+
+    //******************************
 
     @Override
     public int getCount() {
@@ -92,7 +104,7 @@ public class NewsAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        NewsBean item = newsBeans.get(i);
+        final NewsBean item = newsBeans.get(i);
        int itemType= getItemViewType(i);
        if(AD_BIG_PIC == itemType){
            //广告大图
@@ -132,7 +144,11 @@ public class NewsAdapter extends BaseAdapter {
            Holder03.news003_pic01 = view.findViewById(R.id.news003_pic01);
            Holder03.news003_pic02 = view.findViewById(R.id.news003_pic02);
            Holder03.news003_pic03 = view.findViewById(R.id.news003_pic03);
+           Holder03.news003_delete =view.findViewById(R.id.news003_delete);
            view.setTag(Holder03);
+           if("0".equals(type)){
+               Holder03.news003_delete.setVisibility(View.GONE);
+           }
 
        }else if(NEWS_RIGHT_PIC == itemType){
             //新闻右边有图
@@ -145,24 +161,31 @@ public class NewsAdapter extends BaseAdapter {
            Holder02.news002_read = view.findViewById(R.id.news002_read);
 
            Holder02.news002_pic = view.findViewById(R.id.news002_pic);
+           Holder02.news002_delete =view.findViewById(R.id.news002_delete);
            view.setTag(Holder02);
+           if("0".equals(type)){
+               Holder02.news002_delete.setVisibility(View.GONE);
+           }
        }else if(NEWS_NOPIC == itemType){
             //新闻没有图
            NewsCell001Holder Holder01 =new NewsCell001Holder();
-           view = LayoutInflater.from(context).inflate(R.layout.item_news_001, null);
+           view = LayoutInflater.from(context).inflate(R.layout.item_news_003, null);
            Holder01.news001_content = view.findViewById(R.id.news001_content);
            Holder01.news001_award = view.findViewById(R.id.news001_award);
            Holder01.news001_publishman = view.findViewById(R.id.news001_publishman);
            Holder01.news001_posttime = view.findViewById(R.id.news001_posttime);
            Holder01.news001_read = view.findViewById(R.id.news001_read);
-
+           Holder01.news001_delete =view.findViewById(R.id.news001_delete);
            view.setTag(Holder01);
+           if("0".equals(type)){
+               Holder01.news001_delete.setVisibility(View.GONE);
+           }
        }
 
         //------赋值------------------------------------
        if(NEWS_THREE_PIC == itemType){
            //新闻3张图
-           NewsCell003Holder  Holder03 = (NewsCell003Holder) view.getTag();
+           final NewsCell003Holder  Holder03 = (NewsCell003Holder) view.getTag();
            Holder03.news003_content.setText(item.getTitle());
            Holder03.news003_publishman.setText(item.getPosterScreenName());
            Holder03.news003_posttime.setText(item.getPublishDate());
@@ -170,23 +193,46 @@ public class NewsAdapter extends BaseAdapter {
            Glide.with(context).load(item.getImgsUrl().get(0)).into(Holder03.news003_pic01);
            Glide.with(context).load(item.getImgsUrl().get(1)).into(Holder03.news003_pic02);
            Glide.with(context).load(item.getImgsUrl().get(2)).into(Holder03.news003_pic03);
+           //删除条目
+           Holder03.news003_delete.setOnClickListener(new View.OnClickListener() {
+               @Override
+               public void onClick(View v) {
+                   deleteNewsListener.deleteNews(item.getId(),Holder03.news003_delete);
+               }
+           });
        }
        if(NEWS_RIGHT_PIC == itemType){
            //新闻右边图
-           NewsCell002Holder  Holder02 = (NewsCell002Holder) view.getTag();
+           final NewsCell002Holder  Holder02 = (NewsCell002Holder) view.getTag();
            Holder02.news002_content.setText(item.getTitle());
            Holder02.news002_publishman.setText(item.getPosterScreenName());
            Holder02.news002_posttime.setText(item.getPublishDate());
            Holder02.news002_read.setText(item.getReadNum());
            Glide.with(context).load(item.getImgsUrl().get(0)).into(Holder02.news002_pic);
+           //删除条目
+           Holder02.news002_delete.setOnClickListener(new View.OnClickListener() {
+               @Override
+               public void onClick(View v) {
+                   deleteNewsListener.deleteNews(item.getId(),Holder02.news002_delete);
+               }
+           });
+
+
        }
         if(NEWS_NOPIC == itemType){
             //新闻没有图的
-            NewsCell001Holder  Holder01 = (NewsCell001Holder) view.getTag();
+            final NewsCell001Holder  Holder01 = (NewsCell001Holder) view.getTag();
             Holder01.news001_content.setText(item.getTitle());
             Holder01.news001_publishman.setText(item.getPosterScreenName());
             Holder01.news001_posttime.setText(item.getPublishDate());
             Holder01.news001_read.setText(item.getReadNum());
+            //删除条目
+            Holder01.news001_delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    deleteNewsListener.deleteNews(item.getId(),Holder01.news001_delete);
+                }
+            });
         }
         if(AD_BIG_PIC == itemType){
             AdCell001Holder  cell001Holder = (AdCell001Holder) view.getTag();
@@ -217,6 +263,7 @@ public class NewsAdapter extends BaseAdapter {
         public TextView news001_publishman;
         public TextView news001_posttime;
         public TextView news001_read;
+        public ImageView news001_delete;
 
     }
 
@@ -228,6 +275,7 @@ public class NewsAdapter extends BaseAdapter {
         public TextView news002_posttime;
         public TextView news002_read;
         public ImageView news002_pic;
+        public ImageView news002_delete;
 
     }
 
@@ -241,6 +289,7 @@ public class NewsAdapter extends BaseAdapter {
         public ImageView news003_pic01;
         public ImageView news003_pic02;
         public ImageView news003_pic03;
+        public ImageView news003_delete;
 
     }
     //广告一张大图的
