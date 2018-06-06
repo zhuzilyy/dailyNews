@@ -61,6 +61,7 @@ public class NewsFragment extends BaseFragment implements View.OnClickListener {
 
     private String CurretUsed;
     private String TotleCount;
+    public static String Gold="";
 
     @Override
     protected View getResLayout(LayoutInflater inflater, ViewGroup container) {
@@ -184,6 +185,8 @@ public class NewsFragment extends BaseFragment implements View.OnClickListener {
                        if(jsonObject1!=null){
                            CurretUsed= jsonObject1.getString("used");
                            TotleCount=jsonObject1.getString("cnt");
+                           Gold=jsonObject1.getString("gold");
+                           
                            getActivity().runOnUiThread(new Runnable() {
                                @Override
                                public void run() {
