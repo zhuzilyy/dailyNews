@@ -62,6 +62,7 @@ public class VideoFragment extends BaseFragment implements PullToRefreshView.OnH
     @Override
     protected View getResLayout(LayoutInflater inflater, ViewGroup container) {
         newsView =  inflater.inflate(R.layout.fragment_video, null);
+
         return newsView;
     }
     @Override
