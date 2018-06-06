@@ -24,6 +24,7 @@ import com.qianyi.dailynews.fragment.bean.VideoInfo;
 import com.qianyi.dailynews.ui.video.adapter.RecommendAdapter;
 import com.qianyi.dailynews.ui.video.view.MyJCVideoPlayerStandard;
 import com.qianyi.dailynews.ui.video.view.MyUserActionStandard;
+import com.qianyi.dailynews.utils.Utils;
 
 import java.util.List;
 
@@ -49,6 +50,8 @@ public class VideoPlayingActivity extends BaseActivity {
     TextView tv_viewCount;
     @BindView(R.id.no_data_rl)
     RelativeLayout no_data_rl;
+    @BindView(R.id.no_internet_rl)
+    RelativeLayout no_internet_rl;
     private RecommendAdapter recommendAdapter;
     private Intent intent;
     private String videoUrl,viewCount,title;
@@ -63,6 +66,15 @@ public class VideoPlayingActivity extends BaseActivity {
             videoUrl=intent.getStringExtra("videoUrl");
             viewCount=intent.getStringExtra("viewCount");
             title=intent.getStringExtra("title");
+        }
+        if (Utils.hasInternet()){
+            lv_recommend.setVisibility(View.VISIBLE);
+            no_data_rl.setVisibility(View.GONE);
+            no_internet_rl.setVisibility(View.GONE);
+        }else{
+            lv_recommend.setVisibility(View.GONE);
+            no_data_rl.setVisibility(View.GONE);
+            no_internet_rl.setVisibility(View.VISIBLE);
         }
     }
     //沉浸式管理
@@ -98,18 +110,22 @@ public class VideoPlayingActivity extends BaseActivity {
                         if (infoList!=null && infoList.size()>0){
                             lv_recommend.setVisibility(View.VISIBLE);
                             no_data_rl.setVisibility(View.GONE);
+                            no_internet_rl.setVisibility(View.GONE);
                             recommendAdapter=new RecommendAdapter(VideoPlayingActivity.this,infoList);
                             lv_recommend.setAdapter(recommendAdapter);
                         }else{
                             lv_recommend.setVisibility(View.GONE);
                             no_data_rl.setVisibility(View.VISIBLE);
+                            no_internet_rl.setVisibility(View.GONE);
                         }
                     }
                 });
             }
             @Override
             public void onEror(Call call, int statusCode, Exception e) {
-
+                lv_recommend.setVisibility(View.GONE);
+                no_data_rl.setVisibility(View.GONE);
+                no_internet_rl.setVisibility(View.VISIBLE);
             }
         });
     }
@@ -151,11 +167,14 @@ public class VideoPlayingActivity extends BaseActivity {
         }
         super.onBackPressed();
     }
-    @OnClick({R.id.iv_back})
+    @OnClick({R.id.iv_back,R.id.reload})
     public void click(View view){
         switch (view.getId()){
             case R.id.iv_back:
                 finish();
+                break;
+            case R.id.reload:
+                getData();
                 break;
         }
     }

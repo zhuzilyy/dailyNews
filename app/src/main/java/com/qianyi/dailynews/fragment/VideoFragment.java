@@ -135,6 +135,46 @@ public class VideoFragment extends BaseFragment implements PullToRefreshView.OnH
             }
         });
     }
+    private void getMoreData(int page) {
+        mPullToRefreshView.setEnablePullTorefresh(true);
+        ApiVideo.getVideoList(ApiConstant.VIDEO_LIST, page, ApiConstant.PAGE_SIZE, new RequestCallBack<String>() {
+            @Override
+            public void onSuccess(Call call, Response response, final String s) {
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Gson gson=new Gson();
+                        VideoBean videoBean = gson.fromJson(s, VideoBean.class);
+                        String code = videoBean.getCode();
+                        if (code.equals(ApiConstant.SUCCESS_CODE)){
+                            mPullToRefreshView.onHeaderRefreshComplete();
+                            List<VideoInfo> list = videoBean.getData().getVideos();
+                            if (list!=null && list.size()>0){
+                                infoList.addAll(list);
+                                videoAdapter.notifyDataSetChanged();
+                                //判断是不是没有更多数据了
+                                if (list.size() < Integer.parseInt(ApiConstant.PAGE_SIZE)) {
+                                    mPullToRefreshView.onFooterRefreshComplete(true);
+                                }else{
+                                    mPullToRefreshView.onFooterRefreshComplete(false);
+                                }
+                            }else{
+                                //已经加载到最后一条
+                                mPullToRefreshView.onFooterRefreshComplete(true);
+                            }
+                        }
+                    }
+                });
+            }
+            @Override
+            public void onEror(Call call, int statusCode, Exception e) {
+                customLoadingDialog.dismiss();
+                mPullToRefreshView.setVisibility(View.GONE);
+                no_data_rl.setVisibility(View.GONE);
+                no_internet_rl.setVisibility(View.VISIBLE);
+            }
+        });
+    }
     @Override
     protected void initListener() {
         mPullToRefreshView.setmOnHeaderRefreshListener(this);
@@ -162,6 +202,6 @@ public class VideoFragment extends BaseFragment implements PullToRefreshView.OnH
     @Override
     public void onFooterRefresh(PullToRefreshView view) {
         page++;
-        getData(page);
+        getMoreData(page);
     }
 }

@@ -1,5 +1,6 @@
 package com.qianyi.dailynews.ui.Mine.fragment;
 
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,7 +45,7 @@ public class GoldCoinFragment extends BaseFragment implements PullToRefreshView.
     private CustomLoadingDialog customLoadingDialog;
     private GoldAdapter goldAdapter;
     private List<GoldCoinData> infoList;
-    private boolean isRefresh;
+    private boolean isRefresh,isLoadMore;
     private String userId;
     @Override
     protected View getResLayout(LayoutInflater inflater, ViewGroup container) {
@@ -122,6 +123,44 @@ public class GoldCoinFragment extends BaseFragment implements PullToRefreshView.
             }
         });
     }
+    //获取更多数据
+    private void getMoreData(int page) {
+        mPullToRefreshView.setEnablePullTorefresh(true);
+        ApiMine.goldCoinDetail(ApiConstant.GOLD_COIN, userId,page, ApiConstant.PAGE_SIZE, new RequestCallBack<String>() {
+            @Override
+            public void onSuccess(Call call, Response response, final String s) {
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mPullToRefreshView.onHeaderRefreshComplete();
+                        Gson gson=new Gson();
+                        GoldCoinBean goldCoinBean = gson.fromJson(s, GoldCoinBean.class);
+                        String code = goldCoinBean.getCode();
+                        if (code.equals(ApiConstant.SUCCESS_CODE)){
+                            mPullToRefreshView.onHeaderRefreshComplete();
+                            List<GoldCoinData> list = goldCoinBean.getData();
+                            if (list!=null && list.size()>0){
+                                //判断是不是没有更多数据了
+                                infoList.addAll(list);
+                                goldAdapter.notifyDataSetChanged();
+                                if (list.size() < Integer.parseInt(ApiConstant.PAGE_SIZE))
+                                    mPullToRefreshView.onFooterRefreshComplete(true);
+                                        else
+                                    mPullToRefreshView.onFooterRefreshComplete(false);
+                            }else{
+                                //已经加载到最后一条
+                                mPullToRefreshView.onFooterRefreshComplete(true);
+                            }
+                        }
+                    }
+                });
+            }
+            @Override
+            public void onEror(Call call, int statusCode, Exception e) {
+
+            }
+        });
+    }
     @Override
     protected void initListener() {
         mPullToRefreshView.setmOnHeaderRefreshListener(this);
@@ -131,13 +170,14 @@ public class GoldCoinFragment extends BaseFragment implements PullToRefreshView.
     @Override
     public void onHeaderRefresh(PullToRefreshView view) {
         isRefresh=true;
-        page=1;
+        isLoadMore=false;
+        page=0;
         getData(page);
     }
     //加载事件
     @Override
     public void onFooterRefresh(PullToRefreshView view) {
         page++;
-        getData(page);
+        getMoreData(page);
     }
 }

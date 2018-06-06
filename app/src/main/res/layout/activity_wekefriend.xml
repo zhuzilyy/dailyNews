@@ -141,11 +141,34 @@
                         />
                 </LinearLayout>
                 <android.support.v7.widget.RecyclerView
+                    android:visibility="gone"
                     android:id="@+id/rv"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:background="@color/white"
+                    />
+                <!--暂无数据-->
+                <TextView
+                    android:visibility="gone"
+                    android:gravity="center"
+                    android:id="@+id/tv_noData"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="@color/white"
+                    android:text="好棒哦,好友都处于活跃状态,暂时不需要唤醒!"
+                    />
+                <!--暂无数据-->
+                <TextView
+                    android:visibility="gone"
+                    android:gravity="center"
+                    android:id="@+id/tv_noInternet"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="@color/white"
+                    android:text="网络错误,请重试"
                     />
             </LinearLayout>
             <!--如何快速唤醒徒弟-->

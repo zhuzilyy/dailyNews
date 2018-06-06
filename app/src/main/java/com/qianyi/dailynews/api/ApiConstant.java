@@ -24,6 +24,8 @@ public class ApiConstant {
     public static final String NEWS_CONTENTS = BASE_URL+"/api/news/home";
     //邀请
     public static final String INVITE = BASE_URL+"/api/news/getBanner";
+    //召回徒弟列表
+    public static final String CALL_BACK_FRIEND_LIST = BASE_URL+"/api/news/recallList";
     //签到
     public static final String SIGN = BASE_URL+"/api/sign/do";
     //获取金币
