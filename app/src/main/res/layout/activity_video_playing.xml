@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
+    android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <LinearLayout
@@ -59,9 +60,12 @@
                 android:layout_height="wrap_content" />
         </RelativeLayout>
     </LinearLayout>
+    <View
+        android:background="@color/common_line"
+        android:layout_width="match_parent"
+        android:layout_height="12dp"/>
     <!--推荐-->
     <LinearLayout
-        android:layout_marginTop="12dp"
         android:background="@color/white"
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -91,7 +95,8 @@
             android:dividerHeight="0.5dp"
             android:id="@+id/lv_recommend"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="match_parent"/>
         <include layout="@layout/common_no_data"/>
+        <include layout="@layout/common_wrong_intert"/>
     </LinearLayout>
 </LinearLayout>

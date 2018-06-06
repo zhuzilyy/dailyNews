@@ -124,6 +124,44 @@ public class WithdrawalsFragment extends BaseFragment implements PullToRefreshVi
             }
         });
     }
+    private void getMoreData(int page) {
+        mPullToRefreshView.setEnablePullTorefresh(true);
+        ApiMine.withdrawal(ApiConstant.WITHDRAWAWAL, userId,page, ApiConstant.PAGE_SIZE, "",new RequestCallBack<String>() {
+            @Override
+            public void onSuccess(Call call, Response response, final String s) {
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                        public void run() {
+                        Gson gson=new Gson();
+                        GoldCoinBean goldCoinBean = gson.fromJson(s, GoldCoinBean.class);
+                        String code = goldCoinBean.getCode();
+                        if (code.equals(ApiConstant.SUCCESS_CODE)){
+                            mPullToRefreshView.onHeaderRefreshComplete();
+                            List<GoldCoinData> list = goldCoinBean.getData();
+                            if (list!=null && list.size()>0){
+                                //判断是不是刷新
+                                infoList.addAll(list);
+                                withdrawalAdapter.notifyDataSetChanged();
+                                //判断是不是没有更多数据了
+                                if (list.size() < Integer.parseInt(ApiConstant.PAGE_SIZE)) {
+                                    mPullToRefreshView.onFooterRefreshComplete(true);
+                                }else{
+                                    mPullToRefreshView.onFooterRefreshComplete(false);
+                                }
+                            }else{
+                                //已经加载到最后一条
+                                mPullToRefreshView.onFooterRefreshComplete(true);
+                            }
+                        }
+                    }
+                });
+            }
+            @Override
+            public void onEror(Call call, int statusCode, Exception e) {
+
+            }
+        });
+    }
     @Override
     protected void initListener() {
         mPullToRefreshView.setmOnHeaderRefreshListener(this);
@@ -133,13 +171,13 @@ public class WithdrawalsFragment extends BaseFragment implements PullToRefreshVi
     @Override
     public void onHeaderRefresh(PullToRefreshView view) {
         isRefresh=true;
-        page=1;
+        page=0;
         getData(page);
     }
     //加载事件
     @Override
     public void onFooterRefresh(PullToRefreshView view) {
         page++;
-        getData(page);
+        getMoreData(page);
     }
 }
