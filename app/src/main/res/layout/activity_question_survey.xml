@@ -1,0 +1,994 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include layout="@layout/layout_title"/>
+    <ScrollView
+        android:layout_below="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <!--性别-->
+            <LinearLayout
+                android:layout_marginTop="5dp"
+                android:orientation="vertical"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/bg_question"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_marginLeft="5dp"
+                    android:gravity="center_vertical"
+                    android:textStyle="bold"
+                    android:id="@+id/tv_selectSex"
+                    android:textSize="16sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp" />
+                <View
+                    android:background="@color/common_line"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"/>
+                <RadioGroup
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <RadioButton
+                        android:textColor="@color/gray"
+                        android:checked="true"
+                        android:background="@color/transparent"
+                        android:id="@+id/rb_male"
+                        android:text="男"
+                        android:drawableRight="@drawable/selector_question"
+                        android:button="@null"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp" />
+                    <RadioButton
+                        android:textColor="@color/gray"
+                        android:background="@color/transparent"
+                        android:id="@+id/rb_female"
+                        android:text="女"
+                        android:drawableRight="@drawable/selector_question"
+                        android:button="@null"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp" />
+                </RadioGroup>
+            </LinearLayout>
+
+
+            <!--年龄-->
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:orientation="vertical"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/bg_question"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_marginLeft="5dp"
+                    android:gravity="center_vertical"
+                    android:textStyle="bold"
+                    android:id="@+id/tv_selectAge"
+                    android:textSize="16sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp" />
+                <View
+                    android:background="@color/common_line"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"/>
+                <RadioGroup
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <RadioButton
+                        android:textColor="@color/gray"
+                        android:checked="true"
+                        android:background="@color/transparent"
+                        android:id="@+id/rb_under18"
+                        android:text="18岁以下"
+                        android:drawableRight="@drawable/selector_question"
+                        android:button="@null"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp" />
+                    <RadioButton
+                        android:textColor="@color/gray"
+                        android:background="@color/transparent"
+                        android:id="@+id/rb_18And23"
+                        android:text="18-23岁"
+                        android:drawableRight="@drawable/selector_question"
+                        android:button="@null"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp" />
+                    <RadioButton
+                        android:textColor="@color/gray"
+                        android:background="@color/transparent"
+                        android:id="@+id/rb_24And34"
+                        android:text="24-34岁"
+                        android:drawableRight="@drawable/selector_question"
+                        android:button="@null"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp" />
+                    <RadioButton
+                        android:textColor="@color/gray"
+                        android:background="@color/transparent"
+                        android:id="@+id/rb_35And40"
+                        android:text="35-40岁"
+                        android:drawableRight="@drawable/selector_question"
+                        android:button="@null"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp" />
+                    <RadioButton
+                        android:textColor="@color/gray"
+                        android:background="@color/transparent"
+                        android:id="@+id/rb_40And55"
+                        android:text="40-55岁"
+                        android:drawableRight="@drawable/selector_question"
+                        android:button="@null"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp" />
+                    <RadioButton
+                        android:textColor="@color/gray"
+                        android:background="@color/transparent"
+                        android:id="@+id/rb_above55"
+                        android:text="55岁以上"
+                        android:drawableRight="@drawable/selector_question"
+                        android:button="@null"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp" />
+                </RadioGroup>
+            </LinearLayout>
+            <!--职业-->
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:orientation="vertical"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/bg_question"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_marginLeft="5dp"
+                    android:gravity="center_vertical"
+                    android:textStyle="bold"
+                    android:id="@+id/tv_career"
+                    android:textSize="16sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp" />
+                <View
+                    android:background="@color/common_line"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"/>
+                <RadioGroup
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <RadioButton
+                        android:textColor="@color/gray"
+                        android:checked="true"
+                        android:background="@color/transparent"
+                        android:id="@+id/rb_middleStudent"
+                        android:text="中学生"
+                        android:drawableRight="@drawable/selector_question"
+                        android:button="@null"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp" />
+                    <RadioButton
+                        android:textColor="@color/gray"
+                        android:background="@color/transparent"
+                        android:id="@+id/rb_collegeStudent"
+                        android:text="大学生"
+                        android:drawableRight="@drawable/selector_question"
+                        android:button="@null"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp" />
+                    <RadioButton
+                        android:textColor="@color/gray"
+                        android:background="@color/transparent"
+                        android:id="@+id/rb_freeCareer"
+                        android:text="自由职业"
+                        android:drawableRight="@drawable/selector_question"
+                        android:button="@null"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp" />
+                    <RadioButton
+                        android:textColor="@color/gray"
+                        android:background="@color/transparent"
+                        android:id="@+id/rb_office"
+                        android:text="办公室白领"
+                        android:drawableRight="@drawable/selector_question"
+                        android:button="@null"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp" />
+                    <RadioButton
+                        android:textColor="@color/gray"
+                        android:background="@color/transparent"
+                        android:id="@+id/rb_worker"
+                        android:text="企业蓝领"
+                        android:drawableRight="@drawable/selector_question"
+                        android:button="@null"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp" />
+                    <RadioButton
+                        android:textColor="@color/gray"
+                        android:background="@color/transparent"
+                        android:id="@+id/rb_retire"
+                        android:text="退休"
+                        android:drawableRight="@drawable/selector_question"
+                        android:button="@null"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp" />
+                </RadioGroup>
+            </LinearLayout>
+            <!--月收入-->
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:orientation="vertical"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/bg_question"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_marginLeft="5dp"
+                    android:gravity="center_vertical"
+                    android:textStyle="bold"
+                    android:id="@+id/tv_earning"
+                    android:textSize="16sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp" />
+                <View
+                    android:background="@color/common_line"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"/>
+                <RadioGroup
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <RadioButton
+                        android:textColor="@color/gray"
+                        android:checked="true"
+                        android:background="@color/transparent"
+                        android:id="@+id/rb_below1000"
+                        android:text="1000元以下"
+                        android:drawableRight="@drawable/selector_question"
+                        android:button="@null"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp" />
+                    <RadioButton
+                        android:textColor="@color/gray"
+                        android:background="@color/transparent"
+                        android:id="@+id/rb_1001And2000"
+                        android:text="1001-2000元"
+                        android:drawableRight="@drawable/selector_question"
+                        android:button="@null"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp" />
+                    <RadioButton
+                        android:textColor="@color/gray"
+                        android:background="@color/transparent"
+                        android:id="@+id/rb_2001And3000"
+                        android:text="2001-3000元"
+                        android:drawableRight="@drawable/selector_question"
+                        android:button="@null"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp" />
+                    <RadioButton
+                        android:textColor="@color/gray"
+                        android:background="@color/transparent"
+                        android:id="@+id/rb_3001And4000"
+                        android:text="3001-4000元"
+                        android:drawableRight="@drawable/selector_question"
+                        android:button="@null"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp" />
+                    <RadioButton
+                        android:textColor="@color/gray"
+                        android:background="@color/transparent"
+                        android:id="@+id/rb_4001And5000"
+                        android:text="4001-5000元"
+                        android:drawableRight="@drawable/selector_question"
+                        android:button="@null"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp" />
+                    <RadioButton
+                        android:textColor="@color/gray"
+                        android:background="@color/transparent"
+                        android:id="@+id/rb_5001And8000"
+                        android:text="5001-8000元"
+                        android:drawableRight="@drawable/selector_question"
+                        android:button="@null"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp" />
+                    <RadioButton
+                        android:textColor="@color/gray"
+                        android:background="@color/transparent"
+                        android:id="@+id/rb_8001And12000"
+                        android:text="8001-12000元"
+                        android:drawableRight="@drawable/selector_question"
+                        android:button="@null"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp" />
+                    <RadioButton
+                        android:textColor="@color/gray"
+                        android:background="@color/transparent"
+                        android:id="@+id/rb_12001And20000"
+                        android:text="12001-20000元"
+                        android:drawableRight="@drawable/selector_question"
+                        android:button="@null"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp" />
+                    <RadioButton
+                        android:textColor="@color/gray"
+                        android:background="@color/transparent"
+                        android:id="@+id/rb_above20000"
+                        android:text="200001元以上"
+                        android:drawableRight="@drawable/selector_question"
+                        android:button="@null"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp" />
+                </RadioGroup>
+            </LinearLayout>
+
+
+            <!--受教育程度-->
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:orientation="vertical"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/bg_question"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_marginLeft="5dp"
+                    android:gravity="center_vertical"
+                    android:textStyle="bold"
+                    android:id="@+id/tv_education"
+                    android:textSize="16sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp" />
+                <View
+                    android:background="@color/common_line"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"/>
+                <RadioGroup
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <RadioButton
+                        android:textColor="@color/gray"
+                        android:checked="true"
+                        android:background="@color/transparent"
+                        android:id="@+id/rb_belowMiddle"
+                        android:text="初中以下"
+                        android:drawableRight="@drawable/selector_question"
+                        android:button="@null"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp" />
+                    <RadioButton
+                        android:textColor="@color/gray"
+                        android:background="@color/transparent"
+                        android:id="@+id/rb_highSchool"
+                        android:text="高中"
+                        android:drawableRight="@drawable/selector_question"
+                        android:button="@null"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp" />
+                    <RadioButton
+                        android:textColor="@color/gray"
+                        android:background="@color/transparent"
+                        android:id="@+id/rb_junior"
+                        android:text="大专"
+                        android:drawableRight="@drawable/selector_question"
+                        android:button="@null"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp" />
+                    <RadioButton
+                        android:textColor="@color/gray"
+                        android:background="@color/transparent"
+                        android:id="@+id/rb_undergraduate"
+                        android:text="本科"
+                        android:drawableRight="@drawable/selector_question"
+                        android:button="@null"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp" />
+                    <RadioButton
+                        android:textColor="@color/gray"
+                        android:background="@color/transparent"
+                        android:id="@+id/rb_master"
+                        android:text="硕士及以上"
+                        android:drawableRight="@drawable/selector_question"
+                        android:button="@null"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp" />
+                </RadioGroup>
+            </LinearLayout>
+            <!--个人兴趣爱好-->
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:orientation="vertical"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/bg_question"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_marginLeft="5dp"
+                    android:gravity="center_vertical"
+                    android:textStyle="bold"
+                    android:id="@+id/tv_hobby"
+                    android:textSize="16sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp" />
+                <View
+                    android:background="@color/common_line"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"/>
+                <LinearLayout
+                    android:layout_marginRight="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <CheckBox
+                        android:id="@+id/cb_decoration"
+                        android:textColor="@color/gray"
+                        android:background="@color/transparent"
+                        android:text="装修建材"
+                        android:drawableRight="@drawable/selector_question"
+                        android:button="@null"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="35dp" />
+                    <CheckBox
+                        android:id="@+id/cb_education"
+                        android:layout_marginLeft="10dp"
+                        android:textColor="@color/gray"
+                        android:background="@color/transparent"
+                        android:text="教育"
+                        android:drawableRight="@drawable/selector_question"
+                        android:button="@null"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="35dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginRight="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <CheckBox
+                        android:id="@+id/cb_meiRong"
+                        android:textColor="@color/gray"
+                        android:background="@color/transparent"
+                        android:text="美容整形"
+                        android:drawableRight="@drawable/selector_question"
+                        android:button="@null"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="35dp" />
+                    <CheckBox
+                        android:id="@+id/cb_jiaJu"
+                        android:layout_marginLeft="10dp"
+                        android:textColor="@color/gray"
+                        android:background="@color/transparent"
+                        android:text="家居用品"
+                        android:drawableRight="@drawable/selector_question"
+                        android:button="@null"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="35dp" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_marginRight="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <CheckBox
+                        android:id="@+id/cb_movie"
+                        android:textColor="@color/gray"
+                        android:background="@color/transparent"
+                        android:text="影视"
+                        android:drawableRight="@drawable/selector_question"
+                        android:button="@null"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="35dp" />
+                    <CheckBox
+                        android:id="@+id/cb_clock"
+                        android:layout_marginLeft="10dp"
+                        android:textColor="@color/gray"
+                        android:background="@color/transparent"
+                        android:text="钟表配饰和箱包"
+                        android:drawableRight="@drawable/selector_question"
+                        android:button="@null"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="35dp" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_marginRight="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <CheckBox
+                        android:id="@+id/cb_baby"
+                        android:textColor="@color/gray"
+                        android:background="@color/transparent"
+                        android:text="母婴"
+                        android:drawableRight="@drawable/selector_question"
+                        android:button="@null"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="35dp" />
+                    <CheckBox
+                        android:id="@+id/cb_sport"
+                        android:layout_marginLeft="10dp"
+                        android:textColor="@color/gray"
+                        android:background="@color/transparent"
+                        android:text="体育"
+                        android:drawableRight="@drawable/selector_question"
+                        android:button="@null"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="35dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginRight="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <CheckBox
+                        android:id="@+id/cb_entertainment"
+                        android:textColor="@color/gray"
+                        android:background="@color/transparent"
+                        android:text="休闲娱乐"
+                        android:drawableRight="@drawable/selector_question"
+                        android:button="@null"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="35dp" />
+                    <CheckBox
+                        android:id="@+id/cb_finacal"
+                        android:layout_marginLeft="10dp"
+                        android:textColor="@color/gray"
+                        android:background="@color/transparent"
+                        android:text="金融理财"
+                        android:drawableRight="@drawable/selector_question"
+                        android:button="@null"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="35dp" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_marginRight="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <CheckBox
+                        android:id="@+id/cb_reading"
+                        android:textColor="@color/gray"
+                        android:background="@color/transparent"
+                        android:text="阅读"
+                        android:drawableRight="@drawable/selector_question"
+                        android:button="@null"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="35dp" />
+                    <CheckBox
+                        android:id="@+id/cb_music"
+                        android:layout_marginLeft="10dp"
+                        android:textColor="@color/gray"
+                        android:background="@color/transparent"
+                        android:text="音乐"
+                        android:drawableRight="@drawable/selector_question"
+                        android:button="@null"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="35dp" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_marginRight="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <CheckBox
+                        android:id="@+id/cb_clothing"
+                        android:textColor="@color/gray"
+                        android:background="@color/transparent"
+                        android:text="服饰鞋帽"
+                        android:drawableRight="@drawable/selector_question"
+                        android:button="@null"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="35dp" />
+                    <CheckBox
+                        android:id="@+id/cb_phone"
+                        android:layout_marginLeft="10dp"
+                        android:textColor="@color/gray"
+                        android:background="@color/transparent"
+                        android:text="手机数码"
+                        android:drawableRight="@drawable/selector_question"
+                        android:button="@null"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="35dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginRight="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <CheckBox
+                        android:id="@+id/cb_housing"
+                        android:textColor="@color/gray"
+                        android:background="@color/transparent"
+                        android:text="房产"
+                        android:drawableRight="@drawable/selector_question"
+                        android:button="@null"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="35dp" />
+                    <CheckBox
+                        android:id="@+id/cb_travling"
+                        android:layout_marginLeft="10dp"
+                        android:textColor="@color/gray"
+                        android:background="@color/transparent"
+                        android:text="旅游出行"
+                        android:drawableRight="@drawable/selector_question"
+                        android:button="@null"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="35dp" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_marginRight="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <CheckBox
+                        android:id="@+id/cb_car"
+                        android:textColor="@color/gray"
+                        android:background="@color/transparent"
+                        android:text="汽车"
+                        android:drawableRight="@drawable/selector_question"
+                        android:button="@null"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="35dp" />
+                    <CheckBox
+                        android:id="@+id/cb_meiZhuang"
+                        android:layout_marginLeft="10dp"
+                        android:textColor="@color/gray"
+                        android:background="@color/transparent"
+                        android:text="个户美妆"
+                        android:drawableRight="@drawable/selector_question"
+                        android:button="@null"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="35dp" />
+                </LinearLayout>
+
+
+                              <LinearLayout
+                    android:layout_marginRight="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <CheckBox
+                        android:id="@+id/cb_computer"
+                        android:textColor="@color/gray"
+                        android:background="@color/transparent"
+                        android:text="电脑办公"
+                        android:drawableRight="@drawable/selector_question"
+                        android:button="@null"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="35dp" />
+                    <CheckBox
+                        android:id="@+id/cb_news"
+                        android:layout_marginLeft="10dp"
+                        android:textColor="@color/gray"
+                        android:background="@color/transparent"
+                        android:text="新闻资讯"
+                        android:drawableRight="@drawable/selector_question"
+                        android:button="@null"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="35dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginRight="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <CheckBox
+                        android:id="@+id/cb_machine"
+                        android:textColor="@color/gray"
+                        android:background="@color/transparent"
+                        android:text="家用电器"
+                        android:drawableRight="@drawable/selector_question"
+                        android:button="@null"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="35dp" />
+                    <CheckBox
+                        android:id="@+id/cb_game"
+                        android:layout_marginLeft="10dp"
+                        android:textColor="@color/gray"
+                        android:background="@color/transparent"
+                        android:text="游戏"
+                        android:drawableRight="@drawable/selector_question"
+                        android:button="@null"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="35dp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!--对软件不满意的地方-->
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:orientation="vertical"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/bg_question"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_marginLeft="5dp"
+                    android:gravity="center_vertical"
+                    android:textStyle="bold"
+                    android:id="@+id/tv_satisfy"
+                    android:textSize="16sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp" />
+                <View
+                    android:background="@color/common_line"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"/>
+                <LinearLayout
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <CheckBox
+                        android:textColor="@color/gray"
+                        android:checked="true"
+                        android:background="@color/transparent"
+                        android:id="@+id/cb_advertisement"
+                        android:text="广告太多"
+                        android:drawableRight="@drawable/selector_question"
+                        android:button="@null"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp" />
+                    <CheckBox
+                        android:textColor="@color/gray"
+                        android:background="@color/transparent"
+                        android:id="@+id/cb_content"
+                        android:text="内容质量差"
+                        android:drawableRight="@drawable/selector_question"
+                        android:button="@null"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp" />
+                    <CheckBox
+                        android:textColor="@color/gray"
+                        android:background="@color/transparent"
+                        android:id="@+id/cb_title"
+                        android:text="标题党严重"
+                        android:drawableRight="@drawable/selector_question"
+                        android:button="@null"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp" />
+                    <CheckBox
+                        android:textColor="@color/gray"
+                        android:background="@color/transparent"
+                        android:id="@+id/cb_ui"
+                        android:text="产品界面不好看"
+                        android:drawableRight="@drawable/selector_question"
+                        android:button="@null"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp" />
+                    <CheckBox
+                        android:textColor="@color/gray"
+                        android:background="@color/transparent"
+                        android:id="@+id/cb_noInterest"
+                        android:text="没感兴趣的内容"
+                        android:drawableRight="@drawable/selector_question"
+                        android:button="@null"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp" />
+                    <CheckBox
+                        android:textColor="@color/gray"
+                        android:background="@color/transparent"
+                        android:id="@+id/cb_push"
+                        android:text="推送太频繁"
+                        android:drawableRight="@drawable/selector_question"
+                        android:button="@null"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp" />
+                    <CheckBox
+                        android:textColor="@color/gray"
+                        android:background="@color/transparent"
+                        android:id="@+id/cb_other"
+                        android:text="其他"
+                        android:drawableRight="@drawable/selector_question"
+                        android:button="@null"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp" />
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <!--称呼-->
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:orientation="vertical"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/bg_question"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_marginLeft="5dp"
+                    android:gravity="center_vertical"
+                    android:textStyle="bold"
+                    android:id="@+id/tv_callName"
+                    android:textSize="16sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp" />
+                <View
+                    android:background="@color/common_line"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"/>
+                <RadioGroup
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <RadioButton
+                        android:textColor="@color/gray"
+                        android:checked="true"
+                        android:background="@color/transparent"
+                        android:id="@+id/rb_shaoNian"
+                        android:text="偏偏少年"
+                        android:drawableRight="@drawable/selector_question"
+                        android:button="@null"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp" />
+                    <RadioButton
+                        android:textColor="@color/gray"
+                        android:background="@color/transparent"
+                        android:id="@+id/rb_shaoNv"
+                        android:text="青春少女"
+                        android:drawableRight="@drawable/selector_question"
+                        android:button="@null"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp" />
+                    <RadioButton
+                        android:textColor="@color/gray"
+                        android:background="@color/transparent"
+                        android:id="@+id/rb_daShu"
+                        android:text="成熟大叔"
+                        android:drawableRight="@drawable/selector_question"
+                        android:button="@null"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp" />
+                    <RadioButton
+                        android:textColor="@color/gray"
+                        android:background="@color/transparent"
+                        android:id="@+id/rb_laMa"
+                        android:text="时尚辣妈"
+                        android:drawableRight="@drawable/selector_question"
+                        android:button="@null"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp" />
+                    <RadioButton
+                        android:textColor="@color/gray"
+                        android:background="@color/transparent"
+                        android:id="@+id/rb_sister"
+                        android:text="知心姐姐"
+                        android:drawableRight="@drawable/selector_question"
+                        android:button="@null"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp" />
+                </RadioGroup>
+            </LinearLayout>
+        <LinearLayout
+            android:paddingBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/bg_question"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:gravity="center_vertical"
+                android:textStyle="bold"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:text="9.感谢您的参与，最后您对每日速报有什么建议或意见，请告诉我们，我们会尽最大努力让您满意"
+                android:layout_width="match_parent"
+                android:layout_height="80dp" />
+            <View
+                android:background="@color/common_line"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"/>
+            <EditText
+                android:textSize="12sp"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:maxLines="6"
+                android:layout_marginTop="20dp"
+                android:paddingTop="10dp"
+                android:paddingLeft="10dp"
+                android:gravity="top|left"
+                android:background="@drawable/bg_feedback"
+                android:layout_width="match_parent"
+                android:layout_height="100dp" />
+        </LinearLayout>
+            <TextView
+                android:layout_marginTop="20dp"
+                android:paddingBottom="70dp"
+                android:layout_marginLeft="20dp"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="14sp"
+                android:text="本次问卷奖励会自动到账，请移步收入明细查看"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </ScrollView>
+    <Button
+        android:id="@+id/btn_confrim"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:text="完成并提交"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorPrimaryDark"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+</RelativeLayout>

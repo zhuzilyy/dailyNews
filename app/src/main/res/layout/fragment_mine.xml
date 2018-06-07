@@ -91,6 +91,7 @@
 
                         </LinearLayout>
                         <TextView
+                            android:id="@+id/tv_phone"
                             android:layout_marginTop="@dimen/dp_5"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -153,6 +154,7 @@
                             android:textColor="@color/white"
                             />
                         <TextView
+                            android:id="@+id/tv_gold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="5400"
@@ -183,6 +185,7 @@
                             android:textColor="@color/white"
                             />
                         <TextView
+                            android:id="@+id/tv_balance"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="5.4"
@@ -213,6 +216,7 @@
                             android:textColor="@color/white"
                             />
                         <TextView
+                            android:id="@+id/tv_earning"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="5.0"

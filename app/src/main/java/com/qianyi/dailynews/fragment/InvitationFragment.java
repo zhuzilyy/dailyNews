@@ -37,6 +37,7 @@ import com.qianyi.dailynews.ui.invitation.activity.WakeFriendsActivity;
 import com.qianyi.dailynews.utils.SPUtils;
 import com.qianyi.dailynews.utils.ToastUtils;
 import com.qianyi.dailynews.utils.Utils;
+import com.qianyi.dailynews.utils.WhiteBgBitmapUtil;
 import com.qianyi.dailynews.utils.loader.GlideImageLoader;
 import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
 import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
@@ -303,6 +304,7 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
                 break;
             case R.id.ll_friendCircle:
                 shareFriendCircle();
+                pw_share.dismiss();
                 break;
             case R.id.ll_QQ:
                 break;
@@ -310,6 +312,7 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
                 break;
             case R.id.ll_wechat:
                 shareFriends();
+                pw_share.dismiss();
                 break;
         }
     }
@@ -318,10 +321,11 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
         WXWebpageObject webpage = new WXWebpageObject();
         webpage.webpageUrl = "http://www.gaokaoygzy.cn/download";
         WXMediaMessage msg = new WXMediaMessage(webpage);
-        msg.title ="阳光志愿";
-        msg.description ="阳光志愿" ;
+        msg.title ="每日速报";
+        msg.description ="每日速报" ;
         Bitmap bmp = BitmapFactory.decodeResource(getResources(),R.mipmap.logo);
-        Bitmap thumbBmp = Bitmap.createScaledBitmap(bmp, 100, 100, true);
+        Bitmap bitmap = WhiteBgBitmapUtil.drawableBitmapOnWhiteBg(getActivity(), bmp);
+        Bitmap thumbBmp = Bitmap.createScaledBitmap(bitmap, 200, 200, true);
         msg.setThumbImage(thumbBmp);
         bmp.recycle();
         SendMessageToWX.Req req = new SendMessageToWX.Req();
@@ -335,10 +339,11 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
         WXWebpageObject webpage = new WXWebpageObject();
         webpage.webpageUrl = "http://www.gaokaoygzy.cn/download";
         WXMediaMessage msg = new WXMediaMessage(webpage);
-        msg.title ="阳光志愿";
-        msg.description ="阳光志愿" ;
+        msg.title ="每日速报";
+        msg.description ="每日速报" ;
         Bitmap bmp = BitmapFactory.decodeResource(getResources(),R.mipmap.logo);
-        Bitmap thumbBmp = Bitmap.createScaledBitmap(bmp, 100, 100, true);
+        Bitmap bitmap = WhiteBgBitmapUtil.drawableBitmapOnWhiteBg(getActivity(), bmp);
+        Bitmap thumbBmp = Bitmap.createScaledBitmap(bitmap, 200, 200, true);
         msg.setThumbImage(thumbBmp);
         bmp.recycle();
         SendMessageToWX.Req req = new SendMessageToWX.Req();
@@ -351,12 +356,10 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
     public static String buildTransaction(final String type) {
         return (type == null) ? String.valueOf(System.currentTimeMillis()) : type + System.currentTimeMillis();
     }
-
     /***
      * 弹出一键收徒的弹窗
      */
     private void showOneKeyShouTu() {
-
         pw_onekeyshoutu = new PopupWindow(getActivity());
         pw_onekeyshoutu.setContentView(view_onekeyshoutu);
         pw_onekeyshoutu.setWidth(LinearLayout.LayoutParams.MATCH_PARENT);

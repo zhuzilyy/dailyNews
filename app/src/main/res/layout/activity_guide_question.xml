@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include layout="@layout/layout_title"/>
+    <LinearLayout
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:gravity="center_vertical"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="16sp"
+            android:text="1、什么是每日速报"
+            android:layout_width="match_parent"
+            android:layout_height="35dp" />
+        <RadioGroup
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="35dp">
+            <RadioButton
+                android:background="@color/transparent"
+                android:drawablePadding="10dp"
+                android:drawableLeft="@drawable/selector_question"
+                android:button="@null"
+                android:layout_weight="1"
+                android:id="@+id/rb_first1"
+                android:text="学习工具"
+                android:gravity="center_vertical"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+            <RadioButton
+                android:background="@color/transparent"
+                android:drawablePadding="10dp"
+                android:drawableLeft="@drawable/selector_question"
+                android:button="@null"
+                android:layout_weight="1"
+                android:id="@+id/rb_first2"
+                android:text="赚钱软件"
+                android:gravity="center_vertical"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+            <RadioButton
+                android:background="@color/transparent"
+                android:drawablePadding="10dp"
+                android:drawableLeft="@drawable/selector_question"
+                android:button="@null"
+                android:layout_weight="1"
+                android:id="@+id/rb_first3"
+                android:text="阅读咨讯"
+                android:gravity="center_vertical"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+        </RadioGroup>
+        <View
+            android:layout_marginTop="10dp"
+            android:background="@color/common_line"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:gravity="center_vertical"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="16sp"
+            android:text="1、每日速报为什么会给用户发钱"
+            android:layout_width="match_parent"
+            android:layout_height="35dp" />
+        <RadioGroup
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="35dp">
+            <RadioButton
+                android:background="@color/transparent"
+                android:drawablePadding="10dp"
+                android:drawableLeft="@drawable/selector_question"
+                android:button="@null"
+                android:layout_weight="1"
+                android:id="@+id/rb_second1"
+                android:text="有钱任性"
+                android:gravity="center_vertical"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+            <RadioButton
+                android:background="@color/transparent"
+                android:drawablePadding="10dp"
+                android:drawableLeft="@drawable/selector_question"
+                android:button="@null"
+                android:layout_weight="1"
+                android:id="@+id/rb_second2"
+                android:text="宣传噱头"
+                android:gravity="center_vertical"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+            <RadioButton
+                android:background="@color/transparent"
+                android:drawablePadding="10dp"
+                android:drawableLeft="@drawable/selector_question"
+                android:button="@null"
+                android:layout_weight="1"
+                android:id="@+id/rb_second3"
+                android:text="收益分成"
+                android:gravity="center_vertical"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+        </RadioGroup>
+        <View
+            android:layout_marginTop="10dp"
+            android:background="@color/common_line"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:gravity="center_vertical"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="16sp"
+            android:text="3、金币汇率受什么影响"
+            android:layout_width="match_parent"
+            android:layout_height="35dp" />
+        <RadioGroup
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="35dp">
+            <RadioButton
+                android:background="@color/transparent"
+                android:drawablePadding="10dp"
+                android:drawableLeft="@drawable/selector_question"
+                android:button="@null"
+                android:layout_weight="1"
+                android:id="@+id/rb_third1"
+                android:text="老板心情"
+                android:gravity="center_vertical"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+            <RadioButton
+                android:background="@color/transparent"
+                android:drawablePadding="10dp"
+                android:drawableLeft="@drawable/selector_question"
+                android:button="@null"
+                android:layout_weight="1"
+                android:id="@+id/rb_third2"
+                android:text="阅读内容"
+                android:gravity="center_vertical"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+            <RadioButton
+                android:background="@color/transparent"
+                android:drawablePadding="10dp"
+                android:drawableLeft="@drawable/selector_question"
+                android:button="@null"
+                android:layout_weight="1"
+                android:id="@+id/rb_third3"
+                android:text="平台收益"
+                android:gravity="center_vertical"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+        </RadioGroup>
+        <View
+            android:layout_marginTop="10dp"
+            android:background="@color/common_line"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:gravity="center_vertical"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="16sp"
+            android:text="4、如何增加收益"
+            android:layout_width="match_parent"
+            android:layout_height="35dp" />
+        <RadioGroup
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="35dp">
+            <RadioButton
+                android:background="@color/transparent"
+                android:drawablePadding="10dp"
+                android:drawableLeft="@drawable/selector_question"
+                android:button="@null"
+                android:layout_weight="1"
+                android:id="@+id/rb_forth1"
+                android:text="狂刷文章"
+                android:gravity="center_vertical"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+            <RadioButton
+                android:background="@color/transparent"
+                android:drawablePadding="10dp"
+                android:drawableLeft="@drawable/selector_question"
+                android:button="@null"
+                android:layout_weight="1"
+                android:id="@+id/rb_forth2"
+                android:text="收取徒弟"
+                android:gravity="center_vertical"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+            <RadioButton
+                android:background="@color/transparent"
+                android:drawablePadding="10dp"
+                android:drawableLeft="@drawable/selector_question"
+                android:button="@null"
+                android:layout_weight="1"
+                android:id="@+id/rb_forth3"
+                android:text="囤积金币"
+                android:gravity="center_vertical"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+        </RadioGroup>
+        <View
+            android:layout_marginTop="10dp"
+            android:background="@color/common_line"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"/>
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:gravity="center_vertical"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="16sp"
+            android:text="5、邀请好友有什么用处"
+            android:layout_width="match_parent"
+            android:layout_height="35dp" />
+        <RadioGroup
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="35dp">
+            <RadioButton
+                android:background="@color/transparent"
+                android:drawablePadding="10dp"
+                android:drawableLeft="@drawable/selector_question"
+                android:button="@null"
+                android:layout_weight="1"
+                android:id="@+id/rb_fifth1"
+                android:text="收益暴涨"
+                android:gravity="center_vertical"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+            <RadioButton
+                android:background="@color/transparent"
+                android:drawablePadding="10dp"
+                android:drawableLeft="@drawable/selector_question"
+                android:button="@null"
+                android:layout_weight="1"
+                android:id="@+id/rb_fifth2"
+                android:text="为了炫富"
+                android:gravity="center_vertical"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+            <RadioButton
+                android:background="@color/transparent"
+                android:drawablePadding="10dp"
+                android:drawableLeft="@drawable/selector_question"
+                android:button="@null"
+                android:layout_weight="1"
+                android:id="@+id/rb_fifth3"
+                android:text="增进友谊"
+                android:gravity="center_vertical"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+        </RadioGroup>
+        <View
+            android:layout_marginTop="10dp"
+            android:background="@color/common_line"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"/>
+    </LinearLayout>
+</LinearLayout>

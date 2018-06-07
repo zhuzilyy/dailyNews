@@ -43,31 +43,24 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
     //问卷调查
     @BindView(R.id.ll_Questionnaire001) public LinearLayout ll_Questionnaire001;
     @BindView(R.id.ll_Questionnaire002) public LinearLayout ll_Questionnaire002;
-    @BindView(R.id.btn_Questionnaire) public Button btn_Questionnaire;
     //答题奖励
     @BindView(R.id.ll_answerAward001) public LinearLayout ll_answerAward001;
     @BindView(R.id.ll_answerAward002) public LinearLayout ll_answerAward002;
-    @BindView(R.id.btn_answerAward) public Button btn_answerAward;
     //邀请好友
     @BindView(R.id.ll_inviteFriends001) public LinearLayout ll_inviteFriends001;
     @BindView(R.id.ll_inviteFriends002) public LinearLayout ll_inviteFriends002;
-    @BindView(R.id.btn_inviteFriends) public Button btn_inviteFriends;
     //阅读奖励
     @BindView(R.id.ll_readingAward001) public LinearLayout ll_readingAward001;
     @BindView(R.id.ll_readingAward002) public LinearLayout ll_readingAward002;
-    @BindView(R.id.btn_readingAward) public Button btn_readingAward;
     //分享奖励
     @BindView(R.id.ll_shareRewards001) public LinearLayout ll_shareRewards001;
     @BindView(R.id.ll_shareRewards002) public LinearLayout ll_shareRewards002;
-    @BindView(R.id.btn_share) public Button btn_share;
     //晒收入
     @BindView(R.id.ll_sunIncome001) public LinearLayout ll_sunIncome001;
     @BindView(R.id.ll_sunIncome002) public LinearLayout ll_sunIncome002;
-    @BindView(R.id.btn_sunincome) public Button btn_sunincome;
     //评论奖励
     @BindView(R.id.ll_commentAward001) public LinearLayout ll_commentAward001;
     @BindView(R.id.ll_commentAward002) public LinearLayout ll_commentAward002;
-    @BindView(R.id.btn_commentAward) public Button btn_commentAward;
     //赚钱攻略
     @BindView(R.id.tv_ProfitMakingStrategy) public TextView tv_ProfitMakingStrategy;
     //签到规则
@@ -232,12 +225,12 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
                 Toast.makeText(this, "去完成提现", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.btn_Questionnaire:
+                jumpActivity(this,QuestionSurveyActivity.class);
                 //去调查
-                Toast.makeText(this, "去调查", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.btn_answerAward:
                 //去答题
-                Toast.makeText(this, "去答题", Toast.LENGTH_SHORT).show();
+                jumpActivity(this,GreenHandsGuideActivity.class);
                 break;
             case R.id.btn_inviteFriends:
                 //去邀请
