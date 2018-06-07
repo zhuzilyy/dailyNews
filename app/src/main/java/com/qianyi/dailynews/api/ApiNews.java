@@ -107,6 +107,28 @@ public class ApiNews {
         params.put("userId",userId);
         OkHttpManager.getInstance().postRequest(url,params,callback);
     }
+    /**
+     * 到新闻详情界面首先调该接口
+     * @param callback
+     */
+    public static void ReadNews(String url,String userId,String newsId , RequestCallBack<String> callback){
+        Map<String,String> params=new HashMap<>();
+        params.put("userId",userId);
+        params.put("newsId",newsId);
+        OkHttpManager.getInstance().postRequest(url,params,callback);
+    }
+    /**
+     * 到新闻详情界面首先调该接口
+     * @param callback
+     */
+    public static void GetRewardAfterReadNews(String url,String userId,String newsId , RequestCallBack<String> callback){
+        Map<String,String> params=new HashMap<>();
+        params.put("userId",userId);
+        params.put("newsId",newsId);
+        OkHttpManager.getInstance().postRequest(url,params,callback);
+    }
+
+
 
 
 

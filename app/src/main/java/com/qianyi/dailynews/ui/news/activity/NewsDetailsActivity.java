@@ -38,6 +38,9 @@ import com.qianyi.dailynews.ui.news.views.MySingListView;
 import com.qianyi.dailynews.utils.SPUtils;
 import com.qianyi.dailynews.utils.WebviewUtil;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -94,15 +97,15 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
     private boolean readMore=false;
     @Override
     protected void initViews() {
-
-        //先调阅读新闻
-        readNews();
-
-
-        //计时
-        startTimer();
         newsId=getIntent().getStringExtra("id");
         urlStr=getIntent().getStringExtra("url");
+        if(!TextUtils.isEmpty(newsId)){
+            //先调阅读新闻
+            readNews(newsId);
+        }
+        //计时
+        startTimer();
+
         tv_money.setText("+"+NewsFragment.Gold);
         if(!TextUtils.isEmpty(urlStr)){
             webSettings = news_webview.getSettings();
@@ -119,10 +122,34 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
 
     /***
      * 到详情界面先调阅读新闻接口
+     * @param newsId
      */
-    private void readNews() {
+    private void readNews(String newsId) {
+        String userid = (String) SPUtils.get(NewsDetailsActivity.this,"user_id","");
+        if(TextUtils.isEmpty(userid)){
+            return;
+        }
+        ApiNews.ReadNews(ApiConstant.READ_NEWS, userid, newsId, new RequestCallBack<String>() {
+            @Override
+            public void onSuccess(Call call, Response response, String s) {
+                Log.i("ss",s);
+                try {
+                    JSONObject jsonObject = new JSONObject(s);
+                    String code = jsonObject.getString("code");
+                    if("0000".equals(code)){
 
-        ApiNews.
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void onEror(Call call, int statusCode, Exception e) {
+                Log.i("ss",e.getMessage());
+            }
+        });
 
     }
 
@@ -410,8 +437,16 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
      */
     private void getReward() {
         if(timeOut&&readMore){
+            getReward2();
 
         }
+    }
+
+    /***
+     * 符合规则，获取阅读奖励
+     */
+    private void getReward2() {
+        //ApiNews.GetRewardAfterReadNews();
     }
 
     /***
