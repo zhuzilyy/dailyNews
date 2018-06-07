@@ -20,6 +20,7 @@ import com.qianyi.dailynews.ui.Mine.activity.SettingsActivity;
 import com.qianyi.dailynews.ui.Mine.activity.TaskCenterActivity;
 import com.qianyi.dailynews.ui.Mine.activity.WithdrawalsActivity;
 import com.qianyi.dailynews.ui.Mine.activity.WriteInvitationActivity;
+import com.qianyi.dailynews.utils.SPUtils;
 import com.qianyi.dailynews.utils.Utils;
 
 import butterknife.BindView;
@@ -59,7 +60,15 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     public TextView tv_copy;
     @BindView(R.id.tv_InvitationCode)
     public TextView tv_InvitationCode;
-
+    @BindView(R.id.tv_phone)
+    public TextView tv_phone;
+    @BindView(R.id.tv_balance)
+    public TextView tv_balance;
+    @BindView(R.id.tv_earning)
+    public TextView tv_earning;
+    @BindView(R.id.tv_gold)
+    public TextView tv_gold;
+    private String phone,balance,earnings,gold,my_invite_code;
     @Override
     protected View getResLayout(LayoutInflater inflater, ViewGroup container) {
         newsView = inflater.inflate(R.layout.fragment_mine, null);
@@ -68,7 +77,16 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
 
     @Override
     protected void initViews() {
-
+        phone= (String) SPUtils.get(getActivity(),"phone","");
+        gold=(String)SPUtils.get(getActivity(),"gold","");
+        my_invite_code=(String)SPUtils.get(getActivity(),"my_invite_code","");
+        balance=(String)SPUtils.get(getActivity(),"balance","");
+        earnings=(String)SPUtils.get(getActivity(),"earnings","");
+        tv_phone.setText("电话号:"+phone);
+        tv_balance.setText(balance);
+        tv_InvitationCode.setText(my_invite_code);
+        tv_earning.setText(earnings);
+        tv_gold.setText(gold);
     }
 
     @Override

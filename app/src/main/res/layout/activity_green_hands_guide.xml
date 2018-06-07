@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:background="@color/white"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include layout="@layout/layout_title"/>
+    <ScrollView
+        android:layout_below="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+    <TextView
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:text="了解每日速报"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:text="仔细阅读下面的内容，便于您能答对所有题目领取奖励"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:layout_marginTop="10dp"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:text="1、什么是每日速报"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:text="每日速报致力于打造一款新形式的资讯阅读软件，以平台、媒体、共赢的方式。以移动应用为载体进行内容创作、资讯阅读，提供更多有用、有趣、有益的内容呈现给大家"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_marginTop="10dp"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:text="2、每日速报为什么会给用户奖励？"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:text="每日速报为了引领全民阅读，为了帮助大家养成良好的阅读习惯，在阅读文章的过程中，将给予一定的金币奖励，而奖励的金币也会在次日自动换算成零钱，让您阅读不仅增长知识，而且还能有所收益"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:layout_marginTop="10dp"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:text="3、用户如何获取收益"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:text="只要您每天登录每日速报进行阅读内容，签到，完成任务，参与我们举办的各项活动，都可以获得一定的金币奖励。另外邀请您的亲朋好友一起玩每日速报，还可以获得额外的现金红包和更多的金币奖励！"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+    <TextView
+        android:layout_marginTop="10dp"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:text="4、一金币等于多少人民币"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:text="每日速报是根据运营收益来与用户分成的，每天的运营收益都不一样，所以一个金币等于多少钱不固定，通常情况运营收益越高，金币价值越高，具体以次日转换为准。每日凌晨，平台会按照当日的运营收益计算出当天的金币汇率，并按照金币汇率转换成人民币存到您的零钱里。"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_marginTop="10dp"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:text="5、为什么要收徒"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:paddingBottom="60dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:text="邀请朋友一起来玩每日速报，即收徒弟。收徒能让您的收益暴涨，除了平台的活动奖励外，徒弟平常的分享阅读奖励，将向您进贡一定的金币，徒弟越多进贡金币也就越多。"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+        </LinearLayout>
+    </ScrollView>
+    <Button
+        android:id="@+id/btn_confrim"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:text="我已阅读开始答题"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorPrimaryDark"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+</RelativeLayout>

@@ -804,16 +804,16 @@
                         android:layout_height="50dp"
                         android:orientation="horizontal"
                         >
+
                         <TextView
-                            android:layout_centerVertical="true"
                             android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_centerVertical="true"
                             android:layout_weight="3"
                             android:gravity="center_vertical"
-                            android:layout_height="match_parent"
                             android:text="问卷调查"
-                            android:textSize="14sp"
                             android:textColor="@color/black"
-                            />
+                            android:textSize="14sp" />
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_weight="2"
@@ -846,7 +846,6 @@
                                 android:layout_centerVertical="true"
                                 />
 
-
                         </LinearLayout>
 
 
@@ -856,30 +855,33 @@
                         android:visibility="gone"
                         android:id="@+id/ll_Questionnaire002"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="50dp"
                         android:orientation="horizontal"
                         android:paddingBottom="@dimen/dp_10"
                         >
                         <TextView
+                            android:gravity="center_vertical"
                             android:layout_width="0dp"
                             android:layout_weight="2"
-                            android:layout_height="wrap_content"
-                            android:text="的链接分离式结构老司机经理过来是根据娄山关路放假了时间个类似废旧塑料的副驾驶来个距离是开关机放假了手机发了发老司机父类看浪费时间李放斐林试剂公司结构升龙国际搜二级公司附件四六级"
+                            android:layout_height="match_parent"
+                            android:text="根据问卷调查质量发放奖励"
                             />
                         <LinearLayout
                             android:layout_width="0dp"
+                            android:layout_weight="2"
+                            android:gravity="center_vertical|right"
                             android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:gravity="center"
+                            android:orientation="horizontal"
                             >
-                            <Button
+                            <TextView
+                                android:gravity="center"
+                                android:layout_gravity="center_vertical"
                                 android:id="@+id/btn_Questionnaire"
-                                android:layout_width="wrap_content"
+                                android:layout_width="90dp"
                                 android:layout_height="30dp"
                                 android:text="去填写"
                                 android:textColor="@color/white"
                                 android:background="@drawable/shape_coner30_gold"
-
                                 />
 
                         </LinearLayout>
@@ -958,15 +960,16 @@
                         android:visibility="gone"
                         android:id="@+id/ll_answerAward002"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="50dp"
                         android:orientation="horizontal"
                         android:paddingBottom="@dimen/dp_10"
                         >
                         <TextView
+                            android:gravity="center_vertical"
                             android:layout_width="0dp"
                             android:layout_weight="2"
-                            android:layout_height="wrap_content"
-                            android:text="的链接分离式结构老司机经理过来是根据娄山关路放假了时间个类似废旧塑料的副驾驶来个距离是开关机放假了手机发了发老司机父类看浪费时间李放斐林试剂公司结构升龙国际搜二级公司附件四六级"
+                            android:layout_height="match_parent"
+                            android:text="填写新手问答获得奖励"
                             />
                         <LinearLayout
                             android:layout_width="0dp"
@@ -974,16 +977,16 @@
                             android:layout_weight="1"
                             android:gravity="center"
                             >
-                            <Button
+                            <TextView
                                 android:id="@+id/btn_answerAward"
-                                android:layout_width="wrap_content"
+                                android:layout_width="90dp"
                                 android:layout_height="30dp"
                                 android:text="去答题"
                                 android:textColor="@color/white"
                                 android:background="@drawable/shape_coner30_gold"
-
+                                android:gravity="center"
+                                android:layout_gravity="center_vertical"
                                 />
-
                         </LinearLayout>
 
                     </LinearLayout>

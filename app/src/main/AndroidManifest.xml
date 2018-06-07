@@ -157,5 +157,17 @@
         <activity android:name=".ui.news.activity.NewsDetailsActivity"
             android:screenOrientation="portrait"
             />
+        <!--调查问卷-->
+        <activity android:name=".ui.Mine.activity.QuestionSurveyActivity"
+            android:screenOrientation="portrait"
+            />
+        <!--新手引导-->
+        <activity android:name=".ui.Mine.activity.GreenHandsGuideActivity"
+            android:screenOrientation="portrait"
+            />
+        <!--新手答题-->
+        <activity android:name=".ui.Mine.activity.GuideQuestionActivity"
+            android:screenOrientation="portrait"
+            />
     </application>
 </manifest>
