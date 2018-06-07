@@ -25,6 +25,7 @@ import com.qianyi.dailynews.api.ApiConstant;
 import com.qianyi.dailynews.api.ApiNews;
 import com.qianyi.dailynews.base.BaseActivity;
 import com.qianyi.dailynews.callback.RequestCallBack;
+import com.qianyi.dailynews.fragment.NewsFragment;
 import com.qianyi.dailynews.ui.news.adapter.HotCommentAdapterNews;
 import com.qianyi.dailynews.ui.news.adapter.NewsDetailsAdapter;
 import com.qianyi.dailynews.ui.news.bean.CommPublishBean;
@@ -62,6 +63,7 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
     @BindView(R.id.lv_) public MySingListView lv;
     @BindView(R.id.lv_comment) public MySingListView lv_comment;
     @BindView(R.id.sc) public ScrollView sc;
+
     //****************************
     //评论
     @BindView(R.id.re_comm) public RelativeLayout re_comm;
@@ -87,6 +89,7 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
     protected void initViews() {
         newsId=getIntent().getStringExtra("id");
         urlStr=getIntent().getStringExtra("url");
+        tv_money.setText("+"+NewsFragment.Gold);
         if(!TextUtils.isEmpty(urlStr)){
             webSettings=news_webview.getSettings();
             WebviewUtil.setWebview(news_webview, webSettings);

@@ -60,7 +60,7 @@
                     android:layout_alignTop="@+id/iv_money"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="+255"
+                    android:text=""
                     android:textSize="12sp"
                     android:layout_marginTop="-5dp"
                     android:background="@drawable/shape_coner_red"
