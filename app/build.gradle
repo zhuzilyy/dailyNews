@@ -37,10 +37,6 @@ android {
             signingConfig signingConfigs.config
         }
     }
-    sourceSets.main{
-        jniLibs.srcDirs=['libs']
-
-    }
     dexOptions {
         // incremental true
     }
