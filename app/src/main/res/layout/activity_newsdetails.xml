@@ -72,7 +72,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_0.5"
             android:background="@color/gray"/>
-        <ScrollView
+        <android.support.v4.widget.NestedScrollView
             android:id="@+id/sc"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -136,11 +136,12 @@
                     android:layout_height="10dp"
                     android:background="@color/light_gray5"
                     />
-                <!--相关推荐-->
+                <!--相关推荐,热门评论-->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
+                    android:descendantFocusability="blocksDescendants"
                     >
                     <!--title-->
                     <LinearLayout
@@ -185,6 +186,7 @@
                         android:layout_height="40dp"
                         android:gravity="center_vertical"
                         android:paddingLeft="@dimen/dp_10"
+                        android:descendantFocusability="blocksDescendants"
                         >
                         <View
                             android:layout_width="6dp"
@@ -222,7 +224,7 @@
 
 
 
-        </ScrollView>
+        </android.support.v4.widget.NestedScrollView>
     </LinearLayout>
     <!--评论弹框-->
     <RelativeLayout

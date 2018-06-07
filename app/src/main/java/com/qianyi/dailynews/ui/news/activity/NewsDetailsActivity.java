@@ -2,6 +2,7 @@ package com.qianyi.dailynews.ui.news.activity;
 
 import android.content.Intent;
 import android.os.Handler;
+import android.support.v4.widget.NestedScrollView;
 import android.text.TextUtils;
 
 
@@ -37,8 +38,13 @@ import com.qianyi.dailynews.ui.news.views.MySingListView;
 import com.qianyi.dailynews.utils.SPUtils;
 import com.qianyi.dailynews.utils.WebviewUtil;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -62,7 +68,7 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
     @BindView(R.id.top_web_re) public RelativeLayout top_web_re;
     @BindView(R.id.lv_) public MySingListView lv;
     @BindView(R.id.lv_comment) public MySingListView lv_comment;
-    @BindView(R.id.sc) public ScrollView sc;
+    @BindView(R.id.sc) public NestedScrollView sc;
 
     //****************************
     //评论
@@ -85,19 +91,79 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
     private int pageSize=10;
     private int pageLevel2=1;//二级评论的也是
     private int pageSizeLevel2=10; //二级评论的页面大小
+    ///**********************************
+    //计时
+    private boolean timeOut=false;
+    private boolean readMore=false;
     @Override
     protected void initViews() {
         newsId=getIntent().getStringExtra("id");
         urlStr=getIntent().getStringExtra("url");
+        if(!TextUtils.isEmpty(newsId)){
+            //先调阅读新闻
+            readNews(newsId);
+        }
+        //计时
+        startTimer();
+
         tv_money.setText("+"+NewsFragment.Gold);
         if(!TextUtils.isEmpty(urlStr)){
-            webSettings=news_webview.getSettings();
-            WebviewUtil.setWebview(news_webview, webSettings);
+            webSettings = news_webview.getSettings();
+            WebviewUtil.setWebview(news_webview,webSettings);
             news_webview.loadUrl(urlStr);
             WebviewUtil.setWebview(bottom_web,webSettings);
             bottom_web.loadUrl(urlStr);
         }
+
+
+
+
     }
+
+    /***
+     * 到详情界面先调阅读新闻接口
+     * @param newsId
+     */
+    private void readNews(String newsId) {
+        String userid = (String) SPUtils.get(NewsDetailsActivity.this,"user_id","");
+        if(TextUtils.isEmpty(userid)){
+            return;
+        }
+        ApiNews.ReadNews(ApiConstant.READ_NEWS, userid, newsId, new RequestCallBack<String>() {
+            @Override
+            public void onSuccess(Call call, Response response, String s) {
+                Log.i("ss",s);
+                try {
+                    JSONObject jsonObject = new JSONObject(s);
+                    String code = jsonObject.getString("code");
+                    if("0000".equals(code)){
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void onEror(Call call, int statusCode, Exception e) {
+                Log.i("ss",e.getMessage());
+            }
+        });
+
+    }
+
+    private void startTimer() {
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                timeOut=true;
+            }
+        },15*1000);
+
+
+        }
+
     @Override
     protected void initData() {
         // 加载webview
@@ -350,10 +416,12 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
                 re_newsmore.setVisibility(View.GONE);
                 top_web_re.setVisibility(View.GONE);
                 bottom_web.setVisibility(View.VISIBLE);
-                //让ScrollVeiw 回到顶部
-               // sc.scrollTo(0,0);
+
                 sc.fullScroll(View.FOCUS_UP);
-               // sc.smoothScrollTo(0, 0);
+                readMore=true;
+                //获得奖励
+                getReward();
+
                 break;
             case R.id.re_comm:
                 //发表一级评论
@@ -363,6 +431,24 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
             break;
         }
     }
+
+    /***
+     * 点击阅读更多，并阅读15秒获得奖励
+     */
+    private void getReward() {
+        if(timeOut&&readMore){
+            getReward2();
+
+        }
+    }
+
+    /***
+     * 符合规则，获取阅读奖励
+     */
+    private void getReward2() {
+        //ApiNews.GetRewardAfterReadNews();
+    }
+
     /***
      * 发表一级评论
      */
@@ -382,27 +468,39 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
                         }
                         ApiNews.PublishNewsCommend(ApiConstant.PUBLISH_NEWS_COMMENT, userid, newsId, 1, 0+"", 1+"", inputText, new RequestCallBack<String>() {
                             @Override
-                            public void onSuccess(Call call, Response response, String s) {
-                                dialog.hideProgressdialog();
-                                dialog.dismiss();
-                                Log.i("ss",s);
-                                Gson gson=new Gson();
-                                CommPublishBean bean=gson.fromJson(s,CommPublishBean.class);
-                                if(bean!=null){
-                                   String code= bean.getCode();
-                                   if("0000".equals(code)){
-                                        CommPublishBean.CommPublisData data=bean.getData();
-                                        if(data!=null){
-                                            getCommend();
+                            public void onSuccess(Call call, Response response, final String s) {
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        dialog.hideProgressdialog();
+                                        dialog.dismiss();
+                                        Log.i("ss",s);
+                                        Gson gson=new Gson();
+                                        CommPublishBean bean=gson.fromJson(s,CommPublishBean.class);
+                                        if(bean!=null){
+                                            String code= bean.getCode();
+                                            if("0000".equals(code)){
+                                                CommPublishBean.CommPublisData data=bean.getData();
+                                                if(data!=null){
+                                                    getCommend();
+                                                }
+                                            }
                                         }
-                                   }
-                                }
+                                    }
+                                });
+
                             }
                             @Override
-                            public void onEror(Call call, int statusCode, Exception e) {
-                                dialog.hideProgressdialog();
-                                dialog.dismiss();
-                                Log.i("ss",e.getMessage());
+                            public void onEror(Call call, int statusCode, final Exception e) {
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        dialog.hideProgressdialog();
+                                        dialog.dismiss();
+                                        Log.i("ss",e.getMessage());
+                                    }
+                                });
+
                             }
                         });
                     }
