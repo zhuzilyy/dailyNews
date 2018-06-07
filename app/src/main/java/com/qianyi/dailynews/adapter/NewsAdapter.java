@@ -82,12 +82,13 @@ public class NewsAdapter extends BaseAdapter {
             if (!TextUtils.isEmpty(adtype)) {
                 switch (adtype) {
                     case "1":
-                        int number = new Random().nextInt(10) + 1;
-                        if(number>5){
-                            return AD_BIG_PIC;
-                        }else {
-                            return AD_RIGHT_PIC;
-                        }
+                        return AD_BIG_PIC;
+//                        int number = new Random().nextInt(10) + 1;
+//                        if(number>5){
+//                            return AD_BIG_PIC;
+//                        }else {
+//                            return AD_RIGHT_PIC;
+//                        }
                     case "3":
                         return AD_THREE_PIC;
                 }

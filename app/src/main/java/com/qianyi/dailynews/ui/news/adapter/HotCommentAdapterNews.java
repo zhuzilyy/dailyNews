@@ -25,6 +25,9 @@ import com.qianyi.dailynews.ui.news.activity.OneCommDetailsActivity;
 import com.qianyi.dailynews.ui.news.bean.CommentBean;
 import com.qianyi.dailynews.utils.SPUtils;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.List;
 
 import okhttp3.Call;
@@ -78,7 +81,7 @@ public class HotCommentAdapterNews extends BaseAdapter {
 
         convertView= LayoutInflater.from(mContext).inflate(R.layout.lay_hotcomment_item,null);
         RoundedImageView head=convertView.findViewById(R.id.newsComm_head);
-        TextView zan_tv=convertView.findViewById(R.id.newsComm_zan_tv);
+        final TextView zan_tv=convertView.findViewById(R.id.newsComm_zan_tv);
         ImageView zan_iv=convertView.findViewById(R.id.newsComm_zan_iv);
         LinearLayout zan_ll=convertView.findViewById(R.id.newsComm_zan_ll);
         TextView name=convertView.findViewById(R.id.newsComm_name);
@@ -112,8 +115,20 @@ public class HotCommentAdapterNews extends BaseAdapter {
                 ApiNews.CommLike(ApiConstant.COMMENT_LIKE, commentRes.getId(), userid, new RequestCallBack<String>() {
                     @Override
                     public void onSuccess(Call call, Response response, String s) {
-                        Log.i("ss",s);
                         Logger.i(s);
+
+                        try {
+                            JSONObject jsonObject= new JSONObject(s);
+                            String code=jsonObject.getString("code");
+                            if("0000".equals(code)){
+                                zan_tv.setText((Integer.parseInt(zan_tv.getText().toString().trim())+1)+"");
+                            }else if("0008".equals(code)){
+                                Toast.makeText(mContext, "您已点过赞了", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
                     }
 
                     @Override

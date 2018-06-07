@@ -70,8 +70,8 @@ public class ApiNews {
      */
     public static void CommLike(String url,String commentId ,String userId , RequestCallBack<String> callback){
         Map<String,String> params=new HashMap<>();
-        params.put("commentId ",commentId );
-        params.put("userId ",userId  );
+        params.put("commentId",commentId);
+        params.put("userId",userId);
         OkHttpManager.getInstance().postRequest(url,params,callback);
     }
     /**
@@ -107,6 +107,8 @@ public class ApiNews {
         params.put("userId",userId);
         OkHttpManager.getInstance().postRequest(url,params,callback);
     }
+
+
 
 
     //=======以下辛振宇=================================================================
