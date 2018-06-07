@@ -169,5 +169,15 @@
         <activity android:name=".ui.Mine.activity.GuideQuestionActivity"
             android:screenOrientation="portrait"
             />
+        <!-- 授权认证 -->
+        <activity android:name=".ui.invitation.activity.WBAuthActivity"
+            android:screenOrientation="portrait"
+            />
+        <meta-data
+            android:name="WEIBO_APPKEY"
+            android:value="2664184092" />
+        <meta-data
+            android:name="WEIBO_CHANNEL"
+            android:value="weibo" />
     </application>
 </manifest>

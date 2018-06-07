@@ -33,12 +33,16 @@ import com.qianyi.dailynews.fragment.bean.InviteBean;
 import com.qianyi.dailynews.ui.WebviewActivity;
 import com.qianyi.dailynews.ui.invitation.activity.ApprenticeActivity;
 import com.qianyi.dailynews.ui.invitation.activity.DailySharingAcitity;
+import com.qianyi.dailynews.ui.invitation.activity.WBAuthActivity;
 import com.qianyi.dailynews.ui.invitation.activity.WakeFriendsActivity;
 import com.qianyi.dailynews.utils.SPUtils;
 import com.qianyi.dailynews.utils.ToastUtils;
 import com.qianyi.dailynews.utils.Utils;
 import com.qianyi.dailynews.utils.WhiteBgBitmapUtil;
 import com.qianyi.dailynews.utils.loader.GlideImageLoader;
+import com.sina.weibo.sdk.WbSdk;
+import com.sina.weibo.sdk.auth.AuthInfo;
+import com.sina.weibo.sdk.statistic.WBAgent;
 import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
 import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
@@ -116,6 +120,7 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
 
     @Override
     protected void initViews() {
+        WbSdk.install(getActivity(),new AuthInfo(getActivity(), ApiConstant.APP_KEY_WEIBO, ApiConstant.REDIRECT_URL, ApiConstant.SCOPE));
         charBannerArray=new ArrayList<>();
         view_share=LayoutInflater.from(getActivity()).inflate(R.layout.pw_share,null);
         ll_friendCircle=view_share.findViewById(R.id.ll_friendCircle);
@@ -309,6 +314,8 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
             case R.id.ll_QQ:
                 break;
             case R.id.ll_weibo:
+                shareWeiBo();
+                pw_share.dismiss();
                 break;
             case R.id.ll_wechat:
                 shareFriends();
@@ -316,6 +323,25 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
                 break;
         }
     }
+    //分享到微博
+    private void shareWeiBo() {
+        initLog();
+        startActivity(new Intent(getActivity(), WBAuthActivity.class));
+
+    }
+    private void initLog() {
+        WBAgent.setAppKey(ApiConstant.APP_KEY_WEIBO);
+        WBAgent.setChannel("weibo"); //这个是统计这个app 是从哪一个平台down下来的  百度手机助手
+        WBAgent.openActivityDurationTrack(false);
+        try {
+            //设置发送时间间隔 需大于90s小于8小时
+            WBAgent.setUploadInterval(91000);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
     //分享到微信
     private void shareFriends() {
         WXWebpageObject webpage = new WXWebpageObject();

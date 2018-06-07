@@ -25,4 +25,6 @@
     <dimen name="medit_padding_top">10dp</dimen>
     <dimen name="medit_padding_bottom">3dp</dimen>
     <dimen name="textSize_14">14sp</dimen>
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
 </resources>
