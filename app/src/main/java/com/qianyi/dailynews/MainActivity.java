@@ -10,11 +10,14 @@ import android.util.Log;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
+import com.qianyi.dailynews.api.ApiConstant;
 import com.qianyi.dailynews.base.BaseActivity;
 import com.qianyi.dailynews.fragment.InvitationFragment;
 import com.qianyi.dailynews.fragment.MineFragment;
 import com.qianyi.dailynews.fragment.NewsFragment;
 import com.qianyi.dailynews.fragment.VideoFragment;
+import com.sina.weibo.sdk.WbSdk;
+import com.sina.weibo.sdk.auth.AuthInfo;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -31,9 +34,6 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
     private Fragment currentFra=new Fragment();
     @BindView(R.id.bar)
     public BottomNavigationBar bar;
-
-
-
     @Override
     protected void initViews() {
         BaseActivity.addActivity(this);
@@ -52,6 +52,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
                 .setFirstSelectedPosition(0).initialise();
         bar.setTabSelectedListener(this);
         Log.i("location_",sHA1(MainActivity.this));
+        WbSdk.install(this,new AuthInfo(this, ApiConstant.APP_KEY_WEIBO, ApiConstant.REDIRECT_URL, ApiConstant.SCOPE));
     }
 
     @Override

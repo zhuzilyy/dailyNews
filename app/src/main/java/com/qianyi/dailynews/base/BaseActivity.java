@@ -7,6 +7,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
@@ -139,16 +140,13 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
     /*隐藏软键盘*/
+    @RequiresApi(api = Build.VERSION_CODES.CUPCAKE)
     void hintKeyboard(Activity context) {
         InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         if (inputMethodManager.isActive()) {
             inputMethodManager.hideSoftInputFromWindow(context.getCurrentFocus().getWindowToken(), 0);
         }
     }
-
-
-
-
     protected abstract void initViews();
     protected abstract void initData();
     protected abstract void getResLayout();

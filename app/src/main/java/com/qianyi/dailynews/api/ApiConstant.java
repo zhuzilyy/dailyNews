@@ -7,6 +7,12 @@ package com.qianyi.dailynews.api;
 public class ApiConstant {
     public static final String APP_ID="wx263e7ba709980bc0";
     public static final String APP_SECRET="APP_SECRET";
+    public static final String APP_KEY_WEIBO="2664184092";
+    public static final String REDIRECT_URL = "http://www.sina.com";
+    public static final String SCOPE =
+            "email,direct_messages_read,direct_messages_write,"
+                    + "friendships_groups_read,friendships_groups_write,statuses_to_me_read,"
+                    + "follow_app_official_microblog," + "invitation_write";
     public static final String BASE_URL="http://47.104.73.127:8080/news-0.0.1";
     public static final String PAGE_SIZE="10";
     public static final String SUCCESS_CODE="0000";

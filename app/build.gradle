@@ -36,7 +36,6 @@ android {
         debug {
             signingConfig signingConfigs.config
         }
-
     }
     dexOptions {
         // incremental true
@@ -88,4 +87,5 @@ dependencies {
     compile 'cn.jiguang.sdk:jcore:1.1.9'
     // 此处以JCore 1.1.9 版本为例。
     implementation files('libs/libammsdk.jar')
+    compile 'com.sina.weibo.sdk:core:4.1.0:openDefaultRelease@aar'
 }

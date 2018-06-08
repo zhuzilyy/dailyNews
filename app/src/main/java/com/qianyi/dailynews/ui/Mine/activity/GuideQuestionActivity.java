@@ -35,7 +35,6 @@ public class GuideQuestionActivity extends BaseActivity{
     protected void initListener() {
 
     }
-
     @Override
     protected void setStatusBarColor() {
 

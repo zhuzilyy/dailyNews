@@ -33,12 +33,22 @@ import com.qianyi.dailynews.fragment.bean.InviteBean;
 import com.qianyi.dailynews.ui.WebviewActivity;
 import com.qianyi.dailynews.ui.invitation.activity.ApprenticeActivity;
 import com.qianyi.dailynews.ui.invitation.activity.DailySharingAcitity;
+import com.qianyi.dailynews.ui.invitation.activity.WBAuthActivity;
 import com.qianyi.dailynews.ui.invitation.activity.WakeFriendsActivity;
 import com.qianyi.dailynews.utils.SPUtils;
 import com.qianyi.dailynews.utils.ToastUtils;
 import com.qianyi.dailynews.utils.Utils;
 import com.qianyi.dailynews.utils.WhiteBgBitmapUtil;
 import com.qianyi.dailynews.utils.loader.GlideImageLoader;
+import com.sina.weibo.sdk.WbSdk;
+import com.sina.weibo.sdk.api.ImageObject;
+import com.sina.weibo.sdk.api.TextObject;
+import com.sina.weibo.sdk.api.WebpageObject;
+import com.sina.weibo.sdk.api.WeiboMultiMessage;
+import com.sina.weibo.sdk.auth.AuthInfo;
+import com.sina.weibo.sdk.share.WbShareHandler;
+import com.sina.weibo.sdk.statistic.WBAgent;
+import com.sina.weibo.sdk.utils.Utility;
 import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
 import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
@@ -63,7 +73,7 @@ import okhttp3.Response;
  * Created by Administrator on 2018/4/30.
  */
 
-public class InvitationFragment extends BaseFragment implements View.OnClickListener{
+public class InvitationFragment extends BaseFragment implements View.OnClickListener {
     private View newsView;
     @BindView(R.id.tv_title)
     public TextView title;
@@ -95,7 +105,7 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
     public TextView tv_friendCount;
     private PopupWindow pw_share;
     private PopupWindow pw_onekeyshoutu;
-    private View view_share,view_onekeyshoutu;
+    private View view_share, view_onekeyshoutu;
     @BindView(R.id.ll_invitation)
     public LinearLayout ll_invitation;
     //上下滚动
@@ -105,75 +115,83 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
     public Button btn_onekey_shoutu;
     private CustomLoadingDialog customLoadingDialog;
     private String userId;
-    private LinearLayout ll_friendCircle,ll_qq,ll_wechat,ll_weibo;
+    private LinearLayout ll_friendCircle, ll_qq, ll_wechat, ll_weibo;
     private IWXAPI mWxApi;
     private List<String> charBannerArray;
+    private WbShareHandler shareHandler;
     @Override
     protected View getResLayout(LayoutInflater inflater, ViewGroup container) {
-        newsView =  inflater.inflate(R.layout.fragment_invitation, null);
+        newsView = inflater.inflate(R.layout.fragment_invitation, null);
         return newsView;
     }
 
     @Override
     protected void initViews() {
-        charBannerArray=new ArrayList<>();
-        view_share=LayoutInflater.from(getActivity()).inflate(R.layout.pw_share,null);
-        ll_friendCircle=view_share.findViewById(R.id.ll_friendCircle);
-        ll_qq=view_share.findViewById(R.id.ll_QQ);
-        ll_wechat=view_share.findViewById(R.id.ll_wechat);
-        ll_weibo=view_share.findViewById(R.id.ll_weibo);
-        view_onekeyshoutu = LayoutInflater.from(getActivity()).inflate(R.layout.pw_onekeyshoutu,null);
+        WbSdk.install(getActivity(), new AuthInfo(getActivity(), ApiConstant.APP_KEY_WEIBO, ApiConstant.REDIRECT_URL, ApiConstant.SCOPE));
+        charBannerArray = new ArrayList<>();
+        view_share = LayoutInflater.from(getActivity()).inflate(R.layout.pw_share, null);
+        ll_friendCircle = view_share.findViewById(R.id.ll_friendCircle);
+        ll_qq = view_share.findViewById(R.id.ll_QQ);
+        ll_wechat = view_share.findViewById(R.id.ll_wechat);
+        ll_weibo = view_share.findViewById(R.id.ll_weibo);
+        view_onekeyshoutu = LayoutInflater.from(getActivity()).inflate(R.layout.pw_onekeyshoutu, null);
         title.setText("邀请");
         back.setVisibility(View.GONE);
         rightTv.setText("邀请规则");
         rightTv.setVisibility(View.VISIBLE);
-        customLoadingDialog=new CustomLoadingDialog(getActivity());
-        userId= (String) SPUtils.get(getActivity(),"user_id","");
+        customLoadingDialog = new CustomLoadingDialog(getActivity());
+        userId = (String) SPUtils.get(getActivity(), "user_id", "");
 
         mWxApi = WXAPIFactory.createWXAPI(getActivity(), ApiConstant.APP_ID, false);
         // 将该app注册到微信
         mWxApi.registerApp(ApiConstant.APP_ID);
     }
+
     //开始滚动
     @Override
     public void onResume() {
         super.onResume();
     }
+
     //停止滚动
     @Override
     public void onPause() {
         super.onPause();
         autotext.stopAutoScroll();
     }
+
     @Override
     protected void initData() {
         getData();
         getInviteData();
     }
+
     //获取邀请数据的值
     private void getInviteData() {
         ApiInvite.inviteDetail(ApiConstant.INVITE_DETAIL, userId, new RequestCallBack<String>() {
             @Override
             public void onSuccess(Call call, Response response, String s) {
                 try {
-                    JSONObject jsonObject=new JSONObject(s);
+                    JSONObject jsonObject = new JSONObject(s);
                     JSONObject data = jsonObject.getJSONObject("data");
                     String income = data.getString("income");
                     String inviteCount = data.getString("inviteCount");
                     String myInviteCode = data.getString("myInviteCode");
-                    tv_income.setText(income+"金币");
-                    tv_friendCount.setText(inviteCount+"个");
+                    tv_income.setText(income + "金币");
+                    tv_friendCount.setText(inviteCount + "个");
                     tv_myCode.setText(myInviteCode);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
+
             @Override
             public void onEror(Call call, int statusCode, Exception e) {
 
             }
         });
     }
+
     //获取数据
     private void getData() {
         customLoadingDialog.show();
@@ -184,27 +202,29 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
                     @Override
                     public void run() {
                         customLoadingDialog.dismiss();
-                        Gson gson=new Gson();
+                        Gson gson = new Gson();
                         InviteBean inviteBean = gson.fromJson(s, InviteBean.class);
                         String code = inviteBean.getCode();
-                        if (code.equals(ApiConstant.SUCCESS_CODE)){
+                        if (code.equals(ApiConstant.SUCCESS_CODE)) {
                             List<BannerImgInfo> imgBannerArray = inviteBean.getData().getImgBannerArray();
-                            charBannerArray= inviteBean.getData().getCharBannerArray();
-                            setValue(imgBannerArray,charBannerArray);
+                            charBannerArray = inviteBean.getData().getCharBannerArray();
+                            setValue(imgBannerArray, charBannerArray);
                         }
                     }
                 });
             }
+
             @Override
             public void onEror(Call call, int statusCode, Exception e) {
                 customLoadingDialog.dismiss();
             }
         });
     }
+
     //赋值
     private void setValue(List<BannerImgInfo> imgBannerArray, List<String> charBannerArray) {
-        images= new ArrayList<>();
-        for (int i = 0; i <imgBannerArray.size() ; i++) {
+        images = new ArrayList<>();
+        for (int i = 0; i < imgBannerArray.size(); i++) {
             images.add(imgBannerArray.get(i).getUrl());
         }
         //设置banner
@@ -217,17 +237,18 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
         banner.start();
 
         //设置上下跑马灯
-        ArrayList<String> titleList =new ArrayList<>();
-        for (int i = 0; i <charBannerArray.size() ; i++) {
+        ArrayList<String> titleList = new ArrayList<>();
+        for (int i = 0; i < charBannerArray.size(); i++) {
             titleList.add(charBannerArray.get(i));
         }
         autotext.setTextList(titleList);//加入显示内容,集合类型
         autotext.setText(14, 5, Color.BLACK);//设置属性,具体跟踪源码
         autotext.setTextStillTime(6000);//设置停留时长间隔
         autotext.setAnimTime(300);//设置进入和退出的时间间隔`
-        autotext.setPadding(5,5,0,5);
+        autotext.setPadding(5, 5, 0, 5);
         autotext.startAutoScroll();
     }
+
     @Override
     protected void initListener() {
         ll_friendCircle.setOnClickListener(this);
@@ -238,9 +259,9 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
         banner.setOnBannerListener(new OnBannerListener() {
             @Override
             public void OnBannerClick(int position) {
-                Intent intent=new Intent(getActivity(),WebviewActivity.class);
-                intent.putExtra("url",charBannerArray.get(position));
-                intent.putExtra("title","详情");
+                Intent intent = new Intent(getActivity(), WebviewActivity.class);
+                intent.putExtra("url", charBannerArray.get(position));
+                intent.putExtra("title", "详情");
                 startActivity(intent);
             }
         });
@@ -253,19 +274,20 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
         });
 
     }
-    @OnClick({R.id.tv_right,R.id.ll_FriendIncome,R.id.ll_FriendNum,R.id.ll_MyInvitationCode,
-            R.id.ll_DailySharing,R.id.ll_ShowIncome,R.id.ll_WakeUpFriends,R.id.btn_onekey_shoutu})
+
+    @OnClick({R.id.tv_right, R.id.ll_FriendIncome, R.id.ll_FriendNum, R.id.ll_MyInvitationCode,
+            R.id.ll_DailySharing, R.id.ll_ShowIncome, R.id.ll_WakeUpFriends, R.id.btn_onekey_shoutu})
     @Override
     public void onClick(View v) {
-        switch(v.getId()){
+        switch (v.getId()) {
             case R.id.btn_onekey_shoutu:
                 //一键收徒
                 showOneKeyShouTu();
                 break;
             case R.id.tv_right:
                 Intent intent = new Intent(getActivity(), WebviewActivity.class);
-                intent.putExtra("title","邀请规则");
-                intent.putExtra("url","http://www.baidu.com");
+                intent.putExtra("title", "邀请规则");
+                intent.putExtra("url", "http://www.baidu.com");
                 startActivity(intent);
                 break;
             case R.id.ll_FriendIncome:
@@ -282,9 +304,9 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
                 //我的邀请码 赋值到剪贴板
                 String myCode = tv_myCode.getText().toString().trim();
                 try {
-                    Utils.copy(myCode,getActivity());
+                    Utils.copy(myCode, getActivity());
                     Toast.makeText(mActivity, "已复制", Toast.LENGTH_SHORT).show();
-                }catch (Exception e){
+                } catch (Exception e) {
                     Logger.i(e.getMessage());
                 }
                 break;
@@ -309,6 +331,8 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
             case R.id.ll_QQ:
                 break;
             case R.id.ll_weibo:
+                shareWeiBo();
+                pw_share.dismiss();
                 break;
             case R.id.ll_wechat:
                 shareFriends();
@@ -316,6 +340,147 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
                 break;
         }
     }
+
+    //分享到微博
+    private void shareWeiBo() {
+        initLog();
+        //startActivity(new Intent(getActivity(), WBAuthActivity.class));
+        shareHandler = new WbShareHandler(getActivity());
+        shareHandler.registerApp();
+       // sendMessage(true, true);
+        shareWebPage();
+    }
+
+    private void shareWebPage() {
+      /*  WebpageObject mediaObj =new WebpageObject();
+        //创建文本消息对象
+        TextObject textObject =new TextObject();
+        textObject.text= "你分享内容的描述"+"分享网页的话加上网络地址";
+
+        textObject.title= "哈哈哈哈哈哈";
+
+        //创建图片消息对象，如果只分享文字和网页就不用加图片
+
+        WeiboMultiMessage message =new WeiboMultiMessage();
+
+        ImageObject imageObject =new ImageObject();
+
+        // 设置 Bitmap 类型的图片到视频对象里        设置缩略图。 注意：最终压缩过的缩略图大小 不得超过 32kb。
+
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources() , R.drawable.test);
+
+        imageObject.setImageObject(bitmap);
+
+        message.textObject= textObject;
+
+        message.imageObject= imageObject;
+
+        message.mediaObject= mediaObj;*/
+
+
+
+        WebpageObject mediaObject = new WebpageObject();
+        mediaObject.identify = Utility.generateGUID();
+        mediaObject.title ="测试title";
+        mediaObject.description = "测试描述";
+        Bitmap  bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_logo);
+
+        // 设置 Bitmap 类型的图片到视频对象里         设置缩略图。 注意：最终压缩过的缩略图大小不得超过 32kb。
+        mediaObject.setThumbImage(bitmap);
+        mediaObject.actionUrl = "http://news.sina.com.cn/c/2013-10-22/021928494669.shtml";
+        mediaObject.defaultText = "Webpage 默认文案";
+        WeiboMultiMessage message =new WeiboMultiMessage();
+        message.mediaObject=mediaObject;
+        shareHandler.shareMessage(message,false);
+    }
+    /**
+     * 第三方应用发送请求消息到微博，唤起微博分享界面。
+     */
+    private void sendMessage(boolean hasText, boolean hasImage) {
+        sendMultiMessage(hasText, hasImage);
+    }
+
+    /**
+     * 第三方应用发送请求消息到微博，唤起微博分享界面。
+     */
+    private void sendMultiMessage(boolean hasText, boolean hasImage) {
+        WeiboMultiMessage weiboMessage = new WeiboMultiMessage();
+        if (hasText) {
+            weiboMessage.textObject = getTextObj();
+        }
+        if (hasImage) {
+            weiboMessage.imageObject = getImageObj();
+        }
+        shareHandler.shareMessage(weiboMessage, false);
+    }
+    /**
+     * 创建文本消息对象。
+     * @return 文本消息对象。
+     */
+    private TextObject getTextObj() {
+        TextObject textObject = new TextObject();
+        textObject.text = getSharedText();
+        textObject.title = "xxxx";
+        textObject.actionUrl = "http://www.baidu.com";
+        return textObject;
+    }
+    /**
+     * 获取分享的文本模板。
+     */
+    private String getSharedText() {
+        int formatId = R.string.weibosdk_demo_share_text_template;
+        String format = getString(formatId);
+        String text = format;
+      /*  if (mTextCheckbox.isChecked() || mImageCheckbox.isChecked()) {
+            text = "@大屁老师，这是一个很漂亮的小狗，朕甚是喜欢-_-!! #大屁老师#http://weibo.com/p/1005052052202067/home?from=page_100505&mod=TAB&is_all=1#place";
+        }*/
+        return text;
+    }
+
+    /**
+     * 创建图片消息对象。
+     * @return 图片消息对象。
+     */
+    private ImageObject getImageObj() {
+        ImageObject imageObject = new ImageObject();
+        Bitmap  bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.test);
+        imageObject.setImageObject(bitmap);
+        return imageObject;
+    }
+
+
+    private void initLog() {
+        WBAgent.setAppKey(ApiConstant.APP_KEY_WEIBO);
+        WBAgent.setChannel("weibo"); //这个是统计这个app 是从哪一个平台down下来的  百度手机助手
+        WBAgent.openActivityDurationTrack(false);
+        try {
+            //设置发送时间间隔 需大于90s小于8小时
+            WBAgent.setUploadInterval(91000);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 创建多媒体（网页）消息对象。
+     *
+     * @return 多媒体（网页）消息对象。
+     */
+    private WebpageObject getWebpageObj() {
+        WebpageObject mediaObject = new WebpageObject();
+        mediaObject.identify = Utility.generateGUID();
+        mediaObject.title ="测试title";
+        mediaObject.description = "测试描述";
+        Bitmap  bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_logo);
+
+        // 设置 Bitmap 类型的图片到视频对象里         设置缩略图。 注意：最终压缩过的缩略图大小不得超过 32kb。
+        mediaObject.setThumbImage(bitmap);
+        mediaObject.actionUrl = "http://news.sina.com.cn/c/2013-10-22/021928494669.shtml";
+        mediaObject.defaultText = "Webpage 默认文案";
+        return mediaObject;
+    }
+
     //分享到微信
     private void shareFriends() {
         WXWebpageObject webpage = new WXWebpageObject();
