@@ -1,7 +1,9 @@
 package com.qianyi.dailynews.fragment;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -62,6 +64,7 @@ public class NewsFragment extends BaseFragment implements View.OnClickListener {
     private String CurretUsed;
     private String TotleCount;
     public static String Gold="";
+    private MyReceiver myReceiver;
 
     @Override
     protected View getResLayout(LayoutInflater inflater, ViewGroup container) {
@@ -72,10 +75,17 @@ public class NewsFragment extends BaseFragment implements View.OnClickListener {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+
+
+
+
     }
 
     @Override
     protected void initViews() {
+        myReceiver= new MyReceiver();
+        IntentFilter filter01=new IntentFilter("getRewardOk");
+        getActivity().registerReceiver(myReceiver,filter01);
 
         //获取红包奖励数
         getRedPackage();
@@ -214,4 +224,17 @@ public class NewsFragment extends BaseFragment implements View.OnClickListener {
 
 
     }
+
+    public class MyReceiver extends BroadcastReceiver{
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+          String action =  intent.getAction();
+            if("getRewardOk".equals(action)){
+                getRedPackage();
+            }
+        }
+    }
+
+
 }

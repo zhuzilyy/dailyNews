@@ -2,6 +2,8 @@ package com.qianyi.dailynews.ui.news.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,11 +15,22 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.makeramen.roundedimageview.RoundedImageView;
+import com.orhanobut.logger.Logger;
 import com.qianyi.dailynews.R;
+import com.qianyi.dailynews.api.ApiConstant;
+import com.qianyi.dailynews.api.ApiNews;
+import com.qianyi.dailynews.callback.RequestCallBack;
 import com.qianyi.dailynews.ui.news.activity.OneCommDetailsActivity;
 import com.qianyi.dailynews.ui.news.bean.CommentBean;
+import com.qianyi.dailynews.utils.SPUtils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Response;
 
 /**
  * Created by Administrator on 2018/5/31.
@@ -66,7 +79,7 @@ public class AllCommentAdapter extends BaseAdapter {
 
         convertView= LayoutInflater.from(mContext).inflate(R.layout.lay_hotcomment_item,null);
         RoundedImageView head=convertView.findViewById(R.id.newsComm_head);
-        TextView zan_tv=convertView.findViewById(R.id.newsComm_zan_tv);
+        final TextView zan_tv=convertView.findViewById(R.id.newsComm_zan_tv);
         ImageView zan_iv=convertView.findViewById(R.id.newsComm_zan_iv);
         LinearLayout zan_ll=convertView.findViewById(R.id.newsComm_zan_ll);
         TextView name=convertView.findViewById(R.id.newsComm_name);
@@ -88,6 +101,46 @@ public class AllCommentAdapter extends BaseAdapter {
         name.setText(commentRes.getName()==null?commentRes.getUserName():commentRes.getName());
         content.setText(commentRes.getComment());
         time.setText(commentRes.getTime());
+        zan_tv.setText(commentRes.getLike());
+
+        //点赞
+        zan_ll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String userid = (String) SPUtils.get(mContext,"user_id","");
+                if(TextUtils.isEmpty(userid)){
+                    return;
+                }
+                ApiNews.CommLike(ApiConstant.COMMENT_LIKE, commentRes.getId(), userid, new RequestCallBack<String>() {
+                    @Override
+                    public void onSuccess(Call call, Response response, String s) {
+                        Logger.i(s);
+                        try {
+                            JSONObject jsonObject= new JSONObject(s);
+                            String code=jsonObject.getString("code");
+                            if("0000".equals(code)){
+                                zan_tv.setText((Integer.parseInt(zan_tv.getText().toString().trim())+1)+"");
+                            }else if("0008".equals(code)){
+                                Toast.makeText(mContext, "您已点过赞了", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                    @Override
+                    public void onEror(Call call, int statusCode, Exception e) {
+                        Log.i("ss",e.getMessage());
+                    }
+                });
+            }
+        });
+
+
+
+
+
         //二级评论
         if(commentRes.getNewsCommentLevel2Array().size()>0){
             CommentBean.CommentData.NewsCommentRes.NewsCommentLevel2Array item01=commentRes.getNewsCommentLevel2Array().get(0);

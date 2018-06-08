@@ -10,10 +10,12 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.makeramen.roundedimageview.RoundedImageView;
+import com.orhanobut.logger.Logger;
 import com.qianyi.dailynews.R;
 import com.qianyi.dailynews.api.ApiConstant;
 import com.qianyi.dailynews.api.ApiNews;
@@ -27,6 +29,9 @@ import com.qianyi.dailynews.ui.news.bean.OneNewsBean;
 import com.qianyi.dailynews.ui.news.views.KeyMapDailog;
 import com.qianyi.dailynews.utils.SPUtils;
 import com.qianyi.dailynews.views.PullToRefreshView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -258,7 +263,7 @@ public class OneCommDetailsActivity extends BaseActivity implements PullToRefres
         head= LayoutInflater.from(OneCommDetailsActivity.this).inflate(R.layout.lay_onecomment_head,null);
 
         RoundedImageView touxiang=head.findViewById(R.id.newsComm_head);
-        TextView zan_tv=head.findViewById(R.id.newsComm_zan_tv);
+        final TextView zan_tv=head.findViewById(R.id.newsComm_zan_tv);
         ImageView zan_iv=head.findViewById(R.id.newsComm_zan_iv);
         LinearLayout zan_ll=head.findViewById(R.id.newsComm_zan_ll);
         TextView name=head.findViewById(R.id.newsComm_name);
@@ -272,6 +277,45 @@ public class OneCommDetailsActivity extends BaseActivity implements PullToRefres
         content.setText(newsData.getComment());
         time.setText(newsData.getTime());
         zan_tv.setText(newsData.getLike());
+
+        //点赞
+        zan_ll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String userid = (String) SPUtils.get(OneCommDetailsActivity.this,"user_id","");
+                if(TextUtils.isEmpty(userid)){
+                    return;
+                }
+                ApiNews.CommLike(ApiConstant.COMMENT_LIKE, commId, userid, new RequestCallBack<String>() {
+                    @Override
+                    public void onSuccess(Call call, Response response, String s) {
+                        Logger.i(s);
+
+                        try {
+                            JSONObject jsonObject= new JSONObject(s);
+                            String code=jsonObject.getString("code");
+                            if("0000".equals(code)){
+                                zan_tv.setText((Integer.parseInt(zan_tv.getText().toString().trim())+1)+"");
+                            }else if("0008".equals(code)){
+                                Toast.makeText(OneCommDetailsActivity.this, "您已点过赞了", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+
+                    @Override
+                    public void onEror(Call call, int statusCode, Exception e) {
+                        Log.i("ss",e.getMessage());
+                    }
+                });
+
+
+
+            }
+        });
 
 
 
