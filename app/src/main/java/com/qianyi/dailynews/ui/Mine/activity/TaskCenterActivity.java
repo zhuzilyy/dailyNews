@@ -35,11 +35,9 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
     //微信绑定
     @BindView(R.id.ll_bandwx001) public LinearLayout ll_bandwx001;
     @BindView(R.id.ll_bandwx002) public LinearLayout ll_bandwx002;
-    @BindView(R.id.btn_bandwx) public Button btn_bandwx;
     //一元提现
     @BindView(R.id.ll_oneYuan001) public LinearLayout ll_oneYuan001;
     @BindView(R.id.ll_oneYuan002) public LinearLayout ll_oneYuan002;
-    @BindView(R.id.btn_oneyuan) public Button btn_oneyuan;
     //问卷调查
     @BindView(R.id.ll_Questionnaire001) public LinearLayout ll_Questionnaire001;
     @BindView(R.id.ll_Questionnaire002) public LinearLayout ll_Questionnaire002;
@@ -222,7 +220,7 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
                 break;
             case R.id.btn_oneyuan:
                 //去完成提现
-                Toast.makeText(this, "去完成提现", Toast.LENGTH_SHORT).show();
+                jumpActivity(this,ActivityZoneActivity.class);
                 break;
             case R.id.btn_Questionnaire:
                 jumpActivity(this,QuestionSurveyActivity.class);

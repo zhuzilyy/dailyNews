@@ -54,7 +54,6 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         Log.i("location_",sHA1(MainActivity.this));
         WbSdk.install(this,new AuthInfo(this, ApiConstant.APP_KEY_WEIBO, ApiConstant.REDIRECT_URL, ApiConstant.SCOPE));
     }
-
     @Override
     protected void initData() {
 
