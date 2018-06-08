@@ -179,5 +179,9 @@
         <meta-data
             android:name="WEIBO_CHANNEL"
             android:value="weibo" />
+        <!-- 新手活动 -->
+        <activity android:name=".ui.Mine.activity.ActivityZoneActivity"
+            android:screenOrientation="portrait"
+            />
     </application>
 </manifest>

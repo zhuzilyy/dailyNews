@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include layout="@layout/layout_title"/>
+    <LinearLayout
+        android:layout_below="@+id/title"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <TextView
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:textSize="16sp"
+        android:gravity="center_vertical"
+        android:textColor="@color/black"
+        android:text="提现任务"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+        <View
+            android:background="@color/common_line"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"/>
+        <!--签到-->
+        <RelativeLayout
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+            <TextView
+                android:textColor="@color/black"
+                android:layout_centerVertical="true"
+                android:textSize="16sp"
+                android:gravity="center_vertical"
+                android:text="1.签到(0/1)"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:background="@drawable/bg_activity_finish"
+                android:id="@+id/tv_signState"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:textSize="14sp"
+                android:gravity="center"
+                android:text="已完成"
+                android:layout_width="80dp"
+                android:layout_height="30dp" />
+        </RelativeLayout>
+        <View
+            android:background="@color/common_line"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"/>
+
+        <!--分享到朋友圈-->
+        <RelativeLayout
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+            <TextView
+                android:textColor="@color/black"
+                android:layout_centerVertical="true"
+                android:textSize="16sp"
+                android:gravity="center_vertical"
+                android:text="2.分享到朋友圈(0/1)"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:background="@drawable/bg_activity_finish"
+                android:id="@+id/tv_shareState"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:textSize="14sp"
+                android:gravity="center"
+                android:text="已完成"
+                android:layout_width="80dp"
+                android:layout_height="30dp" />
+        </RelativeLayout>
+        <View
+            android:background="@color/common_line"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"/>
+        <!--认真阅读新闻-->
+        <RelativeLayout
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+            <TextView
+                android:textColor="@color/black"
+                android:layout_centerVertical="true"
+                android:textSize="16sp"
+                android:gravity="center_vertical"
+                android:text="3.认真阅读新闻(0/10)"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:background="@drawable/bg_activity_finish"
+                android:id="@+id/tv_readState"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:textSize="14sp"
+                android:gravity="center"
+                android:text="已完成"
+                android:layout_width="80dp"
+                android:layout_height="30dp" />
+        </RelativeLayout>
+        <View
+            android:background="@color/common_line"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"/>
+
+        <!--搜索新闻阅读-->
+        <RelativeLayout
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+            <TextView
+                android:textColor="@color/black"
+                android:layout_centerVertical="true"
+                android:textSize="16sp"
+                android:gravity="center_vertical"
+                android:text="4.搜索新闻阅读(0/2)"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:background="@drawable/bg_activity_finish"
+                android:id="@+id/tv_searchState"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:textSize="14sp"
+                android:gravity="center"
+                android:text="已完成"
+                android:layout_width="80dp"
+                android:layout_height="30dp" />
+        </RelativeLayout>
+        <View
+            android:background="@color/common_line"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"/>
+        <TextView
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="10dp"
+            android:text="注意"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="10dp"
+            android:text="1.完成上面5个任务，会开启提现奖励"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="10dp"
+            android:text="2.提现有效期为新用户注册10日之内"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <Button
+       android:layout_gravity="bottom"
+        android:id="@+id/btn_confrim"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:text="立即提现一元"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorPrimaryDark"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+</RelativeLayout>
