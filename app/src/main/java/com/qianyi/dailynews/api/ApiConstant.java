@@ -56,6 +56,8 @@ public class ApiConstant {
     public static final String  NEWS_REWARD= BASE_URL+"/api/news/getRewardsCnt";
     //阅读新闻
     public static final String  READ_NEWS= BASE_URL+"/api/news/readNews";
+    //活动专区
+    public static final String  ACTIVITY_ZONE= BASE_URL+"/api/newer/mission";
     //==========辛振宇==========================================
 
 

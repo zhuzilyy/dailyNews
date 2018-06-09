@@ -43,4 +43,13 @@ public class ApiMine {
         params.put("state","");
         OkHttpManager.getInstance().postRequest(url,params,callback);
     }
+    /**
+     * 活动专区
+     * @param callback
+     */
+    public static void activityZone(String url,String userId,RequestCallBack<String> callback){
+        Map<String,String> params=new HashMap<>();
+        params.put("userId",userId);
+        OkHttpManager.getInstance().postRequest(url,params,callback);
+    }
 }
