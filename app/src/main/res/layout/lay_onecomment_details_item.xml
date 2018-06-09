@@ -22,7 +22,7 @@
                 android:id="@+id/newsComm_head"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
-                android:src="@mipmap/touxiang"
+                android:src="@mipmap/headportrait_icon"
                 app:riv_corner_radius="30dp"
                 android:layout_centerHorizontal="true"
                 />
@@ -48,7 +48,8 @@
                     />
                 <!--点赞-->
                 <LinearLayout
-                    android:visibility="visible"
+
+                    android:visibility="gone"
                     android:id="@+id/newsComm_zan_ll"
                     android:layout_marginRight="@dimen/dp_20"
                     android:layout_alignParentRight="true"

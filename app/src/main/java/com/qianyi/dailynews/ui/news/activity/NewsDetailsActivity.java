@@ -18,6 +18,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.qianyi.dailynews.R;
@@ -158,6 +159,7 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
             @Override
             public void run() {
                 timeOut=true;
+                getReward();
             }
         },15*1000);
 
@@ -438,7 +440,6 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
     private void getReward() {
         if(timeOut&&readMore){
             getReward2();
-
         }
     }
 
@@ -446,7 +447,30 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
      * 符合规则，获取阅读奖励
      */
     private void getReward2() {
-        //ApiNews.GetRewardAfterReadNews();
+        String userid = (String) SPUtils.get(NewsDetailsActivity.this,"user_id","");
+        if(TextUtils.isEmpty(userid)){
+            return;
+        }
+        ApiNews.GetRewardAfterReadNews(ApiConstant.GET_REWARD_AFTER_READ_NEWS, userid, newsId, new RequestCallBack<String>() {
+            @Override
+            public void onSuccess(Call call, Response response, String s) {
+                Log.i("sss",s);
+                try {
+                    JSONObject jsonObject =new JSONObject(s);
+                    String code=jsonObject.getString("code");
+                    if("0000".equals(code)){
+                        //更新阅读奖励数
+                        sendBroadcast(new Intent("getRewardOk"));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            @Override
+            public void onEror(Call call, int statusCode, Exception e) {
+                Log.i("sss",e.getMessage());
+            }
+        });
     }
 
     /***
