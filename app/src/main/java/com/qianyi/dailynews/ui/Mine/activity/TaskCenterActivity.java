@@ -92,7 +92,6 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
         OtherLineralayout.add(ll_sunIncome002);
         OtherLineralayout.add(ll_commentAward002);
     }
-
     @Override
     protected void getResLayout() {
         setContentView(R.layout.activity_taskcenter);

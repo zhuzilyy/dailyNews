@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:orientation="vertical"
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <include layout="@layout/layout_title"/>
     <LinearLayout
         android:layout_marginRight="20dp"
@@ -19,6 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="35dp" />
         <RadioGroup
+            android:id="@+id/rg_question1"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="35dp">
@@ -78,6 +82,7 @@
             android:layout_width="match_parent"
             android:layout_height="35dp" />
         <RadioGroup
+            android:id="@+id/rg_question2"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="35dp">
@@ -137,6 +142,7 @@
             android:layout_width="match_parent"
             android:layout_height="35dp" />
         <RadioGroup
+            android:id="@+id/rg_question3"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="35dp">
@@ -196,6 +202,7 @@
             android:layout_width="match_parent"
             android:layout_height="35dp" />
         <RadioGroup
+            android:id="@+id/rg_question4"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="35dp">
@@ -256,6 +263,7 @@
             android:layout_width="match_parent"
             android:layout_height="35dp" />
         <RadioGroup
+            android:id="@+id/rg_question5"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="35dp">
@@ -299,4 +307,14 @@
             android:layout_width="match_parent"
             android:layout_height="0.5dp"/>
     </LinearLayout>
-</LinearLayout>
+    </LinearLayout>
+    <Button
+        android:id="@+id/btn_confrim"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:text="完成并提交"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorPrimaryDark"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+</RelativeLayout>

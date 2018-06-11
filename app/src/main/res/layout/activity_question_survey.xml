@@ -34,6 +34,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"/>
                 <RadioGroup
+                    android:id="@+id/rg_question1"
                     android:paddingLeft="5dp"
                     android:paddingRight="5dp"
                     android:orientation="vertical"
@@ -41,7 +42,6 @@
                     android:layout_height="wrap_content">
                     <RadioButton
                         android:textColor="@color/gray"
-                        android:checked="true"
                         android:background="@color/transparent"
                         android:id="@+id/rb_male"
                         android:text="男"
@@ -84,6 +84,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"/>
                 <RadioGroup
+                    android:id="@+id/rg_question2"
                     android:paddingLeft="5dp"
                     android:paddingRight="5dp"
                     android:orientation="vertical"
@@ -91,7 +92,6 @@
                     android:layout_height="wrap_content">
                     <RadioButton
                         android:textColor="@color/gray"
-                        android:checked="true"
                         android:background="@color/transparent"
                         android:id="@+id/rb_under18"
                         android:text="18岁以下"
@@ -168,6 +168,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"/>
                 <RadioGroup
+                    android:id="@+id/rg_question3"
                     android:paddingLeft="5dp"
                     android:paddingRight="5dp"
                     android:orientation="vertical"
@@ -175,7 +176,6 @@
                     android:layout_height="wrap_content">
                     <RadioButton
                         android:textColor="@color/gray"
-                        android:checked="true"
                         android:background="@color/transparent"
                         android:id="@+id/rb_middleStudent"
                         android:text="中学生"
@@ -252,6 +252,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"/>
                 <RadioGroup
+                    android:id="@+id/rg_question4"
                     android:paddingLeft="5dp"
                     android:paddingRight="5dp"
                     android:orientation="vertical"
@@ -259,7 +260,6 @@
                     android:layout_height="wrap_content">
                     <RadioButton
                         android:textColor="@color/gray"
-                        android:checked="true"
                         android:background="@color/transparent"
                         android:id="@+id/rb_below1000"
                         android:text="1000元以下"
@@ -365,6 +365,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"/>
                 <RadioGroup
+                    android:id="@+id/rg_question5"
                     android:paddingLeft="5dp"
                     android:paddingRight="5dp"
                     android:orientation="vertical"
@@ -372,7 +373,6 @@
                     android:layout_height="wrap_content">
                     <RadioButton
                         android:textColor="@color/gray"
-                        android:checked="true"
                         android:background="@color/transparent"
                         android:id="@+id/rb_belowMiddle"
                         android:text="初中以下"
@@ -574,7 +574,7 @@
                         android:layout_width="0dp"
                         android:layout_height="35dp" />
                     <CheckBox
-                        android:id="@+id/cb_finacal"
+                        android:id="@+id/cb_finical"
                         android:layout_marginLeft="10dp"
                         android:textColor="@color/gray"
                         android:background="@color/transparent"
@@ -706,7 +706,7 @@
                 </LinearLayout>
 
 
-                              <LinearLayout
+               <LinearLayout
                     android:layout_marginRight="5dp"
                     android:layout_marginLeft="5dp"
                     android:orientation="horizontal"
@@ -794,7 +794,6 @@
                     android:layout_height="wrap_content">
                     <CheckBox
                         android:textColor="@color/gray"
-                        android:checked="true"
                         android:background="@color/transparent"
                         android:id="@+id/cb_advertisement"
                         android:text="广告太多"
@@ -858,8 +857,6 @@
                         android:layout_height="35dp" />
                 </LinearLayout>
             </LinearLayout>
-
-
             <!--称呼-->
             <LinearLayout
                 android:layout_marginTop="10dp"
@@ -882,6 +879,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"/>
                 <RadioGroup
+                    android:id="@+id/rg_question8"
                     android:paddingLeft="5dp"
                     android:paddingRight="5dp"
                     android:orientation="vertical"
@@ -889,7 +887,6 @@
                     android:layout_height="wrap_content">
                     <RadioButton
                         android:textColor="@color/gray"
-                        android:checked="true"
                         android:background="@color/transparent"
                         android:id="@+id/rb_shaoNian"
                         android:text="偏偏少年"
@@ -959,6 +956,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"/>
             <EditText
+                android:id="@+id/et_advice"
                 android:textSize="12sp"
                 android:layout_marginRight="10dp"
                 android:layout_marginLeft="10dp"
