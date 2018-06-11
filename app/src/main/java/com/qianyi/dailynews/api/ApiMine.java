@@ -43,4 +43,24 @@ public class ApiMine {
         params.put("state","");
         OkHttpManager.getInstance().postRequest(url,params,callback);
     }
+    /**
+     * 活动专区
+     * @param callback
+     */
+    public static void activityZone(String url,String userId,RequestCallBack<String> callback){
+        Map<String,String> params=new HashMap<>();
+        params.put("userId",userId);
+        OkHttpManager.getInstance().postRequest(url,params,callback);
+    }
+    /**
+     * 新手答题
+     * @param callback
+     */
+    public static void greendHandQuestion(String url,String userId,String type,String answers ,RequestCallBack<String> callback){
+        Map<String,String> params=new HashMap<>();
+        params.put("userId",userId);
+        params.put("type",type);
+        params.put("answers",answers);
+        OkHttpManager.getInstance().postRequest(url,params,callback);
+    }
 }
