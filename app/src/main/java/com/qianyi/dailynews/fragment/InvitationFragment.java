@@ -5,12 +5,16 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -22,24 +26,30 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.orhanobut.logger.Logger;
 import com.paradoxie.autoscrolltextview.VerticalTextview;
+import com.qianyi.dailynews.MainActivity;
 import com.qianyi.dailynews.R;
+import com.qianyi.dailynews.api.ApiAccount;
 import com.qianyi.dailynews.api.ApiConstant;
 import com.qianyi.dailynews.api.ApiInvite;
+import com.qianyi.dailynews.api.ApiNews;
 import com.qianyi.dailynews.base.BaseFragment;
 import com.qianyi.dailynews.callback.RequestCallBack;
 import com.qianyi.dailynews.dialog.CustomLoadingDialog;
 import com.qianyi.dailynews.fragment.bean.BannerImgInfo;
 import com.qianyi.dailynews.fragment.bean.InviteBean;
 import com.qianyi.dailynews.ui.WebviewActivity;
+import com.qianyi.dailynews.ui.account.activity.LoginActivity;
 import com.qianyi.dailynews.ui.invitation.activity.ApprenticeActivity;
 import com.qianyi.dailynews.ui.invitation.activity.DailySharingAcitity;
 import com.qianyi.dailynews.ui.invitation.activity.WBAuthActivity;
 import com.qianyi.dailynews.ui.invitation.activity.WakeFriendsActivity;
+import com.qianyi.dailynews.ui.news.activity.NewsDetailsActivity;
 import com.qianyi.dailynews.utils.SPUtils;
 import com.qianyi.dailynews.utils.ToastUtils;
 import com.qianyi.dailynews.utils.Utils;
 import com.qianyi.dailynews.utils.WhiteBgBitmapUtil;
 import com.qianyi.dailynews.utils.loader.GlideImageLoader;
+import com.qianyi.dailynews.views.ClearEditText;
 import com.sina.weibo.sdk.WbSdk;
 import com.sina.weibo.sdk.api.ImageObject;
 import com.sina.weibo.sdk.api.TextObject;
@@ -61,8 +71,12 @@ import com.youth.banner.listener.OnBannerListener;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -113,12 +127,19 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
     public VerticalTextview autotext;
     @BindView(R.id.btn_onekey_shoutu)
     public Button btn_onekey_shoutu;
+    @BindView(R.id.ll_invation)
+    public LinearLayout ll_invation;
+    @BindView(R.id.et_invation)
+    public ClearEditText et_invation;
+
+
     private CustomLoadingDialog customLoadingDialog;
     private String userId;
     private LinearLayout ll_friendCircle, ll_qq, ll_wechat, ll_weibo;
     private IWXAPI mWxApi;
     private List<String> charBannerArray;
     private WbShareHandler shareHandler;
+
     @Override
     protected View getResLayout(LayoutInflater inflater, ViewGroup container) {
         newsView = inflater.inflate(R.layout.fragment_invitation, null);
@@ -145,6 +166,113 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
         mWxApi = WXAPIFactory.createWXAPI(getActivity(), ApiConstant.APP_ID, false);
         // 将该app注册到微信
         mWxApi.registerApp(ApiConstant.APP_ID);
+
+        ///填写邀请码
+        et_invation.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (EditorInfo.IME_ACTION_SEARCH == actionId) {
+                    String codeOfFriend = et_invation.getText().toString().trim();
+                    if (!TextUtils.isEmpty(codeOfFriend)) {
+                        writeInvatiCode(codeOfFriend);
+                    }
+                }
+                return false;
+            }
+        });
+
+    }
+
+    /****
+     * 填写好友邀请码
+     * @param codeOfFriend
+     */
+    private void writeInvatiCode(String codeOfFriend) {
+
+        String userid = (String) SPUtils.get(getActivity(), "user_id", "");
+        if (TextUtils.isEmpty(userid)) {
+            return;
+        }
+
+        ApiInvite.writeCode(ApiConstant.WRITE_CODE, userid, codeOfFriend, new RequestCallBack<String>() {
+            @Override
+            public void onSuccess(Call call, Response response, String s) {
+                Log.i("sss", s);
+                try {
+                    JSONObject jsonObject = new JSONObject(s);
+                    String code = jsonObject.getString("code");
+                    if ("0000".equals(code)) {
+                        ll_invation.setVisibility(View.GONE);
+
+                        //更新用户信息
+                        updateUserInfo();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onEror(Call call, int statusCode, Exception e) {
+                Log.i("sss", e.getMessage());
+            }
+        });
+    }
+
+    /***
+     * 更新用户信息
+     */
+    private void updateUserInfo() {
+        String userid = (String) SPUtils.get(getActivity(), "user_id", "");
+        if (TextUtils.isEmpty(userid)) {
+            return;
+        }
+
+        ApiAccount.getUserInfo(ApiConstant.GET_USER_INFO, userid, new RequestCallBack<String>() {
+            @Override
+            public void onSuccess(Call call, Response response, final String s) {
+                Log.i("sss", s);
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            JSONObject jsonObject = new JSONObject(s);
+                            String code = jsonObject.getString("code");
+                            String return_msg = jsonObject.getString("return_msg");
+
+                            JSONObject data = jsonObject.getJSONObject("data");
+                            String user_id = data.getString("user_id");
+                            String phone = data.getString("phone");
+                            String head_portrait = data.getString("head_portrait");
+                            String gold = data.getString("gold");
+                            String my_invite_code = data.getString("my_invite_code");
+                            String balance = data.getString("balance");
+                            String earnings = data.getString("earnings");
+                            String invite_code = data.getString("invite_code");
+
+
+                            SPUtils.put(getActivity(), "user_id", user_id);
+                            SPUtils.put(getActivity(), "phone", phone);
+                            SPUtils.put(getActivity(), "head_portrait", head_portrait);
+                            SPUtils.put(getActivity(), "gold", gold);
+                            SPUtils.put(getActivity(), "my_invite_code", my_invite_code);
+                            SPUtils.put(getActivity(), "balance", balance);
+                            SPUtils.put(getActivity(), "earnings", earnings);
+                            SPUtils.put(getActivity(), "invite_code", invite_code);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
+
+            @Override
+            public void onEror(Call call, int statusCode, Exception e) {
+                Log.i("sss", e.getMessage());
+            }
+        });
+
     }
 
     //开始滚动
@@ -276,7 +404,8 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
     }
 
     @OnClick({R.id.tv_right, R.id.ll_FriendIncome, R.id.ll_FriendNum, R.id.ll_MyInvitationCode,
-            R.id.ll_DailySharing, R.id.ll_ShowIncome, R.id.ll_WakeUpFriends, R.id.btn_onekey_shoutu})
+            R.id.ll_DailySharing, R.id.ll_ShowIncome, R.id.ll_WakeUpFriends, R.id.btn_onekey_shoutu,
+    })
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -347,7 +476,7 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
         //startActivity(new Intent(getActivity(), WBAuthActivity.class));
         shareHandler = new WbShareHandler(getActivity());
         shareHandler.registerApp();
-       // sendMessage(true, true);
+        // sendMessage(true, true);
         shareWebPage();
     }
 
@@ -378,21 +507,21 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
         message.mediaObject= mediaObj;*/
 
 
-
         WebpageObject mediaObject = new WebpageObject();
         mediaObject.identify = Utility.generateGUID();
-        mediaObject.title ="测试title";
+        mediaObject.title = "测试title";
         mediaObject.description = "测试描述";
-        Bitmap  bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_logo);
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_logo);
 
         // 设置 Bitmap 类型的图片到视频对象里         设置缩略图。 注意：最终压缩过的缩略图大小不得超过 32kb。
         mediaObject.setThumbImage(bitmap);
         mediaObject.actionUrl = "http://news.sina.com.cn/c/2013-10-22/021928494669.shtml";
         mediaObject.defaultText = "Webpage 默认文案";
-        WeiboMultiMessage message =new WeiboMultiMessage();
-        message.mediaObject=mediaObject;
-        shareHandler.shareMessage(message,false);
+        WeiboMultiMessage message = new WeiboMultiMessage();
+        message.mediaObject = mediaObject;
+        shareHandler.shareMessage(message, false);
     }
+
     /**
      * 第三方应用发送请求消息到微博，唤起微博分享界面。
      */
@@ -413,8 +542,10 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
         }
         shareHandler.shareMessage(weiboMessage, false);
     }
+
     /**
      * 创建文本消息对象。
+     *
      * @return 文本消息对象。
      */
     private TextObject getTextObj() {
@@ -424,6 +555,7 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
         textObject.actionUrl = "http://www.baidu.com";
         return textObject;
     }
+
     /**
      * 获取分享的文本模板。
      */
@@ -439,11 +571,12 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
 
     /**
      * 创建图片消息对象。
+     *
      * @return 图片消息对象。
      */
     private ImageObject getImageObj() {
         ImageObject imageObject = new ImageObject();
-        Bitmap  bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.test);
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.test);
         imageObject.setImageObject(bitmap);
         return imageObject;
     }
@@ -470,9 +603,9 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
     private WebpageObject getWebpageObj() {
         WebpageObject mediaObject = new WebpageObject();
         mediaObject.identify = Utility.generateGUID();
-        mediaObject.title ="测试title";
+        mediaObject.title = "测试title";
         mediaObject.description = "测试描述";
-        Bitmap  bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_logo);
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_logo);
 
         // 设置 Bitmap 类型的图片到视频对象里         设置缩略图。 注意：最终压缩过的缩略图大小不得超过 32kb。
         mediaObject.setThumbImage(bitmap);
@@ -486,9 +619,9 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
         WXWebpageObject webpage = new WXWebpageObject();
         webpage.webpageUrl = "http://www.gaokaoygzy.cn/download";
         WXMediaMessage msg = new WXMediaMessage(webpage);
-        msg.title ="每日速报";
-        msg.description ="每日速报" ;
-        Bitmap bmp = BitmapFactory.decodeResource(getResources(),R.mipmap.logo);
+        msg.title = "每日速报";
+        msg.description = "每日速报";
+        Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.mipmap.logo);
         Bitmap bitmap = WhiteBgBitmapUtil.drawableBitmapOnWhiteBg(getActivity(), bmp);
         Bitmap thumbBmp = Bitmap.createScaledBitmap(bitmap, 200, 200, true);
         msg.setThumbImage(thumbBmp);
@@ -500,13 +633,14 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
         req.scene = SendMessageToWX.Req.WXSceneSession;
         mWxApi.sendReq(req);
     }
+
     private void shareFriendCircle() {
         WXWebpageObject webpage = new WXWebpageObject();
         webpage.webpageUrl = "http://www.gaokaoygzy.cn/download";
         WXMediaMessage msg = new WXMediaMessage(webpage);
-        msg.title ="每日速报";
-        msg.description ="每日速报" ;
-        Bitmap bmp = BitmapFactory.decodeResource(getResources(),R.mipmap.logo);
+        msg.title = "每日速报";
+        msg.description = "每日速报";
+        Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.mipmap.logo);
         Bitmap bitmap = WhiteBgBitmapUtil.drawableBitmapOnWhiteBg(getActivity(), bmp);
         Bitmap thumbBmp = Bitmap.createScaledBitmap(bitmap, 200, 200, true);
         msg.setThumbImage(thumbBmp);
@@ -518,9 +652,11 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
         req.scene = SendMessageToWX.Req.WXSceneTimeline;
         mWxApi.sendReq(req);
     }
+
     public static String buildTransaction(final String type) {
         return (type == null) ? String.valueOf(System.currentTimeMillis()) : type + System.currentTimeMillis();
     }
+
     /***
      * 弹出一键收徒的弹窗
      */
@@ -563,6 +699,7 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
             }
         });
     }
+
     /**
      * 设置添加屏幕的背景透明度
      *

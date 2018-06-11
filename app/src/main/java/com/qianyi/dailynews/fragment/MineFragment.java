@@ -1,6 +1,10 @@
 package com.qianyi.dailynews.fragment;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -77,6 +81,13 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
 
     @Override
     protected void initViews() {
+
+        String invite_code = (String) SPUtils.get(getActivity(), "invite_code", "");
+        if (!TextUtils.isEmpty(invite_code)) {
+            re_WriteCode.setVisibility(View.GONE);
+        }
+
+
         phone= (String) SPUtils.get(getActivity(),"phone","");
         gold=(String)SPUtils.get(getActivity(),"gold","");
         my_invite_code=(String)SPUtils.get(getActivity(),"my_invite_code","");
@@ -160,4 +171,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 break;
         }
     }
+
+
+
 }

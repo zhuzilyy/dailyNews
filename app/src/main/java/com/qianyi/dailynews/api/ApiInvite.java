@@ -36,4 +36,75 @@ public class ApiInvite {
         params.put("userId",userId);
         OkHttpManager.getInstance().postRequest(url,params,callback);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /**
+     * 填写好友邀请码
+     * @param callback
+     */
+    public static void writeCode(String url,String userId,String inviteCode,RequestCallBack<String> callback){
+        Map<String,String> params=new HashMap<>();
+        params.put("userId",userId);
+        params.put("inviteCode",inviteCode);
+        OkHttpManager.getInstance().postRequest(url,params,callback);
+    }
 }

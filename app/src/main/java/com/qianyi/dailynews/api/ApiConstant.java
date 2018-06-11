@@ -97,6 +97,12 @@ public class ApiConstant {
 
 
 
+    //阅读新闻后获得奖励g
+    public static final String  WRITE_CODE= BASE_URL+"/api/news/setInviteCode";
+    //更新个人信息
+    public static final String  GET_USER_INFO= BASE_URL+"/api/user/getUserInfo";
+
+
 
 
 

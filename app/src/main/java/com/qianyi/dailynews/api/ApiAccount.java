@@ -62,5 +62,14 @@ public class ApiAccount {
         params.put("code",code);
         OkHttpManager.getInstance().postRequest(url,params,callback);
     }
+
+    /***
+     * 获取用户信息
+     */
+    public static void getUserInfo(String url,String userId,RequestCallBack<String> callback) {
+        Map<String,String> params=new HashMap<>();
+        params.put("userId",userId);
+        OkHttpManager.getInstance().postRequest(url,params,callback);
+    }
     //=======以下辛振宇=================================================================
 }
