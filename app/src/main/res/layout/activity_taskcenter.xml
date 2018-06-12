@@ -111,11 +111,11 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="100"
-
                             />
                     </LinearLayout>
                     <!--未签到-->
                     <LinearLayout
+                        android:visibility="gone"
                         android:layout_centerHorizontal="true"
                         android:id="@+id/firstDay_none_ll"
                         android:layout_width="45dp"
@@ -124,12 +124,13 @@
                         android:gravity="center_horizontal"
                         android:background="@mipmap/alreadyreceived_icon"
                         >
+
                         <TextView
-                            android:layout_marginTop="@dimen/dp_10"
-                            android:textColor="@color/white"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp_10"
                             android:text="已领"
+                            android:textColor="@color/white"
                             android:textSize="10sp"
 
                             />
@@ -144,7 +145,8 @@
                     </LinearLayout>
                     <!--时间-->
                     <TextView
-                        android:layout_below="@+id/firstDay_none_ll"
+                        android:layout_marginBottom="5dp"
+                        android:layout_alignParentBottom="true"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="1天"
@@ -204,13 +206,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="+100"
-                            android:textSize="102sp"
+                            android:textSize="10sp"
 
                             />
                     </LinearLayout>
                     <!--时间-->
                     <TextView
-                        android:layout_below="@+id/secondDay_none_ll"
+                        android:layout_marginBottom="5dp"
+                        android:layout_alignParentBottom="true"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="2天"
@@ -276,7 +279,8 @@
                     </LinearLayout>
                     <!--时间-->
                     <TextView
-                        android:layout_below="@+id/thirdDay_none_ll"
+                        android:layout_marginBottom="5dp"
+                        android:layout_alignParentBottom="true"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="3天"
@@ -342,7 +346,8 @@
                     </LinearLayout>
                     <!--时间-->
                     <TextView
-                        android:layout_below="@+id/fourthDay_none_ll"
+                        android:layout_marginBottom="5dp"
+                        android:layout_alignParentBottom="true"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="4天"
@@ -408,7 +413,8 @@
                     </LinearLayout>
                     <!--时间-->
                     <TextView
-                        android:layout_below="@+id/fifthDay_none_ll"
+                        android:layout_marginBottom="5dp"
+                        android:layout_alignParentBottom="true"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="5天"
@@ -428,7 +434,7 @@
                     <!--已签到-->
                     <LinearLayout
                         android:layout_centerHorizontal="true"
-                        android:id="@+id/sexthDay_already_ll"
+                        android:id="@+id/sixthDay_already_ll"
                         android:layout_width="45dp"
                         android:layout_height="45dp"
                         android:orientation="vertical"
@@ -447,7 +453,7 @@
                     <!--未签到-->
                     <LinearLayout
                         android:layout_centerHorizontal="true"
-                        android:id="@+id/sexthDay_none_ll"
+                        android:id="@+id/sixthDay_none_ll"
                         android:layout_width="45dp"
                         android:layout_height="45dp"
                         android:orientation="vertical"
@@ -474,7 +480,7 @@
                     </LinearLayout>
                     <!--时间-->
                     <TextView
-                        android:layout_below="@+id/sexthDay_none_ll"
+                        android:layout_below="@+id/sixthDay_none_ll"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="6天"
@@ -1092,15 +1098,16 @@
                         android:visibility="gone"
                         android:id="@+id/ll_inviteFriends002"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="50dp"
                         android:paddingBottom="@dimen/dp_10"
                         android:orientation="horizontal"
                         >
                         <TextView
                             android:layout_width="0dp"
-                            android:layout_weight="2"
-                            android:layout_height="wrap_content"
-                            android:text="的链接分离式结构老司机经理过来是根据娄山关路放假了时间个类似废旧塑料的副驾驶来个距离是开关机放假了手机发了发老司机父类看浪费时间李放斐林试剂公司结构升龙国际搜二级公司附件四六级"
+                            android:gravity="center_vertical"
+                            android:layout_weight="2.5"
+                            android:layout_height="50dp"
+                            android:text="每邀请一名好友可以获得100金币奖励"
                             />
                         <LinearLayout
                             android:layout_width="0dp"
@@ -1108,16 +1115,16 @@
                             android:layout_weight="1"
                             android:gravity="center"
                             >
-                            <Button
+                            <TextView
+                                android:gravity="center"
+                                android:layout_gravity="center_vertical"
                                 android:id="@+id/btn_inviteFriends"
-                                android:layout_width="wrap_content"
+                                android:layout_width="90dp"
                                 android:layout_height="30dp"
                                 android:text="去邀请"
                                 android:textColor="@color/white"
                                 android:background="@drawable/shape_coner30_gold"
-
                                 />
-
                         </LinearLayout>
 
                     </LinearLayout>
@@ -1183,11 +1190,7 @@
                                 android:layout_alignParentRight="true"
                                 android:layout_centerVertical="true"
                                 />
-
-
                         </LinearLayout>
-
-
                     </LinearLayout>
                     <!--002-->
                     <LinearLayout
@@ -1202,7 +1205,7 @@
                             android:layout_width="0dp"
                             android:layout_weight="2"
                             android:layout_height="wrap_content"
-                            android:text="的链接分离式结构老司机经理过来是根据娄山关路放假了时间个类似废旧塑料的副驾驶来个距离是开关机放假了手机发了发老司机父类看浪费时间李放斐林试剂公司结构升龙国际搜二级公司附件四六级"
+                            android:text="阅读文章可获得5金币,每日最多200次并不是每次阅读都会产生阅读奖励,系统会根据深度和质量测评,请保持正常心态,作弊会导致严重的封号行为"
                             />
                         <LinearLayout
                             android:layout_width="0dp"
@@ -1304,7 +1307,7 @@
                             android:layout_width="0dp"
                             android:layout_weight="2"
                             android:layout_height="wrap_content"
-                            android:text="的链接分离式结构老司机经理过来是根据娄山关路放假了时间个类似废旧塑料的副驾驶来个距离是开关机放假了手机发了发老司机父类看浪费时间李放斐林试剂公司结构升龙国际搜二级公司附件四六级"
+                            android:text="将您喜欢的文章分享到朋友圈后，您好友的每一次有效阅读都会为你带来80金币的收益"
                             />
                         <LinearLayout
                             android:layout_width="0dp"
@@ -1399,14 +1402,15 @@
                         android:id="@+id/ll_sunIncome002"
                         android:layout_width="match_parent"
                         android:paddingBottom="@dimen/dp_10"
-                        android:layout_height="wrap_content"
+                        android:layout_height="50dp"
                         android:orientation="horizontal"
                         >
                         <TextView
+                            android:gravity="center_vertical"
                             android:layout_width="0dp"
                             android:layout_weight="2"
-                            android:layout_height="wrap_content"
-                            android:text="的链接分离式结构老司机经理过来是根据娄山关路放假了时间个类似废旧塑料的副驾驶来个距离是开关机放假了手机发了发老司机父类看浪费时间李放斐林试剂公司结构升龙国际搜二级公司附件四六级"
+                            android:layout_height="match_parent"
+                            android:text="每日第一次晒收入时获得"
                             />
                         <LinearLayout
                             android:layout_width="0dp"
@@ -1414,9 +1418,10 @@
                             android:layout_weight="1"
                             android:gravity="center"
                             >
-                            <Button
+                            <TextView
+                                android:gravity="center"
                                 android:id="@+id/btn_sunincome"
-                                android:layout_width="wrap_content"
+                                android:layout_width="90dp"
                                 android:layout_height="30dp"
                                 android:text="晒收入"
                                 android:textColor="@color/white"
@@ -1428,6 +1433,11 @@
 
                     </LinearLayout>
                 </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_0.5"
+                    android:background="@color/light_gray5"
+                    />
                 <!--评论奖励-->
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -1495,15 +1505,16 @@
                         android:visibility="gone"
                         android:id="@+id/ll_commentAward002"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="50dp"
                         android:paddingBottom="@dimen/dp_10"
                         android:orientation="horizontal"
                         >
                         <TextView
+                            android:gravity="center_vertical"
                             android:layout_width="0dp"
                             android:layout_weight="2"
-                            android:layout_height="wrap_content"
-                            android:text="的链接分离式结构老司机经理过来是根据娄山关路放假了时间个类似废旧塑料的副驾驶来个距离是开关机放假了手机发了发老司机父类看浪费时间李放斐林试剂公司结构升龙国际搜二级公司附件四六级"
+                            android:layout_height="match_parent"
+                            android:text="每日第一次评论时获得"
                             />
                         <LinearLayout
                             android:layout_width="0dp"
@@ -1511,18 +1522,16 @@
                             android:layout_weight="1"
                             android:gravity="center"
                             >
-                            <Button
+                            <TextView
+                                android:gravity="center"
                                 android:id="@+id/btn_commentAward"
-                                android:layout_width="wrap_content"
+                                android:layout_width="90dp"
                                 android:layout_height="30dp"
                                 android:text="去评论"
                                 android:textColor="@color/white"
                                 android:background="@drawable/shape_coner30_gold"
-
                                 />
-
                         </LinearLayout>
-
                     </LinearLayout>
                     <View
                         android:layout_width="match_parent"

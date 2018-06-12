@@ -36,6 +36,15 @@ public class ActivityZoneActivity extends BaseActivity {
     TextView tv_readState;
     @BindView(R.id.tv_searchState)
     TextView tv_searchState;
+
+    @BindView(R.id.tv_sign)
+    TextView tv_sign;
+    @BindView(R.id.tv_share)
+    TextView tv_share;
+    @BindView(R.id.tv_search)
+    TextView tv_search;
+    @BindView(R.id.tv_read)
+    TextView tv_read;
     private CustomLoadingDialog customLoadingDialog;
     private String user_id;
     private int count;
@@ -51,6 +60,7 @@ public class ActivityZoneActivity extends BaseActivity {
         ApiMine.activityZone(ApiConstant.ACTIVITY_ZONE,user_id,new RequestCallBack<String>() {
             @Override
             public void onSuccess(Call call, Response response, final String s) {
+                Log.i("tag",s);
                 customLoadingDialog.dismiss();
                 try {
                     JSONObject jsonObject=new JSONObject(s);
@@ -59,20 +69,28 @@ public class ActivityZoneActivity extends BaseActivity {
                     String search = data.getString("search");
                     String read =data.getString("read");
                     String share =data.getString("share");
+                    tv_sign.setText(" 1.签到("+sign+"/1)");
+                    tv_share.setText(" 2.分享到朋友圈("+share+"/1)");
+                    tv_read.setText(" 3.认真阅读新闻("+read+"/10)");
+                    tv_search.setText(" 4.搜索新闻阅读("+search+"/2)");
                     if (sign.equals("1")){
                         tv_signState.setBackgroundResource(R.drawable.bg_activity_finish);
+                        tv_signState.setText("已完成");
                         count++;
                     }
                     if (share.equals("1")){
                         tv_shareState.setBackgroundResource(R.drawable.bg_activity_finish);
+                        tv_shareState.setText("已完成");
                         count++;
                     }
                     if (read.equals("10")){
                         tv_readState.setBackgroundResource(R.drawable.bg_activity_finish);
+                        tv_readState.setText("已完成");
                         count++;
                     }
                     if (search.equals("2")){
                         tv_searchState.setBackgroundResource(R.drawable.bg_activity_finish);
+                        tv_searchState.setText("已完成");
                         count++;
                     }
                 } catch (JSONException e) {

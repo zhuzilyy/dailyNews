@@ -62,6 +62,8 @@ public class ApiConstant {
     public static final String  ACTIVITY_ZONE= BASE_URL+"/api/newer/mission";
     //新手活动提交答案
     public static final String  GREEN_HAND_QUESTION= BASE_URL+"/api/answer/mission";
+    //签到状态查询
+    public static final String  SIGN_STATE= BASE_URL+"/api/sign/init";
     //==========辛振宇==========================================
 
 

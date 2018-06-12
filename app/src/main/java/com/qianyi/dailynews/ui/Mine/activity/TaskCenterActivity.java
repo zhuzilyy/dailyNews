@@ -17,6 +17,7 @@ import com.qianyi.dailynews.callback.RequestCallBack;
 import com.qianyi.dailynews.dialog.CustomLoadingDialog;
 import com.qianyi.dailynews.ui.Mine.bean.SignBean;
 import com.qianyi.dailynews.ui.WebviewActivity;
+import com.qianyi.dailynews.ui.account.activity.LoginActivity;
 import com.qianyi.dailynews.utils.SPUtils;
 
 import java.util.ArrayList;
@@ -59,6 +60,30 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
     //评论奖励
     @BindView(R.id.ll_commentAward001) public LinearLayout ll_commentAward001;
     @BindView(R.id.ll_commentAward002) public LinearLayout ll_commentAward002;
+
+    //签到第一天
+    @BindView(R.id.firstDay_already_ll) public LinearLayout firstDay_already_ll;
+    @BindView(R.id.firstDay_none_ll) public LinearLayout firstDay_none_ll;
+    //签到第2天
+    @BindView(R.id.secondDay_none_ll) public LinearLayout secondDay_none_ll;
+    @BindView(R.id.secondDay_already_ll) public LinearLayout secondDay_already_ll;
+    //签到第3天
+    @BindView(R.id.thirdDay_already_ll) public LinearLayout thirdDay_already_ll;
+    @BindView(R.id.thirdDay_none_ll) public LinearLayout thirdDay_none_ll;
+    //签到第4天
+    @BindView(R.id.fourthDay_already_ll) public LinearLayout fourthDay_already_ll;
+    @BindView(R.id.fourthDay_none_ll) public LinearLayout fourthDay_none_ll;
+    //签到第5天
+    @BindView(R.id.fifthDay_already_ll) public LinearLayout fifthDay_already_ll;
+    @BindView(R.id.fifthDay_none_ll) public LinearLayout fifthDay_none_ll;
+    //签到第6天
+    @BindView(R.id.sixthDay_already_ll) public LinearLayout sixthDay_already_ll;
+    @BindView(R.id.sixthDay_none_ll) public LinearLayout sixthDay_none_ll;
+    //签到第7天
+    @BindView(R.id.seventhDay_already_ll) public LinearLayout seventhDay_already_ll;
+    @BindView(R.id.seventhDay_none_ll) public LinearLayout seventhDay_none_ll;
+
+
     //赚钱攻略
     @BindView(R.id.tv_ProfitMakingStrategy) public TextView tv_ProfitMakingStrategy;
     //签到规则
@@ -68,6 +93,8 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
     private List<LinearLayout> OtherLineralayout=new ArrayList<>();
     private String userId;
     private CustomLoadingDialog customLoadingDialog;
+    private List<LinearLayout> signedDays,unsignDays;
+    private String user_id;
     @Override
     protected void initViews() {
         back.setOnClickListener(new View.OnClickListener() {
@@ -78,6 +105,23 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
         });
         userId= (String) SPUtils.get(TaskCenterActivity.this,"user_id","");
         customLoadingDialog=new CustomLoadingDialog(this);
+        signedDays=new ArrayList<>();
+        unsignDays=new ArrayList<>();
+        signedDays.add(firstDay_already_ll);
+        signedDays.add(secondDay_already_ll);
+        signedDays.add(thirdDay_already_ll);
+        signedDays.add(fourthDay_already_ll);
+        signedDays.add(fifthDay_already_ll);
+        signedDays.add(sixthDay_already_ll);
+        signedDays.add(secondDay_already_ll);
+
+        unsignDays.add(firstDay_none_ll);
+        unsignDays.add(secondDay_none_ll);
+        unsignDays.add(thirdDay_none_ll);
+        unsignDays.add(fourthDay_none_ll);
+        unsignDays.add(fifthDay_none_ll);
+        unsignDays.add(sixthDay_none_ll);
+        unsignDays.add(seventhDay_none_ll);
     }
     @Override
     protected void initData() {
@@ -91,7 +135,37 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
         OtherLineralayout.add(ll_shareRewards002);
         OtherLineralayout.add(ll_sunIncome002);
         OtherLineralayout.add(ll_commentAward002);
+        customLoadingDialog.show();
+        getSignState();
     }
+
+    private void getSignState() {
+        user_id= (String) SPUtils.get(TaskCenterActivity.this,"user_id","");
+        ApiMine.signState(ApiConstant.SIGN_STATE, user_id, new RequestCallBack<String>() {
+            @Override
+            public void onSuccess(Call call, Response response,final String s) {
+                customLoadingDialog.dismiss();
+                Gson gson=new Gson();
+                SignBean signBean = gson.fromJson(s, SignBean.class);
+                String countinuous = signBean.getData().getCountinuous();
+                int signDay = Integer.parseInt(countinuous);
+                for (int i = 0; i <signDay; i++) {
+                    if (i<signDay){
+                        signedDays.get(i).setVisibility(View.VISIBLE);
+                        unsignDays.get(i).setVisibility(View.GONE);
+                    }else{
+                        signedDays.get(i).setVisibility(View.GONE);
+                        unsignDays.get(i).setVisibility(View.VISIBLE);
+                    }
+                }
+            }
+            @Override
+            public void onEror(Call call, int statusCode, Exception e) {
+                customLoadingDialog.dismiss();
+            }
+        });
+    }
+
     @Override
     protected void getResLayout() {
         setContentView(R.layout.activity_taskcenter);
@@ -114,6 +188,7 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
     R.id.tv_ProfitMakingStrategy,R.id.tv_SignInRules,R.id.btn_sign})
     @Override
     public void onClick(View view) {
+        Intent intent=null;
         switch(view.getId()){
             case R.id.tv_ProfitMakingStrategy:
                 //赚钱攻略
@@ -231,15 +306,24 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
                 break;
             case R.id.btn_inviteFriends:
                 //去邀请
-                Toast.makeText(this, "去邀请", Toast.LENGTH_SHORT).show();
+                intent=new Intent();
+                intent.setAction("com.action.invite");
+                sendBroadcast(intent);
+                finish();
                 break;
             case R.id.btn_readingAward:
                 //去阅读
-                Toast.makeText(this, "去阅读", Toast.LENGTH_SHORT).show();
+                intent=new Intent();
+                intent.setAction("com.action.read");
+                sendBroadcast(intent);
+                finish();
                 break;
             case R.id.btn_share:
                 //去分享
-                Toast.makeText(this, "去分享", Toast.LENGTH_SHORT).show();
+                intent=new Intent();
+                intent.setAction("com.action.read");
+                sendBroadcast(intent);
+                finish();
                 break;
             case R.id.btn_sunincome:
                 //晒收入
@@ -247,7 +331,12 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
                 break;
             case R.id.btn_commentAward:
                 //去评论
-                Toast.makeText(this, "去评论", Toast.LENGTH_SHORT).show();
+                //去邀请
+                intent=new Intent();
+                intent.setAction("com.action.comment");
+                sendBroadcast(intent);
+                finish();
+                //Toast.makeText(this, "去评论", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.btn_sign:
                 sign();
@@ -270,6 +359,7 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
                         SignBean signBean = gson.fromJson(s, SignBean.class);
                         String message = signBean.getData().getMessage();
                         Toast.makeText(TaskCenterActivity.this, message, Toast.LENGTH_SHORT).show();
+                        getSignState();
                     }
                 });
             }
