@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_height="match_parent">
-    <include layout="@layout/layout_title"/>
+
     <com.qianyi.dailynews.views.PullToRefreshView
         android:orientation="vertical"
         android:id="@+id/pulltorefreshView"
