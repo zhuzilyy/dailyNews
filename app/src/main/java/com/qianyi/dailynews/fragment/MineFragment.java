@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -82,11 +83,10 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     @Override
     protected void initViews() {
 
-        String invite_code = (String) SPUtils.get(getActivity(), "invite_code", "");
-        if (!TextUtils.isEmpty(invite_code)) {
-            re_WriteCode.setVisibility(View.GONE);
-        }
-
+//        String invite_code = (String) SPUtils.get(getActivity(), "invite_code", "");
+//        if (!TextUtils.isEmpty(invite_code)) {
+//            re_WriteCode.setVisibility(View.GONE);
+//        }
 
         phone= (String) SPUtils.get(getActivity(),"phone","");
         gold=(String)SPUtils.get(getActivity(),"gold","");
@@ -119,7 +119,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             case R.id.re_WriteCode:
                 //填写邀请码
                 Intent intent_writecode = new Intent(getActivity(), WriteInvitationActivity.class);
-                startActivity(intent_writecode);
+                startActivityForResult(intent_writecode,100);
                 break;
             case R.id.re_MoneyCenter:
                 //赚钱中心
@@ -172,6 +172,17 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         }
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch(requestCode){
+            case 100:
+                //好友邀请码写完，返回后隐藏该条目
+                re_WriteCode.setVisibility(View.GONE);
+                break;
+            default:
+                break;
+        }
 
-
+    }
 }

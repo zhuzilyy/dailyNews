@@ -47,6 +47,8 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <EditText
+                android:id="@+id/ed_invatation"
+                android:imeOptions="actionSearch"
                 android:hint="请输入好友邀请码"
                 android:textColorHint="@color/white"
                 android:textColor="@color/white"
@@ -87,6 +89,7 @@
             />
 
         <Button
+            android:id="@+id/btn_submit"
             android:layout_marginTop="40dp"
             android:layout_width="match_parent"
             android:layout_height="45dp"

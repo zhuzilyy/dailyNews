@@ -41,6 +41,7 @@ import com.qianyi.dailynews.ui.WebviewActivity;
 import com.qianyi.dailynews.ui.account.activity.LoginActivity;
 import com.qianyi.dailynews.ui.invitation.activity.ApprenticeActivity;
 import com.qianyi.dailynews.ui.invitation.activity.DailySharingAcitity;
+import com.qianyi.dailynews.ui.invitation.activity.IncomeShowActivity;
 import com.qianyi.dailynews.ui.invitation.activity.WBAuthActivity;
 import com.qianyi.dailynews.ui.invitation.activity.WakeFriendsActivity;
 import com.qianyi.dailynews.ui.news.activity.NewsDetailsActivity;
@@ -163,6 +164,14 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
         customLoadingDialog = new CustomLoadingDialog(getActivity());
         userId = (String) SPUtils.get(getActivity(), "user_id", "");
 
+        //****是否展示填写邀请码**********
+        String invite_code = (String) SPUtils.get(getActivity(), "invite_code", "");
+        if (!TextUtils.isEmpty(invite_code)) {
+            //有邀请码，隐藏输入框
+            ll_invation.setVisibility(View.GONE);
+        }
+
+
         mWxApi = WXAPIFactory.createWXAPI(getActivity(), ApiConstant.APP_ID, false);
         // 将该app注册到微信
         mWxApi.registerApp(ApiConstant.APP_ID);
@@ -203,7 +212,6 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
                     String code = jsonObject.getString("code");
                     if ("0000".equals(code)) {
                         ll_invation.setVisibility(View.GONE);
-
                         //更新用户信息
                         updateUserInfo();
                     }
@@ -236,29 +244,32 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
                     @Override
                     public void run() {
                         try {
+
                             JSONObject jsonObject = new JSONObject(s);
                             String code = jsonObject.getString("code");
-                            String return_msg = jsonObject.getString("return_msg");
+                            if("0000".equals(code)){
+                                String return_msg = jsonObject.getString("return_msg");
+                                JSONObject data = jsonObject.getJSONObject("data");
+                                String user_id = data.getString("user_id");
+                                String phone = data.getString("phone");
+                                String head_portrait = data.getString("head_portrait");
+                                String gold = data.getString("gold");
+                                String my_invite_code = data.getString("my_invite_code");
+                                String balance = data.getString("balance");
+                                String earnings = data.getString("earnings");
+                                String invite_code = data.getString("invite_code");
 
-                            JSONObject data = jsonObject.getJSONObject("data");
-                            String user_id = data.getString("user_id");
-                            String phone = data.getString("phone");
-                            String head_portrait = data.getString("head_portrait");
-                            String gold = data.getString("gold");
-                            String my_invite_code = data.getString("my_invite_code");
-                            String balance = data.getString("balance");
-                            String earnings = data.getString("earnings");
-                            String invite_code = data.getString("invite_code");
 
+                                SPUtils.put(getActivity(), "user_id", user_id);
+                                SPUtils.put(getActivity(), "phone", phone);
+                                SPUtils.put(getActivity(), "head_portrait", head_portrait);
+                                SPUtils.put(getActivity(), "gold", gold);
+                                SPUtils.put(getActivity(), "my_invite_code", my_invite_code);
+                                SPUtils.put(getActivity(), "balance", balance);
+                                SPUtils.put(getActivity(), "earnings", earnings);
+                                SPUtils.put(getActivity(), "invite_code", invite_code);
+                            }
 
-                            SPUtils.put(getActivity(), "user_id", user_id);
-                            SPUtils.put(getActivity(), "phone", phone);
-                            SPUtils.put(getActivity(), "head_portrait", head_portrait);
-                            SPUtils.put(getActivity(), "gold", gold);
-                            SPUtils.put(getActivity(), "my_invite_code", my_invite_code);
-                            SPUtils.put(getActivity(), "balance", balance);
-                            SPUtils.put(getActivity(), "earnings", earnings);
-                            SPUtils.put(getActivity(), "invite_code", invite_code);
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -446,7 +457,9 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
                 break;
             case R.id.ll_ShowIncome:
                 //晒收入
-                shwoSharePw();
+                Intent intent3=new Intent(getActivity(), IncomeShowActivity.class);
+                startActivity(intent3);
+
                 break;
             case R.id.ll_WakeUpFriends:
                 //唤醒好友

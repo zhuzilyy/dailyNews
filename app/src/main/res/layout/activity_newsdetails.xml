@@ -136,6 +136,128 @@
                     android:layout_height="10dp"
                     android:background="@color/light_gray5"
                     />
+                <!--分享 朋友圈，微信好友，qq,微博-->
+                <LinearLayout
+                    android:visibility="gone"
+                    android:id="@+id/ll_share"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp">
+                        <!--朋友圈-->
+                        <LinearLayout
+                            android:id="@+id/ll_friendCircle"
+                            android:layout_gravity="center_vertical"
+                            android:gravity="center"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content">
+                            <ImageView
+                                android:src="@mipmap/friend_circle"
+                                android:scaleType="centerCrop"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp" />
+                            <TextView
+                                android:layout_marginTop="10dp"
+                                android:text="朋友圈"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                        </LinearLayout>
+                        <!--QQ-->
+                        <LinearLayout
+                            android:id="@+id/ll_QQ"
+                            android:layout_gravity="center_vertical"
+                            android:gravity="center"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content">
+                            <ImageView
+                                android:src="@mipmap/login_qq"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                            <TextView
+                                android:layout_marginTop="10dp"
+                                android:text="QQ"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                        </LinearLayout>
+                        <!--微信-->
+                        <LinearLayout
+                            android:id="@+id/ll_wechat"
+                            android:layout_gravity="center_vertical"
+                            android:gravity="center"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content">
+                            <ImageView
+                                android:src="@mipmap/login_wechat"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                            <TextView
+                                android:layout_marginTop="10dp"
+                                android:text="微信"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                        </LinearLayout>
+                        <!--微博-->
+                        <LinearLayout
+                            android:id="@+id/ll_weibo"
+                            android:layout_gravity="center_vertical"
+                            android:gravity="center"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content">
+                            <ImageView
+                                android:src="@mipmap/login_weibo"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                            <TextView
+                                android:layout_marginTop="10dp"
+                                android:text="微博"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:visibility="gone"
+                        android:weightSum="4"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp">
+                        <!--空间-->
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_gravity="center_vertical"
+                            android:gravity="center"
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content">
+                            <ImageView
+                                android:src="@mipmap/login_wechat"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                            <TextView
+                                android:layout_marginTop="10dp"
+                                android:text="空间"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                        </LinearLayout>
+                    </LinearLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp"
+                        android:background="@color/light_gray5"
+                        />
+                </LinearLayout>
+
                 <!--相关推荐,热门评论-->
                 <LinearLayout
                     android:layout_width="match_parent"
