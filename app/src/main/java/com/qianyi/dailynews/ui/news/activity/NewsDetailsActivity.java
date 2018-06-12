@@ -14,6 +14,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
@@ -70,6 +71,11 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
     @BindView(R.id.lv_) public MySingListView lv;
     @BindView(R.id.lv_comment) public MySingListView lv_comment;
     @BindView(R.id.sc) public NestedScrollView sc;
+    @BindView(R.id.ll_share) public LinearLayout ll_share;
+    @BindView(R.id.ll_friendCircle) public LinearLayout ll_friendCircle;//分享到盆友圈
+    @BindView(R.id.ll_QQ) public LinearLayout ll_QQ;//分享到QQ
+    @BindView(R.id.ll_wechat) public LinearLayout ll_wechat;//分享到微信
+    @BindView(R.id.ll_weibo) public LinearLayout ll_weibo;//分享到微博
 
     //****************************
     //评论
@@ -407,10 +413,27 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
             }
         });
     }
-    @OnClick({R.id.iv_back,R.id.tv_news_more,R.id.re_comm})
+    @OnClick({R.id.iv_back,R.id.tv_news_more,R.id.re_comm,
+            R.id.ll_wechat,R.id.ll_friendCircle,R.id.ll_QQ,R.id.ll_weibo})
     @Override
     public void onClick(View view) {
         switch(view.getId()){
+            case R.id.ll_wechat:
+                //微信分享
+                Toast.makeText(this, "微信分享", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.ll_friendCircle:
+                //朋友圈分享
+                Toast.makeText(this, "朋友圈分享", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.ll_QQ:
+                //QQ分享
+                Toast.makeText(this, "QQ分享", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.ll_weibo:
+                //微博分享
+                Toast.makeText(this, "微博分享", Toast.LENGTH_SHORT).show();
+                break;
             case R.id.iv_back:
                 finish();
             break;
@@ -418,7 +441,7 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
                 re_newsmore.setVisibility(View.GONE);
                 top_web_re.setVisibility(View.GONE);
                 bottom_web.setVisibility(View.VISIBLE);
-
+                ll_share.setVisibility(View.VISIBLE);
                 sc.fullScroll(View.FOCUS_UP);
                 readMore=true;
                 //获得奖励

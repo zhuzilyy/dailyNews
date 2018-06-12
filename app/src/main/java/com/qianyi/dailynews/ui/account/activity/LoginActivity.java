@@ -221,6 +221,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                                 String my_invite_code=data.getString("my_invite_code");
                                 String balance=data.getString("balance");
                                 String earnings=data.getString("earnings");
+                                String invite_code=data.getString("invite_code");
+
                                 SPUtils.put(LoginActivity.this,"user_id",user_id);
                                 SPUtils.put(LoginActivity.this,"phone",phone);
                                 SPUtils.put(LoginActivity.this,"head_portrait",head_portrait);
@@ -228,6 +230,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                                 SPUtils.put(LoginActivity.this,"my_invite_code",my_invite_code);
                                 SPUtils.put(LoginActivity.this,"balance",balance);
                                 SPUtils.put(LoginActivity.this,"earnings",earnings);
+                                SPUtils.put(LoginActivity.this,"invite_code",invite_code);
                                 Toast.makeText(LoginActivity.this, return_msg, Toast.LENGTH_SHORT).show();
                                 if (code.equals(ApiConstant.SUCCESS_CODE)){
                                     Intent intent=new Intent(LoginActivity.this, MainActivity.class);

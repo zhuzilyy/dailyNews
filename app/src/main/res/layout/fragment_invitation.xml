@@ -421,6 +421,7 @@
             </LinearLayout>
             <!--填写好友邀请码-->
             <LinearLayout
+                android:id="@+id/ll_invation"
                 android:layout_marginTop="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
@@ -433,12 +434,15 @@
                 android:orientation="horizontal"
                 >
                 <com.qianyi.dailynews.views.ClearEditText
+                    android:id="@+id/et_invation"
                     android:layout_width="wrap_content"
                     android:layout_weight="1"
                     android:background="@null"
                     android:hint="填写好友邀请码"
                     android:textColorHint="@color/black"
                     android:textSize="14sp"
+                    android:imeOptions="actionSearch"
+                    android:singleLine="true"
                     android:layout_marginRight="@dimen/dp_10"
                     android:layout_marginLeft="@dimen/dp_15"
                     android:layout_height="match_parent" />
