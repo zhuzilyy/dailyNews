@@ -63,4 +63,13 @@ public class ApiMine {
         params.put("answers",answers);
         OkHttpManager.getInstance().postRequest(url,params,callback);
     }
+    /**
+     * 签到状态
+     * @param callback
+     */
+    public static void signState(String url,String userId,RequestCallBack<String> callback){
+        Map<String,String> params=new HashMap<>();
+        params.put("userId",userId);
+        OkHttpManager.getInstance().postRequest(url,params,callback);
+    }
 }

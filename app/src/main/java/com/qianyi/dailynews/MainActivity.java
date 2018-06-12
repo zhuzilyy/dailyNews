@@ -1,6 +1,9 @@
 package com.qianyi.dailynews;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.support.v4.app.Fragment;
@@ -34,8 +37,28 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
     private Fragment currentFra=new Fragment();
     @BindView(R.id.bar)
     public BottomNavigationBar bar;
+    private MyReceiver myReceiver;
     @Override
     protected void initViews() {
+
+        //注册广播邀请
+        myReceiver=new MyReceiver();
+        IntentFilter intentFilter=new IntentFilter();
+        intentFilter.addAction("com.action.invite");
+        registerReceiver(myReceiver,intentFilter);
+
+        //注册广播阅读
+        myReceiver=new MyReceiver();
+        IntentFilter intentFilterRead=new IntentFilter();
+        intentFilterRead.addAction("com.action.read");
+        registerReceiver(myReceiver,intentFilterRead);
+
+        //注册广播评论
+        myReceiver=new MyReceiver();
+        IntentFilter intentFilterComment=new IntentFilter();
+        intentFilterComment.addAction("com.action.comment");
+        registerReceiver(myReceiver,intentFilterComment);
+
         BaseActivity.addActivity(this);
       //  ButterKnife.bind(this);
         fragmentManager=getSupportFragmentManager();
@@ -51,8 +74,10 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
                 .addItem(new BottomNavigationItem(getResources().getDrawable(R.mipmap.nonemy_icon),"我的").setActiveColorResource(R.color.main_red))
                 .setFirstSelectedPosition(0).initialise();
         bar.setTabSelectedListener(this);
-        Log.i("location_",sHA1(MainActivity.this));
         WbSdk.install(this,new AuthInfo(this, ApiConstant.APP_KEY_WEIBO, ApiConstant.REDIRECT_URL, ApiConstant.SCOPE));
+
+
+
     }
     @Override
     protected void initData() {
@@ -75,6 +100,13 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
 
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (myReceiver!=null){
+            unregisterReceiver(myReceiver);
+        }
+    }
     /***
      * 显示隐藏Fragment
      *
@@ -86,10 +118,10 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
             return;
         }
         if (!Fra.isAdded()) {
-            ft.hide(currentFra).add(R.id.main_switch, Fra).commit();
+            ft.hide(currentFra).add(R.id.main_switch, Fra).commitAllowingStateLoss();
 
         } else {
-            ft.hide(currentFra).show(Fra).commit();
+            ft.hide(currentFra).show(Fra).commitAllowingStateLoss();
 
         }
         currentFra = Fra;
@@ -171,5 +203,26 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
     @Override
     public void onTabReselected(int position) {
 
+    }
+    class MyReceiver extends BroadcastReceiver{
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (action.equals("com.action.invite")){
+                if(invitationFragment==null){
+                    invitationFragment=new InvitationFragment();
+                }
+                bar.setFirstSelectedPosition(2).initialise();
+                FragmentTransaction ft_invitation=fragmentManager.beginTransaction();
+                AddOrShowFra(ft_invitation,invitationFragment);
+            }else if(action.equals("com.action.read")||action.equals("com.action.comment")){
+                if(newsFragment==null){
+                    newsFragment=new NewsFragment();
+                }
+                bar.setFirstSelectedPosition(0).initialise();
+                FragmentTransaction ft_news=fragmentManager.beginTransaction();
+                AddOrShowFra(ft_news,newsFragment);
+            }
+        }
     }
 }
