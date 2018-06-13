@@ -64,6 +64,10 @@ public class ApiConstant {
     public static final String  GREEN_HAND_QUESTION= BASE_URL+"/api/answer/mission";
     //签到状态查询
     public static final String  SIGN_STATE= BASE_URL+"/api/sign/init";
+    //修改密码
+    public static final String  MODIFY_PWD= BASE_URL+"/api/user/updatePasswd2";
+    //徒弟列表
+    public static final String  TUDI_LIST= BASE_URL+"/api/news/tudiList";
     //==========辛振宇==========================================
 
 

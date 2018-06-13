@@ -459,7 +459,6 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
                 //晒收入
                 Intent intent3=new Intent(getActivity(), IncomeShowActivity.class);
                 startActivity(intent3);
-
                 break;
             case R.id.ll_WakeUpFriends:
                 //唤醒好友

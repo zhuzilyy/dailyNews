@@ -8,6 +8,8 @@ import android.widget.TextView;
 
 import com.qianyi.dailynews.R;
 import com.qianyi.dailynews.base.BaseActivity;
+import com.qianyi.dailynews.ui.account.activity.LoginActivity;
+import com.qianyi.dailynews.utils.SPUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -19,6 +21,7 @@ import butterknife.OnClick;
 public class SettingsActivity extends BaseActivity implements View.OnClickListener {
     @BindView(R.id.iv_back) public ImageView back;
     @BindView(R.id.tv_title) public TextView title;
+    @BindView(R.id.tv_phone) public TextView tv_phone;
     @BindView(R.id.re_ModifyPassword) public RelativeLayout re_ModifyPassword;
 
     @Override
@@ -30,6 +33,9 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
             }
         });
         title.setText("设置");
+
+        String phone= (String) SPUtils.get(SettingsActivity.this,"phone","");
+        tv_phone.setText(phone);
     }
 
     @Override

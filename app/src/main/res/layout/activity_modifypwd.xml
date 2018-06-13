@@ -27,6 +27,7 @@
             android:textSize="16sp"
             />
         <com.qianyi.dailynews.views.ClearEditText
+            android:id="@+id/et_oldPwd"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:background="@null"
@@ -63,6 +64,7 @@
             android:textSize="16sp"
             />
         <com.qianyi.dailynews.views.ClearEditText
+            android:id="@+id/et_newPwd"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:background="@null"
@@ -97,6 +99,7 @@
             android:textSize="16sp"
             />
         <com.qianyi.dailynews.views.ClearEditText
+            android:id="@+id/et_confirmPwd"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:background="@null"
@@ -117,6 +120,7 @@
     </LinearLayout>
     <!--确认修改-->
     <Button
+        android:id="@+id/btn_confrim"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:text="确认修改"
@@ -125,6 +129,4 @@
         android:textColor="@color/white"
         android:textSize="16sp"
         />
-
-
 </RelativeLayout>

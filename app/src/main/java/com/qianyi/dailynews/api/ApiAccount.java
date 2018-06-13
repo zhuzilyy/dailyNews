@@ -71,5 +71,15 @@ public class ApiAccount {
         params.put("userId",userId);
         OkHttpManager.getInstance().postRequest(url,params,callback);
     }
+    /***
+     * 修改密码
+     */
+    public static void modifyPwd(String url,String userId,String oldPasswd,String newPasswd ,RequestCallBack<String> callback) {
+        Map<String,String> params=new HashMap<>();
+        params.put("userId",userId);
+        params.put("oldPasswd",oldPasswd);
+        params.put("newPasswd",newPasswd);
+        OkHttpManager.getInstance().postRequest(url,params,callback);
+    }
     //=======以下辛振宇=================================================================
 }

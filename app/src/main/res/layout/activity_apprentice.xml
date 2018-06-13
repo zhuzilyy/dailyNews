@@ -32,6 +32,7 @@
                     android:textColor="@color/gray"
                     />
                 <TextView
+                    android:id="@+id/tv_count"
                     android:layout_marginTop="@dimen/dp_5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -56,6 +57,7 @@
                     android:textColor="@color/gray"
                     />
                 <TextView
+                    android:id="@+id/tv_income"
                     android:layout_marginTop="@dimen/dp_5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -133,5 +135,6 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         />
-
+    <include layout="@layout/common_no_data"/>
+    <include layout="@layout/common_wrong_intert"/>
 </LinearLayout>

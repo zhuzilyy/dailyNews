@@ -63,14 +63,13 @@ public class WakeUpFriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
         return null;
     }
-
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         //将数据与item视图进行绑定，如果是MyViewHolder就加载网络图片，如果是MyViewHolder2就显示页数
         if (holder instanceof WakeUpFriendAdapter.MyViewHolder) {
             String phone=infoList.get(position).getPhone();
             String preThirdNum = phone.substring(0, 3);
-            String lastFourthNum = phone.substring(8,12);
+            String lastFourthNum = phone.substring(phone.length()-4,phone.length());
             ((MyViewHolder) holder).tv_name.setText(preThirdNum+"****"+lastFourthNum);
             ((MyViewHolder) holder).tv_phone.setText(infoList.get(position).getPhone());
             // Picasso.with(mContext).load(datas.get(position).getUrl()).into(((MyViewHolder) holder).iv);//加载网络图片
@@ -100,7 +99,6 @@ public class WakeUpFriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             super(view);
             ButterKnife.bind(this,view);
             pic_item = view.findViewById(R.id.tv_wakeup);
-
         }
     }
 }

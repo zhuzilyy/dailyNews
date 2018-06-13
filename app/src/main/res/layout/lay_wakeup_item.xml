@@ -29,7 +29,6 @@
         android:gravity="center"
         android:text="BY"
         android:singleLine="true"
-        android:maxLength="10"
         android:textColor="@color/black"
         android:textSize="14sp"
         />
