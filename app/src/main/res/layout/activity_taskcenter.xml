@@ -658,7 +658,7 @@
                         android:visibility="gone"
                         android:id="@+id/ll_bandwx002"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="50dp"
                         android:orientation="horizontal"
                         android:paddingBottom="@dimen/dp_10"
                         >
@@ -666,7 +666,7 @@
                             android:layout_width="0dp"
                             android:layout_weight="2"
                             android:layout_height="wrap_content"
-                            android:text="的链接分离式结构老司机经理过来是根据娄山关路放假了时间个类似废旧塑料的副驾驶来个距离是开关机放假了手机发了发老司机父类看浪费时间李放斐林试剂公司结构升龙国际搜二级公司附件四六级"
+                            android:text="绑定微信可获得奖励"
                             />
                         <LinearLayout
                             android:layout_width="0dp"
