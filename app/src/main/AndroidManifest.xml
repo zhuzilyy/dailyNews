@@ -184,15 +184,16 @@
             android:screenOrientation="portrait"
             />
 
-
-
-
-
-
         <!-- 每日分享 -->
         <activity android:name=".ui.invitation.activity.IncomeShowActivity"
             android:screenOrientation="portrait"
             />
+        <!-- 高额返利详情 -->
+        <activity android:name=".ui.Mine.activity.HighRebateDetilsActivity"
+            android:screenOrientation="portrait"
+            />
+
+
 
     </application>
 </manifest>

@@ -72,4 +72,45 @@ public class ApiMine {
         params.put("userId",userId);
         OkHttpManager.getInstance().postRequest(url,params,callback);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /**
+     * 高额返利
+     * @param callback
+     */
+    public static void highBackMoney(String url,String userId,RequestCallBack<String> callback){
+        Map<String,String> params=new HashMap<>();
+        params.put("userId",userId);
+        OkHttpManager.getInstance().postRequest(url,params,callback);
+    }
+
+
+
+
+
+
+
 }

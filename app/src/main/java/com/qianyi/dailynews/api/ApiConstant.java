@@ -107,6 +107,9 @@ public class ApiConstant {
     public static final String  WRITE_CODE= BASE_URL+"/api/news/setInviteCode";
     //更新个人信息
     public static final String  GET_USER_INFO= BASE_URL+"/api/user/getUserInfo";
+    //高额返利
+    public static final String  HIGH_BACK_MONEY= BASE_URL+"/api/makeMoney/getList";
+
 
 
 
