@@ -10,6 +10,9 @@ import android.widget.TextView;
 
 import com.qianyi.dailynews.R;
 import com.qianyi.dailynews.base.BaseFragment;
+import com.qianyi.dailynews.ui.Mine.activity.MessageActivity;
+import com.qianyi.dailynews.ui.Mine.adapter.HighRebateAdapter;
+import com.qianyi.dailynews.ui.Mine.adapter.MessageAdapter;
 import com.qianyi.dailynews.views.PullToRefreshView;
 
 import butterknife.BindView;
@@ -25,11 +28,11 @@ public class HighRebateFragment extends BaseFragment {
     ListView listview;
     @BindView(R.id.no_data_rl)
     RelativeLayout no_data_rl;
-    @BindView(R.id.tv_title)
-    TextView tv_title;
+
     @BindView(R.id.no_internet_rl)
     RelativeLayout no_internet_rl;
-    @BindView(R.id.iv_back)  public ImageView back;
+
+    private HighRebateAdapter adapter;
 
     @Override
     protected View getResLayout(LayoutInflater inflater, ViewGroup container) {
@@ -39,11 +42,15 @@ public class HighRebateFragment extends BaseFragment {
     @Override
     protected void initViews() {
 
-        tv_title.setText("消息中心");
+
+        adapter=new HighRebateAdapter(getActivity());
+        listview.setAdapter(adapter);
     }
 
     @Override
     protected void initData() {
+
+
 
     }
 
