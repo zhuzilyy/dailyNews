@@ -63,7 +63,6 @@ public class WakeUpFriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
         return null;
     }
-
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         //将数据与item视图进行绑定，如果是MyViewHolder就加载网络图片，如果是MyViewHolder2就显示页数

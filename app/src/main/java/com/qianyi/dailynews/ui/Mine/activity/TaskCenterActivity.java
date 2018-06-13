@@ -18,6 +18,7 @@ import com.qianyi.dailynews.dialog.CustomLoadingDialog;
 import com.qianyi.dailynews.ui.Mine.bean.SignBean;
 import com.qianyi.dailynews.ui.WebviewActivity;
 import com.qianyi.dailynews.ui.account.activity.LoginActivity;
+import com.qianyi.dailynews.ui.invitation.activity.IncomeShowActivity;
 import com.qianyi.dailynews.utils.SPUtils;
 
 import java.util.ArrayList;
@@ -212,7 +213,6 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
                     ll_bandwx002.setVisibility(View.VISIBLE);
                 }
                 closeOtherAll(ll_bandwx002);
-
             break;
             case R.id.ll_oneYuan001:
                 //一元提现
@@ -327,7 +327,7 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
                 break;
             case R.id.btn_sunincome:
                 //晒收入
-                Toast.makeText(this, "晒收入", Toast.LENGTH_SHORT).show();
+               jumpActivity(TaskCenterActivity.this, IncomeShowActivity.class);
                 break;
             case R.id.btn_commentAward:
                 //去评论

@@ -10,8 +10,12 @@ import android.widget.TextView;
 
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.qianyi.dailynews.R;
+import com.qianyi.dailynews.fragment.bean.TudiInfo;
+
+import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 
 /**
@@ -20,27 +24,20 @@ import butterknife.BindView;
 
 public class ApprenticeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  {
     private Context mContext;
-
-
+    private List<TudiInfo> infoList;
     //自定义监听事件
     public static interface OnRecyclerViewItemClickListener {
         void onItemClick(int position);
-
-
     }
-
     private ApprenticeAdapter.OnRecyclerViewItemClickListener mOnItemClickListener = null;
 
     public void setOnItemClickListener(ApprenticeAdapter.OnRecyclerViewItemClickListener listener) {
         mOnItemClickListener = listener;
     }
-
-    //适配器初始化
-    public ApprenticeAdapter(Context context) {
-        mContext = context;
-
+    public ApprenticeAdapter(Context mContext, List<TudiInfo> infoList) {
+        this.mContext = mContext;
+        this.infoList = infoList;
     }
-
     @Override
     public int getItemViewType(int position) {
         //判断item类别，是图还是显示页数（图片有URL）
@@ -53,24 +50,23 @@ public class ApprenticeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        //根据item类别加载不同ViewHolder
-        if (viewType == 0) {
-            View view = LayoutInflater.from(mContext).inflate(R.layout.lay_apprentice_item, parent,
-                    false);//这个布局就是一个imageview用来显示图片
-            ApprenticeAdapter.MyViewHolder holder = new ApprenticeAdapter.MyViewHolder(view);
-
-
-
-            return holder;
-        }
-        return null;
+        View view = LayoutInflater.from(mContext).inflate(R.layout.lay_apprentice_item, parent,
+                false);//这个布局就是一个imageview用来显示图片
+        MyViewHolder holder = new MyViewHolder(view);
+        return holder;
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         //将数据与item视图进行绑定，如果是MyViewHolder就加载网络图片，如果是MyViewHolder2就显示页数
         if (holder instanceof ApprenticeAdapter.MyViewHolder) {
-
+             ((MyViewHolder) holder).account.setText(infoList.get(position).getUserName());
+            TudiInfo tudiInfo = infoList.get(position);
+            String userName = tudiInfo.getUserName();
+            String firstName = userName.substring(0, 3);
+            String lastName = userName.substring(7, userName.length());
+            ((MyViewHolder) holder).nick.setText(firstName+"****"+lastName);
+             ((MyViewHolder) holder).money.setText(infoList.get(position).getCash());
             // Picasso.with(mContext).load(datas.get(position).getUrl()).into(((MyViewHolder) holder).iv);//加载网络图片
             if(mOnItemClickListener!=null){
                 ((ApprenticeAdapter.MyViewHolder) holder).apprentic_item_ll.setOnClickListener(new View.OnClickListener() {
@@ -88,7 +84,7 @@ public class ApprenticeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     @Override
     public int getItemCount() {
-        return 15;//获取数据的个数
+        return infoList.size();//获取数据的个数
     }
 
     //自定义ViewHolder，用于加载图片
@@ -104,9 +100,9 @@ public class ApprenticeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         @BindView(R.id.apprentic_item_ll)
         public LinearLayout apprentic_item_ll;
 
-
         public MyViewHolder(View view) {
             super(view);
+            ButterKnife.bind(this,view);
 //            head.setImageResource(R.mipmap.logo);
 //            account.setText("14523698741");
 //            nick.setText("by");
