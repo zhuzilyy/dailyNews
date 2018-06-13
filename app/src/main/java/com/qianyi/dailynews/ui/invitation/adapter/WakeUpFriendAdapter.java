@@ -100,7 +100,6 @@ public class WakeUpFriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             super(view);
             ButterKnife.bind(this,view);
             pic_item = view.findViewById(R.id.tv_wakeup);
-
         }
     }
 }
