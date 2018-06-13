@@ -41,10 +41,10 @@ public class HighRebateFragment extends BaseFragment {
 
     @Override
     protected void initViews() {
-
-
+        View headview = LayoutInflater.from(getActivity()).inflate(R.layout.hight_head,null);
         adapter=new HighRebateAdapter(getActivity());
         listview.setAdapter(adapter);
+        listview.addHeaderView(headview);
     }
 
     @Override

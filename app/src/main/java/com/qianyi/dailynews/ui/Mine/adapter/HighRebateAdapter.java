@@ -45,7 +45,24 @@ public class HighRebateAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        view=LayoutInflater.from(context).inflate(R.layout.item_message,null);
+        int itemType= getItemViewType(i);
+        if("1".equals(itemType)){
+            view=LayoutInflater.from(context).inflate(R.layout.item_register,null);
+        }else {
+           // if("2".equals(itemType))
+            view=LayoutInflater.from(context).inflate(R.layout.item_money,null);
+        }
+
+
         return view;
     }
+
+    public class RegisterHolder{
+
+    }
+    public class MoneyHolder{
+
+    }
+
+
 }
