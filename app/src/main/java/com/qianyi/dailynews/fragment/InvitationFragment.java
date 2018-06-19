@@ -35,6 +35,7 @@ import com.qianyi.dailynews.api.ApiNews;
 import com.qianyi.dailynews.base.BaseFragment;
 import com.qianyi.dailynews.callback.RequestCallBack;
 import com.qianyi.dailynews.dialog.CustomLoadingDialog;
+import com.qianyi.dailynews.dialog.SelfDialog;
 import com.qianyi.dailynews.fragment.bean.BannerImgInfo;
 import com.qianyi.dailynews.fragment.bean.InviteBean;
 import com.qianyi.dailynews.ui.WebviewActivity;
@@ -163,9 +164,8 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
         rightTv.setVisibility(View.VISIBLE);
         customLoadingDialog = new CustomLoadingDialog(getActivity());
         userId = (String) SPUtils.get(getActivity(), "user_id", "");
-
         //****是否展示填写邀请码**********
-        String invite_code = (String) SPUtils.get(getActivity(), "invite_code", "");
+        String invite_code = (String) SPUtils.get(getActivity(), "invite_code", "----");
         if (!TextUtils.isEmpty(invite_code)) {
             //有邀请码，隐藏输入框
             ll_invation.setVisibility(View.GONE);
@@ -431,16 +431,28 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
                 startActivity(intent);
                 break;
             case R.id.ll_FriendIncome:
+                if (TextUtils.isEmpty(userId)){
+                    showLogin();
+                    return;
+                }
                 //好友收入
                 Intent intent1 = new Intent(getActivity(), ApprenticeActivity.class);
                 startActivity(intent1);
                 break;
             case R.id.ll_FriendNum:
+                if (TextUtils.isEmpty(userId)){
+                    showLogin();
+                    return;
+                }
                 //好友数量
                 Intent intent2 = new Intent(getActivity(), ApprenticeActivity.class);
                 startActivity(intent2);
                 break;
             case R.id.ll_MyInvitationCode:
+                if (TextUtils.isEmpty(userId)){
+                    showLogin();
+                    return;
+                }
                 //我的邀请码 赋值到剪贴板
                 String myCode = tv_myCode.getText().toString().trim();
                 try {
@@ -451,16 +463,28 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
                 }
                 break;
             case R.id.ll_DailySharing:
+                if (TextUtils.isEmpty(userId)){
+                    showLogin();
+                    return;
+                }
                 //每日分享
                 Intent intent_dailyshare = new Intent(getActivity(), DailySharingAcitity.class);
                 startActivity(intent_dailyshare);
                 break;
             case R.id.ll_ShowIncome:
+                if (TextUtils.isEmpty(userId)){
+                    showLogin();
+                    return;
+                }
                 //晒收入
                 Intent intent3=new Intent(getActivity(), IncomeShowActivity.class);
                 startActivity(intent3);
                 break;
             case R.id.ll_WakeUpFriends:
+                if (TextUtils.isEmpty(userId)){
+                    showLogin();
+                    return;
+                }
                 //唤醒好友
                 Intent intent_wakefriend = new Intent(getActivity(), WakeFriendsActivity.class);
                 startActivity(intent_wakefriend);
@@ -480,6 +504,27 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
                 pw_share.dismiss();
                 break;
         }
+    }
+
+    private void showLogin() {
+        final SelfDialog quitDialog = new SelfDialog(getActivity());
+        quitDialog.setTitle("提示");
+        quitDialog.setMessage("请先登录");
+        quitDialog.setYesOnclickListener("确定", new SelfDialog.onYesOnclickListener() {
+            @Override
+            public void onYesClick() {
+                Intent intent=new Intent(getActivity(), LoginActivity.class);
+                startActivity(intent);
+                quitDialog.dismiss();
+            }
+        });
+        quitDialog.setNoOnclickListener("取消", new SelfDialog.onNoOnclickListener() {
+            @Override
+            public void onNoClick() {
+                quitDialog.dismiss();
+            }
+        });
+        quitDialog.show();
     }
 
     //分享到微博

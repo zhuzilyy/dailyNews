@@ -9,11 +9,15 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.qianyi.dailynews.api.ApiConstant;
+import com.qianyi.dailynews.api.ApiInvite;
+import com.qianyi.dailynews.callback.RequestCallBack;
 import com.qianyi.dailynews.ui.account.bean.WXAccessTokenInfo;
 import com.qianyi.dailynews.ui.account.bean.WXErrorInfo;
+import com.qianyi.dailynews.utils.SPUtils;
 import com.qianyi.dailynews.utils.Utils;
 import com.tencent.mm.sdk.modelbase.BaseReq;
 import com.tencent.mm.sdk.modelbase.BaseResp;
+
 import com.tencent.mm.sdk.modelmsg.SendAuth;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.IWXAPIEventHandler;
@@ -25,6 +29,9 @@ import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
+import okhttp3.Call;
+import okhttp3.Response;
+
 
 public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHandler {
 
@@ -32,6 +39,7 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
     private Gson gson=new Gson();
 
     private IWXAPI iwxapi;
+    private String userId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +51,7 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
         iwxapi = WXAPIFactory.createWXAPI(this, ApiConstant.APP_ID, false);
         //接收到分享以及登录的intent传递handleIntent方法，处理结果
         iwxapi.handleIntent(getIntent(), this);
+        userId= (String) SPUtils.get(WXEntryActivity.this,"user_id","");
 
     }
     @Override
@@ -77,6 +86,7 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
                 case BaseResp.ErrCode.ERR_OK:
                     //分享成功
                     Toast.makeText(WXEntryActivity.this, "分享成功", Toast.LENGTH_LONG).show();
+                    //shareSuccess();
                     break;
                 case BaseResp.ErrCode.ERR_USER_CANCEL:
                     //分享取消
@@ -90,7 +100,30 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
         }
         finish();
     }
+    //分享成功
+    private void shareSuccess() {
+        ApiInvite.shareAfter(ApiConstant.SHARE_AFTER, userId, new RequestCallBack<String>() {
+            @Override
+            public void onSuccess(Call call, Response response, final String s) {
+                finish();
+                try {
+                    JSONObject jsonObject=new JSONObject(s);
+                    String code = jsonObject.getString("code");
+                    if (code.equals(ApiConstant.SUCCESS_CODE)){
+                        Intent intent=new Intent();
+                        intent.setAction("com.action.share.success");
+                        sendBroadcast(intent);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            @Override
+            public void onEror(Call call, int statusCode, Exception e) {
 
+            }
+        });
+    }
     /***
      * 获取AccessToken
      * @param code

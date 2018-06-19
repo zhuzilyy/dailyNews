@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <include layout="@layout/layout_title"/>
     <!--手机号-->
     <RelativeLayout
@@ -104,6 +108,15 @@
         android:layout_marginLeft="@dimen/dp_10"
         android:layout_marginRight="@dimen/dp_10"
         android:background="@color/light_gray5"/>
-
-
-</LinearLayout>
+    </LinearLayout>
+    <!--登录-->
+    <Button
+        android:layout_alignParentBottom="true"
+        android:id="@+id/btn_quit"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/main_red"
+        android:text="退出登录"
+        android:textColor="@color/white"
+        android:textSize="16sp" />
+</RelativeLayout>

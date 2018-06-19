@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.qianyi.dailynews.MainActivity;
 import com.qianyi.dailynews.ui.account.activity.LoginActivity;
 import com.qianyi.dailynews.ui.account.activity.WelcomeActiity;
 import com.qianyi.dailynews.utils.SPUtils;
@@ -48,7 +49,7 @@ public class MyPagerAdapter extends PagerAdapter {
         imageViews.get(2).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(context, LoginActivity.class);
+                Intent intent=new Intent(context, MainActivity.class);
                 context.startActivity(intent);
                 ((WelcomeActiity)context).finish();
                 SPUtils.put(context,"isFirst",false);

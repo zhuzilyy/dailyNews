@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.orhanobut.logger.Logger;
 import com.qianyi.dailynews.R;
 import com.qianyi.dailynews.base.BaseFragment;
+import com.qianyi.dailynews.dialog.SelfDialog;
 import com.qianyi.dailynews.ui.Mine.activity.MessageActivity;
 import com.qianyi.dailynews.ui.WebviewActivity;
 import com.qianyi.dailynews.ui.Mine.activity.AccountDetailsActivity;
@@ -25,6 +26,7 @@ import com.qianyi.dailynews.ui.Mine.activity.SettingsActivity;
 import com.qianyi.dailynews.ui.Mine.activity.TaskCenterActivity;
 import com.qianyi.dailynews.ui.Mine.activity.WithdrawalsActivity;
 import com.qianyi.dailynews.ui.Mine.activity.WriteInvitationActivity;
+import com.qianyi.dailynews.ui.account.activity.LoginActivity;
 import com.qianyi.dailynews.utils.SPUtils;
 import com.qianyi.dailynews.utils.Utils;
 
@@ -73,7 +75,8 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     public TextView tv_earning;
     @BindView(R.id.tv_gold)
     public TextView tv_gold;
-    private String phone,balance,earnings,gold,my_invite_code;
+    private String phone,balance,earnings,gold,my_invite_code,user_id;
+    private MyReceiver myReceiver;
     @Override
     protected View getResLayout(LayoutInflater inflater, ViewGroup container) {
         newsView = inflater.inflate(R.layout.fragment_mine, null);
@@ -82,24 +85,30 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
 
     @Override
     protected void initViews() {
+        setValue();
+        myReceiver=new MyReceiver();
+        IntentFilter intentFilter=new IntentFilter();
+        intentFilter.addAction("com.action.login.success");
+        getActivity().registerReceiver(myReceiver,intentFilter);
 
-//        String invite_code = (String) SPUtils.get(getActivity(), "invite_code", "");
-//        if (!TextUtils.isEmpty(invite_code)) {
-//            re_WriteCode.setVisibility(View.GONE);
-//        }
+        IntentFilter intentFilterQuit=new IntentFilter();
+        intentFilterQuit.addAction("com.action.quit");
+        getActivity().registerReceiver(myReceiver,intentFilterQuit);
 
+
+    }
+    private void setValue() {
         phone= (String) SPUtils.get(getActivity(),"phone","");
-        gold=(String)SPUtils.get(getActivity(),"gold","");
+        gold=(String)SPUtils.get(getActivity(),"gold","0");
         my_invite_code=(String)SPUtils.get(getActivity(),"my_invite_code","");
-        balance=(String)SPUtils.get(getActivity(),"balance","");
-        earnings=(String)SPUtils.get(getActivity(),"earnings","");
+        balance=(String)SPUtils.get(getActivity(),"balance","0");
+        earnings=(String)SPUtils.get(getActivity(),"earnings","0");
         tv_phone.setText("电话号:"+phone);
         tv_balance.setText(balance);
         tv_InvitationCode.setText(my_invite_code);
         tv_earning.setText(earnings);
         tv_gold.setText(gold);
     }
-
     @Override
     protected void initData() {
 
@@ -115,6 +124,11 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     })
     @Override
     public void onClick(View v) {
+        user_id= (String) SPUtils.get(getActivity(),"user_id","");
+        if (TextUtils.isEmpty(user_id)){
+            showLogin();
+            return;
+        }
         switch (v.getId()) {
             case R.id.re_WriteCode:
                 //填写邀请码
@@ -172,6 +186,27 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         }
     }
 
+    private void showLogin() {
+        final SelfDialog quitDialog = new SelfDialog(getActivity());
+        quitDialog.setTitle("提示");
+        quitDialog.setMessage("请先登录");
+        quitDialog.setYesOnclickListener("确定", new SelfDialog.onYesOnclickListener() {
+            @Override
+            public void onYesClick() {
+                Intent intent=new Intent(getActivity(), LoginActivity.class);
+                startActivity(intent);
+                quitDialog.dismiss();
+            }
+        });
+        quitDialog.setNoOnclickListener("取消", new SelfDialog.onNoOnclickListener() {
+            @Override
+            public void onNoClick() {
+                quitDialog.dismiss();
+            }
+        });
+        quitDialog.show();
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -183,6 +218,15 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             default:
                 break;
         }
-
     }
+    public class MyReceiver extends BroadcastReceiver{
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (action.equals("com.action.login.success")||action.equals("com.action.quit")){
+                setValue();
+            }
+        }
+    }
+
 }
