@@ -51,7 +51,10 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
     //请求回调结果处理
     @Override
     public void onResp(BaseResp baseResp) {
+
         //微信登录为getType为1，分享为0
+
+
         if (baseResp.getType() == WX_LOGIN){
             //登录回调
             SendAuth.Resp resp = (SendAuth.Resp) baseResp;
