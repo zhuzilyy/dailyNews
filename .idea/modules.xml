@@ -3,8 +3,11 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://D:\studioProject\dailyNews\app\app.iml" filepath="D:\studioProject\dailyNews\app\app.iml" />
       <module fileurl="file://$PROJECT_DIR$/dailyNews.iml" filepath="$PROJECT_DIR$/dailyNews.iml" />
+      <module fileurl="file://D:\studioProject\dailyNews\dailyNews.iml" filepath="D:\studioProject\dailyNews\dailyNews.iml" />
       <module fileurl="file://$PROJECT_DIR$/jcvideoplayer-lib/jcvideoplayer-lib.iml" filepath="$PROJECT_DIR$/jcvideoplayer-lib/jcvideoplayer-lib.iml" />
+      <module fileurl="file://D:\studioProject\dailyNews\jcvideoplayer-lib\jcvideoplayer-lib.iml" filepath="D:\studioProject\dailyNews\jcvideoplayer-lib\jcvideoplayer-lib.iml" />
     </modules>
   </component>
 </project>

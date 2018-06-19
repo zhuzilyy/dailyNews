@@ -68,6 +68,10 @@ public class ApiConstant {
     public static final String  MODIFY_PWD= BASE_URL+"/api/user/updatePasswd2";
     //徒弟列表
     public static final String  TUDI_LIST= BASE_URL+"/api/news/tudiList";
+    //每日分享前调用
+    public static final String  SHARE_PRE= BASE_URL+"/api/share/init";
+    //每日分享后调用
+    public static final String  SHARE_AFTER= BASE_URL+"/api/share/success";
     //==========辛振宇==========================================
 
 

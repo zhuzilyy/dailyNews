@@ -158,11 +158,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
 
     }
     @OnClick({R.id.login_close_iv,R.id.login_login_btn,R.id.login_forgetpwd_tv,
-            R.id.login_register_tv,R.id.login_wxlogin_iv,})
+            R.id.login_register_tv,R.id.login_wxlogin_iv})
     @Override
     public void onClick(View view) {
         switch(view.getId()){
             case R.id.login_close_iv:
+                finish();
                 //关闭当前页面
             break;
             case R.id.login_login_btn:
@@ -233,9 +234,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                                 SPUtils.put(LoginActivity.this,"invite_code",invite_code);
                                 Toast.makeText(LoginActivity.this, return_msg, Toast.LENGTH_SHORT).show();
                                 if (code.equals(ApiConstant.SUCCESS_CODE)){
-                                    Intent intent=new Intent(LoginActivity.this, MainActivity.class);
-                                    intent.putExtra("user_id",user_id);
-                                    startActivity(intent);
+                                    Intent intent=new Intent();
+                                    intent.setAction("com.action.login.success");
+                                    sendBroadcast(intent);
                                     finish();
                                 }
                         } catch (JSONException e) {

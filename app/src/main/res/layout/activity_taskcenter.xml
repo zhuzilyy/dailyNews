@@ -115,7 +115,6 @@
                     </LinearLayout>
                     <!--未签到-->
                     <LinearLayout
-                        android:visibility="gone"
                         android:layout_centerHorizontal="true"
                         android:id="@+id/firstDay_none_ll"
                         android:layout_width="45dp"

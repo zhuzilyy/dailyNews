@@ -130,6 +130,9 @@
         <activity android:name=".ui.news.activity.OneCommDetailsActivity"
             android:screenOrientation="portrait"
             />
+        <!--微信授权-->
+        <activity android:name=".wxapi.WXEntryActivity"
+            android:exported="true"/>
         <!--欢迎界面-->
         <activity android:name=".ui.account.activity.SplashActivity"
             android:screenOrientation="portrait"

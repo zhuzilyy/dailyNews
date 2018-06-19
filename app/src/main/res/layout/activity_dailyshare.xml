@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:background="@color/light_gray5"
     android:orientation="vertical"
+    android:id="@+id/ll_share"
     android:layout_height="match_parent">
     <include layout="@layout/layout_title"/>
 
@@ -73,9 +74,10 @@
                 android:textColor="@color/black"
                 />
             <TextView
+                android:id="@+id/tv_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="4次"
+                android:text="0次"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:textColor="@color/orange"
@@ -106,17 +108,18 @@
                 android:textColor="@color/black"
                 />
             <TextView
+                android:id="@+id/tv_intervel"
                 android:layout_marginLeft="@dimen/dp_10"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="03:59:59"
+                android:text=""
                 android:textSize="16sp"
                 android:textColor="@color/black"
                 />
 
-
         </LinearLayout>
         <Button
+            android:id="@+id/btn_share"
             android:layout_marginTop="@dimen/dp_40"
             android:layout_width="match_parent"
             android:layout_height="45dp"

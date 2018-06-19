@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.qianyi.dailynews.R;
 import com.qianyi.dailynews.base.BaseActivity;
+import com.qianyi.dailynews.dialog.SelfDialog;
 import com.qianyi.dailynews.ui.account.activity.LoginActivity;
 import com.qianyi.dailynews.utils.SPUtils;
 
@@ -58,7 +59,7 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
     protected void setStatusBarColor() {
 
     }
-    @OnClick({R.id.re_ModifyPassword})
+    @OnClick({R.id.re_ModifyPassword,R.id.btn_quit})
     @Override
     public void onClick(View v) {
         switch(v.getId()){
@@ -66,8 +67,44 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
                Intent intent_modifypwd = new Intent(SettingsActivity.this,ModifyPasswordActivity.class);
                startActivity(intent_modifypwd);
                 break;
-            default:
+            case R.id.btn_quit:
+                quitAccount();
                 break;
         }
+    }
+
+    private void quitAccount() {
+        final SelfDialog quitDialog = new SelfDialog(this);
+        quitDialog.setTitle("提示");
+        quitDialog.setMessage("确定要退出登录吗");
+        quitDialog.setYesOnclickListener("确定", new SelfDialog.onYesOnclickListener() {
+            @Override
+            public void onYesClick() {
+                SPUtils.put(SettingsActivity.this,"user_id","");
+                jumpActivity(SettingsActivity.this,LoginActivity.class);
+                quitDialog.dismiss();
+
+                Intent intent=new Intent();
+                intent.setAction("com.action.quit");
+                sendBroadcast(intent);
+
+                SPUtils.put(SettingsActivity.this,"user_id","");
+                SPUtils.put(SettingsActivity.this,"phone","");
+                SPUtils.put(SettingsActivity.this,"head_portrait","");
+                SPUtils.put(SettingsActivity.this,"gold","");
+                SPUtils.put(SettingsActivity.this,"my_invite_code","");
+                SPUtils.put(SettingsActivity.this,"balance","");
+                SPUtils.put(SettingsActivity.this,"earnings","");
+                SPUtils.put(SettingsActivity.this,"invite_code","");
+                finish();
+            }
+        });
+        quitDialog.setNoOnclickListener("取消", new SelfDialog.onNoOnclickListener() {
+            @Override
+            public void onNoClick() {
+                quitDialog.dismiss();
+            }
+        });
+        quitDialog.show();
     }
 }
