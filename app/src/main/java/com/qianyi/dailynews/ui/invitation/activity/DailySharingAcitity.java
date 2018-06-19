@@ -287,11 +287,18 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
         WXMediaMessage msg = new WXMediaMessage(webpage);
         msg.title = "每日速报";
         msg.description = "每日速报";
-        Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.mipmap.logo);
+       /* Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.mipmap.logo);
         Bitmap bitmap = WhiteBgBitmapUtil.drawableBitmapOnWhiteBg(this, bmp);
         Bitmap thumbBmp = Bitmap.createScaledBitmap(bitmap, 200, 200, true);
         msg.setThumbImage(thumbBmp);
+        bmp.recycle();*/
+
+        Bitmap bmp = BitmapFactory.decodeResource(getResources(),R.mipmap.logo);
+        Bitmap thumbBmp = Bitmap.createScaledBitmap(bmp, 100, 100, true);
+        msg.setThumbImage(thumbBmp);
         bmp.recycle();
+
+
         SendMessageToWX.Req req = new SendMessageToWX.Req();
         req.transaction = buildTransaction("webpage");
         req.message = msg;

@@ -131,8 +131,10 @@
             android:screenOrientation="portrait"
             />
         <!--微信授权-->
-        <activity android:name=".wxapi.WXEntryActivity"
-            android:exported="true"/>
+       <activity android:name=".wxapi.WXEntryActivity"
+           android:exported="true"
+           android:screenOrientation="portrait"
+           />
         <!--欢迎界面-->
         <activity android:name=".ui.account.activity.SplashActivity"
             android:screenOrientation="portrait"
