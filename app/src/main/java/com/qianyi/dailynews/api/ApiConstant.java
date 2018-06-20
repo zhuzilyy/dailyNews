@@ -72,6 +72,8 @@ public class ApiConstant {
     public static final String  SHARE_PRE= BASE_URL+"/api/share/init";
     //每日分享后调用
     public static final String  SHARE_AFTER= BASE_URL+"/api/share/success";
+    //
+    public static final String  ISHARE_INCOME= BASE_URL+"/api/show/income";
     //==========辛振宇==========================================
 
 

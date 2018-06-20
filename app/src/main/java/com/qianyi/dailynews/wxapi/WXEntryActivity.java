@@ -43,7 +43,7 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       // getSupportActionBar().hide();
+        //getSupportActionBar().hide();
         // 隐藏状态栏
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -51,7 +51,6 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
         iwxapi = WXAPIFactory.createWXAPI(this, ApiConstant.APP_ID, false);
         //接收到分享以及登录的intent传递handleIntent方法，处理结果
         iwxapi.handleIntent(getIntent(), this);
-        userId= (String) SPUtils.get(WXEntryActivity.this,"user_id","");
 
     }
     @Override
@@ -60,10 +59,7 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
     //请求回调结果处理
     @Override
     public void onResp(BaseResp baseResp) {
-
         //微信登录为getType为1，分享为0
-
-
         if (baseResp.getType() == WX_LOGIN){
             //登录回调
             SendAuth.Resp resp = (SendAuth.Resp) baseResp;
@@ -86,7 +82,7 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
                 case BaseResp.ErrCode.ERR_OK:
                     //分享成功
                     Toast.makeText(WXEntryActivity.this, "分享成功", Toast.LENGTH_LONG).show();
-                    //shareSuccess();
+                    shareSuccess();
                     break;
                 case BaseResp.ErrCode.ERR_USER_CANCEL:
                     //分享取消
@@ -102,10 +98,10 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
     }
     //分享成功
     private void shareSuccess() {
+        userId= (String) SPUtils.get(WXEntryActivity.this,"user_id","");
         ApiInvite.shareAfter(ApiConstant.SHARE_AFTER, userId, new RequestCallBack<String>() {
             @Override
             public void onSuccess(Call call, Response response, final String s) {
-                finish();
                 try {
                     JSONObject jsonObject=new JSONObject(s);
                     String code = jsonObject.getString("code");
@@ -113,6 +109,7 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
                         Intent intent=new Intent();
                         intent.setAction("com.action.share.success");
                         sendBroadcast(intent);
+                        finish();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

@@ -72,6 +72,15 @@ public class ApiMine {
         params.put("userId",userId);
         OkHttpManager.getInstance().postRequest(url,params,callback);
     }
+    /**
+     * 晒收入
+     * @param callback
+     */
+    public static void shareIncome(String url,String userId,RequestCallBack<String> callback){
+        Map<String,String> params=new HashMap<>();
+        params.put("userId",userId);
+        OkHttpManager.getInstance().postRequest(url,params,callback);
+    }
 
 
 

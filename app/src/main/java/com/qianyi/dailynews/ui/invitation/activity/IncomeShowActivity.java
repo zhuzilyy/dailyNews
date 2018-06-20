@@ -1,5 +1,6 @@
 package com.qianyi.dailynews.ui.invitation.activity;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -14,12 +15,18 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.qianyi.dailynews.R;
 import com.qianyi.dailynews.api.ApiConstant;
+import com.qianyi.dailynews.api.ApiMine;
 import com.qianyi.dailynews.base.BaseActivity;
+import com.qianyi.dailynews.callback.RequestCallBack;
+import com.qianyi.dailynews.dialog.CustomLoadingDialog;
+import com.qianyi.dailynews.utils.SPUtils;
 import com.qianyi.dailynews.utils.WhiteBgBitmapUtil;
 import com.sina.weibo.sdk.api.WebpageObject;
 import com.sina.weibo.sdk.api.WeiboMultiMessage;
+import com.sina.weibo.sdk.share.WbShareCallback;
 import com.sina.weibo.sdk.share.WbShareHandler;
 import com.sina.weibo.sdk.statistic.WBAgent;
 import com.sina.weibo.sdk.utils.Utility;
@@ -29,18 +36,25 @@ import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import butterknife.BindView;
 import butterknife.OnClick;
+import okhttp3.Call;
+import okhttp3.Response;
 
 /**
  * Created by Administrator on 2018/6/12.
  */
 
-public class IncomeShowActivity extends BaseActivity implements View.OnClickListener {
+public class IncomeShowActivity extends BaseActivity implements View.OnClickListener, WbShareCallback {
     @BindView(R.id.btn_share) public Button btn_share;
     @BindView(R.id.ll_shai) public LinearLayout ll_shai;
     @BindView(R.id.iv_back) public ImageView back;
     @BindView(R.id.tv_title) public TextView title;
+    @BindView(R.id.tv_income) public TextView tv_income;
+    @BindView(R.id.iv_erweima) public ImageView iv_erweima;
     public LinearLayout ll_friendCircle;//分享到盆友圈
     public LinearLayout ll_QQ;//分享到QQ
     public LinearLayout ll_wechat;//分享到微信
@@ -50,6 +64,8 @@ public class IncomeShowActivity extends BaseActivity implements View.OnClickList
     private View view_share, view_onekeyshoutu;
     private IWXAPI mWxApi;
     private WbShareHandler shareHandler;
+    private CustomLoadingDialog customLoadingDialog;
+    private String userId;
     @Override
     protected void initViews() {
 
@@ -75,12 +91,36 @@ public class IncomeShowActivity extends BaseActivity implements View.OnClickList
         mWxApi = WXAPIFactory.createWXAPI(this, ApiConstant.APP_ID, false);
         // 将该app注册到微信
         mWxApi.registerApp(ApiConstant.APP_ID);
+
+        customLoadingDialog=new CustomLoadingDialog(this);
+        userId= (String) SPUtils.get(this,"user_id","");
+
+
     }
     @Override
     protected void initData(){
-
+        customLoadingDialog.show();
+        ApiMine.shareIncome(ApiConstant.ISHARE_INCOME, userId, new RequestCallBack<String>() {
+            @Override
+            public void onSuccess(Call call, Response response, final String s) {
+                customLoadingDialog.dismiss();
+                try {
+                    JSONObject jsonObject=new JSONObject(s);
+                    JSONObject data = jsonObject.getJSONObject("data");
+                    String income = data.getString("income");
+                    String url = data.getString("url");
+                    tv_income.setText(income);
+                    Glide.with(IncomeShowActivity.this).load(url).into(iv_erweima);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            @Override
+            public void onEror(Call call, int statusCode, Exception e) {
+                customLoadingDialog.dismiss();
+            }
+        });
     }
-
     @Override
     protected void getResLayout() {
         setContentView(R.layout.activity_income_show);
@@ -272,6 +312,11 @@ public class IncomeShowActivity extends BaseActivity implements View.OnClickList
             }
         });
     }
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        shareHandler.doResultIntent(intent,this);
+    }
     /**
      * 设置添加屏幕的背景透明度
      *
@@ -281,5 +326,19 @@ public class IncomeShowActivity extends BaseActivity implements View.OnClickList
         WindowManager.LayoutParams lp = getWindow().getAttributes();
         lp.alpha = bgAlpha;
         getWindow().setAttributes(lp);
+    }
+    //微博分享以后的回调
+    @Override
+    public void onWbShareSuccess() {
+
+    }
+    @Override
+    public void onWbShareCancel() {
+
+    }
+
+    @Override
+    public void onWbShareFail() {
+
     }
 }
