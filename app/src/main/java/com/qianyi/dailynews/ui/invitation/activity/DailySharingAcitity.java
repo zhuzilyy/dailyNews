@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.qianyi.dailynews.R;
 import com.qianyi.dailynews.api.ApiConstant;
@@ -24,8 +25,10 @@ import com.qianyi.dailynews.callback.RequestCallBack;
 import com.qianyi.dailynews.dialog.CustomLoadingDialog;
 import com.qianyi.dailynews.utils.SPUtils;
 import com.qianyi.dailynews.utils.WhiteBgBitmapUtil;
+import com.qianyi.dailynews.wxapi.WXEntryActivity;
 import com.sina.weibo.sdk.api.WebpageObject;
 import com.sina.weibo.sdk.api.WeiboMultiMessage;
+import com.sina.weibo.sdk.share.WbShareCallback;
 import com.sina.weibo.sdk.share.WbShareHandler;
 import com.sina.weibo.sdk.statistic.WBAgent;
 import com.sina.weibo.sdk.utils.Utility;
@@ -47,7 +50,7 @@ import okhttp3.Response;
  * Created by Administrator on 2018/5/1.
  */
 
-public class DailySharingAcitity extends BaseActivity implements View.OnClickListener {
+public class DailySharingAcitity extends BaseActivity implements View.OnClickListener, WbShareCallback {
     @BindView(R.id.tv_title)
     public TextView title;
     @BindView(R.id.tv_time)
@@ -338,12 +341,52 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
     }
 
     @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        shareHandler.doResultIntent(intent,this);
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         if (myReceiver!=null){
             unregisterReceiver(myReceiver);
         }
     }
+    //分享的回调
+    @Override
+    public void onWbShareSuccess() {
+        shareSuccess();
+    }
+    @Override
+    public void onWbShareCancel() {
+    }
+    @Override
+    public void onWbShareFail() {
+    }
+
+    //分享成功
+    private void shareSuccess() {
+        ApiInvite.shareAfter(ApiConstant.SHARE_AFTER, userId, new RequestCallBack<String>() {
+            @Override
+            public void onSuccess(Call call, Response response, final String s) {
+                try {
+                    JSONObject jsonObject=new JSONObject(s);
+                    String code = jsonObject.getString("code");
+                    if (code.equals(ApiConstant.SUCCESS_CODE)){
+                        finish();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            @Override
+            public void onEror(Call call, int statusCode, Exception e) {
+
+            }
+        });
+    }
+
     class MyReceiver extends BroadcastReceiver{
         @Override
         public void onReceive(Context context, Intent intent) {
