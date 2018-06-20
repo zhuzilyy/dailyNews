@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.qianyi.dailynews.R;
@@ -66,6 +67,7 @@ public class HighRebateFragment extends BaseFragment implements PullToRefreshVie
         listview.setAdapter(adapter);
         listview.addHeaderView(headview);
         userId= (String) SPUtils.get(getActivity(),"user_id","");
+
     }
     @Override
     protected void initData() {
@@ -84,6 +86,7 @@ public class HighRebateFragment extends BaseFragment implements PullToRefreshVie
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(getActivity(), HighRebateDetilsActivity.class);
+                intent.putExtra("id",infoList.get(i-1).getId());
                 startActivity(intent);
             }
         });

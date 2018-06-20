@@ -125,6 +125,8 @@ public class ApiConstant {
     public static final String  GET_USER_INFO= BASE_URL+"/api/user/getUserInfo";
     //高额返利
     public static final String  HIGH_BACK_MONEY= BASE_URL+"/api/makeMoney/getList";
+    //高额返利详情
+    public static final String  HIGH_BACK_MONEY_DETAILS= BASE_URL+"/api/makeMoney/detail";
 
 
 
