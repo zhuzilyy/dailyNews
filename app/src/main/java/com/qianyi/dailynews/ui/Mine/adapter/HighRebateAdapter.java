@@ -5,8 +5,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.TextView;
 
 import com.qianyi.dailynews.R;
+import com.qianyi.dailynews.ui.Mine.bean.FanLiInfo;
+
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by Administrator on 2018/5/22.
@@ -14,18 +21,21 @@ import com.qianyi.dailynews.R;
 
 public class HighRebateAdapter extends BaseAdapter {
     private Context context;
-    public HighRebateAdapter(Context context) {
+    private List<FanLiInfo> infoList;
+    private int itemType=0;
+    public HighRebateAdapter(Context context, List<FanLiInfo> infoList) {
         this.context = context;
+        this.infoList = infoList;
     }
 
     @Override
     public int getCount() {
-        return 10;
+        return infoList.size();
     }
 
     @Override
     public Object getItem(int i) {
-        return null;
+        return infoList.get(i);
     }
 
     @Override
@@ -35,33 +45,74 @@ public class HighRebateAdapter extends BaseAdapter {
 
     @Override
     public int getItemViewType(int position) {
-        return super.getItemViewType(position);
+        String type = infoList.get(position).getType();
+        if (type.equals("0")){
+            itemType=0;
+        }else{
+            itemType=1;
+        }
+        return 0;
     }
-
     @Override
     public int getViewTypeCount() {
         return 2;
     }
-
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        int itemType= getItemViewType(i);
-        if("1".equals(itemType)){
-            view=LayoutInflater.from(context).inflate(R.layout.item_register,null);
+        RegisterHolder registerHolder=null;
+        MoneyHolder moneyHolder=null;
+        if(0==itemType){
+            if (registerHolder==null){
+                view=LayoutInflater.from(context).inflate(R.layout.item_register,null);
+                registerHolder=new RegisterHolder(view);
+                view.setTag(registerHolder);
+            }else{
+                registerHolder= (RegisterHolder) view.getTag();
+            }
+            FanLiInfo fanLiInfo = infoList.get(i);
+            registerHolder.tv_title.setText(fanLiInfo.getTitle());
+            registerHolder.tv_coin.setText(fanLiInfo.getCash()+"金币");
+            registerHolder.tv_type.setText(fanLiInfo.getDescription());
         }else {
-           // if("2".equals(itemType))
-            view=LayoutInflater.from(context).inflate(R.layout.item_money,null);
+            if (moneyHolder==null){
+                view=LayoutInflater.from(context).inflate(R.layout.item_money,null);
+                moneyHolder=new MoneyHolder(view);
+                view.setTag(moneyHolder);
+            }else{
+                moneyHolder= (MoneyHolder) view.getTag();
+            }
+            FanLiInfo fanLiInfo = infoList.get(i);
+            moneyHolder.tv_title.setText(fanLiInfo.getTitle());
+            moneyHolder.tv_cash.setText(fanLiInfo.getCash()+"金币");
+            moneyHolder.tv_rate.setText(fanLiInfo.getDescription());
+            moneyHolder.tv_time.setText(fanLiInfo.getTime());
         }
-
-
         return view;
     }
 
     public class RegisterHolder{
-
+        @BindView(R.id.tv_title)
+        TextView tv_title;
+        @BindView(R.id.tv_type)
+        TextView tv_type;
+        @BindView(R.id.tv_coin)
+        TextView tv_coin;
+        public RegisterHolder(View view){
+            ButterKnife.bind(this,view);
+        }
     }
     public class MoneyHolder{
-
+        @BindView(R.id.tv_title)
+        TextView tv_title;
+        @BindView(R.id.tv_rate)
+        TextView tv_rate;
+        @BindView(R.id.tv_cash)
+        TextView tv_cash;
+        @BindView(R.id.tv_time)
+        TextView tv_time;
+        public MoneyHolder(View view){
+            ButterKnife.bind(this,view);
+        }
     }
 
 

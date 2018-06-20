@@ -4,11 +4,18 @@
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_height="match_parent">
-    <TextView
+    <com.qianyi.dailynews.views.PullToRefreshView
+        android:orientation="vertical"
+        android:id="@+id/pulltorefreshView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:textSize="50sp"
-        android:text="高额返利  record"
-        />
+        android:layout_height="match_parent">
+        <ListView
+            android:divider="@color/divider_line"
+            android:id="@+id/listview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </com.qianyi.dailynews.views.PullToRefreshView>
+    <include layout="@layout/common_no_data"/>
+    <include layout="@layout/common_wrong_intert"/>
 
 </LinearLayout>

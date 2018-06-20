@@ -1,17 +1,12 @@
 package com.qianyi.dailynews.ui.Mine.fragment;
 
 import android.content.Intent;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.qianyi.dailynews.R;
@@ -19,20 +14,20 @@ import com.qianyi.dailynews.api.ApiConstant;
 import com.qianyi.dailynews.api.ApiMine;
 import com.qianyi.dailynews.base.BaseFragment;
 import com.qianyi.dailynews.callback.RequestCallBack;
+import com.qianyi.dailynews.dialog.CustomLoadingDialog;
 import com.qianyi.dailynews.ui.Mine.activity.HighRebateDetilsActivity;
-import com.qianyi.dailynews.ui.Mine.activity.MessageActivity;
 import com.qianyi.dailynews.ui.Mine.adapter.HighRebateAdapter;
-import com.qianyi.dailynews.ui.Mine.adapter.MessageAdapter;
-import com.qianyi.dailynews.ui.Mine.bean.HightBackBean;
-import com.qianyi.dailynews.ui.news.activity.NewsDetailsActivity;
-import com.qianyi.dailynews.ui.news.activity.OneCommDetailsActivity;
+import com.qianyi.dailynews.ui.Mine.bean.FanLiBean;
+import com.qianyi.dailynews.ui.Mine.bean.FanLiInfo;
 import com.qianyi.dailynews.utils.SPUtils;
+import com.qianyi.dailynews.utils.Utils;
 import com.qianyi.dailynews.views.PullToRefreshView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import okhttp3.Call;
 import okhttp3.Response;
 
@@ -50,87 +45,153 @@ public class HighRebateFragment extends BaseFragment implements PullToRefreshVie
 
     @BindView(R.id.no_internet_rl)
     RelativeLayout no_internet_rl;
-
+    private int page=1;
     private HighRebateAdapter adapter;
-    private List<HightBackBean.HightBackData> bigList=new ArrayList<>();
+    private List<FanLiInfo> infoList;
+    private CustomLoadingDialog customLoadingDialog;
+    private  String userId;
 
     @Override
     protected View getResLayout(LayoutInflater inflater, ViewGroup container) {
         return inflater.inflate(R.layout.fragment_high_rebate,null);
     }
-
     @Override
     protected void initViews() {
+        customLoadingDialog=new CustomLoadingDialog(getActivity());
+        infoList=new ArrayList<>();
         mPullToRefreshView.setmOnHeaderRefreshListener(this);
         mPullToRefreshView.setmOnFooterRefreshListener(this);
         View headview = LayoutInflater.from(getActivity()).inflate(R.layout.hight_head,null);
-        adapter=new HighRebateAdapter(getActivity());
+        adapter=new HighRebateAdapter(getActivity(),infoList);
         listview.setAdapter(adapter);
         listview.addHeaderView(headview);
+        userId= (String) SPUtils.get(getActivity(),"user_id","");
+    }
+    @Override
+    protected void initData() {
+        if (!Utils.hasInternet()){
+            mPullToRefreshView.setVisibility(View.GONE);
+            no_data_rl.setVisibility(View.GONE);
+            no_internet_rl.setVisibility(View.VISIBLE);
+        }else{
+            customLoadingDialog.show();
+            firstData(page);
+        }
+    }
+    @Override
+    protected void initListener() {
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-               Intent intent = new Intent(getActivity(), HighRebateDetilsActivity.class);
-               startActivity(intent);
+                Intent intent = new Intent(getActivity(), HighRebateDetilsActivity.class);
+                startActivity(intent);
             }
         });
     }
-
-    @Override
-    protected void initData() {
-
-
+    private void firstData(int page) {
+        mPullToRefreshView.setEnablePullTorefresh(true);
+        ApiMine.fanliList(ApiConstant.FANLI_LIST, userId,page,ApiConstant.PAGE_SIZE, new RequestCallBack<String>() {
+            @Override
+            public void onSuccess(Call call, Response response, final String s) {
+                infoList.clear();
+                customLoadingDialog.dismiss();
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Gson gson=new Gson();
+                        FanLiBean fanLiBean = gson.fromJson(s, FanLiBean.class);
+                        String code = fanLiBean.getCode();
+                        if (code.equals(ApiConstant.SUCCESS_CODE)){
+                            mPullToRefreshView.onHeaderRefreshComplete();
+                            List<FanLiInfo> list = fanLiBean.getData();
+                            if (list!=null && list.size()>0){
+                                //判断是不是刷新
+                                mPullToRefreshView.setVisibility(View.VISIBLE);
+                                no_data_rl.setVisibility(View.GONE);
+                                no_internet_rl.setVisibility(View.GONE);
+                                infoList.addAll(list);
+                                adapter.notifyDataSetChanged();
+                                //判断是不是没有更多数据了
+                                if (list.size() < Integer.parseInt(ApiConstant.PAGE_SIZE)) {
+                                    mPullToRefreshView.onFooterRefreshComplete(true);
+                                }else{
+                                    mPullToRefreshView.onFooterRefreshComplete(false);
+                                }
+                            }else{
+                                mPullToRefreshView.setVisibility(View.GONE);
+                                no_data_rl.setVisibility(View.VISIBLE);
+                                no_internet_rl.setVisibility(View.GONE);
+                            }
+                        }
+                    }
+                });
+            }
+            @Override
+            public void onEror(Call call, int statusCode, Exception e) {
+                customLoadingDialog.dismiss();
+                mPullToRefreshView.setVisibility(View.GONE);
+                no_data_rl.setVisibility(View.GONE);
+                no_internet_rl.setVisibility(View.VISIBLE);
+            }
+        });
 
     }
-
-    private void firstData() {
-        String userid = (String) SPUtils.get(getActivity(),"user_id","");
-        if(TextUtils.isEmpty(userid)){
-            return;
-        }
-        ApiMine.highBackMoney(ApiConstant.HIGH_BACK_MONEY, userid, new RequestCallBack<String>() {
+    //获取更多数据
+    private void getMoreData(int page) {
+        mPullToRefreshView.setEnablePullTorefresh(true);
+        ApiMine.fanliList(ApiConstant.FANLI_LIST, userId, page, ApiConstant.PAGE_SIZE, new RequestCallBack<String>() {
             @Override
-            public void onSuccess(Call call, Response response, String s) {
-                Log.i("sss",s);
-                Gson gson = new Gson();
-                HightBackBean hightBackBean=gson.fromJson(s,HightBackBean.class);
-                if(hightBackBean!=null){
-                    String code = hightBackBean.getCode();
-                    if("0000".equals(code)){
-                       List<HightBackBean.HightBackData> beanList= hightBackBean.getData();
-                        if(beanList.size()>0){
-                            bigList.clear();
-                            bigList.addAll(beanList);
-                            adapter.notifyDataSetChanged();
+            public void onSuccess(Call call, Response response, final String s) {
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mPullToRefreshView.onHeaderRefreshComplete();
+                        Gson gson = new Gson();
+                        FanLiBean fanLiBean = gson.fromJson(s, FanLiBean.class);
+                        String code = fanLiBean.getCode();
+                        if (code.equals(ApiConstant.SUCCESS_CODE)) {
+                            mPullToRefreshView.onHeaderRefreshComplete();
+                            List<FanLiInfo> list = fanLiBean.getData();
+                            if (list != null && list.size() > 0) {
+                                //判断是不是没有更多数据了
+                                infoList.addAll(list);
+                                adapter.notifyDataSetChanged();
+                                if (list.size() < Integer.parseInt(ApiConstant.PAGE_SIZE))
+                                    mPullToRefreshView.onFooterRefreshComplete(true);
+                                else
+                                    mPullToRefreshView.onFooterRefreshComplete(false);
+                            } else {
+                                //已经加载到最后一条
+                                mPullToRefreshView.onFooterRefreshComplete(true);
+                            }
                         }
-
                     }
-                }
+                });
             }
 
             @Override
             public void onEror(Call call, int statusCode, Exception e) {
-                Log.i("sss",e.getMessage());
+
             }
         });
     }
 
-    private void moreData() {
-    }
-
-
-    @Override
-    protected void initListener() {
-
-    }
-
     @Override
     public void onFooterRefresh(PullToRefreshView view) {
-        moreData();
+        page=1;
+        firstData(page);
     }
-
     @Override
     public void onHeaderRefresh(PullToRefreshView view) {
-        firstData();
+        page++;
+        getMoreData(page);
+    }
+    @OnClick({R.id.reload})
+    public void click(View view){
+        switch (view.getId()){
+            case R.id.reload:
+                firstData(page);
+                break;
+        }
     }
 }

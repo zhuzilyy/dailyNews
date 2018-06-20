@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginTop="@dimen/dp_10"
     android:orientation="vertical">
     <View
@@ -25,26 +26,33 @@
                 android:orientation="horizontal">
 
                 <RelativeLayout
+                    android:layout_marginLeft="10dp"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-
-                    android:layout_weight="1">
-
-                    <ImageView
-                        android:layout_centerInParent="true"
-                        android:layout_width="86dp"
-                        android:layout_height="86dp"
-                        android:src="@mipmap/smallweixin_icon"
+                    android:layout_weight="0.7">
+                    <com.makeramen.roundedimageview.RoundedImageView
+                        android:id="@+id/mine_head"
+                        android:layout_width="80dp"
+                        android:layout_centerVertical="true"
+                        android:layout_height="80dp"
+                        app:riv_border_color="@color/light_gray4"
+                        app:riv_border_width="@dimen/dp_2"
+                        app:riv_corner_radius="40dp"
+                        app:riv_oval="true"
+                        android:scaleType="fitXY"
                         />
                 </RelativeLayout>
 
                 <LinearLayout
+                    android:layout_marginLeft="10dp"
+                   android:gravity="center_vertical"
                     android:paddingRight="@dimen/dp_10"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="2"
                     android:orientation="vertical">
                     <TextView
+                        android:id="@+id/tv_title"
                         android:layout_marginTop="12.5dp"
                         android:textColor="@color/black"
                         android:layout_width="match_parent"

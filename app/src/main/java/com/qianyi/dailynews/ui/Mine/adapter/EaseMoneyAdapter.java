@@ -10,12 +10,17 @@ import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.qianyi.dailynews.R;
 import com.qianyi.dailynews.adapter.NewsAdapter;
+import com.qianyi.dailynews.ui.Mine.bean.MakeMoneyInfo;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 
 /**
@@ -24,18 +29,15 @@ import java.util.List;
 
 public class EaseMoneyAdapter extends BaseAdapter {
     private Context context;
-
-    public EaseMoneyAdapter(Context context) {
-
+    private List<MakeMoneyInfo> infoList;
+    public EaseMoneyAdapter(Context context, List<MakeMoneyInfo> infoList) {
         this.context = context;
-
-
-
+        this.infoList = infoList;
     }
 
     @Override
     public int getCount() {
-        return 15;
+        return infoList.size();
     }
 
     @Override
@@ -52,12 +54,25 @@ public class EaseMoneyAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-
-        view=LayoutInflater.from(context).inflate(R.layout.lay_easymoney_item,null);
-
-
+        ViewHolder viewHolder=null;
+        if (view==null){
+            view=LayoutInflater.from(context).inflate(R.layout.lay_easymoney_item,null);
+            viewHolder=new ViewHolder(view);
+            view.setTag(viewHolder);
+        }else{
+            viewHolder= (ViewHolder) view.getTag();
+        }
+        viewHolder.tv_title.setText(infoList.get(i).getTitle());
+        Glide.with(context).load(infoList.get(i).getImg()).placeholder(R.mipmap.logo).into(viewHolder.roundedImageView);
         return view;
     }
-
-
+    static class ViewHolder{
+        @BindView(R.id.mine_head)
+        RoundedImageView roundedImageView;
+        @BindView(R.id.tv_title)
+        TextView tv_title;
+        public ViewHolder(View view){
+            ButterKnife.bind(this,view);
+        }
+    }
 }

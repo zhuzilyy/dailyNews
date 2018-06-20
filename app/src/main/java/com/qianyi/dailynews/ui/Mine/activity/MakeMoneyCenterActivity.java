@@ -86,11 +86,6 @@ public class MakeMoneyCenterActivity extends BaseActivity implements View.OnClic
                 Intent intent_taskrecord = new Intent(MakeMoneyCenterActivity.this,TaskRecordActivity.class);
                 startActivity(intent_taskrecord);
             break;
-
-            default:
-            break;
-
-
         }
     }
 }

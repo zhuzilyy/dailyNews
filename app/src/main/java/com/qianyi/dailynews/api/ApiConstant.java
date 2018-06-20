@@ -72,8 +72,14 @@ public class ApiConstant {
     public static final String  SHARE_PRE= BASE_URL+"/api/share/init";
     //每日分享后调用
     public static final String  SHARE_AFTER= BASE_URL+"/api/share/success";
-    //
+    //晒收入
     public static final String  ISHARE_INCOME= BASE_URL+"/api/show/income";
+    //高额返利列表
+    public static final String  FANLI_LIST= BASE_URL+"/api/makeMoney/getList";
+    //高额返利任务列表
+    public static final String  FANLI_TASK_LIST= BASE_URL+"/api/makeMoney/makeMoneyTask";
+    //轻松赚钱
+    public static final String  MAKE_MONEY= BASE_URL+"/api/makeMoney/easyMoneyList";
     //==========辛振宇==========================================
 
 

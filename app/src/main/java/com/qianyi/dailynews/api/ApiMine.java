@@ -81,6 +81,39 @@ public class ApiMine {
         params.put("userId",userId);
         OkHttpManager.getInstance().postRequest(url,params,callback);
     }
+    /**
+     * 高额返利
+     * @param callback
+     */
+    public static void fanliList(String url,String userId,int page,String pageSize, RequestCallBack<String> callback){
+        Map<String,String> params=new HashMap<>();
+        params.put("userId",userId);
+        params.put("page",page+"");
+        params.put("pageSize",pageSize);
+        OkHttpManager.getInstance().postRequest(url,params,callback);
+    }
+    /**
+     * 高额返利任务列表
+     * @param callback
+     */
+    public static void fanliTaskList(String url,String userId,int page,String pageSize, RequestCallBack<String> callback){
+        Map<String,String> params=new HashMap<>();
+        params.put("userId",userId);
+        params.put("page",page+"");
+        params.put("pageSize",pageSize);
+        OkHttpManager.getInstance().postRequest(url,params,callback);
+    }
+    /**
+     * 轻松赚钱
+     * @param callback
+     */
+    public static void makeMoney(String url,String userId,int page,String pageSize, RequestCallBack<String> callback){
+        Map<String,String> params=new HashMap<>();
+        params.put("userId",userId);
+        params.put("page",page+"");
+        params.put("pageSize",pageSize);
+        OkHttpManager.getInstance().postRequest(url,params,callback);
+    }
 
 
 
