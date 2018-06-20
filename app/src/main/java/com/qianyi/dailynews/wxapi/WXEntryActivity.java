@@ -114,6 +114,7 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
+
                 }
             }
             @Override
