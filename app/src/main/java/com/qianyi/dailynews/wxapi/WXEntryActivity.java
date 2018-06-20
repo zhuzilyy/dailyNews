@@ -91,6 +91,7 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
                 case BaseResp.ErrCode.ERR_AUTH_DENIED:
                     //分享拒绝
                     Toast.makeText(WXEntryActivity.this, "分享拒绝", Toast.LENGTH_LONG).show();
+
                     break;
             }
         }
@@ -113,6 +114,7 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
+
                 }
             }
             @Override
