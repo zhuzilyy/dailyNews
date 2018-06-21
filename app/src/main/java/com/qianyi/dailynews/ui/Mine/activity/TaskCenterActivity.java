@@ -89,6 +89,7 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
     @BindView(R.id.tv_ProfitMakingStrategy) public TextView tv_ProfitMakingStrategy;
     //签到规则
     @BindView(R.id.tv_SignInRules) public TextView tv_SignInRules;
+    @BindView(R.id.btn_sign) public Button btn_sign;
 
     @BindView(R.id.back) public ImageView back;
     private List<LinearLayout> OtherLineralayout=new ArrayList<>();
@@ -96,6 +97,7 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
     private CustomLoadingDialog customLoadingDialog;
     private List<LinearLayout> signedDays,unsignDays;
     private String user_id;
+    private boolean signed;
     @Override
     protected void initViews() {
         back.setOnClickListener(new View.OnClickListener() {
@@ -149,6 +151,10 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
                 Gson gson=new Gson();
                 SignBean signBean = gson.fromJson(s, SignBean.class);
                 String countinuous = signBean.getData().getCountinuous();
+                signed= signBean.getData().isSigned();
+                if (signed){
+                    btn_sign.setText("明天签到可领取100金币");
+                }
                 int signDay = Integer.parseInt(countinuous);
                 for (int i = 0; i <signDay; i++) {
                     if (i<signDay){
@@ -339,6 +345,10 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
                 //Toast.makeText(this, "去评论", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.btn_sign:
+                if (signed){
+                    Toast.makeText(this, "已签到", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 sign();
                 break;
 
@@ -359,6 +369,7 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
                         SignBean signBean = gson.fromJson(s, SignBean.class);
                         String message = signBean.getData().getMessage();
                         Toast.makeText(TaskCenterActivity.this, message, Toast.LENGTH_SHORT).show();
+                        btn_sign.setText("明天签到可领取100金币");
                         getSignState();
                     }
                 });
@@ -370,16 +381,12 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
             }
         });
     }
-
     private void closeOtherAll(LinearLayout ll){
-
         for (int i = 0; i <OtherLineralayout.size() ; i++) {
             if(ll!=OtherLineralayout.get(i)){
                 OtherLineralayout.get(i).setVisibility(View.GONE);
             }
         }
-
-
     }
 
 

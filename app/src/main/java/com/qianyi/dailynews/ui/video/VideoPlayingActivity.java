@@ -98,7 +98,7 @@ public class VideoPlayingActivity extends BaseActivity {
     }
     //获取数据
     private void getData() {
-        ApiVideo.videoDetail(ApiConstant.VIDEO_DETAIL, "3", new RequestCallBack<String>() {
+        ApiVideo.videoDetail(ApiConstant.VIDEO_DETAIL, "20", new RequestCallBack<String>() {
             @Override
             public void onSuccess(Call call, Response response, final String s) {
                 runOnUiThread(new Runnable() {

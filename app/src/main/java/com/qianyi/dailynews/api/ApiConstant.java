@@ -80,6 +80,10 @@ public class ApiConstant {
     public static final String  FANLI_TASK_LIST= BASE_URL+"/api/makeMoney/makeMoneyTask";
     //轻松赚钱
     public static final String  MAKE_MONEY= BASE_URL+"/api/makeMoney/easyMoneyList";
+    //热词
+    public static final String  HOT_WORD= BASE_URL+"/api/news/keywords";
+    //更换热词
+    public static final String  CHANGE_HOT_WORD= BASE_URL+"/api/news/nextkeywords";
     //==========辛振宇==========================================
 
 

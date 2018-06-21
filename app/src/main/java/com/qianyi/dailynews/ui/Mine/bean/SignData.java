@@ -8,7 +8,6 @@ public class SignData {
     private String countinuous;
     private boolean signed;
     private String message;
-
     public String getCountinuous() {
         return countinuous;
     }
