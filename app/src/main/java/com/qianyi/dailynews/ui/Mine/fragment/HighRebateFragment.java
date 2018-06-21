@@ -87,6 +87,7 @@ public class HighRebateFragment extends BaseFragment implements PullToRefreshVie
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(getActivity(), HighRebateDetilsActivity.class);
                 intent.putExtra("id",infoList.get(i-1).getId());
+                intent.putExtra("type",infoList.get(i-1).getType());
                 startActivity(intent);
             }
         });

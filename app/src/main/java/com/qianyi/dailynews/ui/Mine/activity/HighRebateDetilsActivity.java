@@ -1,11 +1,14 @@
 package com.qianyi.dailynews.ui.Mine.activity;
 
+import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,13 +55,34 @@ public class HighRebateDetilsActivity extends BaseActivity implements View.OnCli
     @BindView(R.id.moneyImg003_iv) public ImageView moneyImg003_iv;
     @BindView(R.id.webview) public WebView webview;
 
+    @BindView(R.id.title04) public TextView title04;
+    @BindView(R.id.title03) public TextView title03;
+    @BindView(R.id.title02) public TextView title02;
+    @BindView(R.id.title01) public TextView title01;
+
+    @BindView(R.id.ll_bottom02) public LinearLayout ll_bottom02;
+    @BindView(R.id.tv_shots) public TextView tv_shots;
+
+
+
+
 
 
 
     private String id;
+    private String type;
     @Override
     protected void initViews() {
         id=getIntent().getStringExtra("id");
+        type=getIntent().getStringExtra("type");
+
+        if("1".equals(type)){
+            title01.setText("投资期限");
+            title02.setText("投资金额");
+            title03.setText("年华收益");
+            title04.setText("额外返利");
+        }
+
         title.setText("试玩应用");
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,6 +99,8 @@ public class HighRebateDetilsActivity extends BaseActivity implements View.OnCli
      */
     private void initWebView(WebView webview) {
         WebviewUtil.setWebview(webview,webview.getSettings());
+
+
     }
 
     @Override
@@ -156,12 +182,16 @@ public class HighRebateDetilsActivity extends BaseActivity implements View.OnCli
     protected void setStatusBarColor() {
 
     }
-    @OnClick({R.id.btn_getMoney})
+    @OnClick({R.id.btn_getMoney,R.id.tv_shots})
     @Override
     public void onClick(View v) {
         switch(v.getId()){
             case R.id.btn_getMoney:
-
+                btn_getMoney.setVisibility(View.GONE);
+                break;
+            case R.id.tv_shots:
+                Intent intent  = new Intent(HighRebateDetilsActivity.this,UploadScreenshotsActivity.class);
+                startActivity(intent);
                 break;
             default:
                 break;

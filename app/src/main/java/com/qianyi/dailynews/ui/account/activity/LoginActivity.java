@@ -1,6 +1,9 @@
 package com.qianyi.dailynews.ui.account.activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -11,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.qianyi.dailynews.MainActivity;
 import com.qianyi.dailynews.R;
 import com.qianyi.dailynews.api.ApiAccount;
@@ -20,6 +24,9 @@ import com.qianyi.dailynews.callback.RequestCallBack;
 import com.qianyi.dailynews.dialog.CustomLoadingDialog;
 import com.qianyi.dailynews.utils.SPUtils;
 import com.qianyi.dailynews.views.ClearEditText;
+import com.tencent.mm.sdk.modelmsg.SendAuth;
+import com.tencent.mm.sdk.openapi.IWXAPI;
+import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -48,10 +55,16 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
     public TextView login_register_tv;
     @BindView(R.id.login_wxlogin_iv)
     public ImageView login_wxlogin_iv;
+    private MyReceiver myReceiver;
 
     private boolean account_b = false;
     private boolean pwd_b = false;
     private CustomLoadingDialog customLoadingDialog;
+
+    private String openid, unionid, nickname, headimgurl;
+    private int sex;
+
+    private String qqOpenId,qqNickname,qqHeadimgurl,qqSex;
     @Override
     protected void initViews() {
         String account =login_account_cet.getText().toString().trim();
@@ -62,6 +75,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
             login_login_btn.setEnabled(false);
         }
         customLoadingDialog=new CustomLoadingDialog(this);
+
+        myReceiver = new MyReceiver();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("com.action.wechat");
+        registerReceiver(myReceiver, intentFilter);
+
     }
 
     @Override
@@ -192,6 +211,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                 break;
             case R.id.login_wxlogin_iv:
                 //微信登录
+                loginWx();
                 break;
             default:
             break;
@@ -199,6 +219,21 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
 
         }
     }
+
+    /***
+     * 微信登录
+     */
+    private void loginWx() {
+        IWXAPI mWxApi = WXAPIFactory.createWXAPI(this, ApiConstant.APP_ID, false);
+        // 将该app注册到微信
+        mWxApi.registerApp(ApiConstant.APP_ID);
+        final SendAuth.Req req = new SendAuth.Req();
+        req.scope = "snsapi_userinfo";
+        req.state = "diandi_wx_login";
+        mWxApi.sendReq(req);
+
+    }
+
     //登录的方法
     private void login(String account, String pwd) {
         customLoadingDialog.show();
@@ -250,5 +285,71 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                 customLoadingDialog.dismiss();
             }
         });
+    }
+
+    class MyReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (action.equals("com.action.wechat")) {
+                openid = intent.getStringExtra("openid");
+                unionid = intent.getStringExtra("unionid");
+                nickname = intent.getStringExtra("nickname");
+                headimgurl = intent.getStringExtra("headimgurl");
+                sex = intent.getIntExtra("sex", 0);
+                wechatLogin();
+            }
+        }
+    }
+    private void wechatLogin() {
+//        customLoadingDialog.show();
+//        ApiAccount.wechatLogin(ApiConstant.WECHAT_LOGIN, openid, unionid, sex, headimgurl, nickname, new RequestCallBack<String>() {
+//            @Override
+//            public void onSuccess(Call call, Response response, final String s) {
+//                Log.i("tag", s);
+//                customLoadingDialog.dismiss();
+//                runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        Gson gson = new Gson();
+//                        LoginBean loginBean = gson.fromJson(s, LoginBean.class);
+//                        if (loginBean != null) {
+//                            String code = loginBean.getCode();
+//                            if ("0".equals(code)) {
+//                                LoginBean.LoginData.LoginInfo user = loginBean.getData().getInfo();
+//                                String member_scoreinfo_status = loginBean.getData().getInfo().getMember_scoreinfo_status();
+//                                try {
+//                                    //存储当前用户
+//                                    Utils.saveUser(user, LoginActivity.this);
+//                                   /* Intent intent=new Intent(LoginActivity.this, GuessScoreActivity.class);
+//                                    intent.putExtra("tag","setScore");
+//                                    startActivity(intent);
+//                                    finish();*/
+//                                    if (member_scoreinfo_status.equals("0")) {
+//                                        Intent intent = new Intent(LoginActivity.this, GuessScoreActivity.class);
+//                                        intent.putExtra("tag", "setScore");
+//                                        startActivity(intent);
+//                                        finish();
+//                                    } else if (member_scoreinfo_status.equals("1")) {
+//                                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+//                                        startActivity(intent);
+//                                        finish();
+//                                    }
+//                                } catch (Exception e) {
+//                                    Log.i("excaption_shine", e.getMessage());
+//                                }
+//                            } else {
+//                                Toast.makeText(LoginActivity.this, "" + loginBean.getInfo(), Toast.LENGTH_SHORT).show();
+//                            }
+//                        }
+//                    }
+//                });
+//            }
+//
+//            @Override
+//            public void onEror(Call call, int statusCode, Exception e) {
+//                customLoadingDialog.dismiss();
+//            }
+//        });
     }
 }

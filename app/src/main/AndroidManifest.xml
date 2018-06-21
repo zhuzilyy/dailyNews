@@ -54,6 +54,10 @@
         <activity android:name=".ui.account.activity.ForgetPwdActivity"
             android:windowSoftInputMode="adjustPan"
             />
+        <!--上传截图-->
+        <activity android:name=".ui.Mine.activity.UploadScreenshotsActivity"
+            android:windowSoftInputMode="adjustPan"
+            />
         <!--WebView 页面-->
         <activity android:name=".ui.WebviewActivity"
             android:screenOrientation="portrait"/>
@@ -197,6 +201,24 @@
         <activity android:name=".ui.Mine.activity.HighRebateDetilsActivity"
             android:screenOrientation="portrait"
             />
+        <!-- 截图事例 -->
+        <activity android:name=".ui.Mine.activity.ScreenshotExamplesActivity"
+            android:screenOrientation="portrait"
+            />
+        <!-- 截图事例 -->
+        <activity android:name=".ui.Mine.activity.MakeMoneyEasilyDetailActivity"
+            android:screenOrientation="portrait"
+            />
+        //********************************************************************
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.by.daily_news.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
 
 
 

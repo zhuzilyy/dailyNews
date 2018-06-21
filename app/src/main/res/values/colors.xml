@@ -14,6 +14,11 @@
     <color name="main_blue">#1aa1f3</color>
     <color name="bg">#fff</color>
     <color name="white_alpha_0.5">#44ffffff</color>
+    <!-- 选择图片弹窗-->
+    <color name="line">#DAD9DB</color>
+    <color name="btn_gradient_press">#CACACB</color>
+    <color name="btn_gradient_normal">#EBEBEB</color>
+    <color name="gray_light">#EBEDF0</color>
 
     <color name="hard_color">#48495f</color>
     <color name="item_bg">#FFFFFF</color>
