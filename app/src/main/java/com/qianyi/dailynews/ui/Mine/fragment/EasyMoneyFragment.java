@@ -1,8 +1,11 @@
 package com.qianyi.dailynews.ui.Mine.fragment;
 
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -14,6 +17,7 @@ import com.qianyi.dailynews.api.ApiMine;
 import com.qianyi.dailynews.base.BaseFragment;
 import com.qianyi.dailynews.callback.RequestCallBack;
 import com.qianyi.dailynews.dialog.CustomLoadingDialog;
+import com.qianyi.dailynews.ui.Mine.activity.MakeMoneyEasilyDetailActivity;
 import com.qianyi.dailynews.ui.Mine.adapter.EaseMoneyAdapter;
 import com.qianyi.dailynews.ui.Mine.adapter.HighRebateTaskAdapter;
 import com.qianyi.dailynews.ui.Mine.bean.FanLiBean;
@@ -71,6 +75,15 @@ public class EasyMoneyFragment extends BaseFragment implements PullToRefreshView
         mPullToRefreshView.setmOnHeaderRefreshListener(this);
         mPullToRefreshView.setmOnFooterRefreshListener(this);
 
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(getActivity(), MakeMoneyEasilyDetailActivity.class);
+
+                startActivity(intent);
+            }
+        });
+
 
     }
 
@@ -91,6 +104,7 @@ public class EasyMoneyFragment extends BaseFragment implements PullToRefreshView
             @Override
             public void onSuccess(Call call, Response response, final String s) {
                 infoList.clear();
+                Log.i("sss",s);
                 customLoadingDialog.dismiss();
                 getActivity().runOnUiThread(new Runnable() {
                     @Override

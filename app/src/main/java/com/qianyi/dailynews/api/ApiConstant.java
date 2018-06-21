@@ -6,7 +6,7 @@ package com.qianyi.dailynews.api;
 
 public class ApiConstant {
     public static final String APP_ID="wx263e7ba709980bc0";
-    public static final String APP_SECRET="APP_SECRET";
+    public static final String APP_SECRET="06f90194e860b537c6e23985894ad81c";
     public static final String APP_KEY_WEIBO="2664184092";
     public static final String REDIRECT_URL = "http://www.sina.com";
     public static final String SCOPE =
@@ -129,6 +129,10 @@ public class ApiConstant {
     public static final String  GET_USER_INFO= BASE_URL+"/api/user/getUserInfo";
     //高额返利
     public static final String  HIGH_BACK_MONEY= BASE_URL+"/api/makeMoney/getList";
+    //高额返利详情
+    public static final String  HIGH_BACK_MONEY_DETAILS= BASE_URL+"/api/makeMoney/detail";
+    //微信登录
+    public static final String  WECHAT_LOGIN= BASE_URL+"/api/wx/login";
 
 
 

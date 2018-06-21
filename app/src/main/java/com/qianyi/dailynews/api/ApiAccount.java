@@ -81,5 +81,38 @@ public class ApiAccount {
         params.put("newPasswd",newPasswd);
         OkHttpManager.getInstance().postRequest(url,params,callback);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /***
+     * 微信登录
+     */
+    public static void wechatLogin(String url,String userId,String oldPasswd,String newPasswd ,RequestCallBack<String> callback) {
+        Map<String,String> params=new HashMap<>();
+        params.put("userId",userId);
+        params.put("oldPasswd",oldPasswd);
+        params.put("newPasswd",newPasswd);
+        OkHttpManager.getInstance().postRequest(url,params,callback);
+    }
+
+
     //=======以下辛振宇=================================================================
 }
