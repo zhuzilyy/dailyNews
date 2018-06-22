@@ -19,6 +19,7 @@
             >
             <!--微信邀请好友-->
             <LinearLayout
+                android:id="@+id/ll_copyLianjie"
                 android:background="@color/light_gray5"
                 android:layout_marginLeft="@dimen/dp_10"
                 android:layout_marginRight="@dimen/dp_5"
@@ -46,6 +47,7 @@
             </LinearLayout>
             <!--面对面收徒-->
             <LinearLayout
+                android:id="@+id/ll_shouTu"
                 android:layout_marginBottom="@dimen/dp_5"
                 android:layout_marginTop="@dimen/dp_10"
                 android:layout_marginRight="@dimen/dp_10"
@@ -83,6 +85,7 @@
                 android:layout_height="100dp">
                 <!--朋友圈-->
                 <LinearLayout
+                    android:id="@+id/ll_friendCircle"
                     android:layout_gravity="center_vertical"
                     android:gravity="center"
                     android:background="@color/light_gray5"
@@ -107,6 +110,7 @@
                 </LinearLayout>
                 <!--QQ-->
                 <LinearLayout
+                    android:id="@+id/ll_qq"
                     android:layout_gravity="center_vertical"
                     android:gravity="center"
                     android:layout_marginLeft="@dimen/dp_5"
@@ -158,6 +162,7 @@
 
                 <!--微博-->
                 <LinearLayout
+                    android:id="@+id/ll_weibo"
                     android:layout_marginLeft="@dimen/dp_5"
                     android:layout_marginRight="@dimen/dp_10"
                     android:paddingTop="@dimen/dp_10"

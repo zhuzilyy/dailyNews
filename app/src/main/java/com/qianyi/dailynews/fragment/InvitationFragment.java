@@ -1,6 +1,9 @@
 package com.qianyi.dailynews.fragment;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -137,11 +140,11 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
 
     private CustomLoadingDialog customLoadingDialog;
     private String userId;
-    private LinearLayout ll_friendCircle, ll_qq, ll_wechat, ll_weibo;
+    private LinearLayout ll_friendCircle, ll_qq, ll_wechat, ll_weibo,ll_copyLianjie,ll_shouTu;
     private IWXAPI mWxApi;
     private List<String> charBannerArray;
     private WbShareHandler shareHandler;
-
+    private MyReceiver myReceiver;
     @Override
     protected View getResLayout(LayoutInflater inflater, ViewGroup container) {
         newsView = inflater.inflate(R.layout.fragment_invitation, null);
@@ -152,18 +155,27 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
     protected void initViews() {
         WbSdk.install(getActivity(), new AuthInfo(getActivity(), ApiConstant.APP_KEY_WEIBO, ApiConstant.REDIRECT_URL, ApiConstant.SCOPE));
         charBannerArray = new ArrayList<>();
-        view_share = LayoutInflater.from(getActivity()).inflate(R.layout.pw_share, null);
-        ll_friendCircle = view_share.findViewById(R.id.ll_friendCircle);
-        ll_qq = view_share.findViewById(R.id.ll_QQ);
-        ll_wechat = view_share.findViewById(R.id.ll_wechat);
-        ll_weibo = view_share.findViewById(R.id.ll_weibo);
         view_onekeyshoutu = LayoutInflater.from(getActivity()).inflate(R.layout.pw_onekeyshoutu, null);
+        ll_friendCircle = view_onekeyshoutu.findViewById(R.id.ll_friendCircle);
+        ll_qq = view_onekeyshoutu.findViewById(R.id.ll_qq);
+        ll_wechat = view_onekeyshoutu.findViewById(R.id.ll_wechat);
+        ll_weibo = view_onekeyshoutu.findViewById(R.id.ll_weibo);
+        ll_copyLianjie = view_onekeyshoutu.findViewById(R.id.ll_copyLianjie);
+        ll_shouTu = view_onekeyshoutu.findViewById(R.id.ll_shouTu);
+        ll_friendCircle.setOnClickListener(this);
+        ll_qq.setOnClickListener(this);
+        ll_wechat.setOnClickListener(this);
+        ll_weibo.setOnClickListener(this);
+        ll_copyLianjie.setOnClickListener(this);
+        ll_shouTu.setOnClickListener(this);
+
+
+
         title.setText("邀请");
         back.setVisibility(View.GONE);
         rightTv.setText("邀请规则");
         rightTv.setVisibility(View.VISIBLE);
         customLoadingDialog = new CustomLoadingDialog(getActivity());
-        userId = (String) SPUtils.get(getActivity(), "user_id", "");
         //****是否展示填写邀请码**********
         String invite_code = (String) SPUtils.get(getActivity(), "invite_code", "----");
         if (!TextUtils.isEmpty(invite_code)) {
@@ -189,6 +201,12 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
                 return false;
             }
         });
+
+
+        myReceiver=new MyReceiver();
+        IntentFilter intentFilter=new IntentFilter();
+        intentFilter.addAction("com.action.login.success");
+        getActivity().registerReceiver(myReceiver,intentFilter);
 
     }
 
@@ -244,7 +262,6 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
                     @Override
                     public void run() {
                         try {
-
                             JSONObject jsonObject = new JSONObject(s);
                             String code = jsonObject.getString("code");
                             if("0000".equals(code)){
@@ -307,6 +324,7 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
 
     //获取邀请数据的值
     private void getInviteData() {
+        userId = (String) SPUtils.get(getActivity(), "user_id", "");
         ApiInvite.inviteDetail(ApiConstant.INVITE_DETAIL, userId, new RequestCallBack<String>() {
             @Override
             public void onSuccess(Call call, Response response, String s) {
@@ -323,7 +341,6 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
                     e.printStackTrace();
                 }
             }
-
             @Override
             public void onEror(Call call, int statusCode, Exception e) {
 
@@ -390,10 +407,6 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
 
     @Override
     protected void initListener() {
-        ll_friendCircle.setOnClickListener(this);
-        ll_qq.setOnClickListener(this);
-        ll_wechat.setOnClickListener(this);
-        ll_weibo.setOnClickListener(this);
         //banner点击事件
         banner.setOnBannerListener(new OnBannerListener() {
             @Override
@@ -491,17 +504,23 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
                 break;
             case R.id.ll_friendCircle:
                 shareFriendCircle();
-                pw_share.dismiss();
+                pw_onekeyshoutu.dismiss();
                 break;
             case R.id.ll_QQ:
                 break;
             case R.id.ll_weibo:
                 shareWeiBo();
-                pw_share.dismiss();
+                pw_onekeyshoutu.dismiss();
                 break;
             case R.id.ll_wechat:
                 shareFriends();
-                pw_share.dismiss();
+                pw_onekeyshoutu.dismiss();
+                break;
+            case R.id.ll_shouTu:
+                pw_onekeyshoutu.dismiss();
+                break;
+            case R.id.ll_copyLianjie:
+                pw_onekeyshoutu.dismiss();
                 break;
         }
     }
@@ -766,5 +785,15 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
         WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
         lp.alpha = bgAlpha;
         getActivity().getWindow().setAttributes(lp);
+    }
+
+    public class MyReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (action.equals("com.action.login.success")){
+                getInviteData();
+            }
+        }
     }
 }

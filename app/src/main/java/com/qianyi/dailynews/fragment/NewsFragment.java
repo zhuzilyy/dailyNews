@@ -138,9 +138,6 @@ public class NewsFragment extends BaseFragment implements View.OnClickListener {
 
                                   }
                               });
-
-
-
                           }
 
                        }
@@ -167,6 +164,7 @@ public class NewsFragment extends BaseFragment implements View.OnClickListener {
         switch(v.getId()){
             case R.id.re_home_search:
                 Intent intent = new Intent(getActivity(), SearchActivity.class);
+                intent.putExtra("tag","news");
                 startActivity(intent);
                 break;
             default:

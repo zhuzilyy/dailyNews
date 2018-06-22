@@ -125,7 +125,7 @@ public class ForgetPwdActivity extends BaseActivity implements View.OnClickListe
                             String return_msg=jsonObject.getString("return_msg");
                             String code=jsonObject.getString("code");
                             if (code.equals(ApiConstant.SUCCESS_CODE)){
-                                jumpActivity(ForgetPwdActivity.this, MainActivity.class);
+                                //jumpActivity(ForgetPwdActivity.this, MainActivity.class);
                                 finish();
                             }
                             ToastUtils.show(ForgetPwdActivity.this,return_msg);

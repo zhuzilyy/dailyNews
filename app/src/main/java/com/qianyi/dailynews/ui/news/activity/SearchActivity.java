@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.qianyi.dailynews.R;
@@ -21,6 +22,7 @@ import com.qianyi.dailynews.ui.Mine.activity.SettingsActivity;
 import com.qianyi.dailynews.ui.Mine.adapter.HotWordAdapter;
 import com.qianyi.dailynews.ui.WebviewActivity;
 import com.qianyi.dailynews.ui.news.bean.HotWordBean;
+import com.qianyi.dailynews.utils.SPUtils;
 import com.qianyi.dailynews.utils.Utils;
 import com.qianyi.dailynews.views.ClearEditText;
 
@@ -55,9 +57,14 @@ public class SearchActivity extends BaseActivity {
     @BindView(R.id.newsSearch_etc) public ClearEditText newsSearch_etc;
     @BindView(R.id.back) public TextView back;
     private List<String> data;
+    private String tag;
     @Override
     protected void initViews() {
         customLoadingDialog=new CustomLoadingDialog(this);
+        Intent intent=getIntent();
+        if (intent!=null){
+            tag=intent.getStringExtra("tag");
+        }
     }
     @Override
     protected void initData() {
@@ -126,6 +133,9 @@ public class SearchActivity extends BaseActivity {
                     };
                     timer.schedule(task, 0);
                 }
+                if (tag.equals("mission")){
+                    mission();
+                }
                 return false;
             }
         });
@@ -149,10 +159,36 @@ public class SearchActivity extends BaseActivity {
                     }
                 };
                 timer.schedule(task, 0);
+                if (tag.equals("mission")){
+                    mission();
+                }
             }
         });
     }
+    //
+    private void mission() {
+        String user_id= (String) SPUtils.get(SearchActivity.this,"user_id","");
+        ApiNews.missionHotWord(ApiConstant.MISSSION_READ, user_id, new RequestCallBack<String>() {
+            @Override
+            public void onSuccess(Call call, Response response, final String s) {
+                try {
+                    JSONObject jsonObject=new JSONObject(s);
+                    String code = jsonObject.getString("code");
+                    if (code.equals(ApiConstant.SUCCESS_CODE)){
+                        Intent intent=new Intent();
+                        intent.setAction("com.action.search.mission");
+                        sendBroadcast(intent);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            @Override
+            public void onEror(Call call, int statusCode, Exception e) {
 
+            }
+        });
+    }
     @Override
     protected void setStatusBarColor() {
 

@@ -105,11 +105,35 @@ public class ApiAccount {
     /***
      * 微信登录
      */
-    public static void wechatLogin(String url,String userId,String oldPasswd,String newPasswd ,RequestCallBack<String> callback) {
+    public static void wechatLogin(String url,String openid,String nickname,String sex,String language,String city,String province,String country,String headimgurl,String unionid,RequestCallBack<String> callback) {
         Map<String,String> params=new HashMap<>();
-        params.put("userId",userId);
-        params.put("oldPasswd",oldPasswd);
-        params.put("newPasswd",newPasswd);
+        params.put("openid",openid);
+        params.put("nickname",nickname);
+        params.put("sex",sex);
+        params.put("language",language);
+        params.put("city",city);
+        params.put("province",province);
+        params.put("country",country);
+        params.put("headimgurl",headimgurl);
+        params.put("unionid",unionid);
+        OkHttpManager.getInstance().postRequest(url,params,callback);
+    }
+
+    /***
+     * 微信绑定
+     */
+    public static void wechatBind(String url,String user_id,String openid,String nickname,String sex,String language,String city,String province,String country,String headimgurl,String unionid,RequestCallBack<String> callback) {
+        Map<String,String> params=new HashMap<>();
+        params.put("user_id",user_id);
+        params.put("openid",openid);
+        params.put("nickname",nickname);
+        params.put("sex",sex);
+        params.put("language",language);
+        params.put("city",city);
+        params.put("province",province);
+        params.put("country",country);
+        params.put("headimgurl",headimgurl);
+        params.put("unionid",unionid);
         OkHttpManager.getInstance().postRequest(url,params,callback);
     }
 

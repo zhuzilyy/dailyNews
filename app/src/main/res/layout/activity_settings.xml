@@ -59,6 +59,7 @@
             android:gravity="center"
             />
         <Button
+            android:id="@+id/btn_bind"
             android:layout_width="80dp"
             android:layout_height="40dp"
             android:text="去绑定"

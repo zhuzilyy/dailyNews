@@ -60,11 +60,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
     private boolean account_b = false;
     private boolean pwd_b = false;
     private CustomLoadingDialog customLoadingDialog;
-
-    private String openid, unionid, nickname, headimgurl;
+    private String openid, unionid, nickname, headimgurl,language,city,province,country;
     private int sex;
-
-    private String qqOpenId,qqNickname,qqHeadimgurl,qqSex;
     @Override
     protected void initViews() {
         String account =login_account_cet.getText().toString().trim();
@@ -230,7 +227,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
         req.scope = "snsapi_userinfo";
         req.state = "diandi_wx_login";
         mWxApi.sendReq(req);
-
     }
 
     //登录的方法
@@ -292,63 +288,75 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
             String action = intent.getAction();
             if (action.equals("com.action.wechat")) {
                 openid = intent.getStringExtra("openid");
-                unionid = intent.getStringExtra("unionid");
                 nickname = intent.getStringExtra("nickname");
-                headimgurl = intent.getStringExtra("headimgurl");
                 sex = intent.getIntExtra("sex", 0);
+                language = intent.getStringExtra("language");
+                city = intent.getStringExtra("city");
+                province = intent.getStringExtra("province");
+                country = intent.getStringExtra("country");
+                headimgurl = intent.getStringExtra("headimgurl");
+                unionid = intent.getStringExtra("unionid");
+                SPUtils.put(LoginActivity.this,"head_portrait",headimgurl);
                 wechatLogin();
             }
         }
     }
     private void wechatLogin() {
-//        customLoadingDialog.show();
-//        ApiAccount.wechatLogin(ApiConstant.WECHAT_LOGIN, openid, unionid, sex, headimgurl, nickname, new RequestCallBack<String>() {
-//            @Override
-//            public void onSuccess(Call call, Response response, final String s) {
-//                Log.i("tag", s);
-//                customLoadingDialog.dismiss();
-//                runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        Gson gson = new Gson();
-//                        LoginBean loginBean = gson.fromJson(s, LoginBean.class);
-//                        if (loginBean != null) {
-//                            String code = loginBean.getCode();
-//                            if ("0".equals(code)) {
-//                                LoginBean.LoginData.LoginInfo user = loginBean.getData().getInfo();
-//                                String member_scoreinfo_status = loginBean.getData().getInfo().getMember_scoreinfo_status();
-//                                try {
-//                                    //存储当前用户
-//                                    Utils.saveUser(user, LoginActivity.this);
-//                                   /* Intent intent=new Intent(LoginActivity.this, GuessScoreActivity.class);
-//                                    intent.putExtra("tag","setScore");
-//                                    startActivity(intent);
-//                                    finish();*/
-//                                    if (member_scoreinfo_status.equals("0")) {
-//                                        Intent intent = new Intent(LoginActivity.this, GuessScoreActivity.class);
-//                                        intent.putExtra("tag", "setScore");
-//                                        startActivity(intent);
-//                                        finish();
-//                                    } else if (member_scoreinfo_status.equals("1")) {
-//                                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-//                                        startActivity(intent);
-//                                        finish();
-//                                    }
-//                                } catch (Exception e) {
-//                                    Log.i("excaption_shine", e.getMessage());
-//                                }
-//                            } else {
-//                                Toast.makeText(LoginActivity.this, "" + loginBean.getInfo(), Toast.LENGTH_SHORT).show();
-//                            }
-//                        }
-//                    }
-//                });
-//            }
-//
-//            @Override
-//            public void onEror(Call call, int statusCode, Exception e) {
-//                customLoadingDialog.dismiss();
-//            }
-//        });
+        customLoadingDialog.show();
+        ApiAccount.wechatLogin(ApiConstant.WECHAT_LOGIN, openid, nickname, sex+"", language, city, province,country,headimgurl,unionid,new RequestCallBack<String>() {
+            @Override
+            public void onSuccess(Call call, Response response, final String s) {
+                Log.i("tag", s);
+                customLoadingDialog.dismiss();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            JSONObject jsonObject=new JSONObject(s);
+                            String code = jsonObject.getString("code");
+                            String return_msg = jsonObject.getString("return_msg");
+                            JSONObject data = jsonObject.getJSONObject("data");
+                            String user_id=data.getString("user_id");
+                            String phone=data.getString("phone");
+                            String head_portrait=data.getString("head_portrait");
+                            String gold=data.getString("gold");
+                            String my_invite_code=data.getString("my_invite_code");
+                            String balance=data.getString("balance");
+                            String earnings=data.getString("earnings");
+                            String invite_code=data.getString("invite_code");
+                            SPUtils.put(LoginActivity.this,"user_id",user_id);
+                            SPUtils.put(LoginActivity.this,"phone",phone);
+                            SPUtils.put(LoginActivity.this,"head_portrait",head_portrait);
+                            SPUtils.put(LoginActivity.this,"gold",gold);
+                            SPUtils.put(LoginActivity.this,"my_invite_code",my_invite_code);
+                            SPUtils.put(LoginActivity.this,"balance",balance);
+                            SPUtils.put(LoginActivity.this,"earnings",earnings);
+                            SPUtils.put(LoginActivity.this,"invite_code",invite_code);
+                            Toast.makeText(LoginActivity.this, return_msg, Toast.LENGTH_SHORT).show();
+                            if (code.equals(ApiConstant.SUCCESS_CODE)){
+                                Intent intent=new Intent();
+                                intent.setAction("com.action.login.success");
+                                sendBroadcast(intent);
+                                finish();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
+
+            @Override
+            public void onEror(Call call, int statusCode, Exception e) {
+                customLoadingDialog.dismiss();
+            }
+        });
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (myReceiver!=null){
+            unregisterReceiver(myReceiver);
+        }
     }
 }

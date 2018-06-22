@@ -9,11 +9,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.orhanobut.logger.Logger;
 import com.qianyi.dailynews.R;
 import com.qianyi.dailynews.base.BaseFragment;
@@ -29,6 +31,7 @@ import com.qianyi.dailynews.ui.Mine.activity.WriteInvitationActivity;
 import com.qianyi.dailynews.ui.account.activity.LoginActivity;
 import com.qianyi.dailynews.utils.SPUtils;
 import com.qianyi.dailynews.utils.Utils;
+import com.qianyi.dailynews.views.CircleImageView;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -75,7 +78,9 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     public TextView tv_earning;
     @BindView(R.id.tv_gold)
     public TextView tv_gold;
-    private String phone,balance,earnings,gold,my_invite_code,user_id;
+    @BindView(R.id.mine_head)
+    public CircleImageView mine_head;
+    private String phone,balance,earnings,gold,my_invite_code,user_id,headimgurl;
     private MyReceiver myReceiver;
     @Override
     protected View getResLayout(LayoutInflater inflater, ViewGroup container) {
@@ -103,7 +108,11 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         my_invite_code=(String)SPUtils.get(getActivity(),"my_invite_code","");
         balance=(String)SPUtils.get(getActivity(),"balance","0");
         earnings=(String)SPUtils.get(getActivity(),"earnings","0");
-        tv_phone.setText("电话号:"+phone);
+        headimgurl=(String)SPUtils.get(getActivity(),"head_portrait","");
+        Glide.with(getActivity()).load(headimgurl).error(R.mipmap.logo).into(mine_head);
+        if (!TextUtils.isEmpty(phone)){
+            tv_phone.setText("电话号:"+phone);
+        }
         tv_balance.setText(balance);
         tv_InvitationCode.setText(my_invite_code);
         tv_earning.setText(earnings);
@@ -219,6 +228,15 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 break;
         }
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (myReceiver!=null){
+            getActivity().unregisterReceiver(myReceiver);
+        }
+    }
+
     public class MyReceiver extends BroadcastReceiver{
         @Override
         public void onReceive(Context context, Intent intent) {

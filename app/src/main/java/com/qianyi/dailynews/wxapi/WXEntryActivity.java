@@ -209,16 +209,24 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
                 try {
                     JSONObject jsonObject=new JSONObject(result);
                     String openid=jsonObject.getString("openid");
-                    String unionid=jsonObject.getString("unionid");
                     String nickname=jsonObject.getString("nickname");
                     int sex=jsonObject.getInt("sex");
+                    String language=jsonObject.getString("language");
+                    String city=jsonObject.getString("city");
+                    String province=jsonObject.getString("province");
+                    String country=jsonObject.getString("country");
                     String headimgurl=jsonObject.getString("headimgurl");
+                    String unionid=jsonObject.getString("unionid");
                     Intent intent=new Intent();
                     intent.putExtra("openid",openid);
-                    intent.putExtra("unionid",unionid);
                     intent.putExtra("nickname",nickname);
                     intent.putExtra("sex",sex);
+                    intent.putExtra("language",language);
+                    intent.putExtra("city",city);
+                    intent.putExtra("province",province);
+                    intent.putExtra("country",country);
                     intent.putExtra("headimgurl",headimgurl);
+                    intent.putExtra("unionid",unionid);
                     intent.setAction("com.action.wechat");
                     sendBroadcast(intent);
                 } catch (JSONException e) {

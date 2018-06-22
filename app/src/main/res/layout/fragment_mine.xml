@@ -22,20 +22,18 @@
                 android:background="@mipmap/mine_bg"
                 >
                 <RelativeLayout
-
                     android:layout_width="match_parent"
                     android:paddingLeft="@dimen/dp_15"
                     android:layout_height="150dp">
                     <!--头像-->
-                    <com.makeramen.roundedimageview.RoundedImageView
+                    <com.qianyi.dailynews.views.CircleImageView
                         android:id="@+id/mine_head"
                         android:layout_width="65dp"
-                        android:layout_centerVertical="true"
                         android:layout_height="65dp"
-                        android:src="@mipmap/touxiang"
-                        app:riv_border_color="@color/light_gray4"
-                        app:riv_border_width="@dimen/dp_2"
-                        app:riv_corner_radius="33dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        app:border_width="1dp"
+                        app:border_color="@android:color/white"
                         />
                     <!--信息-->
                     <LinearLayout

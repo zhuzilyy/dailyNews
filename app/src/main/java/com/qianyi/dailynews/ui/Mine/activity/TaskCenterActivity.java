@@ -1,6 +1,10 @@
 package com.qianyi.dailynews.ui.Mine.activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -10,6 +14,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.qianyi.dailynews.R;
+import com.qianyi.dailynews.api.ApiAccount;
 import com.qianyi.dailynews.api.ApiConstant;
 import com.qianyi.dailynews.api.ApiMine;
 import com.qianyi.dailynews.base.BaseActivity;
@@ -20,6 +25,12 @@ import com.qianyi.dailynews.ui.WebviewActivity;
 import com.qianyi.dailynews.ui.account.activity.LoginActivity;
 import com.qianyi.dailynews.ui.invitation.activity.IncomeShowActivity;
 import com.qianyi.dailynews.utils.SPUtils;
+import com.tencent.mm.sdk.modelmsg.SendAuth;
+import com.tencent.mm.sdk.openapi.IWXAPI;
+import com.tencent.mm.sdk.openapi.WXAPIFactory;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -94,10 +105,14 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
     @BindView(R.id.back) public ImageView back;
     private List<LinearLayout> OtherLineralayout=new ArrayList<>();
     private String userId;
-    private CustomLoadingDialog customLoadingDialog;
     private List<LinearLayout> signedDays,unsignDays;
-    private String user_id;
     private boolean signed;
+
+    private MyReceiver myReceiver;
+
+    private CustomLoadingDialog customLoadingDialog;
+    private String openid, unionid, nickname, headimgurl,language,city,province,country,user_id;
+    private int sex;
     @Override
     protected void initViews() {
         back.setOnClickListener(new View.OnClickListener() {
@@ -125,6 +140,11 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
         unsignDays.add(fifthDay_none_ll);
         unsignDays.add(sixthDay_none_ll);
         unsignDays.add(seventhDay_none_ll);
+
+        myReceiver = new MyReceiver();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("com.action.wechat");
+        registerReceiver(myReceiver, intentFilter);
     }
     @Override
     protected void initData() {
@@ -296,7 +316,7 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
 
             case R.id.btn_bandwx:
                 //去绑定微信
-                Toast.makeText(this, "去绑定微信", Toast.LENGTH_SHORT).show();
+                initWx();
                 break;
             case R.id.btn_oneyuan:
                 //去完成提现
@@ -353,6 +373,63 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
                 break;
 
         }
+    }
+    /***
+     * 微信登录
+     */
+    private void initWx() {
+        IWXAPI mWxApi = WXAPIFactory.createWXAPI(this, ApiConstant.APP_ID, false);
+        // 将该app注册到微信
+        mWxApi.registerApp(ApiConstant.APP_ID);
+        final SendAuth.Req req = new SendAuth.Req();
+        req.scope = "snsapi_userinfo";
+        req.state = "diandi_wx_login";
+        mWxApi.sendReq(req);
+    }
+
+    class MyReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (action.equals("com.action.wechat")) {
+                openid = intent.getStringExtra("openid");
+                nickname = intent.getStringExtra("nickname");
+                sex = intent.getIntExtra("sex", 0);
+                language = intent.getStringExtra("language");
+                city = intent.getStringExtra("city");
+                province = intent.getStringExtra("province");
+                country = intent.getStringExtra("country");
+                headimgurl = intent.getStringExtra("headimgurl");
+                unionid = intent.getStringExtra("unionid");
+                bindWx();
+            }
+        }
+    }
+    private void bindWx() {
+        customLoadingDialog.show();
+        ApiAccount.wechatBind(ApiConstant.WX_BIND, user_id,openid, nickname, sex+"", language, city, province,country,headimgurl,unionid,new RequestCallBack<String>() {
+            @Override
+            public void onSuccess(Call call, Response response, final String s) {
+                Log.i("tag", s);
+                customLoadingDialog.dismiss();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            JSONObject jsonObject=new JSONObject(s);
+                            String code = jsonObject.getString("code");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
+
+            @Override
+            public void onEror(Call call, int statusCode, Exception e) {
+                customLoadingDialog.dismiss();
+            }
+        });
 
     }
     //签到

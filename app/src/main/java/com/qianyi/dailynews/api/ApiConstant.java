@@ -84,6 +84,10 @@ public class ApiConstant {
     public static final String  HOT_WORD= BASE_URL+"/api/news/keywords";
     //更换热词
     public static final String  CHANGE_HOT_WORD= BASE_URL+"/api/news/nextkeywords";
+    //绑定微信
+    public static final String  WX_BIND= BASE_URL+"/api/wx/bind";
+    //新手任务热词搜索
+    public static final String  MISSSION_READ= BASE_URL+"/api/newer/search";
     //==========辛振宇==========================================
 
 
@@ -133,6 +137,7 @@ public class ApiConstant {
     public static final String  HIGH_BACK_MONEY_DETAILS= BASE_URL+"/api/makeMoney/detail";
     //微信登录
     public static final String  WECHAT_LOGIN= BASE_URL+"/api/wx/login";
+    //微信登录
 
 
 

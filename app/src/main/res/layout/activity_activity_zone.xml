@@ -45,7 +45,8 @@
                 android:layout_centerVertical="true"
                 android:textSize="14sp"
                 android:gravity="center"
-                android:text="去完成"
+                android:textColor="@color/main_red"
+                android:text="去签到"
                 android:layout_width="80dp"
                 android:layout_height="30dp" />
         </RelativeLayout>
@@ -76,7 +77,8 @@
                 android:layout_centerVertical="true"
                 android:textSize="14sp"
                 android:gravity="center"
-                android:text="去完成"
+                android:textColor="@color/main_red"
+                android:text="去分享"
                 android:layout_width="80dp"
                 android:layout_height="30dp" />
         </RelativeLayout>
@@ -106,7 +108,8 @@
                 android:layout_centerVertical="true"
                 android:textSize="14sp"
                 android:gravity="center"
-                android:text="去完成"
+                android:textColor="@color/main_red"
+                android:text="去阅读"
                 android:layout_width="80dp"
                 android:layout_height="30dp" />
         </RelativeLayout>
@@ -137,7 +140,8 @@
                 android:layout_centerVertical="true"
                 android:textSize="14sp"
                 android:gravity="center"
-                android:text="去完成"
+                android:textColor="@color/main_red"
+                android:text="去搜索"
                 android:layout_width="80dp"
                 android:layout_height="30dp" />
         </RelativeLayout>

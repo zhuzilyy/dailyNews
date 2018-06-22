@@ -135,10 +135,15 @@ public class ApiNews {
         Map<String,String> params=new HashMap<>();
         OkHttpManager.getInstance().postRequest(url,params,callback);
     }
-
-
-
-
+    /**
+     * 任务热词
+     * @param callback
+     */
+    public static void missionHotWord(String url,String userId,RequestCallBack<String> callback){
+        Map<String,String> params=new HashMap<>();
+        params.put("userId",userId);
+        OkHttpManager.getInstance().postRequest(url,params,callback);
+    }
     //=======以下辛振宇=================================================================
 
 }
