@@ -209,6 +209,10 @@
         <activity android:name=".ui.Mine.activity.MakeMoneyEasilyDetailActivity"
             android:screenOrientation="portrait"
             />
+        <!-- 高额返利小课堂 -->
+        <activity android:name=".ui.Mine.activity.HightBackMoneyRewardWebViewActivity"
+            android:screenOrientation="portrait"
+            />
         //********************************************************************
         <provider
             android:name="android.support.v4.content.FileProvider"

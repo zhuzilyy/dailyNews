@@ -191,6 +191,7 @@ public class NewsAdapter extends BaseAdapter {
            Holder03.news003_publishman.setText(item.getPosterScreenName());
            Holder03.news003_posttime.setText(item.getPublishDate());
            Holder03.news003_read.setText(item.getReadNum());
+           Holder03.news003_read.setText(item.getViewCount()+"次阅读");
            Glide.with(context).load(item.getImgsUrl().get(0)).into(Holder03.news003_pic01);
            Glide.with(context).load(item.getImgsUrl().get(1)).into(Holder03.news003_pic02);
            Glide.with(context).load(item.getImgsUrl().get(2)).into(Holder03.news003_pic03);
@@ -209,6 +210,7 @@ public class NewsAdapter extends BaseAdapter {
            Holder02.news002_publishman.setText(item.getPosterScreenName());
            Holder02.news002_posttime.setText(item.getPublishDate());
            Holder02.news002_read.setText(item.getReadNum());
+           Holder02.news002_read.setText(item.getViewCount()+"次阅读");
            Glide.with(context).load(item.getImgsUrl().get(0)).into(Holder02.news002_pic);
            //删除条目
            Holder02.news002_delete.setOnClickListener(new View.OnClickListener() {
@@ -227,6 +229,7 @@ public class NewsAdapter extends BaseAdapter {
             Holder01.news001_publishman.setText(item.getPosterScreenName());
             Holder01.news001_posttime.setText(item.getPublishDate());
             Holder01.news001_read.setText(item.getReadNum());
+            Holder01.news001_read.setText(item.getViewCount()+"次阅读");
             //删除条目
             Holder01.news001_delete.setOnClickListener(new View.OnClickListener() {
                 @Override

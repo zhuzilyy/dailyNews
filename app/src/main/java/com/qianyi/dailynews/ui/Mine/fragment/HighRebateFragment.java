@@ -19,6 +19,7 @@ import com.qianyi.dailynews.base.BaseFragment;
 import com.qianyi.dailynews.callback.RequestCallBack;
 import com.qianyi.dailynews.dialog.CustomLoadingDialog;
 import com.qianyi.dailynews.ui.Mine.activity.HighRebateDetilsActivity;
+import com.qianyi.dailynews.ui.Mine.activity.HightBackMoneyRewardWebViewActivity;
 import com.qianyi.dailynews.ui.Mine.adapter.HighRebateAdapter;
 import com.qianyi.dailynews.ui.Mine.bean.FanLiBean;
 import com.qianyi.dailynews.ui.Mine.bean.FanLiInfo;
@@ -87,10 +88,17 @@ public class HighRebateFragment extends BaseFragment implements PullToRefreshVie
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(getActivity(), HighRebateDetilsActivity.class);
-                intent.putExtra("id",infoList.get(i-1).getId());
-                intent.putExtra("type",infoList.get(i-1).getType());
-                startActivity(intent);
+                if(0==i){
+                    //高额奖励小课堂
+                    Intent intent = new Intent(getActivity(), HightBackMoneyRewardWebViewActivity.class);
+                    startActivity(intent);
+                }else {
+                    Intent intent = new Intent(getActivity(), HighRebateDetilsActivity.class);
+                    intent.putExtra("id",infoList.get(i-1).getId());
+                    intent.putExtra("type",infoList.get(i-1).getType());
+                    startActivity(intent);
+                }
+
             }
         });
     }
