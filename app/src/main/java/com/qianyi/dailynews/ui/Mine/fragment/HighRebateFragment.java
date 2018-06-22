@@ -1,6 +1,7 @@
 package com.qianyi.dailynews.ui.Mine.fragment;
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.orhanobut.logger.Logger;
 import com.qianyi.dailynews.R;
 import com.qianyi.dailynews.api.ApiConstant;
 import com.qianyi.dailynews.api.ApiMine;
@@ -97,6 +99,7 @@ public class HighRebateFragment extends BaseFragment implements PullToRefreshVie
         ApiMine.fanliList(ApiConstant.FANLI_LIST, userId,page,ApiConstant.PAGE_SIZE, new RequestCallBack<String>() {
             @Override
             public void onSuccess(Call call, Response response, final String s) {
+                Logger.i(s);
                 infoList.clear();
                 customLoadingDialog.dismiss();
                 getActivity().runOnUiThread(new Runnable() {
