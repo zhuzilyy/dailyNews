@@ -93,6 +93,7 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
                 Intent intent = new Intent(getActivity(),NewsDetailsActivity.class);
                 intent.putExtra("title",bigList.get(i).getTitle());
                 intent.putExtra("url",bigList.get(i).getUrl());
+                intent.putExtra("des",bigList.get(i).getContent());
                 intent.putExtra("id",bigList.get(i).getId());
                 getActivity().startActivity(intent);
             }
@@ -139,9 +140,14 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
             }
         });
 
-
-
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        firstData(NewsFragment.CurrentNewsTitle);
+    }
+
 
     /***
      * 删除该条新闻
@@ -171,7 +177,8 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
 
 
     @Override
-    public void onFooterRefresh(PullToRefreshView view) {
+    public void
+    onFooterRefresh(PullToRefreshView view) {
         moreData(NewsFragment.CurrentNewsTitle);
     }
 
@@ -204,7 +211,7 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
                         Logger.i(page + "==page==");
                         Logger.i(userid + "==userid==");
 
-                        ApiNews.GetNewsContent(ApiConstant.NEWS_CONTENTS, userid, MyApplication.newsTypeRes.get(NewsFragment.CurrentNewsTitle).getCatId(), page, 10, page, 10, new RequestCallBack<String>() {
+                        ApiNews.GetNewsContent(ApiConstant.NEWS_CONTENTS, userid, MyApplication.newsTypeRes.get(NewsFragment.CurrentNewsTitle).getCatId(), page, 15, page, 15, new RequestCallBack<String>() {
                             @Override
                             public void onSuccess(Call call, Response response, String s) {
                                 Log.i("ttt", "s" + s);
@@ -225,15 +232,12 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
                                                     bigList.clear();
                                                     bigList.addAll(newsBeans);
                                                     newsAdapter.notifyDataSetChanged();
-
-
                                                 }
                                             }
                                         }
                                     }
                                 }
                             }
-
                             @Override
                             public void onEror(Call call, int statusCode, Exception e) {
                                 Log.i("ttt", "e" + e.getMessage());
@@ -275,7 +279,7 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
                                 Log.i("tag", MyApplication.newsTypeRes.get(position).getCatId() + "==getCatId==");
                                 Log.i("tag", page + "==page==");
                                 Log.i("tag", userid + "==userid==");
-                                ApiNews.GetNewsContent(ApiConstant.NEWS_CONTENTS, userid, MyApplication.newsTypeRes.get(NewsFragment.CurrentNewsTitle).getCatId(), page, 10, page, 10, new RequestCallBack<String>() {
+                                ApiNews.GetNewsContent(ApiConstant.NEWS_CONTENTS, userid, MyApplication.newsTypeRes.get(NewsFragment.CurrentNewsTitle).getCatId(), page, 15, page, 15, new RequestCallBack<String>() {
                                     @Override
                                     public void onSuccess(Call call, Response response, String s) {
                                         Log.i("ttt", "s" + s);
@@ -295,7 +299,6 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
                                                             List<NewsBean> newsBeans = dowithNews(adavertContents, newsContentInfos);
                                                             bigList.addAll(newsBeans);
                                                             newsAdapter.notifyDataSetChanged();
-
                                                         }
                                                     }
                                                 }

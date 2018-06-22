@@ -1,6 +1,8 @@
 package com.qianyi.dailynews.ui.news.activity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Handler;
 import android.support.v4.widget.NestedScrollView;
 import android.text.TextUtils;
@@ -39,6 +41,17 @@ import com.qianyi.dailynews.ui.news.views.KeyMapDailog;
 import com.qianyi.dailynews.ui.news.views.MySingListView;
 import com.qianyi.dailynews.utils.SPUtils;
 import com.qianyi.dailynews.utils.WebviewUtil;
+import com.qianyi.dailynews.utils.WhiteBgBitmapUtil;
+import com.sina.weibo.sdk.api.WebpageObject;
+import com.sina.weibo.sdk.api.WeiboMultiMessage;
+import com.sina.weibo.sdk.share.WbShareHandler;
+import com.sina.weibo.sdk.statistic.WBAgent;
+import com.sina.weibo.sdk.utils.Utility;
+import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
+import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
+import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
+import com.tencent.mm.sdk.openapi.IWXAPI;
+import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -92,20 +105,32 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
     //***********************************
     private String titleStr;
     private String urlStr;
+    private String contentStr;
     private WebSettings webSettings;
     public static String newsId="";
     private int page=1;
     private int pageSize=10;
     private int pageLevel2=1;//二级评论的也是
     private int pageSizeLevel2=10; //二级评论的页面大小
+
+    private IWXAPI mWxApi;
+    private WbShareHandler shareHandler;
+
     ///**********************************
     //计时
     private boolean timeOut=false;
     private boolean readMore=false;
     @Override
     protected void initViews() {
+
+
+        mWxApi = WXAPIFactory.createWXAPI(this, ApiConstant.APP_ID, false);
+        // 将该app注册到微信
+        mWxApi.registerApp(ApiConstant.APP_ID);
         newsId=getIntent().getStringExtra("id");
         urlStr=getIntent().getStringExtra("url");
+        contentStr=getIntent().getStringExtra("des");
+
         if(!TextUtils.isEmpty(newsId)){
             //先调阅读新闻
             readNews(newsId);
@@ -420,11 +445,11 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
         switch(view.getId()){
             case R.id.ll_wechat:
                 //微信分享
-                Toast.makeText(this, "微信分享", Toast.LENGTH_SHORT).show();
+                shareFriends();
                 break;
             case R.id.ll_friendCircle:
                 //朋友圈分享
-                Toast.makeText(this, "朋友圈分享", Toast.LENGTH_SHORT).show();
+                shareFriendCircle();
                 break;
             case R.id.ll_QQ:
                 //QQ分享
@@ -432,7 +457,7 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.ll_weibo:
                 //微博分享
-                Toast.makeText(this, "微博分享", Toast.LENGTH_SHORT).show();
+                shareWeiBo();
                 break;
             case R.id.iv_back:
                 finish();
@@ -604,4 +629,111 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
         });
         dialog.show(getSupportFragmentManager(), "dialog");
     }
+
+    //*************************************************
+    //分享到微信
+    private void shareFriends() {
+        WXWebpageObject webpage = new WXWebpageObject();
+        webpage.webpageUrl = "http://www.gaokaoygzy.cn/download";
+        WXMediaMessage msg = new WXMediaMessage(webpage);
+        msg.title = "每日速报";
+        msg.description = "每日速报";
+        Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.mipmap.logo);
+        Bitmap bitmap = WhiteBgBitmapUtil.drawableBitmapOnWhiteBg(this, bmp);
+        Bitmap thumbBmp = Bitmap.createScaledBitmap(bitmap, 100, 100, true);
+        msg.setThumbImage(thumbBmp);
+        bmp.recycle();
+        SendMessageToWX.Req req = new SendMessageToWX.Req();
+        req.transaction = buildTransaction("webpage");
+        req.message = msg;
+        // req.scene = sendtype==0?SendMessageToWX.Req.WXSceneSession:SendMessageToWX.Req.WXSceneTimeline;
+        req.scene = SendMessageToWX.Req.WXSceneSession;
+        mWxApi.sendReq(req);
+    }
+    public static String buildTransaction(final String type) {
+        return (type == null) ? String.valueOf(System.currentTimeMillis()) : type + System.currentTimeMillis();
+    }
+
+    private void shareFriendCircle() {
+        WXWebpageObject webpage = new WXWebpageObject();
+        webpage.webpageUrl = urlStr;
+        WXMediaMessage msg = new WXMediaMessage(webpage);
+        msg.title = titleStr;
+        msg.description = "123";
+        Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.mipmap.logo);
+        Bitmap bitmap = WhiteBgBitmapUtil.drawableBitmapOnWhiteBg(this, bmp);
+        Bitmap thumbBmp = Bitmap.createScaledBitmap(bitmap, 100, 100, true);
+        msg.setThumbImage(thumbBmp);
+        bmp.recycle();
+        SendMessageToWX.Req req = new SendMessageToWX.Req();
+        req.transaction = buildTransaction("webpage");
+        req.message = msg;
+        // req.scene = sendtype==0?SendMessageToWX.Req.WXSceneSession:SendMessageToWX.Req.WXSceneTimeline;
+        req.scene = SendMessageToWX.Req.WXSceneTimeline;
+        mWxApi.sendReq(req);
+    }
+
+    //分享到微博
+    private void shareWeiBo() {
+        initLog();
+        //startActivity(new Intent(getActivity(), WBAuthActivity.class));
+        shareHandler = new WbShareHandler(this);
+        shareHandler.registerApp();
+        // sendMessage(true, true);
+        shareWebPage();
+    }
+    private void shareWebPage() {
+      /*  WebpageObject mediaObj =new WebpageObject();
+        //创建文本消息对象
+        TextObject textObject =new TextObject();
+        textObject.text= "你分享内容的描述"+"分享网页的话加上网络地址";
+
+        textObject.title= "哈哈哈哈哈哈";
+
+        //创建图片消息对象，如果只分享文字和网页就不用加图片
+
+        WeiboMultiMessage message =new WeiboMultiMessage();
+
+        ImageObject imageObject =new ImageObject();
+
+        // 设置 Bitmap 类型的图片到视频对象里        设置缩略图。 注意：最终压缩过的缩略图大小 不得超过 32kb。
+
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources() , R.drawable.test);
+
+        imageObject.setImageObject(bitmap);
+
+        message.textObject= textObject;
+
+        message.imageObject= imageObject;
+
+        message.mediaObject= mediaObj;*/
+
+
+        WebpageObject mediaObject = new WebpageObject();
+        mediaObject.identify = Utility.generateGUID();
+        mediaObject.title = "测试title";
+        mediaObject.description = "测试描述";
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.logo);
+
+        // 设置 Bitmap 类型的图片到视频对象里         设置缩略图。 注意：最终压缩过的缩略图大小不得超过 32kb。
+        mediaObject.setThumbImage(bitmap);
+        mediaObject.actionUrl = "http://news.sina.com.cn/c/2013-10-22/021928494669.shtml";
+        mediaObject.defaultText = "Webpage 默认文案";
+        WeiboMultiMessage message = new WeiboMultiMessage();
+        message.mediaObject = mediaObject;
+        shareHandler.shareMessage(message, false);
+    }
+    private void initLog() {
+        WBAgent.setAppKey(ApiConstant.APP_KEY_WEIBO);
+        WBAgent.setChannel("weibo"); //这个是统计这个app 是从哪一个平台down下来的  百度手机助手
+        WBAgent.openActivityDurationTrack(false);
+        try {
+            //设置发送时间间隔 需大于90s小于8小时
+            WBAgent.setUploadInterval(91000);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
 }

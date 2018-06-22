@@ -3,8 +3,10 @@ package com.qianyi.dailynews.ui.Mine.fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.qianyi.dailynews.R;
@@ -62,6 +64,13 @@ public class HighRebate_RecordFragment extends BaseFragment implements PullToRef
         adapter=new HighRebateTaskAdapter(getActivity());
         listview.setAdapter(adapter);
         userId= (String) SPUtils.get(getActivity(),"user_id","");
+
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Toast.makeText(mActivity, "4563", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override

@@ -85,7 +85,7 @@ public class HighRebateAdapter extends BaseAdapter {
             moneyHolder.tv_title.setText(fanLiInfo.getTitle());
             moneyHolder.tv_cash.setText(fanLiInfo.getCash()+"金币");
             moneyHolder.tv_rate.setText(fanLiInfo.getDescription());
-            moneyHolder.tv_time.setText(fanLiInfo.getTime());
+            moneyHolder.tv_time.setText("剩余时间 ："+fanLiInfo.getTime()+"秒");
         }
         return view;
     }
