@@ -55,7 +55,15 @@ public class VideoAdapter extends BaseAdapter {
        }
         VideoInfo videoInfo = infoList.get(i);
         viewHolder.tv_title.setText(videoInfo.getTitle());
-        viewHolder.tv_duration.setText(videoInfo.getDurationMin());
+        String durationMin = videoInfo.getDurationMin();
+        int videoLength = Integer.parseInt(durationMin);
+        int minute = videoLength / 60;
+        int second = videoLength % 60;
+        if (minute!=0){
+            viewHolder.tv_duration.setText(minute+"分"+second+"秒");
+        }else{
+            viewHolder.tv_duration.setText(videoInfo.getDurationMin()+"秒");
+        }
         viewHolder.tv_browseCount.setText(videoInfo.getViewCount()+"次播放");
         Glide.with(context).load(videoInfo.getCoverUrl()).placeholder(R.mipmap.video_test).into(viewHolder.iv_background);
         return view;

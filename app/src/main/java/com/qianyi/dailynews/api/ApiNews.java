@@ -127,8 +127,14 @@ public class ApiNews {
         params.put("newsId",newsId);
         OkHttpManager.getInstance().postRequest(url,params,callback);
     }
-
-
+    /**
+     * 热词
+     * @param callback
+     */
+    public static void hotWord(String url,RequestCallBack<String> callback){
+        Map<String,String> params=new HashMap<>();
+        OkHttpManager.getInstance().postRequest(url,params,callback);
+    }
 
 
 

@@ -86,7 +86,6 @@ public class AccountDetailsActivity extends BaseActivity implements View.OnClick
             case R.id.tv_right:
                 Intent intent_presentStatue = new Intent(AccountDetailsActivity.this,PresentStatusActivity.class);
                 startActivity(intent_presentStatue);
-
             break;
 
             default:

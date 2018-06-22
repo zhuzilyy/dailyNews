@@ -26,7 +26,6 @@ public class WithdrawalAdapter extends BaseAdapter {
         this.context = context;
         this.infoList = infoList;
     }
-
     @Override
     public int getCount() {
         return infoList.size();
