@@ -59,15 +59,26 @@
         android:gravity="center_vertical"
         android:paddingLeft="@dimen/dp_5"
         >
-        <TextView
-            android:id="@+id/news003_award"
+        <LinearLayout
+            android:id="@+id/ll_news003_award"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="阅读奖励"
-            android:textSize="14sp"
-            android:textColor="@color/red"
             android:visibility="gone"
-            />
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@mipmap/red_package"/>
+            <TextView
+                android:id="@+id/news003_award"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="阅读奖励"
+                android:textSize="14sp"
+                android:textColor="@color/red"
+                android:visibility="visible"
+                />
+        </LinearLayout>
+
         <TextView
 
             android:id="@+id/news003_publishman"

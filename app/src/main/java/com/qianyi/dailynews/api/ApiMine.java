@@ -3,6 +3,7 @@ package com.qianyi.dailynews.api;
 import com.qianyi.dailynews.callback.RequestCallBack;
 import com.qianyi.dailynews.utils.OkHttpManager;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 

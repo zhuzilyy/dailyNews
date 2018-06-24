@@ -95,8 +95,6 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
     @BindView(R.id.ll_wechat) public LinearLayout ll_wechat;//分享到微信
     @BindView(R.id.ll_weibo) public LinearLayout ll_weibo;//分享到微博
 
-
-
     //****************************
     //评论
     @BindView(R.id.re_comm) public RelativeLayout re_comm;
@@ -508,7 +506,7 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
     private void getReward() {
         if(timeOut&&readMore){
             //金币哗啦哗啦的声音
-            playSound(R.raw.coin);
+            playSound(R.raw.mm);
             getReward2();
         }
     }

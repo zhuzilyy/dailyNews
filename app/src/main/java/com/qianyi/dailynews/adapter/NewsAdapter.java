@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -138,6 +139,7 @@ public class NewsAdapter extends BaseAdapter {
            view = LayoutInflater.from(context).inflate(R.layout.item_news_001, null);
            Holder03.news003_content = view.findViewById(R.id.news003_content);
            Holder03.news003_award = view.findViewById(R.id.news003_award);
+           Holder03.ll_news003_award = view.findViewById(R.id.ll_news003_award);
            Holder03.news003_publishman = view.findViewById(R.id.news003_publishman);
            Holder03.news003_posttime = view.findViewById(R.id.news003_posttime);
            Holder03.news003_read = view.findViewById(R.id.news003_read);
@@ -151,7 +153,7 @@ public class NewsAdapter extends BaseAdapter {
                Holder03.news003_delete.setVisibility(View.GONE);
            }
            if("1".equals(item.getRedpackage())){
-               Holder03.news003_award.setVisibility(View.VISIBLE);
+               Holder03.ll_news003_award.setVisibility(View.VISIBLE);
            }
 
        }else if(NEWS_RIGHT_PIC == itemType){
@@ -160,6 +162,7 @@ public class NewsAdapter extends BaseAdapter {
            view = LayoutInflater.from(context).inflate(R.layout.item_news_002, null);
            Holder02.news002_content = view.findViewById(R.id.news002_content);
            Holder02.news002_award = view.findViewById(R.id.news002_award);
+           Holder02.ll_news002_award = view.findViewById(R.id.ll_news002_award);
            Holder02.news002_publishman = view.findViewById(R.id.news002_publishman);
            Holder02.news002_posttime = view.findViewById(R.id.news002_posttime);
            Holder02.news002_read = view.findViewById(R.id.news002_read);
@@ -171,7 +174,7 @@ public class NewsAdapter extends BaseAdapter {
                Holder02.news002_delete.setVisibility(View.GONE);
            }
            if("1".equals(item.getRedpackage())){
-               Holder02.news002_award.setVisibility(View.VISIBLE);
+               Holder02.ll_news002_award.setVisibility(View.VISIBLE);
            }
 
        }else if(NEWS_NOPIC == itemType){
@@ -180,6 +183,7 @@ public class NewsAdapter extends BaseAdapter {
            view = LayoutInflater.from(context).inflate(R.layout.item_news_003, null);
            Holder01.news001_content = view.findViewById(R.id.news001_content);
            Holder01.news001_award = view.findViewById(R.id.news001_award);
+           Holder01.ll_news001_award = view.findViewById(R.id.ll_news001_award);
            Holder01.news001_publishman = view.findViewById(R.id.news001_publishman);
            Holder01.news001_posttime = view.findViewById(R.id.news001_posttime);
            Holder01.news001_read = view.findViewById(R.id.news001_read);
@@ -189,7 +193,7 @@ public class NewsAdapter extends BaseAdapter {
                Holder01.news001_delete.setVisibility(View.GONE);
            }
            if("1".equals(item.getRedpackage())){
-               Holder01.news001_award.setVisibility(View.VISIBLE);
+               Holder01.ll_news001_award.setVisibility(View.VISIBLE);
            }
 
        }
@@ -279,6 +283,7 @@ public class NewsAdapter extends BaseAdapter {
         public TextView news001_posttime;
         public TextView news001_read;
         public ImageView news001_delete;
+        public LinearLayout ll_news001_award;
 
     }
 
@@ -291,6 +296,7 @@ public class NewsAdapter extends BaseAdapter {
         public TextView news002_read;
         public ImageView news002_pic;
         public ImageView news002_delete;
+        public LinearLayout ll_news002_award;
 
     }
 
@@ -305,6 +311,7 @@ public class NewsAdapter extends BaseAdapter {
         public ImageView news003_pic02;
         public ImageView news003_pic03;
         public ImageView news003_delete;
+        public LinearLayout ll_news003_award;
 
 
     }
