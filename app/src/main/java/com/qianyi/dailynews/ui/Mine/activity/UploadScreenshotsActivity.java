@@ -226,6 +226,7 @@ public class UploadScreenshotsActivity extends BaseActivity implements View.OnCl
             public void onSuccess(String result) {
                 Log.i("uu",result);
 
+
             }
 
             @Override
