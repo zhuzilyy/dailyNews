@@ -182,8 +182,6 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
             //有邀请码，隐藏输入框
             ll_invation.setVisibility(View.GONE);
         }
-
-
         mWxApi = WXAPIFactory.createWXAPI(getActivity(), ApiConstant.APP_ID, false);
         // 将该app注册到微信
         mWxApi.registerApp(ApiConstant.APP_ID);
@@ -685,18 +683,18 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
 
         // 设置 Bitmap 类型的图片到视频对象里         设置缩略图。 注意：最终压缩过的缩略图大小不得超过 32kb。
         mediaObject.setThumbImage(bitmap);
-        mediaObject.actionUrl = "http://news.sina.com.cn/c/2013-10-22/021928494669.shtml";
-        mediaObject.defaultText = "Webpage 默认文案";
+        mediaObject.actionUrl = "http://47.104.73.127:8080/download/download.html";
+        mediaObject.defaultText = "每日速报是一款基于数据挖掘的推荐引擎产品，它为用户推荐有价值的、个性化的信息，提供连接人与信息的新型服务。";
         return mediaObject;
     }
 
     //分享到微信
     private void shareFriends() {
         WXWebpageObject webpage = new WXWebpageObject();
-        webpage.webpageUrl = "http://www.gaokaoygzy.cn/download";
+        webpage.webpageUrl = "http://47.104.73.127:8080/download/download.html";
         WXMediaMessage msg = new WXMediaMessage(webpage);
         msg.title = "每日速报";
-        msg.description = "每日速报";
+        msg.description = "每日速报是一款基于数据挖掘的推荐引擎产品，它为用户推荐有价值的、个性化的信息，提供连接人与信息的新型服务。";
         Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.mipmap.logo);
         Bitmap bitmap = WhiteBgBitmapUtil.drawableBitmapOnWhiteBg(getActivity(), bmp);
         Bitmap thumbBmp = Bitmap.createScaledBitmap(bitmap, 200, 200, true);
@@ -712,10 +710,10 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
 
     private void shareFriendCircle() {
         WXWebpageObject webpage = new WXWebpageObject();
-        webpage.webpageUrl = "http://www.gaokaoygzy.cn/download";
+        webpage.webpageUrl = "http://47.104.73.127:8080/download/download.html";
         WXMediaMessage msg = new WXMediaMessage(webpage);
         msg.title = "每日速报";
-        msg.description = "每日速报";
+        msg.description = "每日速报是一款基于数据挖掘的推荐引擎产品，它为用户推荐有价值的、个性化的信息，提供连接人与信息的新型服务。";
         Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.mipmap.logo);
         Bitmap bitmap = WhiteBgBitmapUtil.drawableBitmapOnWhiteBg(getActivity(), bmp);
         Bitmap thumbBmp = Bitmap.createScaledBitmap(bitmap, 200, 200, true);
@@ -728,11 +726,9 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
         req.scene = SendMessageToWX.Req.WXSceneTimeline;
         mWxApi.sendReq(req);
     }
-
     public static String buildTransaction(final String type) {
         return (type == null) ? String.valueOf(System.currentTimeMillis()) : type + System.currentTimeMillis();
     }
-
     /***
      * 弹出一键收徒的弹窗
      */

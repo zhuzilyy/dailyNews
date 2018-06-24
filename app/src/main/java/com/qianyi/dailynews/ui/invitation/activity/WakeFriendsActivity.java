@@ -7,11 +7,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.qianyi.dailynews.R;
 import com.qianyi.dailynews.api.ApiConstant;
 import com.qianyi.dailynews.api.ApiInvite;
+import com.qianyi.dailynews.api.ApiMine;
 import com.qianyi.dailynews.base.BaseActivity;
 import com.qianyi.dailynews.callback.RequestCallBack;
 import com.qianyi.dailynews.dialog.CustomLoadingDialog;
@@ -21,6 +23,10 @@ import com.qianyi.dailynews.ui.invitation.adapter.WakeUpFriendAdapter;
 import com.qianyi.dailynews.utils.SPUtils;
 import com.qianyi.dailynews.utils.Utils;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -48,6 +54,7 @@ public class WakeFriendsActivity extends BaseActivity {
     public WakeUpFriendAdapter adapter;
     private CustomLoadingDialog customLoadingDialog;
     private String userId;
+    private  List<RecallInfo> recallList;
     @Override
     protected void initViews() {
         title.setText("唤醒好友");
@@ -61,6 +68,11 @@ public class WakeFriendsActivity extends BaseActivity {
         tv_wakefriend_title.setTypeface(typeface1);
         rv.setLayoutManager(new LinearLayoutManager(WakeFriendsActivity.this));
         userId= (String) SPUtils.get(this,"user_id","");
+
+        recallList=new ArrayList<>();
+        adapter = new WakeUpFriendAdapter(WakeFriendsActivity.this,recallList);
+        rv.setAdapter(adapter);
+
     }
     private void getData() {
         ApiInvite.callBackFriendList(ApiConstant.CALL_BACK_FRIEND_LIST, userId, new RequestCallBack<String>() {
@@ -73,14 +85,14 @@ public class WakeFriendsActivity extends BaseActivity {
                         Gson gson=new Gson();
                         RecallBean recallBean = gson.fromJson(s, RecallBean.class);
                         String code = recallBean.getCode();
-                        List<RecallInfo> recallList = recallBean.getData().getRecallList();
+                        List<RecallInfo> list = recallBean.getData().getRecallList();
                         if (code.equals(ApiConstant.SUCCESS_CODE)){
-                            if (recallList!=null && recallList.size()>0){
+                            if (list!=null && list.size()>0){
                                 tv_noData.setVisibility(View.GONE);
                                 rv.setVisibility(View.VISIBLE);
                                 tv_noInternet.setVisibility(View.GONE);
-                                adapter = new WakeUpFriendAdapter(WakeFriendsActivity.this,recallList);
-                                rv.setAdapter(adapter);
+                                recallList.addAll(list);
+                                adapter.notifyDataSetChanged();
                             }else{
                                 tv_noData.setVisibility(View.VISIBLE);
                                 rv.setVisibility(View.GONE);
@@ -112,19 +124,59 @@ public class WakeFriendsActivity extends BaseActivity {
             rv.setVisibility(View.GONE);
             tv_noInternet.setVisibility(View.VISIBLE);
         }
-
     }
     @Override
     protected void getResLayout() {
         setContentView(R.layout.activity_wekefriend);
-
     }
 
     @Override
     protected void initListener() {
-
+        adapter.setOnRecallUserListener(new WakeUpFriendAdapter.RecallUserListener() {
+            @Override
+            public void recall(int position) {
+                recallUser(position);
+            }
+        });
     }
-
+    //唤醒好友
+    private void recallUser(final int position) {
+        customLoadingDialog.show();
+        ApiMine.recall(ApiConstant.RECALL, userId, recallList.get(position).getUserId(), new RequestCallBack<String>() {
+            @Override
+            public void onSuccess(Call call, Response response, final String s) {
+                customLoadingDialog.dismiss();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            JSONObject jsonObject=new JSONObject(s);
+                            String return_msg = jsonObject.getString("return_msg");
+                            Toast.makeText(WakeFriendsActivity.this, return_msg, Toast.LENGTH_SHORT).show();
+                            recallList.remove(position);
+                            adapter.notifyDataSetChanged();
+                            if (recallList.size()==0){
+                                tv_noData.setVisibility(View.VISIBLE);
+                                rv.setVisibility(View.GONE);
+                                tv_noInternet.setVisibility(View.GONE);
+                            }else{
+                                tv_noData.setVisibility(View.GONE);
+                                rv.setVisibility(View.VISIBLE);
+                                tv_noInternet.setVisibility(View.GONE);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
+            @Override
+            public void onEror(Call call, int statusCode, Exception e) {
+                customLoadingDialog.dismiss();
+                Toast.makeText(WakeFriendsActivity.this, "召回失败", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
     @Override
     protected void setStatusBarColor() {
 
