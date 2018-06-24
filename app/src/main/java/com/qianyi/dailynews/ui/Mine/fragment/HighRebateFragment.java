@@ -96,11 +96,13 @@ public class HighRebateFragment extends BaseFragment implements PullToRefreshVie
                     Intent intent = new Intent(getActivity(), HighRebateDetilsActivity.class);
                     intent.putExtra("id",infoList.get(i-1).getId());
                     intent.putExtra("type",infoList.get(i-1).getType());
+                    intent.putExtra("time",infoList.get(i-1).getTime());
                     startActivity(intent);
                 }
 
             }
         });
+       // firstData();
     }
     private void firstData(int page) {
         mPullToRefreshView.setEnablePullTorefresh(true);

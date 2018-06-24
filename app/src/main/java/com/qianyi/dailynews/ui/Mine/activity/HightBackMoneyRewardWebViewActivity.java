@@ -46,7 +46,7 @@ public class HightBackMoneyRewardWebViewActivity extends BaseActivity implements
 
     }
 
-    @OnClick({R.id.iv_back})
+    @OnClick({R.id.iv_back,R.id.btn_money})
     @Override
     public void onClick(View view) {
         switch (view.getId()) {

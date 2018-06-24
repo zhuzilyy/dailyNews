@@ -135,4 +135,24 @@ public class NewsBean {
     private List<String> imgs;
     private String adType;
 
+
+    public String getRedpackage() {
+        return redpackage;
+    }
+
+    public void setRedpackage(String redpackage) {
+        this.redpackage = redpackage;
+    }
+
+    public String getRedMoney() {
+        return redMoney;
+    }
+
+    public void setRedMoney(String redMoney) {
+        this.redMoney = redMoney;
+    }
+
+    private String redpackage;
+    private String redMoney;
+
 }

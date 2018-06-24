@@ -95,6 +95,7 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
                 intent.putExtra("url",bigList.get(i).getUrl());
                 intent.putExtra("des",bigList.get(i).getContent());
                 intent.putExtra("id",bigList.get(i).getId());
+                intent.putExtra("redMoney",bigList.get(i).getRedMoney());
                 getActivity().startActivity(intent);
             }
         });
@@ -166,8 +167,6 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
 
     @Override
     public void lazyLoad() {
-
-
         firstData(NewsFragment.CurrentNewsTitle);
      //   Toast.makeText(mActivity, "" + NewsFragment.CurrentNewsTitle, Toast.LENGTH_SHORT).show();
 
@@ -211,7 +210,7 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
                         Logger.i(page + "==page==");
                         Logger.i(userid + "==userid==");
 
-                        ApiNews.GetNewsContent(ApiConstant.NEWS_CONTENTS, userid, MyApplication.newsTypeRes.get(NewsFragment.CurrentNewsTitle).getCatId(), page, 15, page, 15, new RequestCallBack<String>() {
+                        ApiNews.GetNewsContent(ApiConstant.NEWS_CONTENTS, userid,MyApplication.newsTypeRes.get(NewsFragment.CurrentNewsTitle).getCatId(), page, 15, page, 15, new RequestCallBack<String>() {
                             @Override
                             public void onSuccess(Call call, Response response, String s) {
                                 Log.i("ttt", "s" + s);
@@ -402,7 +401,10 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
                         newsBean.setIfRead(news.getIfRead());
                         newsBean.setNewsType(news.getNewsTyps());
                         newsBeanList.add(newsBean);
+                        newsBean.setRedpackage(news.getRedpackage());
+                        newsBean.setRedMoney(news.getRedMoney());
                         newsContentInfos.remove(0);
+
                         break;
                     }
 

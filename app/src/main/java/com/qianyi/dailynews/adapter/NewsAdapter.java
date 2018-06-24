@@ -150,6 +150,9 @@ public class NewsAdapter extends BaseAdapter {
            if("0".equals(type)){
                Holder03.news003_delete.setVisibility(View.GONE);
            }
+           if("1".equals(item.getRedpackage())){
+               Holder03.news003_award.setVisibility(View.VISIBLE);
+           }
 
        }else if(NEWS_RIGHT_PIC == itemType){
             //新闻右边有图
@@ -167,6 +170,10 @@ public class NewsAdapter extends BaseAdapter {
            if("0".equals(type)){
                Holder02.news002_delete.setVisibility(View.GONE);
            }
+           if("1".equals(item.getRedpackage())){
+               Holder02.news002_award.setVisibility(View.VISIBLE);
+           }
+
        }else if(NEWS_NOPIC == itemType){
             //新闻没有图
            NewsCell001Holder Holder01 =new NewsCell001Holder();
@@ -181,6 +188,10 @@ public class NewsAdapter extends BaseAdapter {
            if("0".equals(type)){
                Holder01.news001_delete.setVisibility(View.GONE);
            }
+           if("1".equals(item.getRedpackage())){
+               Holder01.news001_award.setVisibility(View.VISIBLE);
+           }
+
        }
 
         //------赋值------------------------------------
@@ -294,6 +305,7 @@ public class NewsAdapter extends BaseAdapter {
         public ImageView news003_pic02;
         public ImageView news003_pic03;
         public ImageView news003_delete;
+
 
     }
     //广告一张大图的

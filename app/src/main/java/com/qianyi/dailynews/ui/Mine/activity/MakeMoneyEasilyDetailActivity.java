@@ -3,6 +3,7 @@ package com.qianyi.dailynews.ui.Mine.activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,7 +53,8 @@ public class MakeMoneyEasilyDetailActivity extends BaseActivity implements View.
     public RelativeLayout ll_shai;
     @BindView(R.id.pb_webview)
     ProgressBar pb_webview;
-
+    @BindView(R.id.tv_gold)
+    public TextView tv_gold;
     public LinearLayout ll_friendCircle;//分享到盆友圈
     public LinearLayout ll_QQ;//分享到QQ
     public LinearLayout ll_wechat;//分享到微信
@@ -64,6 +66,7 @@ public class MakeMoneyEasilyDetailActivity extends BaseActivity implements View.
     private WbShareHandler shareHandler;
     private CustomLoadingDialog customLoadingDialog;
     private String userId;
+    private String gold;
 
 
     @Override
@@ -77,6 +80,11 @@ public class MakeMoneyEasilyDetailActivity extends BaseActivity implements View.
         });
 
         title.setText("");
+        gold=getIntent().getStringExtra("gold");
+        if(!TextUtils.isEmpty(gold)){
+            tv_gold.setText("每好友阅读+"+gold+"金币");
+        }
+
 
         WebviewUtil.setWebview(webview, webview.getSettings());
         webview.loadUrl("http://www.baidu.com");

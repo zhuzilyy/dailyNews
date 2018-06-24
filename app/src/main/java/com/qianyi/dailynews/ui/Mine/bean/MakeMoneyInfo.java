@@ -8,6 +8,18 @@ public class MakeMoneyInfo {
     private String id;
     private String title;
     private String img;
+
+    public String getGold() {
+        return gold;
+    }
+
+    public void setGold(String gold) {
+        this.gold = gold;
+    }
+
+    private String gold;
+
+
     public String getId() {
         return id;
     }

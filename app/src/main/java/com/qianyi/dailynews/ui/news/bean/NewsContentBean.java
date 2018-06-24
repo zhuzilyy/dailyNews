@@ -169,6 +169,32 @@ public class NewsContentBean {
                 private String content;
                 private String ifRead;
                 private String newsType;
+                private String redpackage;
+                private String redMoney;
+
+                public String getNewsType() {
+                    return newsType;
+                }
+
+                public void setNewsType(String newsType) {
+                    this.newsType = newsType;
+                }
+
+                public String getRedpackage() {
+                    return redpackage;
+                }
+
+                public void setRedpackage(String redpackage) {
+                    this.redpackage = redpackage;
+                }
+
+                public String getRedMoney() {
+                    return redMoney;
+                }
+
+                public void setRedMoney(String redMoney) {
+                    this.redMoney = redMoney;
+                }
 
                 public String getNewsTyps() {
                     return newsType;

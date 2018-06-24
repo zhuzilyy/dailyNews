@@ -33,6 +33,7 @@
             android:text="阅读奖励"
             android:textSize="14sp"
             android:textColor="@color/red"
+            android:visibility="gone"
             />
         <TextView
             android:id="@+id/news001_publishman"

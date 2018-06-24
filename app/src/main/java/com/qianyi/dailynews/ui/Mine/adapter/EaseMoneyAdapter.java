@@ -63,6 +63,7 @@ public class EaseMoneyAdapter extends BaseAdapter {
             viewHolder= (ViewHolder) view.getTag();
         }
         viewHolder.tv_title.setText(infoList.get(i).getTitle());
+        viewHolder.tv_gold.setText("每个好友阅读 +"+infoList.get(i).getGold()+"金币");
         Glide.with(context).load(infoList.get(i).getImg()).placeholder(R.mipmap.logo).into(viewHolder.roundedImageView);
         return view;
     }
@@ -71,6 +72,8 @@ public class EaseMoneyAdapter extends BaseAdapter {
         RoundedImageView roundedImageView;
         @BindView(R.id.tv_title)
         TextView tv_title;
+        @BindView(R.id.tv_gold)
+        TextView tv_gold;
         public ViewHolder(View view){
             ButterKnife.bind(this,view);
         }
