@@ -63,6 +63,7 @@
                         android:text="德科技发的设计费放假覅我附件四伏服务黑发生纠纷iOS费危机和覅无覅服务金额非"
                         />
                     <TextView
+                        android:id="@+id/tv_gold"
                         android:layout_marginTop="@dimen/dp_5"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

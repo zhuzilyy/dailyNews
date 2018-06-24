@@ -3,6 +3,10 @@ package com.qianyi.dailynews.ui.news.activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.AudioAttributes;
+import android.media.AudioManager;
+import android.media.SoundPool;
+import android.os.Build;
 import android.os.Handler;
 import android.support.v4.widget.NestedScrollView;
 import android.text.TextUtils;
@@ -28,6 +32,7 @@ import com.qianyi.dailynews.R;
 import com.qianyi.dailynews.adapter.NewsAdapter;
 import com.qianyi.dailynews.api.ApiConstant;
 import com.qianyi.dailynews.api.ApiNews;
+import com.qianyi.dailynews.application.MyApplication;
 import com.qianyi.dailynews.base.BaseActivity;
 import com.qianyi.dailynews.callback.RequestCallBack;
 import com.qianyi.dailynews.fragment.NewsFragment;
@@ -73,7 +78,7 @@ import okhttp3.Response;
 public class NewsDetailsActivity extends BaseActivity implements View.OnClickListener {
     @BindView(R.id.iv_back) public ImageView back;
     @BindView(R.id.tv_title) public TextView title;
-    @BindView(R.id.tv_money) public TextView tv_money;
+    @BindView(R.id.tv_money2) public TextView tv_money2;
     @BindView(R.id.re_money) public RelativeLayout re_money;
     @BindView(R.id.news_webview) public WebView news_webview;
     @BindView(R.id.pb_webview) public ProgressBar pb_webview;
@@ -89,6 +94,8 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
     @BindView(R.id.ll_QQ) public LinearLayout ll_QQ;//分享到QQ
     @BindView(R.id.ll_wechat) public LinearLayout ll_wechat;//分享到微信
     @BindView(R.id.ll_weibo) public LinearLayout ll_weibo;//分享到微博
+
+
 
     //****************************
     //评论
@@ -116,6 +123,9 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
     private IWXAPI mWxApi;
     private WbShareHandler shareHandler;
 
+    //红包奖励数
+    private String redMoney;
+
     ///**********************************
     //计时
     private boolean timeOut=false;
@@ -130,6 +140,16 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
         newsId=getIntent().getStringExtra("id");
         urlStr=getIntent().getStringExtra("url");
         contentStr=getIntent().getStringExtra("des");
+        redMoney=getIntent().getStringExtra("redMoney");
+        int redMoneyStr=Integer.parseInt(redMoney);
+        Toast.makeText(this, ""+redMoneyStr, Toast.LENGTH_SHORT).show();
+        if(redMoneyStr>0){
+
+            re_money.setVisibility(View.VISIBLE);
+           tv_money2.setText("+"+redMoneyStr+"");
+        }else {
+            re_money.setVisibility(View.GONE);
+        }
 
         if(!TextUtils.isEmpty(newsId)){
             //先调阅读新闻
@@ -138,7 +158,7 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
         //计时
         startTimer();
 
-        tv_money.setText("+"+NewsFragment.Gold);
+      //  tv_money.setText("+"+NewsFragment.Gold);
         if(!TextUtils.isEmpty(urlStr)){
             webSettings = news_webview.getSettings();
             WebviewUtil.setWebview(news_webview,webSettings);
@@ -487,9 +507,49 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
      */
     private void getReward() {
         if(timeOut&&readMore){
+            //金币哗啦哗啦的声音
+            playSound(R.raw.coin);
             getReward2();
         }
     }
+
+    /**
+     * 适合播放声音短，文件小
+     * 可以同时播放多种音频
+     * 消耗资源较小
+     */
+    public static void playSound(int rawId) {
+        SoundPool soundPool;
+        if (Build.VERSION.SDK_INT >= 21) {
+            SoundPool.Builder builder = new SoundPool.Builder();
+            //传入音频的数量
+            builder.setMaxStreams(1);
+            //AudioAttributes是一个封装音频各种属性的类
+            AudioAttributes.Builder attrBuilder = new AudioAttributes.Builder();
+            //设置音频流的合适属性
+            attrBuilder.setLegacyStreamType(AudioManager.STREAM_MUSIC);
+            builder.setAudioAttributes(attrBuilder.build());
+            soundPool = builder.build();
+        } else {
+            //第一个参数是可以支持的声音数量，第二个是声音类型，第三个是声音品质
+            soundPool = new SoundPool(1, AudioManager.STREAM_SYSTEM, 5);
+        }
+        //第一个参数Context,第二个参数资源Id，第三个参数优先级
+        soundPool.load(MyApplication.getApplication(), rawId, 1);
+        soundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
+            @Override
+            public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
+                soundPool.play(1, 1, 1, 0, 0, 1);
+            }
+        });
+        //第一个参数id，即传入池中的顺序，第二个和第三个参数为左右声道，第四个参数为优先级，第五个是否循环播放，0不循环，-1循环
+        //最后一个参数播放比率，范围0.5到2，通常为1表示正常播放
+//        soundPool.play(1, 1, 1, 0, 0, 1);
+        //回收Pool中的资源
+        //soundPool.release();
+
+    }
+
 
     /***
      * 符合规则，获取阅读奖励
@@ -502,7 +562,7 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
         ApiNews.GetRewardAfterReadNews(ApiConstant.GET_REWARD_AFTER_READ_NEWS, userid, newsId, new RequestCallBack<String>() {
             @Override
             public void onSuccess(Call call, Response response, String s) {
-                Log.i("sss",s);
+                Log.i("yuuuuuuu",s);
                 try {
                     JSONObject jsonObject =new JSONObject(s);
                     String code=jsonObject.getString("code");
@@ -516,7 +576,7 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
             }
             @Override
             public void onEror(Call call, int statusCode, Exception e) {
-                Log.i("sss",e.getMessage());
+                Log.i("yuuuuuuu",e.getMessage());
             }
         });
     }

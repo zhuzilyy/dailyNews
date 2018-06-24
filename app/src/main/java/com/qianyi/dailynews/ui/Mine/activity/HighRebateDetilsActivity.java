@@ -21,6 +21,7 @@ import com.qianyi.dailynews.api.ApiMine;
 import com.qianyi.dailynews.base.BaseActivity;
 import com.qianyi.dailynews.callback.RequestCallBack;
 import com.qianyi.dailynews.ui.Mine.bean.MoneyDetailBean;
+import com.qianyi.dailynews.utils.CodeTimerTask;
 import com.qianyi.dailynews.utils.SPUtils;
 import com.qianyi.dailynews.utils.WebviewUtil;
 
@@ -62,6 +63,7 @@ public class HighRebateDetilsActivity extends BaseActivity implements View.OnCli
 
     @BindView(R.id.ll_bottom02) public LinearLayout ll_bottom02;
     @BindView(R.id.tv_shots) public TextView tv_shots;
+    @BindView(R.id.tv_leftTime) public TextView tv_leftTime;
 
 
 
@@ -71,11 +73,16 @@ public class HighRebateDetilsActivity extends BaseActivity implements View.OnCli
 
     private String id;
     private String type;
+    private String time;
     @Override
     protected void initViews() {
         id=getIntent().getStringExtra("id");
         type=getIntent().getStringExtra("type");
+        time=getIntent().getStringExtra("time");
+        if(!TextUtils.isEmpty(time)){
+            tv_leftTime.setText(time+" s");
 
+        }
         if("1".equals(type)){
             title01.setText("投资期限");
             title02.setText("投资金额");
@@ -188,6 +195,7 @@ public class HighRebateDetilsActivity extends BaseActivity implements View.OnCli
         switch(v.getId()){
             case R.id.btn_getMoney:
                 btn_getMoney.setVisibility(View.GONE);
+                CodeTimerTask.getInstence(time).starrTimer(tv_leftTime);
                 break;
             case R.id.tv_shots:
                 Intent intent  = new Intent(HighRebateDetilsActivity.this,UploadScreenshotsActivity.class);

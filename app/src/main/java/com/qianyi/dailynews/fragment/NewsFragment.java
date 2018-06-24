@@ -96,6 +96,7 @@ public class NewsFragment extends BaseFragment implements View.OnClickListener {
         ApiNews.GetNewsTitles(ApiConstant.NEWS_TITLES, new RequestCallBack<String>() {
             @Override
             public void onSuccess(Call call, Response response, String s) {
+                Log.i("ss",s);
                 Gson gson = new Gson();
                 NewsTitleBean newsTitleBean = gson.fromJson(s,NewsTitleBean.class);
                 if(newsTitleBean!=null){
