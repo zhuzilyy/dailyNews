@@ -20,6 +20,7 @@ import com.orhanobut.logger.Logger;
 import com.qianyi.dailynews.R;
 import com.qianyi.dailynews.base.BaseFragment;
 import com.qianyi.dailynews.dialog.SelfDialog;
+import com.qianyi.dailynews.ui.Mine.activity.HelpAndFeedBackActivity;
 import com.qianyi.dailynews.ui.Mine.activity.MessageActivity;
 import com.qianyi.dailynews.ui.WebviewActivity;
 import com.qianyi.dailynews.ui.Mine.activity.AccountDetailsActivity;
@@ -166,7 +167,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 break;
             case R.id.re_HelpBack:
                 //帮助与反馈
-                Intent intent_helpback = new Intent(getActivity(), WebviewActivity.class);
+                Intent intent_helpback = new Intent(getActivity(), HelpAndFeedBackActivity.class);
                 intent_helpback.putExtra("title","帮助与反馈");
                 intent_helpback.putExtra("url","http://www.baidu.com");
                 startActivity(intent_helpback);

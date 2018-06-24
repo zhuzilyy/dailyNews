@@ -680,7 +680,6 @@
                                 android:text="去绑定"
                                 android:textColor="@color/white"
                                 android:background="@drawable/shape_coner30_gold"
-
                                 />
 
                         </LinearLayout>

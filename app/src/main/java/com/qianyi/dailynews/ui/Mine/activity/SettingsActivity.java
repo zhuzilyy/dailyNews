@@ -4,8 +4,10 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -14,6 +16,7 @@ import android.widget.Toast;
 import com.qianyi.dailynews.R;
 import com.qianyi.dailynews.api.ApiAccount;
 import com.qianyi.dailynews.api.ApiConstant;
+import com.qianyi.dailynews.api.ApiMine;
 import com.qianyi.dailynews.base.BaseActivity;
 import com.qianyi.dailynews.callback.RequestCallBack;
 import com.qianyi.dailynews.dialog.CustomLoadingDialog;
@@ -40,12 +43,13 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
     @BindView(R.id.iv_back) public ImageView back;
     @BindView(R.id.tv_title) public TextView title;
     @BindView(R.id.tv_phone) public TextView tv_phone;
+    @BindView(R.id.btn_bind) public Button btn_bind;
     @BindView(R.id.re_ModifyPassword) public RelativeLayout re_ModifyPassword;
 
     private MyReceiver myReceiver;
 
     private CustomLoadingDialog customLoadingDialog;
-    private String openid, unionid, nickname, headimgurl,language,city,province,country,user_id;
+    private String openid, unionid, nickname, headimgurl,language,city,province,country,user_id,missionWxBind;
     private int sex;
 
     @Override
@@ -62,11 +66,39 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
         user_id= (String) SPUtils.get(SettingsActivity.this,"user_id","");
         tv_phone.setText(phone);
 
+        getUserInfo();
+
         customLoadingDialog=new CustomLoadingDialog(this);
         myReceiver = new MyReceiver();
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("com.action.wechat");
         registerReceiver(myReceiver, intentFilter);
+    }
+
+    private void getUserInfo() {
+        ApiMine.getUserInfo(ApiConstant.GET_USERINFO, user_id, new RequestCallBack<String>() {
+            @Override
+            public void onSuccess(Call call, Response response, String s) {
+                try {
+                    JSONObject jsonObject=new JSONObject(s);
+                    JSONObject data = jsonObject.getJSONObject("data");
+                    String newer_mission = data.getString("newer_mission");
+                    String[] missionArr=newer_mission.split("\\|");
+                    missionWxBind = missionArr[0];
+                    if (missionWxBind.equals("1")){
+                        btn_bind.setText("已绑定");
+                        btn_bind.setTextColor(Color.parseColor("#ffffff"));
+                        btn_bind.setBackgroundResource(R.drawable.bg_wx_bind_finish);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            @Override
+            public void onEror(Call call, int statusCode, Exception e) {
+
+            }
+        });
     }
 
     @Override
@@ -99,8 +131,11 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
             case R.id.btn_quit:
                 quitAccount();
                 break;
+            //微信绑定
             case R.id.btn_bind:
-                //微信绑定
+                if (missionWxBind.equals("1")){
+                    return;
+                }
                 initWx();
                 break;
         }
@@ -144,17 +179,13 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
             public void onSuccess(Call call, Response response, final String s) {
                 Log.i("tag", s);
                 customLoadingDialog.dismiss();
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            JSONObject jsonObject=new JSONObject(s);
-                            String code = jsonObject.getString("code");
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
+                try {
+                    JSONObject jsonObject=new JSONObject(s);
+                    String return_msg = jsonObject.getString("return_msg");
+                    Toast.makeText(SettingsActivity.this, return_msg, Toast.LENGTH_SHORT).show();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override

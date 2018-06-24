@@ -31,6 +31,9 @@ import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.xutils.common.Callback;
+import org.xutils.http.RequestParams;
+import org.xutils.x;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -113,6 +116,13 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
     private CustomLoadingDialog customLoadingDialog;
     private String openid, unionid, nickname, headimgurl,language,city,province,country,user_id;
     private int sex;
+    private String wxBindState,tixianState,questionState,awardState;
+    //新手任务
+    @BindView(R.id.btn_bandwx) public Button btn_bandwx;
+    @BindView(R.id.btn_oneyuan) public TextView btn_oneyuan;
+    @BindView(R.id.btn_answerAward) public TextView btn_answerAward;
+    @BindView(R.id.btn_Questionnaire) public TextView btn_Questionnaire;
+    private String mission1,mission2,mission3,mission4;
     @Override
     protected void initViews() {
         back.setOnClickListener(new View.OnClickListener() {
@@ -160,8 +170,51 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
         OtherLineralayout.add(ll_commentAward002);
         customLoadingDialog.show();
         getSignState();
-    }
+        getUesrInfo();
 
+    }
+    //获取新手任务状态
+    private void getUesrInfo() {
+        user_id= (String) SPUtils.get(TaskCenterActivity.this,"user_id","");
+        ApiMine.getUserInfo(ApiConstant.GET_USERINFO, user_id, new RequestCallBack<String>() {
+            @Override
+            public void onSuccess(Call call, Response response, String s) {
+                try {
+                    JSONObject jsonObject=new JSONObject(s);
+                    JSONObject data = jsonObject.getJSONObject("data");
+                    String newer_mission = data.getString("newer_mission");
+                    String[] missionArr=newer_mission.split("\\|");
+                    mission1 = missionArr[0];
+                    mission2 = missionArr[1];
+                    mission3 = missionArr[2];
+                    mission4 = missionArr[3];
+                    if (mission1.equals("1")){
+                        btn_bandwx.setText("已完成");
+                        btn_bandwx.setBackgroundResource(R.drawable.new_mission_finish);
+                    }
+                    if (mission2.equals("1")){
+                        btn_oneyuan.setText("已完成");
+                        btn_oneyuan.setBackgroundResource(R.drawable.new_mission_finish);
+                    }
+                    if (mission3.equals("1")){
+                        btn_Questionnaire.setText("已完成");
+                        btn_Questionnaire.setBackgroundResource(R.drawable.new_mission_finish);
+                    }
+                    if (mission4.equals("1")){
+                        btn_answerAward.setText("已完成");
+                        btn_answerAward.setBackgroundResource(R.drawable.new_mission_finish);
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            @Override
+            public void onEror(Call call, int statusCode, Exception e) {
+
+            }
+        });
+    }
     private void getSignState() {
         user_id= (String) SPUtils.get(TaskCenterActivity.this,"user_id","");
         ApiMine.signState(ApiConstant.SIGN_STATE, user_id, new RequestCallBack<String>() {
@@ -226,7 +279,7 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
                 break;
             case R.id.tv_SignInRules:
                 //签到规则
-                Intent intent_SignInRules  = new Intent(TaskCenterActivity.this, WebviewActivity.class);
+                Intent intent_SignInRules  = new Intent(TaskCenterActivity.this, SignRuleActivity.class);
                 intent_SignInRules.putExtra("title","签到规则");
                 intent_SignInRules.putExtra("utl","http://www.qq.com");
                 startActivity(intent_SignInRules);
@@ -315,18 +368,30 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
                 break;
 
             case R.id.btn_bandwx:
+                if (mission1.equals("1")){
+                    return;
+                }
                 //去绑定微信
                 initWx();
                 break;
             case R.id.btn_oneyuan:
+                if (mission2.equals("1")){
+                    return;
+                }
                 //去完成提现
                 jumpActivity(this,ActivityZoneActivity.class);
                 break;
             case R.id.btn_Questionnaire:
+                if (mission3.equals("1")){
+                    return;
+                }
                 jumpActivity(this,QuestionSurveyActivity.class);
                 //去调查
                 break;
             case R.id.btn_answerAward:
+                if (mission4.equals("1")){
+                    return;
+                }
                 //去答题
                 jumpActivity(this,GreenHandsGuideActivity.class);
                 break;
@@ -407,29 +472,25 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
     }
     private void bindWx() {
         customLoadingDialog.show();
-        ApiAccount.wechatBind(ApiConstant.WX_BIND, user_id,openid, nickname, sex+"", language, city, province,country,headimgurl,unionid,new RequestCallBack<String>() {
+        ApiAccount.wechatBind(ApiConstant.WX_BIND, user_id,openid, nickname,sex+"",language,city,province,country,headimgurl,unionid,new RequestCallBack<String>() {
             @Override
             public void onSuccess(Call call, Response response, final String s) {
-                Log.i("tag", s);
                 customLoadingDialog.dismiss();
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            JSONObject jsonObject=new JSONObject(s);
-                            String code = jsonObject.getString("code");
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
+                try {
+                    JSONObject jsonObject=new JSONObject(s);
+                    String return_msg = jsonObject.getString("return_msg");
+                    Toast.makeText(TaskCenterActivity.this, return_msg, Toast.LENGTH_SHORT).show();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
-
             @Override
             public void onEror(Call call, int statusCode, Exception e) {
+                Log.i("tag",e.getMessage());
                 customLoadingDialog.dismiss();
             }
         });
+
 
     }
     //签到

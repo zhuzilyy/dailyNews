@@ -114,6 +114,15 @@ public class ApiMine {
         params.put("pageSize",pageSize);
         OkHttpManager.getInstance().postRequest(url,params,callback);
     }
+    /**
+     * 获取个人信息
+     * @param callback
+     */
+    public static void getUserInfo(String url,String userId,RequestCallBack<String> callback){
+        Map<String,String> params=new HashMap<>();
+        params.put("userId",userId);
+        OkHttpManager.getInstance().postRequest(url,params,callback);
+    }
 
 
 

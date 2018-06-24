@@ -175,9 +175,9 @@ public class ActivityZoneActivity extends BaseActivity {
                 jumpActivity(ActivityZoneActivity.this, MainActivity.class);
                 break;
             case R.id.tv_searchState:
-                if (search.equals("2")){
+               /* if (search.equals("2")){
                     return;
-                }
+                }*/
                 intent=new Intent(ActivityZoneActivity.this,SearchActivity.class);
                 intent.putExtra("tag","mission");
                 startActivity(intent);

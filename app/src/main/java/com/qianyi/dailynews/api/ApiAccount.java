@@ -124,7 +124,7 @@ public class ApiAccount {
      */
     public static void wechatBind(String url,String user_id,String openid,String nickname,String sex,String language,String city,String province,String country,String headimgurl,String unionid,RequestCallBack<String> callback) {
         Map<String,String> params=new HashMap<>();
-        params.put("user_id",user_id);
+        params.put("userId",user_id);
         params.put("openid",openid);
         params.put("nickname",nickname);
         params.put("sex",sex);

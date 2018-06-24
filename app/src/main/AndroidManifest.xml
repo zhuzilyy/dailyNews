@@ -213,6 +213,14 @@
         <activity android:name=".ui.Mine.activity.HightBackMoneyRewardWebViewActivity"
             android:screenOrientation="portrait"
             />
+        <!-- 签到规则 -->
+        <activity android:name=".ui.Mine.activity.SignRuleActivity"
+            android:screenOrientation="portrait"
+            />
+        <!-- 帮助与设置 -->
+        <activity android:name=".ui.Mine.activity.HelpAndFeedBackActivity"
+            android:screenOrientation="portrait"
+            />
         //********************************************************************
         <provider
             android:name="android.support.v4.content.FileProvider"

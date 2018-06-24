@@ -16,6 +16,7 @@ public class ApiConstant {
     public static final String BASE_URL="http://47.104.73.127:8080/news-0.0.1";
     public static final String PAGE_SIZE="10";
     public static final String SUCCESS_CODE="0000";
+    public static final String SUCCESS="SUCCESS";
     public static final String CONFIRMCODE=BASE_URL+"/api/user/sendRegisterCode";
     public static final String REGISTER=BASE_URL+"/api/user/register";
     public static final String LOGIN=BASE_URL+"/api/user/login";
@@ -88,6 +89,8 @@ public class ApiConstant {
     public static final String  WX_BIND= BASE_URL+"/api/wx/bind";
     //新手任务热词搜索
     public static final String  MISSSION_READ= BASE_URL+"/api/newer/search";
+    //获取用户信息
+    public static final String  GET_USERINFO= BASE_URL+"/api/user/getUserInfo";
     //==========辛振宇==========================================
 
 

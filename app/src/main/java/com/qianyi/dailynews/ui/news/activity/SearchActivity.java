@@ -128,14 +128,15 @@ public class SearchActivity extends BaseActivity {
                     TimerTask task = new TimerTask() {
                         @Override
                         public void run() {
+                            if (tag.equals("mission")){
+                                mission();
+                            }
                             startActivity(it);
                         }
                     };
                     timer.schedule(task, 0);
                 }
-                if (tag.equals("mission")){
-                    mission();
-                }
+
                 return false;
             }
         });
@@ -162,6 +163,7 @@ public class SearchActivity extends BaseActivity {
                 if (tag.equals("mission")){
                     mission();
                 }
+
             }
         });
     }
@@ -174,7 +176,7 @@ public class SearchActivity extends BaseActivity {
                 try {
                     JSONObject jsonObject=new JSONObject(s);
                     String code = jsonObject.getString("code");
-                    if (code.equals(ApiConstant.SUCCESS_CODE)){
+                    if (code.equals(ApiConstant.SUCCESS)){
                         Intent intent=new Intent();
                         intent.setAction("com.action.search.mission");
                         sendBroadcast(intent);
