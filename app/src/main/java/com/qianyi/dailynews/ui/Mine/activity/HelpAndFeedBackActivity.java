@@ -34,7 +34,6 @@ public class HelpAndFeedBackActivity extends BaseActivity {
     protected void initListener() {
 
     }
-
     @Override
     protected void setStatusBarColor() {
 

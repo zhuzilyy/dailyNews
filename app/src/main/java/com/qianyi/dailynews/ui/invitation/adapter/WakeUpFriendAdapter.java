@@ -24,6 +24,7 @@ import butterknife.ButterKnife;
 public class WakeUpFriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  {
     private Context mContext;
     private List<RecallInfo> infoList;
+    private RecallUserListener recallUserListener;
     public WakeUpFriendAdapter(Context mContext, List<RecallInfo> infoList) {
         this.mContext = mContext;
         this.infoList = infoList;
@@ -72,6 +73,14 @@ public class WakeUpFriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             String lastFourthNum = phone.substring(phone.length()-4,phone.length());
             ((MyViewHolder) holder).tv_name.setText(preThirdNum+"****"+lastFourthNum);
             ((MyViewHolder) holder).tv_phone.setText(infoList.get(position).getPhone());
+            ((MyViewHolder) holder).tv_wakeup.setTag(position);
+            ((MyViewHolder) holder).tv_wakeup.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int tag = (int) view.getTag();
+                    recallUserListener.recall(tag);
+                }
+            });
             // Picasso.with(mContext).load(datas.get(position).getUrl()).into(((MyViewHolder) holder).iv);//加载网络图片
             if(mOnItemClickListener!=null){
                 ((WakeUpFriendAdapter.MyViewHolder) holder).pic_item.setOnClickListener(new View.OnClickListener() {
@@ -92,6 +101,8 @@ public class WakeUpFriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     class MyViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.tv_phone)
         TextView tv_phone;
+        @BindView(R.id.tv_wakeup)
+        TextView tv_wakeup;
         @BindView(R.id.tv_name)
         TextView tv_name;
         private TextView pic_item;
@@ -100,5 +111,11 @@ public class WakeUpFriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             ButterKnife.bind(this,view);
             pic_item = view.findViewById(R.id.tv_wakeup);
         }
+    }
+    public void setOnRecallUserListener(RecallUserListener recallUserListener){
+        this.recallUserListener=recallUserListener;
+    }
+    public interface  RecallUserListener{
+        void recall(int position);
     }
 }

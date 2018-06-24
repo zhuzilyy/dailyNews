@@ -91,6 +91,8 @@ public class ApiConstant {
     public static final String  MISSSION_READ= BASE_URL+"/api/newer/search";
     //获取用户信息
     public static final String  GET_USERINFO= BASE_URL+"/api/user/getUserInfo";
+    //找回徒弟
+    public static final String  RECALL= BASE_URL+"/api/news/recall";
     //==========辛振宇==========================================
 
 

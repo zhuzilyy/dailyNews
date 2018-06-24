@@ -124,6 +124,16 @@ public class ApiMine {
         params.put("userId",userId);
         OkHttpManager.getInstance().postRequest(url,params,callback);
     }
+    /**
+     * 获取个人信息
+     * @param callback
+     */
+    public static void recall(String url,String userId,String recallId,RequestCallBack<String> callback){
+        Map<String,String> params=new HashMap<>();
+        params.put("userId",userId);
+        params.put("recallUser",recallId);
+        OkHttpManager.getInstance().postRequest(url,params,callback);
+    }
 
 
 
