@@ -25,6 +25,7 @@ public class HelpAndFeedBackActivity extends BaseActivity {
 
     }
 
+
     @Override
     protected void getResLayout() {
         setContentView(R.layout.activity_help_feedback);
