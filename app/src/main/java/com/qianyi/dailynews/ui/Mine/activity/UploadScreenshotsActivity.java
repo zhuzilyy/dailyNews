@@ -17,12 +17,23 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.qianyi.dailynews.R;
+import com.qianyi.dailynews.api.ApiConstant;
+import com.qianyi.dailynews.api.ApiMine;
 import com.qianyi.dailynews.base.BaseActivity;
 import com.qianyi.dailynews.utils.BitmapToBase64;
 import com.qianyi.dailynews.utils.PhotoUtils;
 import com.qianyi.dailynews.utils.dialog.PhotoChioceDialog;
 
+import org.xutils.common.Callback;
+import org.xutils.http.RequestParams;
+import org.xutils.x;
+
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -151,24 +162,93 @@ public class UploadScreenshotsActivity extends BaseActivity implements View.OnCl
             case R.id.del_001:
                 currentPosition=1;
                 deleteImg(del_001,upload_pic001);
+                bitmap001=null;
                 break;
             case R.id.del_002:
                 currentPosition=2;
                 deleteImg(del_002,upload_pic002);
+                bitmap002=null;
                 break;
             case R.id.del_003:
                 currentPosition=3;
                 deleteImg(del_003,upload_pic003);
+                bitmap003=null;
                 break;
 
             case R.id.submit_pic:
-                submitPics();
+                List<String> strings = new ArrayList<>();
+                if(bitmap001!=null&&bitmap002!=null&&bitmap003!=null){
+                    String base64pic001=BitmapToBase64.Bitmap2StrByBase64(bitmap001);
+                    String base64pic002=BitmapToBase64.Bitmap2StrByBase64(bitmap002);
+                    String base64pic003=BitmapToBase64.Bitmap2StrByBase64(bitmap003);
+                    strings.add(base64pic001);
+                    strings.add(base64pic002);
+                    strings.add(base64pic003);
+                    if(strings.size()>0){
+                        for (int i = 0; i <strings.size() ; i++) {
+                            submitPics(strings.get(i));
+                        }
+                    }
+                }
                 break;
         }
     }
 
-    private void submitPics() {
+    /****
+     * 将图片转化成file
+     */
+    public File dowithPicToFile(Bitmap bm, String fileName) throws IOException {//将Bitmap类型的图片转化成file类型，便于上传到服务器
+        String path = Environment.getExternalStorageDirectory() + "/Ask";
+        File dirFile = new File(path);
+        if(!dirFile.exists()){
+            dirFile.mkdir();
+        }
+        File myCaptureFile = new File(path + fileName);
+        BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(myCaptureFile));
+        bm.compress(Bitmap.CompressFormat.JPEG, 80, bos);
+        bos.flush();
+        bos.close();
+        return myCaptureFile;
 
+    }
+
+    /***
+     * 上传截图
+     */
+    private void submitPics(String filePic) {
+
+        RequestParams params = new RequestParams(ApiConstant.UPLOAD_PICS);
+        params.addParameter("file",filePic);
+
+
+        x.http().post(params, new Callback.CacheCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Log.i("uu",result);
+
+
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                Log.i("uu",ex.getMessage());
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+
+            @Override
+            public boolean onCache(String result) {
+                return false;
+            }
+        });
 
     }
 

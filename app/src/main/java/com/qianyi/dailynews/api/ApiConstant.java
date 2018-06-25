@@ -142,7 +142,11 @@ public class ApiConstant {
     public static final String  HIGH_BACK_MONEY_DETAILS= BASE_URL+"/api/makeMoney/detail";
     //微信登录
     public static final String  WECHAT_LOGIN= BASE_URL+"/api/wx/login";
-    //微信登录
+
+    //上传图片（file）
+    public static final String  UPLOAD_PICS= BASE_URL+"/api/makeMoney/uploadImage";
+
+
 
 
 
