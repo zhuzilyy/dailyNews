@@ -109,6 +109,7 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
     protected void getResLayout() {
         setContentView(R.layout.activity_settings);
 
+
     }
 
     @Override
