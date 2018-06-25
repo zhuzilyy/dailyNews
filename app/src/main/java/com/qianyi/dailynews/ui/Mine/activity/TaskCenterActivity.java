@@ -155,6 +155,11 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("com.action.wechat");
         registerReceiver(myReceiver, intentFilter);
+
+        IntentFilter intentFilterUpdateMission = new IntentFilter();
+        intentFilterUpdateMission.addAction("com.action.update.mission");
+        registerReceiver(myReceiver, intentFilterUpdateMission);
+
     }
     @Override
     protected void initData() {
@@ -467,6 +472,8 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
                 headimgurl = intent.getStringExtra("headimgurl");
                 unionid = intent.getStringExtra("unionid");
                 bindWx();
+            }else if(action.equals(" com.action.update.mission")){
+               getUesrInfo();
             }
         }
     }
@@ -508,6 +515,9 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
                         String message = signBean.getData().getMessage();
                         Toast.makeText(TaskCenterActivity.this, message, Toast.LENGTH_SHORT).show();
                         btn_sign.setText("明天签到可领取100金币");
+                        Intent intent=new Intent();
+                        intent.setAction("com.action.sign.success");
+                        sendBroadcast(intent);
                         getSignState();
                     }
                 });

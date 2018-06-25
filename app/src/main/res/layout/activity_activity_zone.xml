@@ -70,17 +70,18 @@
                 android:text="2.分享到朋友圈(0/1)"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
+
             <TextView
-                android:background="@drawable/bg_activity_unfinish"
                 android:id="@+id/tv_shareState"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:textSize="14sp"
-                android:gravity="center"
-                android:textColor="@color/main_red"
-                android:text="去分享"
                 android:layout_width="80dp"
-                android:layout_height="30dp" />
+                android:layout_height="30dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/bg_activity_unfinish"
+                android:gravity="center"
+                android:text="去分享"
+                android:textColor="@color/main_red"
+                android:textSize="14sp" />
         </RelativeLayout>
         <View
             android:background="@color/common_line"

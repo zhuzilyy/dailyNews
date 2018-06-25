@@ -4,6 +4,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.View;
@@ -19,6 +21,12 @@ import com.qianyi.dailynews.callback.RequestCallBack;
 import com.qianyi.dailynews.dialog.CustomLoadingDialog;
 import com.qianyi.dailynews.ui.news.activity.SearchActivity;
 import com.qianyi.dailynews.utils.SPUtils;
+import com.qianyi.dailynews.utils.WhiteBgBitmapUtil;
+import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
+import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
+import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
+import com.tencent.mm.sdk.openapi.IWXAPI;
+import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -56,16 +64,24 @@ public class ActivityZoneActivity extends BaseActivity {
     private String user_id,sign,search,read,share;
     private int count;
     private MyReceiver myReceiver;
+    private IWXAPI mWxApi;
     @Override
     protected void initViews() {
         tv_title.setText("活动专区");
         customLoadingDialog=new CustomLoadingDialog(this);
         user_id= (String) SPUtils.get(ActivityZoneActivity.this,"user_id","");
+        mWxApi = WXAPIFactory.createWXAPI(this, ApiConstant.APP_ID, false);
+        // 将该app注册到微信
+        mWxApi.registerApp(ApiConstant.APP_ID);
 
         myReceiver=new MyReceiver();
         IntentFilter intentFilter=new IntentFilter();
         intentFilter.addAction("com.action.search.mission");
         registerReceiver(myReceiver,intentFilter);
+
+        IntentFilter intentFilterShare=new IntentFilter();
+        intentFilterShare.addAction("com.action.wechat");
+        registerReceiver(myReceiver,intentFilterShare);
     }
     @Override
     protected void initData() {
@@ -163,7 +179,7 @@ public class ActivityZoneActivity extends BaseActivity {
                 if (share.equals("1")){
                     return;
                 }
-                //jumpActivity(ActivityZoneActivity.this,TaskCenterActivity.class);
+                shareFriendCircle();
                 break;
             case R.id.tv_readState:
                 if (read.equals("10")){
@@ -184,7 +200,28 @@ public class ActivityZoneActivity extends BaseActivity {
                 break;
         }
     }
-
+    //分享到朋友圈
+    private void shareFriendCircle() {
+        WXWebpageObject webpage = new WXWebpageObject();
+        webpage.webpageUrl = "http://47.104.73.127:8080/download/download.html";
+        WXMediaMessage msg = new WXMediaMessage(webpage);
+        msg.title = "每日速报";
+        msg.description = "每日速报是一款基于数据挖掘的推荐引擎产品，它为用户推荐有价值的、个性化的信息，提供连接人与信息的新型服务。";
+        Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.mipmap.logo);
+        Bitmap bitmap = WhiteBgBitmapUtil.drawableBitmapOnWhiteBg(this, bmp);
+        Bitmap thumbBmp = Bitmap.createScaledBitmap(bitmap, 200, 200, true);
+        msg.setThumbImage(thumbBmp);
+        bmp.recycle();
+        SendMessageToWX.Req req = new SendMessageToWX.Req();
+        req.transaction = buildTransaction("webpage");
+        req.message = msg;
+        // req.scene = sendtype==0?SendMessageToWX.Req.WXSceneSession:SendMessageToWX.Req.WXSceneTimeline;
+        req.scene = SendMessageToWX.Req.WXSceneTimeline;
+        mWxApi.sendReq(req);
+    }
+    public static String buildTransaction(final String type) {
+        return (type == null) ? String.valueOf(System.currentTimeMillis()) : type + System.currentTimeMillis();
+    }
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -196,7 +233,7 @@ public class ActivityZoneActivity extends BaseActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
-            if (action.equals("com.action.search.mission")){
+            if (action.equals("com.action.search.mission")||action.equals("com.action.wechat")){
                 getData();
             }
         }

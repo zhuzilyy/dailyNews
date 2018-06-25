@@ -119,7 +119,9 @@ public class ModifyPasswordActivity extends BaseActivity {
                             String return_code = jsonObject.getString("return_code");
                             String return_msg = jsonObject.getString("return_msg");
                             Toast.makeText(ModifyPasswordActivity.this, return_msg, Toast.LENGTH_SHORT).show();
-                            finish();
+                            if (return_msg.equals("成功")){
+                                finish();
+                            }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

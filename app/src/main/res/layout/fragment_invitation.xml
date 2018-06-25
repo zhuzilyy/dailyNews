@@ -434,6 +434,7 @@
                 android:orientation="horizontal"
                 >
                 <com.qianyi.dailynews.views.ClearEditText
+                    android:focusable="false"
                     android:id="@+id/et_invation"
                     android:layout_width="wrap_content"
                     android:layout_weight="1"

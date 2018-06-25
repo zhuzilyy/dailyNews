@@ -1,5 +1,6 @@
 package com.qianyi.dailynews.ui.Mine.activity;
 
+import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -189,6 +190,9 @@ public class GuideQuestionActivity extends BaseActivity{
                     JSONObject jsonObject=new JSONObject(s);
                     String return_code = jsonObject.getString("return_code");
                     if (return_code.equals("SUCCESS")){
+                        Intent intent=new Intent();
+                        intent.setAction("com.action.update.mission");
+                        sendBroadcast(intent);
                         finish();
                     }
                 } catch (JSONException e) {

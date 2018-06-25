@@ -32,9 +32,10 @@
                 android:orientation="vertical"
                 >
                 <ImageView
-                    android:layout_width="75dp"
-                    android:layout_height="75dp"
-                    android:src="@mipmap/weixin_icon"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/lianjie"
                     />
                 <TextView
                     android:layout_width="wrap_content"
@@ -43,7 +44,6 @@
                     android:textColor="@color/gray"
                     android:textSize="14sp"
                     />
-
             </LinearLayout>
             <!--面对面收徒-->
             <LinearLayout
@@ -62,7 +62,7 @@
                 <ImageView
                     android:layout_width="75dp"
                     android:layout_height="75dp"
-                    android:src="@mipmap/code_icon"
+                    android:src="@mipmap/erweima"
                     />
                 <TextView
                     android:layout_width="wrap_content"

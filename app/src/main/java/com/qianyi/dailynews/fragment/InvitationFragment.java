@@ -41,6 +41,7 @@ import com.qianyi.dailynews.dialog.CustomLoadingDialog;
 import com.qianyi.dailynews.dialog.SelfDialog;
 import com.qianyi.dailynews.fragment.bean.BannerImgInfo;
 import com.qianyi.dailynews.fragment.bean.InviteBean;
+import com.qianyi.dailynews.ui.Mine.activity.WriteInvitationActivity;
 import com.qianyi.dailynews.ui.WebviewActivity;
 import com.qianyi.dailynews.ui.account.activity.LoginActivity;
 import com.qianyi.dailynews.ui.invitation.activity.ApprenticeActivity;
@@ -427,6 +428,7 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
 
     @OnClick({R.id.tv_right, R.id.ll_FriendIncome, R.id.ll_FriendNum, R.id.ll_MyInvitationCode,
             R.id.ll_DailySharing, R.id.ll_ShowIncome, R.id.ll_WakeUpFriends, R.id.btn_onekey_shoutu,
+            R.id.et_invation
     })
     @Override
     public void onClick(View v) {
@@ -519,6 +521,17 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
                 break;
             case R.id.ll_copyLianjie:
                 pw_onekeyshoutu.dismiss();
+                String code = "http://mrsb.qianyiwangluo.com";
+                try {
+                    Utils.copy(code, getActivity());
+                    Toast.makeText(mActivity, "已复制", Toast.LENGTH_SHORT).show();
+                } catch (Exception e) {
+                    Logger.i(e.getMessage());
+                }
+                break;
+            case R.id.et_invation:
+                intent=new Intent(getActivity(), WriteInvitationActivity.class);
+                startActivity(intent);
                 break;
         }
     }

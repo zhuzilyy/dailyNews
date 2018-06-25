@@ -65,20 +65,20 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
         String phone= (String) SPUtils.get(SettingsActivity.this,"phone","");
         user_id= (String) SPUtils.get(SettingsActivity.this,"user_id","");
         tv_phone.setText(phone);
-
-        getUserInfo();
-
         customLoadingDialog=new CustomLoadingDialog(this);
         myReceiver = new MyReceiver();
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("com.action.wechat");
         registerReceiver(myReceiver, intentFilter);
+        getUserInfo();
     }
 
     private void getUserInfo() {
+        customLoadingDialog.show();
         ApiMine.getUserInfo(ApiConstant.GET_USERINFO, user_id, new RequestCallBack<String>() {
             @Override
             public void onSuccess(Call call, Response response, String s) {
+                customLoadingDialog.dismiss();
                 try {
                     JSONObject jsonObject=new JSONObject(s);
                     JSONObject data = jsonObject.getJSONObject("data");
@@ -96,7 +96,7 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
             }
             @Override
             public void onEror(Call call, int statusCode, Exception e) {
-
+                customLoadingDialog.dismiss();
             }
         });
     }
@@ -183,6 +183,7 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
                     JSONObject jsonObject=new JSONObject(s);
                     String return_msg = jsonObject.getString("return_msg");
                     Toast.makeText(SettingsActivity.this, return_msg, Toast.LENGTH_SHORT).show();
+                    getUserInfo();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

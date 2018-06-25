@@ -27,6 +27,7 @@
             android:textSize="16sp"
             />
         <com.qianyi.dailynews.views.ClearEditText
+            android:password="true"
             android:id="@+id/et_oldPwd"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -34,7 +35,6 @@
             android:hint="请输入原密码"
             android:textSize="16sp"
             android:singleLine="true"
-
             android:textColorHint="@color/gray"
             android:textColor="@color/black"
             android:layout_weight="1"
@@ -64,6 +64,7 @@
             android:textSize="16sp"
             />
         <com.qianyi.dailynews.views.ClearEditText
+            android:password="true"
             android:id="@+id/et_newPwd"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -99,6 +100,7 @@
             android:textSize="16sp"
             />
         <com.qianyi.dailynews.views.ClearEditText
+            android:password="true"
             android:id="@+id/et_confirmPwd"
             android:layout_width="0dp"
             android:layout_height="match_parent"

@@ -296,7 +296,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                 country = intent.getStringExtra("country");
                 headimgurl = intent.getStringExtra("headimgurl");
                 unionid = intent.getStringExtra("unionid");
-                SPUtils.put(LoginActivity.this,"head_portrait",headimgurl);
+                //SPUtils.put(LoginActivity.this,"head_portrait",headimgurl);
                 wechatLogin();
             }
         }

@@ -18,7 +18,10 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.orhanobut.logger.Logger;
 import com.qianyi.dailynews.R;
+import com.qianyi.dailynews.api.ApiConstant;
+import com.qianyi.dailynews.api.ApiMine;
 import com.qianyi.dailynews.base.BaseFragment;
+import com.qianyi.dailynews.callback.RequestCallBack;
 import com.qianyi.dailynews.dialog.SelfDialog;
 import com.qianyi.dailynews.ui.Mine.activity.HelpAndFeedBackActivity;
 import com.qianyi.dailynews.ui.Mine.activity.MessageActivity;
@@ -34,8 +37,13 @@ import com.qianyi.dailynews.utils.SPUtils;
 import com.qianyi.dailynews.utils.Utils;
 import com.qianyi.dailynews.views.CircleImageView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import butterknife.BindView;
 import butterknife.OnClick;
+import okhttp3.Call;
+import okhttp3.Response;
 
 /**
  * Created by Administrator on 2018/4/30.
@@ -64,6 +72,9 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     //设置
     @BindView(R.id.re_Settings)
     public RelativeLayout re_Settings;
+    //邀请码的线
+    @BindView(R.id.view_inviteCode)
+    public View view_inviteCode;
     //提现
     @BindView(R.id.ll_tixian)
     public LinearLayout ll_tixian;
@@ -81,14 +92,13 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     public TextView tv_gold;
     @BindView(R.id.mine_head)
     public CircleImageView mine_head;
-    private String phone,balance,earnings,gold,my_invite_code,user_id,headimgurl;
+    private String phone,balance,earnings,gold,my_invite_code,user_id,headimgurl,invite_code;
     private MyReceiver myReceiver;
     @Override
     protected View getResLayout(LayoutInflater inflater, ViewGroup container) {
         newsView = inflater.inflate(R.layout.fragment_mine, null);
         return newsView;
     }
-
     @Override
     protected void initViews() {
         setValue();
@@ -101,6 +111,12 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         intentFilterQuit.addAction("com.action.quit");
         getActivity().registerReceiver(myReceiver,intentFilterQuit);
 
+        IntentFilter intentFilterSign=new IntentFilter();
+        intentFilterSign.addAction("com.action.sign.success");
+        getActivity().registerReceiver(myReceiver,intentFilterSign);
+
+
+
 
     }
     private void setValue() {
@@ -110,14 +126,19 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         balance=(String)SPUtils.get(getActivity(),"balance","0");
         earnings=(String)SPUtils.get(getActivity(),"earnings","0");
         headimgurl=(String)SPUtils.get(getActivity(),"head_portrait","");
-        Glide.with(getActivity()).load(headimgurl).error(R.mipmap.logo).into(mine_head);
-        if (!TextUtils.isEmpty(phone)){
-            tv_phone.setText("电话号:"+phone);
+        invite_code=(String)SPUtils.get(getActivity(),"invite_code","");
+        if (!TextUtils.isEmpty(invite_code)){
+            re_WriteCode.setVisibility(View.GONE);
+            view_inviteCode.setVisibility(View.GONE);
         }
+        Glide.with(getActivity()).load(headimgurl).error(R.mipmap.logo).into(mine_head);
+        tv_phone.setText("电话号:"+phone);
         tv_balance.setText(balance);
         tv_InvitationCode.setText(my_invite_code);
         tv_earning.setText(earnings);
         tv_gold.setText(gold);
+
+
     }
     @Override
     protected void initData() {
@@ -244,7 +265,28 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             String action = intent.getAction();
             if (action.equals("com.action.login.success")||action.equals("com.action.quit")){
                 setValue();
+            }else if(action.equals("com.action.sign.success")){
+                getUserInfo();
             }
+        }
+        private void getUserInfo() {
+            ApiMine.getUserInfo(ApiConstant.GET_USERINFO, user_id, new RequestCallBack<String>() {
+                @Override
+                public void onSuccess(Call call, Response response, String s) {
+                    try {
+                        JSONObject jsonObject=new JSONObject(s);
+                        JSONObject data = jsonObject.getJSONObject("data");
+                        String  gold= data.getString("gold");
+                        tv_gold.setText(gold);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                @Override
+                public void onEror(Call call, int statusCode, Exception e) {
+
+                }
+            });
         }
     }
 
