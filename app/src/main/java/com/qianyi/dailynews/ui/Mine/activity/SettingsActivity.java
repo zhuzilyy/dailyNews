@@ -211,7 +211,6 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
                 Intent intent=new Intent();
                 intent.setAction("com.action.quit");
                 sendBroadcast(intent);
-
                 SPUtils.put(SettingsActivity.this,"user_id","");
                 SPUtils.put(SettingsActivity.this,"phone","");
                 SPUtils.put(SettingsActivity.this,"head_portrait","");

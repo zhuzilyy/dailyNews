@@ -93,7 +93,7 @@
                             android:layout_marginTop="@dimen/dp_5"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="电话号：15701452036"
+                            android:text="电话号："
                             android:textSize="14sp"
                             android:textColor="@color/white"
                             />
