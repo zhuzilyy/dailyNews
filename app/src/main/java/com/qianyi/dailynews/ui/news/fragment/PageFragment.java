@@ -196,9 +196,7 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
                     @Override
                     public void run() {
                         String userid = (String) SPUtils.get(getActivity(), "user_id", "");
-                        if (TextUtils.isEmpty(userid)) {
-                            return;
-                        }
+
                         Log.i("tag", "url" + ApiConstant.NEWS_CONTENTS);
                         Log.i("tag", userid + "==userid==");
                         Log.i("tag", MyApplication.newsTypeRes.get(position).getCatId() + "==getCatId==");
@@ -210,7 +208,7 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
                         Logger.i(page + "==page==");
                         Logger.i(userid + "==userid==");
 
-                        ApiNews.GetNewsContent(ApiConstant.NEWS_CONTENTS, userid,MyApplication.newsTypeRes.get(NewsFragment.CurrentNewsTitle).getCatId(), page, 15, page, 15, new RequestCallBack<String>() {
+                        ApiNews.GetNewsContent(ApiConstant.NEWS_CONTENTS, userid,MyApplication.newsTypeRes.get(NewsFragment.CurrentNewsTitle).getCatId(), page, 12, page, 3, new RequestCallBack<String>() {
                             @Override
                             public void onSuccess(Call call, Response response, String s) {
                                 Log.i("ttt", "s" + s);
@@ -270,15 +268,13 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
                             @Override
                             public void run() {
                                 String userid = (String) SPUtils.get(getActivity(), "user_id", "");
-                                if (TextUtils.isEmpty(userid)) {
-                                    return;
-                                }
+
                                 Log.i("tag", "url" + ApiConstant.NEWS_CONTENTS);
                                 Log.i("tag", userid + "==userid==");
                                 Log.i("tag", MyApplication.newsTypeRes.get(position).getCatId() + "==getCatId==");
                                 Log.i("tag", page + "==page==");
                                 Log.i("tag", userid + "==userid==");
-                                ApiNews.GetNewsContent(ApiConstant.NEWS_CONTENTS, userid, MyApplication.newsTypeRes.get(NewsFragment.CurrentNewsTitle).getCatId(), page, 15, page, 15, new RequestCallBack<String>() {
+                                ApiNews.GetNewsContent(ApiConstant.NEWS_CONTENTS, userid, MyApplication.newsTypeRes.get(NewsFragment.CurrentNewsTitle).getCatId(), page, 12, page, 3, new RequestCallBack<String>() {
                                     @Override
                                     public void onSuccess(Call call, Response response, String s) {
                                         Log.i("ttt", "s" + s);

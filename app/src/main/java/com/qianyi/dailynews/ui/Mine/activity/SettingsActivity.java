@@ -231,4 +231,12 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
         });
         quitDialog.show();
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(myReceiver!=null){
+            unregisterReceiver(myReceiver);
+        }
+    }
 }
