@@ -402,6 +402,7 @@
                     />
                 <!--消息中心-->
                 <RelativeLayout
+                    android:visibility="gone"
                     android:id="@+id/re_MessageCentre"
                     android:layout_width="match_parent"
                     android:layout_height="45dp">
@@ -437,6 +438,7 @@
 
                 </RelativeLayout>
                 <View
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_0.5"
                     android:background="@color/light_gray5"
