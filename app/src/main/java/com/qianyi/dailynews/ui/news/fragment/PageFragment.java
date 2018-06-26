@@ -376,86 +376,83 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
      */
     private List<NewsBean> dowithNews(List<NewsContentBean.NewsContentData.AdavertContent> adavertContents, List<NewsContentBean.NewsContentData.NewsByType.NewsContentInfo> newsContentInfos) {
         List<NewsBean> newsBeanList = new ArrayList<>();
-        boolean isNews = newsContentInfos.size() > 0 ? true : false;
-        boolean isAd = isNews == true ? false : true;
-        int size = (adavertContents.size() + newsContentInfos.size());
-        for (int i = 1; i <= size; i++) {
-            if (isNews) {
-                if ((newsContentInfos.size() > 0)) {
-                    for (int j = 0; j < newsContentInfos.size(); j++) {
-                        NewsBean newsBean = new NewsBean();
-                        NewsContentBean.NewsContentData.NewsByType.NewsContentInfo news = newsContentInfos.get(j);
-                        newsBean.setId(news.getId());
-                        newsBean.setPublishDate(news.getPublishDate());
-                        newsBean.setPosterScreenName(news.getPosterScreenName());
-                        newsBean.setUrl(news.getUrl());
-                        newsBean.setTitle(news.getTitle());
-                        newsBean.setPosterId(news.getPosterId());
-                        newsBean.setViewCount(news.getViewCount());
-                        newsBean.setContent(news.getContent());
-                        newsBean.setImgsUrl(news.getImgsUrl());
-                        newsBean.setIfRead(news.getIfRead());
-                        newsBean.setNewsType(news.getNewsTyps());
-                        newsBeanList.add(newsBean);
-                        newsBean.setRedpackage(news.getRedpackage());
-                        newsBean.setRedMoney(news.getRedMoney());
-                        newsContentInfos.remove(0);
+        List<NewsBean> newsBeansAd =DoWithNewsForAD(adavertContents);
+        List<NewsBean> newsBeansNews =DoWithNewsForNEWS(newsContentInfos);
+        newsBeanList= dowithNews2(newsBeansAd,newsBeansNews);
+        return newsBeanList;
+    }
 
-                        break;
-                    }
-
-                    if (i % 4 == 0) {
-                        isAd = true;
-                        isNews = false;
-                    }
-                    continue;
-                } else {
-                    isAd = true;
-                    isNews = false;
+    /***
+     *
+     * @param newsBeansAd
+     * @param newsBeansNews
+     * @return
+     */
+    private List<NewsBean> dowithNews2(List<NewsBean> newsBeansAd, List<NewsBean> newsBeansNews) {
+        List<NewsBean> newsBeanList = new ArrayList<>();
+        for (int i = 0; i < newsBeansAd.size() + newsBeansNews.size() ; i++) {
+            if(((i+1)%5)==0){
+                if(newsBeansAd.size()>0){
+                    newsBeanList.add(newsBeansAd.get(0));
+                    newsBeansAd.remove(0);
                 }
-            } else if (isAd) {
-                if ((adavertContents.size() > 0)) {
-                    for (int j = 0; j < adavertContents.size(); j++) {
-                        NewsBean newsBean = new NewsBean();
-                        NewsContentBean.NewsContentData.AdavertContent ad = adavertContents.get(j);
-                        newsBean.setId(ad.getId());
-                        newsBean.setTitle(ad.getTitle());
-                        newsBean.setUrl(ad.getUrl());
-                        newsBean.setReadNum(ad.getReadNum());
-                        newsBean.setImgs(ad.getImgs());
-                        newsBean.setAdType(ad.getAdType());
-                        newsBeanList.add(newsBean);
-                        adavertContents.remove(0);
-                        break;
-                    }
-                    isAd = false;
-                    isNews = true;
-                    continue;
-                } else {
-                    for (int j = 0; j < newsContentInfos.size(); j++) {
-                        NewsBean newsBean = new NewsBean();
-                        NewsContentBean.NewsContentData.NewsByType.NewsContentInfo news = newsContentInfos.get(j);
-                        newsBean.setId(news.getId());
-                        newsBean.setPublishDate(news.getPublishDate());
-                        newsBean.setPosterScreenName(news.getPosterScreenName());
-                        newsBean.setUrl(news.getUrl());
-                        newsBean.setTitle(news.getTitle());
-                        newsBean.setPosterId(news.getPosterId());
-                        newsBean.setViewCount(news.getViewCount());
-                        newsBean.setContent(news.getContent());
-                        newsBean.setImgsUrl(news.getImgsUrl());
-                        newsBean.setIfRead(news.getIfRead());
-                        newsBean.setNewsType(news.getNewsTyps());
-                        newsBeanList.add(newsBean);
-                        newsContentInfos.remove(0);
-                        break;
-                    }
-                    isAd = false;
-                    isNews = true;
-
+            }else {
+                if(newsBeansNews.size()>0){
+                    newsBeanList.add(newsBeansNews.get(0));
+                    newsBeansNews.remove(0);
+                }else {
+                    return newsBeanList;
                 }
             }
+        }
+        return newsBeanList;
+    }
 
+    /**
+     * 处理新闻
+     * @param newsContentInfos
+     * @return
+     */
+    private List<NewsBean> DoWithNewsForNEWS(List<NewsContentBean.NewsContentData.NewsByType.NewsContentInfo> newsContentInfos) {
+        List<NewsBean> newsBeanList = new ArrayList<>();
+        for (int i = 0; i < newsContentInfos.size() ; i++) {
+            NewsBean newsBean = new NewsBean();
+            NewsContentBean.NewsContentData.NewsByType.NewsContentInfo news = newsContentInfos.get(i);
+            newsBean.setId(news.getId());
+            newsBean.setPublishDate(news.getPublishDate());
+            newsBean.setPosterScreenName(news.getPosterScreenName());
+            newsBean.setUrl(news.getUrl());
+            newsBean.setTitle(news.getTitle());
+            newsBean.setPosterId(news.getPosterId());
+            newsBean.setViewCount(news.getViewCount());
+            newsBean.setContent(news.getContent());
+            newsBean.setImgsUrl(news.getImgsUrl());
+            newsBean.setIfRead(news.getIfRead());
+            newsBean.setNewsType(news.getNewsTyps());
+            newsBean.setRedpackage(news.getRedpackage());
+            newsBean.setRedMoney(news.getRedMoney());
+            newsBeanList.add(newsBean);
+        }
+        return newsBeanList;
+    }
+
+    /**
+     * 处理广告
+     * @param adavertContents
+     * @return
+     */
+    private List<NewsBean> DoWithNewsForAD(List<NewsContentBean.NewsContentData.AdavertContent> adavertContents) {
+        List<NewsBean> newsBeanList = new ArrayList<>();
+        for (int i = 0; i <adavertContents.size() ; i++) {
+            NewsBean newsBean = new NewsBean();
+            NewsContentBean.NewsContentData.AdavertContent ad = adavertContents.get(i);
+            newsBean.setId(ad.getId());
+            newsBean.setTitle(ad.getTitle());
+            newsBean.setUrl(ad.getUrl());
+            newsBean.setReadNum(ad.getReadNum());
+            newsBean.setImgs(ad.getImgs());
+            newsBean.setAdType(ad.getAdType());
+            newsBeanList.add(newsBean);
         }
         return newsBeanList;
     }
