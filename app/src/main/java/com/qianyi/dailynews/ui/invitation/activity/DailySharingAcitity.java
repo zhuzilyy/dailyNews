@@ -182,10 +182,10 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
     }
     private void shareFriendCircle() {
         WXWebpageObject webpage = new WXWebpageObject();
-        webpage.webpageUrl = "http://www.gaokaoygzy.cn/download";
+        webpage.webpageUrl = ApiConstant.DAILY_SHARE_URL;
         WXMediaMessage msg = new WXMediaMessage(webpage);
         msg.title = "每日速报";
-        msg.description = "每日速报";
+        msg.description = "每日速报是一款基于数据挖掘的推荐引擎产品，它为用户推荐有价值的、个性化的信息，提供连接人与信息的新型服务";
         Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.mipmap.logo);
         Bitmap bitmap = WhiteBgBitmapUtil.drawableBitmapOnWhiteBg(this, bmp);
         Bitmap thumbBmp = Bitmap.createScaledBitmap(bitmap, 200, 200, true);
@@ -239,14 +239,18 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
 
         WebpageObject mediaObject = new WebpageObject();
         mediaObject.identify = Utility.generateGUID();
-        mediaObject.title = "测试title";
-        mediaObject.description = "测试描述";
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.logo);
+        mediaObject.title = "每日速报";
+        mediaObject.description = "每日速报是一款基于数据挖掘的推荐引擎产品，它为用户推荐有价值的、个性化的信息，提供连接人与信息的新型服务";
+       /* Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.logo);
 
         // 设置 Bitmap 类型的图片到视频对象里         设置缩略图。 注意：最终压缩过的缩略图大小不得超过 32kb。
-        mediaObject.setThumbImage(bitmap);
-        mediaObject.actionUrl = "http://news.sina.com.cn/c/2013-10-22/021928494669.shtml";
-        mediaObject.defaultText = "Webpage 默认文案";
+        mediaObject.setThumbImage(bitmap);*/
+        Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.mipmap.logo);
+        Bitmap bitmap = WhiteBgBitmapUtil.drawableBitmapOnWhiteBg(this, bmp);
+        Bitmap thumbBmp = Bitmap.createScaledBitmap(bitmap, 200, 200, true);
+        mediaObject.setThumbImage(thumbBmp);
+        mediaObject.actionUrl = ApiConstant.DAILY_SHARE_URL;
+        mediaObject.defaultText = "每日速报是一款基于数据挖掘的推荐引擎产品，它为用户推荐有价值的、个性化的信息，提供连接人与信息的新型服务";
         WeiboMultiMessage message = new WeiboMultiMessage();
         message.mediaObject = mediaObject;
         shareHandler.shareMessage(message, false);
@@ -274,10 +278,21 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
         mediaObject.identify = Utility.generateGUID();
         mediaObject.title = "测试title";
         mediaObject.description = "测试描述";
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_logo);
+
+        Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.mipmap.logo);
+        Bitmap bitmap = WhiteBgBitmapUtil.drawableBitmapOnWhiteBg(this, bmp);
+        Bitmap thumbBmp = Bitmap.createScaledBitmap(bitmap, 200, 200, true);
+        mediaObject.setThumbImage(thumbBmp);
+       /* msg.setThumbImage(thumbBmp);
+        bmp.recycle();*/
+
+      /*  Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_logo);
 
         // 设置 Bitmap 类型的图片到视频对象里         设置缩略图。 注意：最终压缩过的缩略图大小不得超过 32kb。
-        mediaObject.setThumbImage(bitmap);
+        mediaObject.setThumbImage(bitmap);*/
+
+
+
         mediaObject.actionUrl = "http://news.sina.com.cn/c/2013-10-22/021928494669.shtml";
         mediaObject.defaultText = "Webpage 默认文案";
         return mediaObject;
@@ -286,20 +301,20 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
     //分享到微信
     private void shareFriends() {
         WXWebpageObject webpage = new WXWebpageObject();
-        webpage.webpageUrl = "http://www.gaokaoygzy.cn/download";
+        webpage.webpageUrl = ApiConstant.DAILY_SHARE_URL;
         WXMediaMessage msg = new WXMediaMessage(webpage);
         msg.title = "每日速报";
-        msg.description = "每日速报";
-       /* Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.mipmap.logo);
+        msg.description = "每日速报是一款基于数据挖掘的推荐引擎产品，它为用户推荐有价值的、个性化的信息，提供连接人与信息的新型服务";
+        Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.mipmap.logo);
         Bitmap bitmap = WhiteBgBitmapUtil.drawableBitmapOnWhiteBg(this, bmp);
         Bitmap thumbBmp = Bitmap.createScaledBitmap(bitmap, 200, 200, true);
         msg.setThumbImage(thumbBmp);
-        bmp.recycle();*/
+        bmp.recycle();
 
-        Bitmap bmp = BitmapFactory.decodeResource(getResources(),R.mipmap.logo);
+     /*   Bitmap bmp = BitmapFactory.decodeResource(getResources(),R.mipmap.logo);
         Bitmap thumbBmp = Bitmap.createScaledBitmap(bmp, 100, 100, true);
         msg.setThumbImage(thumbBmp);
-        bmp.recycle();
+        bmp.recycle();*/
 
 
         SendMessageToWX.Req req = new SendMessageToWX.Req();

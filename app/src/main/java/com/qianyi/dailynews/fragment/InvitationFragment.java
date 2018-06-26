@@ -146,6 +146,7 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
     private List<String> charBannerArray;
     private WbShareHandler shareHandler;
     private MyReceiver myReceiver;
+    private TextView tv_cancle;
     @Override
     protected View getResLayout(LayoutInflater inflater, ViewGroup container) {
         newsView = inflater.inflate(R.layout.fragment_invitation, null);
@@ -163,12 +164,14 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
         ll_weibo = view_onekeyshoutu.findViewById(R.id.ll_weibo);
         ll_copyLianjie = view_onekeyshoutu.findViewById(R.id.ll_copyLianjie);
         ll_shouTu = view_onekeyshoutu.findViewById(R.id.ll_shouTu);
+        tv_cancle = view_onekeyshoutu.findViewById(R.id.tv_cancle);
         ll_friendCircle.setOnClickListener(this);
         ll_qq.setOnClickListener(this);
         ll_wechat.setOnClickListener(this);
         ll_weibo.setOnClickListener(this);
         ll_copyLianjie.setOnClickListener(this);
         ll_shouTu.setOnClickListener(this);
+        tv_cancle.setOnClickListener(this);
 
 
 
@@ -519,11 +522,13 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
             case R.id.ll_shouTu:
                 pw_onekeyshoutu.dismiss();
                 break;
+            case R.id.tv_cancle:
+                pw_onekeyshoutu.dismiss();
+                break;
             case R.id.ll_copyLianjie:
                 pw_onekeyshoutu.dismiss();
-                String code = "http://mrsb.qianyiwangluo.com";
                 try {
-                    Utils.copy(code, getActivity());
+                    Utils.copy(ApiConstant.LIANJIE_URL, getActivity());
                     Toast.makeText(mActivity, "已复制", Toast.LENGTH_SHORT).show();
                 } catch (Exception e) {
                     Logger.i(e.getMessage());
@@ -596,14 +601,14 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
 
         WebpageObject mediaObject = new WebpageObject();
         mediaObject.identify = Utility.generateGUID();
-        mediaObject.title = "测试title";
-        mediaObject.description = "测试描述";
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_logo);
-
-        // 设置 Bitmap 类型的图片到视频对象里         设置缩略图。 注意：最终压缩过的缩略图大小不得超过 32kb。
-        mediaObject.setThumbImage(bitmap);
-        mediaObject.actionUrl = "http://news.sina.com.cn/c/2013-10-22/021928494669.shtml";
-        mediaObject.defaultText = "Webpage 默认文案";
+        mediaObject.title = "每日速报";
+        mediaObject.description = "每日速报是一款基于数据挖掘的推荐引擎产品，它为用户推荐有价值的、个性化的信息，提供连接人与信息的新型服务";
+        Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.mipmap.logo);
+        Bitmap bitmap = WhiteBgBitmapUtil.drawableBitmapOnWhiteBg(getActivity(), bmp);
+        Bitmap thumbBmp = Bitmap.createScaledBitmap(bitmap, 200, 200, true);
+        mediaObject.setThumbImage(thumbBmp);
+        mediaObject.actionUrl = ApiConstant.DOWN_SHARE_URL;
+        mediaObject.defaultText = "每日速报是一款基于数据挖掘的推荐引擎产品，它为用户推荐有价值的、个性化的信息，提供连接人与信息的新型服务。";
         WeiboMultiMessage message = new WeiboMultiMessage();
         message.mediaObject = mediaObject;
         shareHandler.shareMessage(message, false);
@@ -667,8 +672,6 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
         imageObject.setImageObject(bitmap);
         return imageObject;
     }
-
-
     private void initLog() {
         WBAgent.setAppKey(ApiConstant.APP_KEY_WEIBO);
         WBAgent.setChannel("weibo"); //这个是统计这个app 是从哪一个平台down下来的  百度手机助手
@@ -700,11 +703,10 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
         mediaObject.defaultText = "每日速报是一款基于数据挖掘的推荐引擎产品，它为用户推荐有价值的、个性化的信息，提供连接人与信息的新型服务。";
         return mediaObject;
     }
-
     //分享到微信
     private void shareFriends() {
         WXWebpageObject webpage = new WXWebpageObject();
-        webpage.webpageUrl = "http://47.104.73.127:8080/download/download.html";
+        webpage.webpageUrl = ApiConstant.DOWN_SHARE_URL;
         WXMediaMessage msg = new WXMediaMessage(webpage);
         msg.title = "每日速报";
         msg.description = "每日速报是一款基于数据挖掘的推荐引擎产品，它为用户推荐有价值的、个性化的信息，提供连接人与信息的新型服务。";
@@ -723,7 +725,7 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
 
     private void shareFriendCircle() {
         WXWebpageObject webpage = new WXWebpageObject();
-        webpage.webpageUrl = "http://47.104.73.127:8080/download/download.html";
+        webpage.webpageUrl = ApiConstant.DOWN_SHARE_URL;
         WXMediaMessage msg = new WXMediaMessage(webpage);
         msg.title = "每日速报";
         msg.description = "每日速报是一款基于数据挖掘的推荐引擎产品，它为用户推荐有价值的、个性化的信息，提供连接人与信息的新型服务。";

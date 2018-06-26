@@ -128,7 +128,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dp_10"
-                            android:text="已领"
+                            android:text="未领"
                             android:textColor="@color/white"
                             android:textSize="10sp"
 
@@ -196,7 +196,7 @@
                             android:textColor="@color/white"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="已领"
+                            android:text="未领"
                             android:textSize="10sp"
 
                             />
@@ -263,7 +263,7 @@
                             android:textColor="@color/white"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="已领"
+                            android:text="未领"
                             android:textSize="10sp"
 
                             />
@@ -330,7 +330,7 @@
                             android:textColor="@color/white"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="已领"
+                            android:text="未领"
                             android:textSize="10sp"
 
                             />
@@ -397,7 +397,7 @@
                             android:textColor="@color/white"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="已领"
+                            android:text="未领"
                             android:textSize="10sp"
 
                             />
@@ -465,7 +465,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="10sp"
-                            android:text="已领"
+                            android:text="未领"
 
                             />
                         <TextView
@@ -531,7 +531,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="10sp"
-                            android:text="已领"
+                            android:text="未领"
 
                             />
                         <TextView

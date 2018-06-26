@@ -244,26 +244,25 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                                 JSONObject jsonObject=new JSONObject(s);
                                 String code = jsonObject.getString("code");
                                 String return_msg = jsonObject.getString("return_msg");
-                                JSONObject data = jsonObject.getJSONObject("data");
-                                String user_id=data.getString("user_id");
-                                String phone=data.getString("phone");
-                                String head_portrait=data.getString("head_portrait");
-                                String gold=data.getString("gold");
-                                String my_invite_code=data.getString("my_invite_code");
-                                String balance=data.getString("balance");
-                                String earnings=data.getString("earnings");
-                                String invite_code=data.getString("invite_code");
-
-                                SPUtils.put(LoginActivity.this,"user_id",user_id);
-                                SPUtils.put(LoginActivity.this,"phone",phone);
-                                SPUtils.put(LoginActivity.this,"head_portrait",head_portrait);
-                                SPUtils.put(LoginActivity.this,"gold",gold);
-                                SPUtils.put(LoginActivity.this,"my_invite_code",my_invite_code);
-                                SPUtils.put(LoginActivity.this,"balance",balance);
-                                SPUtils.put(LoginActivity.this,"earnings",earnings);
-                                SPUtils.put(LoginActivity.this,"invite_code",invite_code);
                                 Toast.makeText(LoginActivity.this, return_msg, Toast.LENGTH_SHORT).show();
                                 if (code.equals(ApiConstant.SUCCESS_CODE)){
+                                    JSONObject data = jsonObject.getJSONObject("data");
+                                    String user_id=data.getString("user_id");
+                                    String phone=data.getString("phone");
+                                    String head_portrait=data.getString("head_portrait");
+                                    String gold=data.getString("gold");
+                                    String my_invite_code=data.getString("my_invite_code");
+                                    String balance=data.getString("balance");
+                                    String earnings=data.getString("earnings");
+                                    String invite_code=data.getString("invite_code");
+                                    SPUtils.put(LoginActivity.this,"user_id",user_id);
+                                    SPUtils.put(LoginActivity.this,"phone",phone);
+                                    SPUtils.put(LoginActivity.this,"head_portrait",head_portrait);
+                                    SPUtils.put(LoginActivity.this,"gold",gold);
+                                    SPUtils.put(LoginActivity.this,"my_invite_code",my_invite_code);
+                                    SPUtils.put(LoginActivity.this,"balance",balance);
+                                    SPUtils.put(LoginActivity.this,"earnings",earnings);
+                                    SPUtils.put(LoginActivity.this,"invite_code",invite_code);
                                     Intent intent=new Intent();
                                     intent.setAction("com.action.login.success");
                                     sendBroadcast(intent);
@@ -277,6 +276,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
             }
             @Override
             public void onEror(Call call, int statusCode, Exception e) {
+                Log.i("tag",e.getMessage());
                 customLoadingDialog.dismiss();
             }
         });
