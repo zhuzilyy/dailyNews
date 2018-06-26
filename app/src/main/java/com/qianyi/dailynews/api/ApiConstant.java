@@ -14,6 +14,9 @@ public class ApiConstant {
                     + "friendships_groups_read,friendships_groups_write,statuses_to_me_read,"
                     + "follow_app_official_microblog," + "invitation_write";
     public static final String BASE_URL="http://47.104.73.127:8080/news-0.0.1";
+    public static final String DAILY_SHARE_URL="http://47.104.73.127:8080/dailyNews/share/everyday.html";
+    public static final String DOWN_SHARE_URL="http://47.104.73.127:8080/download/download.html";
+    public static final String LIANJIE_URL="http://mrsb.qianyiwangluo.com";
     public static final String PAGE_SIZE="10";
     public static final String SUCCESS_CODE="0000";
     public static final String SUCCESS="SUCCESS";

@@ -34,10 +34,10 @@ public class CustomLoadingDialog extends Dialog {
     public CustomLoadingDialog(Context context) {
         super(context, R.style.loadingDialogStyle);
         /** 设置触摸外面的取消为false */
-        setCanceledOnTouchOutside(false);
-        setCancelable(false);
-    }
 
+        setCanceledOnTouchOutside(false);
+        setCancelable(true);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

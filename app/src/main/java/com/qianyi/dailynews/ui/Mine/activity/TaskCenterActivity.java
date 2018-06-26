@@ -250,7 +250,6 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
             }
         });
     }
-
     @Override
     protected void getResLayout() {
         setContentView(R.layout.activity_taskcenter);
