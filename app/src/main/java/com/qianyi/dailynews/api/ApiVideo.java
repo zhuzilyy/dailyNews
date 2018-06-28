@@ -30,4 +30,13 @@ public class ApiVideo {
         params.put("pageSize",pageSize);
         OkHttpManager.getInstance().postRequest(url,params,callback);
     }
+    /**
+     * 增加视频播放量
+     * @param callback
+     */
+    public static void addWatchNum(String url,String id, RequestCallBack<String> callback){
+        Map<String,String> params=new HashMap<>();
+        params.put("id",id);
+        OkHttpManager.getInstance().postRequest(url,params,callback);
+    }
 }

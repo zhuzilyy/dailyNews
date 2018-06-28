@@ -27,6 +27,9 @@ import com.qianyi.dailynews.ui.video.VideoPlayingActivity;
 import com.qianyi.dailynews.utils.Utils;
 import com.qianyi.dailynews.views.PullToRefreshView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -188,6 +191,31 @@ public class VideoFragment extends BaseFragment implements PullToRefreshView.OnH
                 intent.putExtra("viewCount",videoInfo.getViewCount());
                 intent.putExtra("title",videoInfo.getTitle());
                 startActivity(intent);
+                addWatchNum(videoInfo.getId(),i);
+            }
+        });
+    }
+    private void addWatchNum(String videoId,final int position) {
+        ApiVideo.addWatchNum(ApiConstant.ADD_WATCH_NUM, videoId, new RequestCallBack<String>() {
+            @Override
+            public void onSuccess(Call call, Response response, String s) {
+                try {
+                    JSONObject jsonObject=new JSONObject(s);
+                    String return_code = jsonObject.getString("return_code");
+                    if (return_code.equals("SUCCESS")){
+                        String viewCount = infoList.get(position).getViewCount();
+                        int intViewCount=Integer.parseInt(viewCount);
+                        intViewCount++;
+                        infoList.get(position).setViewCount(intViewCount+"");
+                        videoAdapter.notifyDataSetChanged();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            @Override
+            public void onEror(Call call, int statusCode, Exception e) {
+
             }
         });
     }

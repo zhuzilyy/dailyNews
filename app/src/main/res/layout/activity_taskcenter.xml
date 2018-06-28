@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:background="@color/white"
+    android:id="@+id/ll_taskCenter"
     android:layout_height="match_parent">
     <ScrollView
         android:layout_width="match_parent"
@@ -1388,11 +1389,7 @@
                                 android:layout_alignParentRight="true"
                                 android:layout_centerVertical="true"
                                 />
-
-
                         </LinearLayout>
-
-
                     </LinearLayout>
                     <!--002-->
                     <LinearLayout
@@ -1424,9 +1421,7 @@
                                 android:text="晒收入"
                                 android:textColor="@color/white"
                                 android:background="@drawable/shape_coner30_gold"
-
                                 />
-
                         </LinearLayout>
 
                     </LinearLayout>

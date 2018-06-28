@@ -15,10 +15,13 @@ import com.qianyi.dailynews.callback.RequestCallBack;
 import com.qianyi.dailynews.dialog.CustomLoadingDialog;
 import com.qianyi.dailynews.ui.Mine.adapter.HighRebateTaskAdapter;
 import com.qianyi.dailynews.ui.Mine.adapter.WithdrawalAdapter;
+import com.qianyi.dailynews.ui.Mine.adapter.WithdrawalRecordAdapter;
 import com.qianyi.dailynews.ui.Mine.bean.FanLiBean;
 import com.qianyi.dailynews.ui.Mine.bean.FanLiInfo;
 import com.qianyi.dailynews.ui.Mine.bean.GoldCoinBean;
 import com.qianyi.dailynews.ui.Mine.bean.GoldCoinData;
+import com.qianyi.dailynews.ui.Mine.bean.WithdrawalBean;
+import com.qianyi.dailynews.ui.Mine.bean.WithdrawalInfo;
 import com.qianyi.dailynews.utils.SPUtils;
 import com.qianyi.dailynews.utils.Utils;
 import com.qianyi.dailynews.views.PullToRefreshView;
@@ -48,8 +51,8 @@ public class PresentStatusActivity extends BaseActivity implements PullToRefresh
     @BindView(R.id.no_internet_rl)
     RelativeLayout no_internet_rl;
     private int page=1;
-    private WithdrawalAdapter withdrawalAdapter;
-    private List<GoldCoinData> infoList;
+    private WithdrawalRecordAdapter withdrawalAdapter;
+    private List<WithdrawalInfo> infoList;
     private CustomLoadingDialog customLoadingDialog;
     private  String userId;
     @Override
@@ -65,7 +68,7 @@ public class PresentStatusActivity extends BaseActivity implements PullToRefresh
         infoList=new ArrayList<>();
         mPullToRefreshView.setmOnHeaderRefreshListener(this);
         mPullToRefreshView.setmOnFooterRefreshListener(this);
-        withdrawalAdapter =new WithdrawalAdapter(this,infoList);
+        withdrawalAdapter =new WithdrawalRecordAdapter(this,infoList);
         listview.setAdapter(withdrawalAdapter);
         userId= (String) SPUtils.get(this,"user_id","");
     }
@@ -98,20 +101,19 @@ public class PresentStatusActivity extends BaseActivity implements PullToRefresh
 
     private void firstData(int page) {
         mPullToRefreshView.setEnablePullTorefresh(true);
-        ApiMine.withdrawal(ApiConstant.WITHDRAWAWAL, userId,page, ApiConstant.PAGE_SIZE, "1",new RequestCallBack<String>() {
+        ApiMine.withdrawalRecord(ApiConstant.WITHDRAWAL_RECORD, userId,page, ApiConstant.PAGE_SIZE,new RequestCallBack<String>() {
             @Override
             public void onSuccess(Call call, Response response, final String s) {
-                infoList.clear();
                 customLoadingDialog.dismiss();
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         Gson gson=new Gson();
-                        GoldCoinBean goldCoinBean = gson.fromJson(s, GoldCoinBean.class);
-                        String code = goldCoinBean.getCode();
+                        WithdrawalBean withdrawalBean = gson.fromJson(s, WithdrawalBean.class);
+                        String code = withdrawalBean.getCode();
                         if (code.equals(ApiConstant.SUCCESS_CODE)){
                             mPullToRefreshView.onHeaderRefreshComplete();
-                            List<GoldCoinData> list = goldCoinBean.getData();
+                            List<WithdrawalInfo> list = withdrawalBean.getData();
                             if (list!=null && list.size()>0){
                                 mPullToRefreshView.setVisibility(View.VISIBLE);
                                 no_data_rl.setVisibility(View.GONE);
@@ -135,10 +137,16 @@ public class PresentStatusActivity extends BaseActivity implements PullToRefresh
             }
             @Override
             public void onEror(Call call, int statusCode, Exception e) {
-                customLoadingDialog.dismiss();
-                mPullToRefreshView.setVisibility(View.GONE);
-                no_data_rl.setVisibility(View.GONE);
-                no_internet_rl.setVisibility(View.VISIBLE);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        customLoadingDialog.dismiss();
+                        mPullToRefreshView.setVisibility(View.GONE);
+                        no_data_rl.setVisibility(View.GONE);
+                        no_internet_rl.setVisibility(View.VISIBLE);
+                    }
+                });
+
             }
         });
 
@@ -146,18 +154,18 @@ public class PresentStatusActivity extends BaseActivity implements PullToRefresh
     //获取更多数据
     private void getMoreData(int page) {
         mPullToRefreshView.setEnablePullTorefresh(true);
-        ApiMine.withdrawal(ApiConstant.WITHDRAWAWAL, userId,page, ApiConstant.PAGE_SIZE, "1",new RequestCallBack<String>() {
+        ApiMine.withdrawal(ApiConstant.WITHDRAWAWAL, userId,page, ApiConstant.PAGE_SIZE, "",new RequestCallBack<String>() {
             @Override
             public void onSuccess(Call call, Response response, final String s) {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         Gson gson=new Gson();
-                        GoldCoinBean goldCoinBean = gson.fromJson(s, GoldCoinBean.class);
-                        String code = goldCoinBean.getCode();
+                        WithdrawalBean withdrawalBean = gson.fromJson(s, WithdrawalBean.class);
+                        String code = withdrawalBean.getCode();
                         if (code.equals(ApiConstant.SUCCESS_CODE)){
                             mPullToRefreshView.onHeaderRefreshComplete();
-                            List<GoldCoinData> list = goldCoinBean.getData();
+                            List<WithdrawalInfo> list = withdrawalBean.getData();
                             if (list!=null && list.size()>0){
                                 //判断是不是刷新
                                 infoList.addAll(list);
