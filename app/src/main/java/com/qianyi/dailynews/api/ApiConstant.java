@@ -96,21 +96,15 @@ public class ApiConstant {
     public static final String  GET_USERINFO= BASE_URL+"/api/user/getUserInfo";
     //找回徒弟
     public static final String  RECALL= BASE_URL+"/api/news/recall";
+    //增加播放量
+    public static final String  ADD_WATCH_NUM= BASE_URL+"/api/videos/addAmountOfPlay";
+    //查询可提现金额
+    public static final String  WITHDRAWAL_MONEY= BASE_URL+"/api/withdraw/info";
+    //确认提现
+    public static final String  DO_WITHDRAWAL= BASE_URL+"/api/withdraw/do";
+    //提现记录
+    public static final String  WITHDRAWAL_RECORD= BASE_URL+"/api/withdraw/detail/page";
     //==========辛振宇==========================================
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -221,6 +221,10 @@
         <activity android:name=".ui.Mine.activity.HelpAndFeedBackActivity"
             android:screenOrientation="portrait"
             />
+        <!-- 确认订单 -->
+        <activity android:name=".ui.Mine.activity.ConfirmOrderActivity"
+            android:screenOrientation="portrait"
+            />
         //********************************************************************
         <provider
             android:name="android.support.v4.content.FileProvider"

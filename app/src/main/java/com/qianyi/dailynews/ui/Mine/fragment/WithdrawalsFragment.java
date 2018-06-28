@@ -15,8 +15,11 @@ import com.qianyi.dailynews.callback.RequestCallBack;
 import com.qianyi.dailynews.dialog.CustomLoadingDialog;
 import com.qianyi.dailynews.ui.Mine.adapter.GoldAdapter;
 import com.qianyi.dailynews.ui.Mine.adapter.WithdrawalAdapter;
+import com.qianyi.dailynews.ui.Mine.adapter.WithdrawalRecordAdapter;
 import com.qianyi.dailynews.ui.Mine.bean.GoldCoinBean;
 import com.qianyi.dailynews.ui.Mine.bean.GoldCoinData;
+import com.qianyi.dailynews.ui.Mine.bean.WithdrawalBean;
+import com.qianyi.dailynews.ui.Mine.bean.WithdrawalInfo;
 import com.qianyi.dailynews.utils.SPUtils;
 import com.qianyi.dailynews.utils.Utils;
 import com.qianyi.dailynews.views.PullToRefreshView;
@@ -25,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import okhttp3.Call;
 import okhttp3.Response;
 
@@ -43,9 +47,8 @@ public class WithdrawalsFragment extends BaseFragment implements PullToRefreshVi
     RelativeLayout no_internet_rl;
     private int page=0;
     private CustomLoadingDialog customLoadingDialog;
-    private WithdrawalAdapter withdrawalAdapter;
-    private List<GoldCoinData> infoList;
-    private boolean isRefresh;
+    private WithdrawalRecordAdapter withdrawalAdapter;
+    private List<WithdrawalInfo> infoList;
     private String userId;
     @Override
     protected View getResLayout(LayoutInflater inflater, ViewGroup container) {
@@ -56,7 +59,7 @@ public class WithdrawalsFragment extends BaseFragment implements PullToRefreshVi
     protected void initViews() {
         customLoadingDialog=new CustomLoadingDialog(getActivity());
         infoList=new ArrayList<>();
-        withdrawalAdapter =new WithdrawalAdapter(getActivity(),infoList);
+        withdrawalAdapter =new WithdrawalRecordAdapter(getActivity(),infoList);
         listview.setAdapter(withdrawalAdapter);
         userId= (String) SPUtils.get(getActivity(),"user_id","");
     }
@@ -76,7 +79,7 @@ public class WithdrawalsFragment extends BaseFragment implements PullToRefreshVi
     //获取数据
     private void getData(int page) {
         mPullToRefreshView.setEnablePullTorefresh(true);
-        ApiMine.withdrawal(ApiConstant.WITHDRAWAWAL, userId,page, ApiConstant.PAGE_SIZE, "",new RequestCallBack<String>() {
+        ApiMine.withdrawalRecord(ApiConstant.WITHDRAWAL_RECORD, userId,page, ApiConstant.PAGE_SIZE,new RequestCallBack<String>() {
             @Override
             public void onSuccess(Call call, Response response, final String s) {
                 customLoadingDialog.dismiss();
@@ -84,17 +87,12 @@ public class WithdrawalsFragment extends BaseFragment implements PullToRefreshVi
                     @Override
                     public void run() {
                         Gson gson=new Gson();
-                        GoldCoinBean goldCoinBean = gson.fromJson(s, GoldCoinBean.class);
-                        String code = goldCoinBean.getCode();
+                        WithdrawalBean withdrawalBean = gson.fromJson(s, WithdrawalBean.class);
+                        String code = withdrawalBean.getCode();
                         if (code.equals(ApiConstant.SUCCESS_CODE)){
                             mPullToRefreshView.onHeaderRefreshComplete();
-                            List<GoldCoinData> list = goldCoinBean.getData();
+                            List<WithdrawalInfo> list = withdrawalBean.getData();
                             if (list!=null && list.size()>0){
-                                //判断是不是刷新
-                                if (isRefresh){
-                                    infoList.clear();
-                                    isRefresh=false;
-                                }
                                 mPullToRefreshView.setVisibility(View.VISIBLE);
                                 no_data_rl.setVisibility(View.GONE);
                                 no_internet_rl.setVisibility(View.GONE);
@@ -117,10 +115,16 @@ public class WithdrawalsFragment extends BaseFragment implements PullToRefreshVi
             }
             @Override
             public void onEror(Call call, int statusCode, Exception e) {
-                customLoadingDialog.dismiss();
-                mPullToRefreshView.setVisibility(View.GONE);
-                no_data_rl.setVisibility(View.GONE);
-                no_internet_rl.setVisibility(View.VISIBLE);
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        customLoadingDialog.dismiss();
+                        mPullToRefreshView.setVisibility(View.GONE);
+                        no_data_rl.setVisibility(View.GONE);
+                        no_internet_rl.setVisibility(View.VISIBLE);
+                    }
+                });
+
             }
         });
     }
@@ -133,11 +137,11 @@ public class WithdrawalsFragment extends BaseFragment implements PullToRefreshVi
                     @Override
                         public void run() {
                         Gson gson=new Gson();
-                        GoldCoinBean goldCoinBean = gson.fromJson(s, GoldCoinBean.class);
-                        String code = goldCoinBean.getCode();
+                        WithdrawalBean withdrawalBean = gson.fromJson(s, WithdrawalBean.class);
+                        String code = withdrawalBean.getCode();
                         if (code.equals(ApiConstant.SUCCESS_CODE)){
                             mPullToRefreshView.onHeaderRefreshComplete();
-                            List<GoldCoinData> list = goldCoinBean.getData();
+                            List<WithdrawalInfo> list = withdrawalBean.getData();
                             if (list!=null && list.size()>0){
                                 //判断是不是刷新
                                 infoList.addAll(list);
@@ -170,7 +174,7 @@ public class WithdrawalsFragment extends BaseFragment implements PullToRefreshVi
     //刷新事件
     @Override
     public void onHeaderRefresh(PullToRefreshView view) {
-        isRefresh=true;
+        infoList.clear();
         page=0;
         getData(page);
     }
@@ -179,5 +183,13 @@ public class WithdrawalsFragment extends BaseFragment implements PullToRefreshVi
     public void onFooterRefresh(PullToRefreshView view) {
         page++;
         getMoreData(page);
+    }
+    @OnClick({R.id.reload})
+    public void click(View view){
+        switch (view.getId()){
+            case R.id.reload:
+                getData(page);
+                break;
+        }
     }
 }

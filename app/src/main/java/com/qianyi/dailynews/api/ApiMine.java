@@ -134,6 +134,37 @@ public class ApiMine {
         params.put("recallUser",recallId);
         OkHttpManager.getInstance().postRequest(url,params,callback);
     }
+    /**
+     * 查询可提现金额
+     * @param callback
+     */
+    public static void withdrawalMoney(String url,String userId,RequestCallBack<String> callback){
+        Map<String,String> params=new HashMap<>();
+        params.put("userId",userId);
+        OkHttpManager.getInstance().postRequest(url,params,callback);
+    }
+    /**
+     * 确认提现
+     * @param callback
+     */
+    public static void doWithdrawal(String url,String userId,String fee,String captcha,RequestCallBack<String> callback){
+        Map<String,String> params=new HashMap<>();
+        params.put("userId",userId);
+        params.put("fee",fee );
+        params.put("captcha",captcha);
+        OkHttpManager.getInstance().postRequest(url,params,callback);
+    }
+    /**
+     * 提现记录
+     * @param callback
+     */
+    public static void withdrawalRecord(String url,String userId,int curPage,String pageSize,RequestCallBack<String> callback){
+        Map<String,String> params=new HashMap<>();
+        params.put("userId",userId);
+        params.put("curPage",curPage+"");
+        params.put("pageSize",pageSize);
+        OkHttpManager.getInstance().postRequest(url,params,callback);
+    }
 
 
 

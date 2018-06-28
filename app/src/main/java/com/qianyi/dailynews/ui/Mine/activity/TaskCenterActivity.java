@@ -4,11 +4,18 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,7 +32,16 @@ import com.qianyi.dailynews.ui.WebviewActivity;
 import com.qianyi.dailynews.ui.account.activity.LoginActivity;
 import com.qianyi.dailynews.ui.invitation.activity.IncomeShowActivity;
 import com.qianyi.dailynews.utils.SPUtils;
+import com.qianyi.dailynews.utils.WhiteBgBitmapUtil;
+import com.sina.weibo.sdk.api.WebpageObject;
+import com.sina.weibo.sdk.api.WeiboMultiMessage;
+import com.sina.weibo.sdk.share.WbShareHandler;
+import com.sina.weibo.sdk.statistic.WBAgent;
+import com.sina.weibo.sdk.utils.Utility;
 import com.tencent.mm.sdk.modelmsg.SendAuth;
+import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
+import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
+import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
@@ -98,6 +114,8 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
     @BindView(R.id.seventhDay_already_ll) public LinearLayout seventhDay_already_ll;
     @BindView(R.id.seventhDay_none_ll) public LinearLayout seventhDay_none_ll;
 
+    @BindView(R.id.ll_taskCenter) public LinearLayout ll_taskCenter;
+
 
     //赚钱攻略
     @BindView(R.id.tv_ProfitMakingStrategy) public TextView tv_ProfitMakingStrategy;
@@ -123,6 +141,14 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
     @BindView(R.id.btn_answerAward) public TextView btn_answerAward;
     @BindView(R.id.btn_Questionnaire) public TextView btn_Questionnaire;
     private String mission1,mission2,mission3,mission4;
+    private PopupWindow pw_share;
+    private View view_share;
+    public LinearLayout ll_friendCircle;//分享到盆友圈
+    public LinearLayout ll_QQ;//分享到QQ
+    public LinearLayout ll_wechat;//分享到微信
+    public LinearLayout ll_weibo;//分享到微博
+    private IWXAPI mWxApi;
+    private WbShareHandler shareHandler;
     @Override
     protected void initViews() {
         back.setOnClickListener(new View.OnClickListener() {
@@ -159,6 +185,21 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
         IntentFilter intentFilterUpdateMission = new IntentFilter();
         intentFilterUpdateMission.addAction("com.action.update.mission");
         registerReceiver(myReceiver, intentFilterUpdateMission);
+
+
+        view_share = LayoutInflater.from(TaskCenterActivity.this).inflate(R.layout.pw_share, null);
+        ll_friendCircle=view_share.findViewById(R.id.ll_friendCircle);
+        ll_QQ=view_share.findViewById(R.id.ll_QQ);
+        ll_wechat=view_share.findViewById(R.id.ll_wechat);
+        ll_weibo=view_share.findViewById(R.id.ll_weibo);
+        ll_friendCircle.setOnClickListener(this);
+        ll_QQ.setOnClickListener(this);
+        ll_wechat.setOnClickListener(this);
+        ll_weibo.setOnClickListener(this);
+
+        mWxApi = WXAPIFactory.createWXAPI(this, ApiConstant.APP_ID, false);
+        // 将该app注册到微信
+        mWxApi.registerApp(ApiConstant.APP_ID);
 
     }
     @Override
@@ -421,8 +462,9 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
                 finish();
                 break;
             case R.id.btn_sunincome:
+                shwoSharePw();
                 //晒收入
-               jumpActivity(TaskCenterActivity.this, IncomeShowActivity.class);
+               //jumpActivity(TaskCenterActivity.this, IncomeShowActivity.class);
                 break;
             case R.id.btn_commentAward:
                 //去评论
@@ -440,8 +482,183 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
                 }
                 sign();
                 break;
-
+            case R.id.ll_wechat:
+                //微信分享
+                //Toast.makeText(this, "微信分享", Toast.LENGTH_SHORT).show();
+                shareFriends();
+                pw_share.dismiss();
+                break;
+            case R.id.ll_friendCircle:
+                shareFriendCircle();
+                pw_share.dismiss();
+                //朋友圈分享
+                //Toast.makeText(this, "朋友圈分享", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.ll_QQ:
+                //QQ分享
+                //Toast.makeText(this, "QQ分享", Toast.LENGTH_SHORT).show();
+              /*  shareFriends();
+                pw_share.dismiss();*/
+                break;
+            case R.id.ll_weibo:
+                //微博分享
+                //Toast.makeText(this, "微博分享", Toast.LENGTH_SHORT).show();
+                shareWeiBo();
+                pw_share.dismiss();
+                break;
         }
+    }
+    private void shareFriendCircle() {
+        WXWebpageObject webpage = new WXWebpageObject();
+        webpage.webpageUrl = ApiConstant.DAILY_SHARE_URL;
+        WXMediaMessage msg = new WXMediaMessage(webpage);
+        msg.title = "每日速报";
+        msg.description = "每日速报是一款基于数据挖掘的推荐引擎产品，它为用户推荐有价值的、个性化的信息，提供连接人与信息的新型服务。";
+        Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.mipmap.logo);
+        Bitmap bitmap = WhiteBgBitmapUtil.drawableBitmapOnWhiteBg(this, bmp);
+        Bitmap thumbBmp = Bitmap.createScaledBitmap(bitmap, 200, 200, true);
+        msg.setThumbImage(thumbBmp);
+        bmp.recycle();
+        SendMessageToWX.Req req = new SendMessageToWX.Req();
+        req.transaction = buildTransaction("webpage");
+        req.message = msg;
+        // req.scene = sendtype==0?SendMessageToWX.Req.WXSceneSession:SendMessageToWX.Req.WXSceneTimeline;
+        req.scene = SendMessageToWX.Req.WXSceneTimeline;
+        mWxApi.sendReq(req);
+    }
+    public static String buildTransaction(final String type) {
+        return (type == null) ? String.valueOf(System.currentTimeMillis()) : type + System.currentTimeMillis();
+    }
+    //分享到微博
+    private void shareWeiBo() {
+        initLog();
+        //startActivity(new Intent(getActivity(), WBAuthActivity.class));
+        shareHandler = new WbShareHandler(this);
+        shareHandler.registerApp();
+        // sendMessage(true, true);
+        shareWebPage();
+    }
+    private void shareWebPage() {
+      /*  WebpageObject mediaObj =new WebpageObject();
+        //创建文本消息对象
+        TextObject textObject =new TextObject();
+        textObject.text= "你分享内容的描述"+"分享网页的话加上网络地址";
+
+        textObject.title= "哈哈哈哈哈哈";
+
+        //创建图片消息对象，如果只分享文字和网页就不用加图片
+
+        WeiboMultiMessage message =new WeiboMultiMessage();
+
+        ImageObject imageObject =new ImageObject();
+
+        // 设置 Bitmap 类型的图片到视频对象里        设置缩略图。 注意：最终压缩过的缩略图大小 不得超过 32kb。
+
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources() , R.drawable.test);
+
+        imageObject.setImageObject(bitmap);
+
+        message.textObject= textObject;
+
+        message.imageObject= imageObject;
+
+        message.mediaObject= mediaObj;*/
+
+
+        WebpageObject mediaObject = new WebpageObject();
+        mediaObject.identify = Utility.generateGUID();
+        mediaObject.title = "每日速报";
+        mediaObject.description = "每日速报是一款基于数据挖掘的推荐引擎产品，它为用户推荐有价值的、个性化的信息，提供连接人与信息的新型服务。";
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.logo);
+
+        // 设置 Bitmap 类型的图片到视频对象里         设置缩略图。 注意：最终压缩过的缩略图大小不得超过 32kb。
+        mediaObject.setThumbImage(bitmap);
+        mediaObject.actionUrl = ApiConstant.DAILY_SHARE_URL;
+        mediaObject.defaultText = "每日速报是一款基于数据挖掘的推荐引擎产品，它为用户推荐有价值的、个性化的信息，提供连接人与信息的新型服务。";
+        WeiboMultiMessage message = new WeiboMultiMessage();
+        message.mediaObject = mediaObject;
+        shareHandler.shareMessage(message, false);
+    }
+    private void initLog() {
+        WBAgent.setAppKey(ApiConstant.APP_KEY_WEIBO);
+        WBAgent.setChannel("weibo"); //这个是统计这个app 是从哪一个平台down下来的  百度手机助手
+        WBAgent.openActivityDurationTrack(false);
+        try {
+            //设置发送时间间隔 需大于90s小于8小时
+            WBAgent.setUploadInterval(91000);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 创建多媒体（网页）消息对象。
+     *
+     * @return 多媒体（网页）消息对象。
+     */
+    private WebpageObject getWebpageObj() {
+        WebpageObject mediaObject = new WebpageObject();
+        mediaObject.identify = Utility.generateGUID();
+        mediaObject.title = "测试title";
+        mediaObject.description = "测试描述";
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_logo);
+
+        // 设置 Bitmap 类型的图片到视频对象里         设置缩略图。 注意：最终压缩过的缩略图大小不得超过 32kb。
+        mediaObject.setThumbImage(bitmap);
+        mediaObject.actionUrl = ApiConstant.DAILY_SHARE_URL;
+        mediaObject.defaultText = "Webpage 默认文案";
+        return mediaObject;
+    }
+
+    //分享到微信
+    private void shareFriends() {
+        WXWebpageObject webpage = new WXWebpageObject();
+        webpage.webpageUrl = ApiConstant.DAILY_SHARE_URL;
+        WXMediaMessage msg = new WXMediaMessage(webpage);
+        msg.title = "每日速报";
+        msg.description = "每日速报是一款基于数据挖掘的推荐引擎产品，它为用户推荐有价值的、个性化的信息，提供连接人与信息的新型服务。";
+        Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.mipmap.logo);
+        Bitmap bitmap = WhiteBgBitmapUtil.drawableBitmapOnWhiteBg(this, bmp);
+        Bitmap thumbBmp = Bitmap.createScaledBitmap(bitmap, 200, 200, true);
+        msg.setThumbImage(thumbBmp);
+        bmp.recycle();
+        SendMessageToWX.Req req = new SendMessageToWX.Req();
+        req.transaction = buildTransaction("webpage");
+        req.message = msg;
+        // req.scene = sendtype==0?SendMessageToWX.Req.WXSceneSession:SendMessageToWX.Req.WXSceneTimeline;
+        req.scene = SendMessageToWX.Req.WXSceneSession;
+        mWxApi.sendReq(req);
+    }
+
+    private void shwoSharePw() {
+        pw_share = new PopupWindow(TaskCenterActivity.this);
+        pw_share.setContentView(view_share);
+        pw_share.setWidth(LinearLayout.LayoutParams.MATCH_PARENT);
+        pw_share.setHeight(LinearLayout.LayoutParams.WRAP_CONTENT);
+        pw_share.setTouchable(true);
+        pw_share.setFocusable(true);
+        pw_share.setBackgroundDrawable(new BitmapDrawable());
+        pw_share.setAnimationStyle(R.style.AnimBottom);
+        pw_share.showAtLocation(ll_taskCenter, Gravity.BOTTOM, 0, 0);
+        // 设置pw弹出时候的背景颜色的变化
+        backgroundAlpha(0.5f);
+        pw_share.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                backgroundAlpha(1f);
+            }
+        });
+    }
+    /**
+     * 设置添加屏幕的背景透明度
+     *
+     * @param
+     */
+    public void backgroundAlpha(float bgAlpha) {
+        WindowManager.LayoutParams lp = getWindow().getAttributes();
+        lp.alpha = bgAlpha;
+        getWindow().setAttributes(lp);
     }
     /***
      * 微信登录

@@ -2,6 +2,7 @@ package com.qianyi.dailynews.ui.video;
 
 import android.content.Intent;
 import android.os.Build;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -54,7 +55,7 @@ public class VideoPlayingActivity extends BaseActivity {
     RelativeLayout no_internet_rl;
     private RecommendAdapter recommendAdapter;
     private Intent intent;
-    private String videoUrl,viewCount,title;
+    private String videoUrl,viewCount,title,videoId;
     private List<VideoDetailInfo> infoList;
     @Override
     protected void initViews() {
@@ -66,6 +67,7 @@ public class VideoPlayingActivity extends BaseActivity {
             videoUrl=intent.getStringExtra("videoUrl");
             viewCount=intent.getStringExtra("viewCount");
             title=intent.getStringExtra("title");
+            videoId=intent.getStringExtra("videoId");
         }
         if (Utils.hasInternet()){
             lv_recommend.setVisibility(View.VISIBLE);
@@ -95,6 +97,7 @@ public class VideoPlayingActivity extends BaseActivity {
                 , JCVideoPlayerStandard.SCREEN_LAYOUT_NORMAL,"");
         videoPlayerStandard.startVideo();
         getData();
+
     }
     //获取数据
     private void getData() {
