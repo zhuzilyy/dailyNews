@@ -74,14 +74,15 @@
             app:tabIndicatorHeight="0dp"
             android:background="@color/white"
             app:tabSelectedTextColor="#d81e06"/>
+        <!--当前金币新闻获取情况-->
         <LinearLayout
+
             android:visibility="gone"
             android:id="@+id/ll_redNumber"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:gravity="center"
             android:layout_height="match_parent"
-
             android:background="@color/white"
             >
             <View
@@ -93,6 +94,7 @@
                 android:layout_marginRight="@dimen/dp_5"
                 />
             <LinearLayout
+
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
@@ -132,13 +134,10 @@
         </LinearLayout>
 
     </LinearLayout>
-
-
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#AAEBEBEB"/>
-
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"
         android:layout_width="match_parent"

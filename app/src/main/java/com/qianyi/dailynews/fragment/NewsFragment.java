@@ -65,6 +65,7 @@ public class NewsFragment extends BaseFragment implements View.OnClickListener {
     private String TotleCount;
     public static String Gold="";
     private MyReceiver myReceiver;
+    public static int CurrentGetCoinNumber=0;
 
     @Override
     protected View getResLayout(LayoutInflater inflater, ViewGroup container) {
@@ -75,24 +76,31 @@ public class NewsFragment extends BaseFragment implements View.OnClickListener {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-
-
-
-
     }
 
     @Override
     protected void initViews() {
         myReceiver= new MyReceiver();
         IntentFilter filter01=new IntentFilter("getRewardOk");
+        IntentFilter filter02=new IntentFilter("loginOk");
+
         getActivity().registerReceiver(myReceiver,filter01);
+        getActivity().registerReceiver(myReceiver,filter02);
 
         //获取红包奖励数
         getRedPackage();
 
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
     @Override
     protected void initData() {
+        CurrentNewsTitle = 0;
+        fragments.clear();
         ApiNews.GetNewsTitles(ApiConstant.NEWS_TITLES, new RequestCallBack<String>() {
             @Override
             public void onSuccess(Call call, Response response, String s) {
@@ -108,7 +116,7 @@ public class NewsFragment extends BaseFragment implements View.OnClickListener {
                           if(newsTypeRes.size()>0){
                               MyApplication.newsTypeRes=newsTypeRes;
                               //赋值数据
-                              viewPager.setOffscreenPageLimit(3);
+                             viewPager.setOffscreenPageLimit(3);
                               for(int i=0;i<newsTypeRes.size();i++){
                                   tabLayout.addTab(tabLayout.newTab());
                                   fragments.add(new PageFragment());
@@ -186,6 +194,7 @@ public class NewsFragment extends BaseFragment implements View.OnClickListener {
             @Override
             public void onSuccess(Call call, Response response, String s) {
                 Log.i("ss",s);
+              //  Toast.makeText(mActivity, "99999", Toast.LENGTH_SHORT).show();
                 try {
                     JSONObject jsonObject = new JSONObject(s);
                     String code=jsonObject.getString("code");
@@ -195,14 +204,14 @@ public class NewsFragment extends BaseFragment implements View.OnClickListener {
                            CurretUsed= jsonObject1.getString("used");
                            TotleCount=jsonObject1.getString("cnt");
                            Gold=jsonObject1.getString("gold");
-                           
                            getActivity().runOnUiThread(new Runnable() {
                                @Override
                                public void run() {
                                    if(!TextUtils.isEmpty(CurretUsed)||!TextUtils.isEmpty(TotleCount)){
-                                       //
                                        ll_redNumber.setVisibility(View.VISIBLE);
                                        tv_redNumber.setText(CurretUsed+"/"+TotleCount);
+                                       CurrentGetCoinNumber=Integer.parseInt(CurretUsed);
+
                                    }
                                }
                            });
@@ -232,6 +241,12 @@ public class NewsFragment extends BaseFragment implements View.OnClickListener {
             if("getRewardOk".equals(action)){
                 getRedPackage();
             }
+            if("loginOk".equals(action)){
+                ll_redNumber.setVisibility(View.VISIBLE);
+                //获取当前金币新闻总数
+                getRedPackage();
+            }
+
         }
     }
 

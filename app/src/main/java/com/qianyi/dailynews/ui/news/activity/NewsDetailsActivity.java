@@ -140,7 +140,6 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
         contentStr=getIntent().getStringExtra("des");
         redMoney=getIntent().getStringExtra("redMoney");
         int redMoneyStr=Integer.parseInt(redMoney);
-        Toast.makeText(this, ""+redMoneyStr, Toast.LENGTH_SHORT).show();
         if(redMoneyStr>0){
 
             re_money.setVisibility(View.VISIBLE);
@@ -249,18 +248,21 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
                                     bigCommendList.clear();
                                     bigCommendList.addAll(newsBeans);
                                     newsAdapter=new NewsAdapter(NewsDetailsActivity.this,bigCommendList, "0");
-                                    lv.setAdapter(newsAdapter);
-                                    lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                                        @Override
-                                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                            Intent intent=new Intent(NewsDetailsActivity.this,NewsDetailsActivity.class);
-                                            intent.putExtra("title",bigCommendList.get(position).getTitle());
-                                            intent.putExtra("url",bigCommendList.get(position).getUrl());
-                                            intent.putExtra("id",bigCommendList.get(position).getId());
-                                            startActivity(intent);
-                                            finish();
-                                        }
-                                    });
+                                    if(lv!=null){
+                                        lv.setAdapter(newsAdapter);
+                                        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                            @Override
+                                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                                Intent intent=new Intent(NewsDetailsActivity.this,NewsDetailsActivity.class);
+                                                intent.putExtra("title",bigCommendList.get(position).getTitle());
+                                                intent.putExtra("url",bigCommendList.get(position).getUrl());
+                                                intent.putExtra("id",bigCommendList.get(position).getId());
+                                                startActivity(intent);
+                                                finish();
+                                            }
+                                        });
+                                    }
+
                                 }
                             }
                         }
@@ -505,9 +507,20 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
      */
     private void getReward() {
         if(timeOut&&readMore){
-            //金币哗啦哗啦的声音
-            playSound(R.raw.mm);
-            getReward2();
+            //是红包新闻
+            if(Integer.parseInt(redMoney)>0){
+                getReward2();
+                //金币哗啦哗啦的声音
+                playSound(R.raw.mm);
+            }else {
+                //金币新闻[大于25就结束]
+               if( NewsFragment.CurrentGetCoinNumber <= 25){
+                   getReward2();
+                   //金币哗啦哗啦的声音
+                   playSound(R.raw.mm);
+               }
+            }
+
         }
     }
 

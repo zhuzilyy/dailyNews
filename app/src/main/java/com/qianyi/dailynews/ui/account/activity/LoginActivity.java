@@ -266,6 +266,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                                     Intent intent=new Intent();
                                     intent.setAction("com.action.login.success");
                                     sendBroadcast(intent);
+                                    sendBroadcast(new Intent("loginOk"));
                                     finish();
                                 }
                         } catch (JSONException e) {

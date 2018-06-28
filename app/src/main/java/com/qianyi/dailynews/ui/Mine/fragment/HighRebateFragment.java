@@ -72,6 +72,12 @@ public class HighRebateFragment extends BaseFragment implements PullToRefreshVie
         userId= (String) SPUtils.get(getActivity(),"user_id","");
 
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
+
     @Override
     protected void initData() {
         if (!Utils.hasInternet()){
@@ -162,6 +168,7 @@ public class HighRebateFragment extends BaseFragment implements PullToRefreshVie
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        Log.i("sss",s);
                         mPullToRefreshView.onHeaderRefreshComplete();
                         Gson gson = new Gson();
                         FanLiBean fanLiBean = gson.fromJson(s, FanLiBean.class);
@@ -188,7 +195,7 @@ public class HighRebateFragment extends BaseFragment implements PullToRefreshVie
 
             @Override
             public void onEror(Call call, int statusCode, Exception e) {
-
+                    Log.i("ss",e.getMessage());
             }
         });
     }

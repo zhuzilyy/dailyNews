@@ -139,7 +139,7 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
     public ClearEditText et_invation;
 
 
-    private CustomLoadingDialog customLoadingDialog;
+   // private CustomLoadingDialog customLoadingDialog;
     private String userId;
     private LinearLayout ll_friendCircle, ll_qq, ll_wechat, ll_weibo,ll_copyLianjie,ll_shouTu;
     private IWXAPI mWxApi;
@@ -179,7 +179,7 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
         back.setVisibility(View.GONE);
         rightTv.setText("邀请规则");
         rightTv.setVisibility(View.VISIBLE);
-        customLoadingDialog = new CustomLoadingDialog(getActivity());
+      //  customLoadingDialog = new CustomLoadingDialog(getActivity());
         //****是否展示填写邀请码**********
         String invite_code = (String) SPUtils.get(getActivity(), "invite_code", "----");
         if (!TextUtils.isEmpty(invite_code)) {
@@ -352,14 +352,14 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
 
     //获取数据
     private void getData() {
-        customLoadingDialog.show();
+       // customLoadingDialog.show();
         ApiInvite.getBanner(ApiConstant.INVITE, new RequestCallBack<String>() {
             @Override
             public void onSuccess(Call call, Response response, final String s) {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        customLoadingDialog.dismiss();
+
                         Gson gson = new Gson();
                         InviteBean inviteBean = gson.fromJson(s, InviteBean.class);
                         String code = inviteBean.getCode();
@@ -374,7 +374,7 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
 
             @Override
             public void onEror(Call call, int statusCode, Exception e) {
-                customLoadingDialog.dismiss();
+
             }
         });
     }
