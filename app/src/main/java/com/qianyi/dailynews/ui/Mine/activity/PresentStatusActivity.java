@@ -15,6 +15,7 @@ import com.qianyi.dailynews.callback.RequestCallBack;
 import com.qianyi.dailynews.dialog.CustomLoadingDialog;
 import com.qianyi.dailynews.ui.Mine.adapter.HighRebateTaskAdapter;
 import com.qianyi.dailynews.ui.Mine.adapter.WithdrawalAdapter;
+import com.qianyi.dailynews.ui.Mine.adapter.WithdrawalDetailRecordAdapter;
 import com.qianyi.dailynews.ui.Mine.adapter.WithdrawalRecordAdapter;
 import com.qianyi.dailynews.ui.Mine.bean.FanLiBean;
 import com.qianyi.dailynews.ui.Mine.bean.FanLiInfo;
@@ -51,7 +52,7 @@ public class PresentStatusActivity extends BaseActivity implements PullToRefresh
     @BindView(R.id.no_internet_rl)
     RelativeLayout no_internet_rl;
     private int page=1;
-    private WithdrawalRecordAdapter withdrawalAdapter;
+    private WithdrawalDetailRecordAdapter withdrawalAdapter;
     private List<WithdrawalInfo> infoList;
     private CustomLoadingDialog customLoadingDialog;
     private  String userId;
@@ -68,7 +69,7 @@ public class PresentStatusActivity extends BaseActivity implements PullToRefresh
         infoList=new ArrayList<>();
         mPullToRefreshView.setmOnHeaderRefreshListener(this);
         mPullToRefreshView.setmOnFooterRefreshListener(this);
-        withdrawalAdapter =new WithdrawalRecordAdapter(this,infoList);
+        withdrawalAdapter =new WithdrawalDetailRecordAdapter(this,infoList);
         listview.setAdapter(withdrawalAdapter);
         userId= (String) SPUtils.get(this,"user_id","");
     }

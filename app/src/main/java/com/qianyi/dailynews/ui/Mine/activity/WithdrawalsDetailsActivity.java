@@ -32,7 +32,9 @@ public class WithdrawalsDetailsActivity extends BaseActivity {
     @BindView(R.id.tv_balance)
     TextView tv_balance;
     private Intent intent;
-    private String withdrawalMoney,balance;
+    private String withdrawalMoney,balance,userId;
+    private CustomLoadingDialog customLoadingDialog;
+    private double doubleBalance;
     @Override
     protected void initViews() {
         intent=getIntent();
@@ -43,10 +45,38 @@ public class WithdrawalsDetailsActivity extends BaseActivity {
             tv_wechatMoney.setText(withdrawalMoney);
             tv_balance.setText(balance);
         }
+        userId= (String) SPUtils.get(this,"user_id","");
+        customLoadingDialog=new CustomLoadingDialog(this);
     }
     @Override
     protected void initData() {
-
+        getMoney();
+    }
+    private void getMoney() {
+        customLoadingDialog.show();
+        ApiMine.withdrawalMoney(ApiConstant.WITHDRAWAL_MONEY, userId, new RequestCallBack<String>() {
+            @Override
+            public void onSuccess(Call call, final Response response, final String s) {
+                customLoadingDialog.dismiss();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            JSONObject jsonObject=new JSONObject(s);
+                            balance = jsonObject.getString("data");
+                            doubleBalance=Double.parseDouble(balance);
+                            tv_balance.setText(balance);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
+            @Override
+            public void onEror(Call call, int statusCode, Exception e) {
+                customLoadingDialog.dismiss();
+            }
+        });
     }
     @Override
     protected void getResLayout() {
@@ -69,6 +99,11 @@ public class WithdrawalsDetailsActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.btn_withdrawal:
+                String subMoney = withdrawalMoney.substring(0, withdrawalMoney.length()-1);
+                double doubleSubMoney = Double.parseDouble(subMoney);
+                if (doubleSubMoney<1){
+                    return;
+                }
                 Intent intent=new Intent(WithdrawalsDetailsActivity.this,ConfirmOrderActivity.class);
                 intent.putExtra("withdrawalMoney",withdrawalMoney);
                 startActivity(intent);

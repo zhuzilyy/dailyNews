@@ -1,7 +1,9 @@
 package com.qianyi.dailynews.ui.Mine.activity;
 
 import android.content.Intent;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -18,6 +20,9 @@ import com.qianyi.dailynews.utils.SPUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 import okhttp3.Call;
@@ -31,20 +36,23 @@ public class ConfirmOrderActivity extends BaseActivity {
     @BindView(R.id.tv_title)
     TextView tv_title;
     @BindView(R.id.et1)
-    EditText et1;
+    TextView textView1;
     @BindView(R.id.et2)
-    EditText et2;
+    TextView textView2;
     @BindView(R.id.et3)
-    EditText et3;
+    TextView textView3;
     @BindView(R.id.et4)
-    EditText et4;
+    TextView textView4;
     @BindView(R.id.et5)
-    EditText et5;
+    TextView textView5;
     @BindView(R.id.et6)
-    EditText et6;
+    TextView textView6;
+    @BindView(R.id.et_confirmCode)
+    EditText et_confirmCode;
     private String userId,withdrawalMoney,subMoney;
     private CustomLoadingDialog customLoadingDialog;
     private Intent intent;
+    private List<TextView> textViewList;
     @Override
     protected void initViews() {
         tv_title.setText("确认订单");
@@ -55,6 +63,13 @@ public class ConfirmOrderActivity extends BaseActivity {
             withdrawalMoney=intent.getStringExtra("withdrawalMoney");
             subMoney = withdrawalMoney.substring(0, withdrawalMoney.length()-1);
         }
+        textViewList=new ArrayList<>();
+        textViewList.add(textView1);
+        textViewList.add(textView2);
+        textViewList.add(textView3);
+        textViewList.add(textView4);
+        textViewList.add(textView5);
+        textViewList.add(textView6);
     }
     @Override
     protected void initData() {
@@ -66,7 +81,28 @@ public class ConfirmOrderActivity extends BaseActivity {
     }
     @Override
     protected void initListener() {
+        et_confirmCode.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                String code = charSequence.toString();
+                for (int j = 0; j <textViewList.size() ; j++) {
+                     textViewList.get(j).setText("");
+                }
+                for (int j = 0; j <code.length() ; j++) {
+                    char c = code.charAt(j);
+                    textViewList.get(j).setText(c+"");
+                }
+            }
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
     }
     @Override
     protected void setStatusBarColor() {
@@ -79,12 +115,12 @@ public class ConfirmOrderActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.btn_confrim:
-                String first = et1.getText().toString().trim();
-                String second = et2.getText().toString().trim();
-                String third = et3.getText().toString().trim();
-                String fourth = et4.getText().toString().trim();
-                String fifth = et5.getText().toString().trim();
-                String sixth = et6.getText().toString().trim();
+                String first = textView1.getText().toString().trim();
+                String second =textView2.getText().toString().trim();
+                String third = textView3.getText().toString().trim();
+                String fourth =textView4.getText().toString().trim();
+                String fifth = textView5.getText().toString().trim();
+                String sixth = textView6.getText().toString().trim();
                 if (TextUtils.isEmpty(first)){
                     Toast.makeText(this, "请输入完整验证码第1位", Toast.LENGTH_SHORT).show();
                     return;
