@@ -167,7 +167,9 @@ public class ActivityZoneActivity extends BaseActivity {
                     Toast.makeText(this, "先去完成新手任务", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                jumpActivity(this,WithdrawalsActivity.class);
+                intent=new Intent(this,WithdrawalsDetailsActivity.class);
+                intent.putExtra("withdrawalMoney","1元");
+                startActivity(intent);
                 break;
             case R.id.tv_signState:
                 if (sign.equals("1")){

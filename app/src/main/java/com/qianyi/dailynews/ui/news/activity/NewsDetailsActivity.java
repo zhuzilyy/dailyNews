@@ -46,6 +46,7 @@ import com.qianyi.dailynews.ui.news.bean.NewsBean;
 import com.qianyi.dailynews.ui.news.bean.NewsContentBean;
 import com.qianyi.dailynews.ui.news.views.KeyMapDailog;
 import com.qianyi.dailynews.ui.news.views.MySingListView;
+import com.qianyi.dailynews.utils.RegUtil;
 import com.qianyi.dailynews.utils.SPUtils;
 import com.qianyi.dailynews.utils.WebviewUtil;
 import com.qianyi.dailynews.utils.WhiteBgBitmapUtil;
@@ -110,7 +111,7 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
     private List<NewsBean> bigCommendList=new ArrayList<>();
 
     //***********************************
-    private String titleStr;
+    private String titleStr,subTitle;
     private String urlStr;
     private String contentStr;
     private WebSettings webSettings;
@@ -132,24 +133,23 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
     private boolean readMore=false;
     @Override
     protected void initViews() {
-
-
         mWxApi = WXAPIFactory.createWXAPI(this, ApiConstant.APP_ID, false);
         // 将该app注册到微信
         mWxApi.registerApp(ApiConstant.APP_ID);
         newsId=getIntent().getStringExtra("id");
         urlStr=getIntent().getStringExtra("url");
         contentStr=getIntent().getStringExtra("des");
+        contentStr=RegUtil.replaceSpecialStr(contentStr);
+        contentStr=contentStr.substring(0,50);
         redMoney=getIntent().getStringExtra("redMoney");
+        subTitle=getIntent().getStringExtra("title");
         int redMoneyStr=Integer.parseInt(redMoney);
         if(redMoneyStr>0){
-
             re_money.setVisibility(View.VISIBLE);
            tv_money2.setText("+"+redMoneyStr+"");
         }else {
             re_money.setVisibility(View.GONE);
         }
-
         if(!TextUtils.isEmpty(newsId)){
             //先调阅读新闻
             readNews(newsId);
@@ -165,10 +165,6 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
             WebviewUtil.setWebview(bottom_web,webSettings);
             bottom_web.loadUrl(urlStr);
         }
-
-
-
-
     }
 
     /***
@@ -735,10 +731,10 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
     //分享到微信
     private void shareFriends() {
         WXWebpageObject webpage = new WXWebpageObject();
-        webpage.webpageUrl = "http://www.gaokaoygzy.cn/download";
+        webpage.webpageUrl = urlStr;
         WXMediaMessage msg = new WXMediaMessage(webpage);
         msg.title = "每日速报";
-        msg.description = "每日速报";
+        msg.description = contentStr;
         Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.mipmap.logo);
         Bitmap bitmap = WhiteBgBitmapUtil.drawableBitmapOnWhiteBg(this, bmp);
         Bitmap thumbBmp = Bitmap.createScaledBitmap(bitmap, 100, 100, true);
@@ -759,8 +755,8 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
         WXWebpageObject webpage = new WXWebpageObject();
         webpage.webpageUrl = urlStr;
         WXMediaMessage msg = new WXMediaMessage(webpage);
-        msg.title = titleStr;
-        msg.description = "123";
+        msg.title =  "每日速报";
+        msg.description =contentStr;
         Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.mipmap.logo);
         Bitmap bitmap = WhiteBgBitmapUtil.drawableBitmapOnWhiteBg(this, bmp);
         Bitmap thumbBmp = Bitmap.createScaledBitmap(bitmap, 100, 100, true);
@@ -812,14 +808,18 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
 
         WebpageObject mediaObject = new WebpageObject();
         mediaObject.identify = Utility.generateGUID();
-        mediaObject.title = "测试title";
-        mediaObject.description = "测试描述";
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.logo);
+        mediaObject.title =  "每日速报";
+        mediaObject.description = contentStr;
+        //Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.logo);
 
+
+        Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.mipmap.logo);
+        Bitmap bitmap = WhiteBgBitmapUtil.drawableBitmapOnWhiteBg(this, bmp);
+        Bitmap thumbBmp = Bitmap.createScaledBitmap(bitmap, 100, 100, true);
         // 设置 Bitmap 类型的图片到视频对象里         设置缩略图。 注意：最终压缩过的缩略图大小不得超过 32kb。
-        mediaObject.setThumbImage(bitmap);
-        mediaObject.actionUrl = "http://news.sina.com.cn/c/2013-10-22/021928494669.shtml";
-        mediaObject.defaultText = "Webpage 默认文案";
+        mediaObject.setThumbImage(thumbBmp);
+        mediaObject.actionUrl = urlStr;
+        mediaObject.defaultText = contentStr;
         WeiboMultiMessage message = new WeiboMultiMessage();
         message.mediaObject = mediaObject;
         shareHandler.shareMessage(message, false);

@@ -1,10 +1,12 @@
 package com.qianyi.dailynews.ui.news.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.RelativeLayout;
@@ -195,7 +197,7 @@ public class SearchActivity extends BaseActivity {
     protected void setStatusBarColor() {
 
     }
-    @OnClick({R.id.ll_change,R.id.reload})
+    @OnClick({R.id.ll_change,R.id.reload,R.id.ll_search})
     public void click(View view){
         switch (view.getId()){
             case R.id.ll_change:
@@ -204,6 +206,11 @@ public class SearchActivity extends BaseActivity {
                 break;
             case R.id.reload:
                 getData(ApiConstant.HOT_WORD);
+                break;
+            case R.id.ll_search:
+                InputMethodManager imm = (InputMethodManager)
+                getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                 break;
         }
     }

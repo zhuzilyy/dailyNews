@@ -2,6 +2,7 @@ package com.qianyi.dailynews.ui.Mine.activity;
 
 import android.content.Intent;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.TextView;
 
 import com.qianyi.dailynews.R;
@@ -32,7 +33,11 @@ public class WithdrawalsDetailsActivity extends BaseActivity {
     @BindView(R.id.tv_balance)
     TextView tv_balance;
     private Intent intent;
-    private String withdrawalMoney,balance;
+    private String withdrawalMoney,balance,userId;
+    private CustomLoadingDialog customLoadingDialog;
+    private double doubleBalance;
+    @BindView(R.id.wv_webview)
+    WebView wv_webview;
     @Override
     protected void initViews() {
         intent=getIntent();
@@ -43,10 +48,68 @@ public class WithdrawalsDetailsActivity extends BaseActivity {
             tv_wechatMoney.setText(withdrawalMoney);
             tv_balance.setText(balance);
         }
+        userId= (String) SPUtils.get(this,"user_id","");
+        customLoadingDialog=new CustomLoadingDialog(this);
     }
     @Override
     protected void initData() {
+        getMoney();
+        getWebview();
+    }
 
+    private void getWebview() {
+        ApiMine.getWebview(ApiConstant.WEBVIEW, "DEPOSIT", new RequestCallBack<String>() {
+            @Override
+            public void onSuccess(Call call, Response response, final String s) {
+                customLoadingDialog.dismiss();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            JSONObject jsonObject=new JSONObject(s);
+                            String return_code = jsonObject.getString("return_code");
+                            String data = jsonObject.getString("data");
+                            if (return_code.equals("SUCCESS")){
+                                wv_webview.loadDataWithBaseURL(null, data, "text/html" , "utf-8", null);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
+
+            @Override
+            public void onEror(Call call, int statusCode, Exception e) {
+                customLoadingDialog.dismiss();
+            }
+        });
+    }
+    private void getMoney() {
+        customLoadingDialog.show();
+        ApiMine.withdrawalMoney(ApiConstant.WITHDRAWAL_MONEY, userId, new RequestCallBack<String>() {
+            @Override
+            public void onSuccess(Call call, final Response response, final String s) {
+                customLoadingDialog.dismiss();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            JSONObject jsonObject=new JSONObject(s);
+                            balance = jsonObject.getString("data");
+                            doubleBalance=Double.parseDouble(balance);
+                            tv_balance.setText(balance);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
+            @Override
+            public void onEror(Call call, int statusCode, Exception e) {
+                customLoadingDialog.dismiss();
+            }
+        });
     }
     @Override
     protected void getResLayout() {
@@ -69,6 +132,11 @@ public class WithdrawalsDetailsActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.btn_withdrawal:
+                String subMoney = withdrawalMoney.substring(0, withdrawalMoney.length()-1);
+                double doubleSubMoney = Double.parseDouble(subMoney);
+                if (doubleSubMoney<1){
+                    return;
+                }
                 Intent intent=new Intent(WithdrawalsDetailsActivity.this,ConfirmOrderActivity.class);
                 intent.putExtra("withdrawalMoney",withdrawalMoney);
                 startActivity(intent);

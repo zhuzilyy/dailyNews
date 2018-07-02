@@ -83,7 +83,6 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
         });
         customLoadingDialog=new CustomLoadingDialog(DailySharingAcitity.this);
         userId= (String) SPUtils.get(DailySharingAcitity.this,"user_id","");
-
         view_share = LayoutInflater.from(DailySharingAcitity.this).inflate(R.layout.pw_share, null);
         ll_friendCircle=view_share.findViewById(R.id.ll_friendCircle);
         ll_QQ=view_share.findViewById(R.id.ll_QQ);

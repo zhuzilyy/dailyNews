@@ -90,9 +90,11 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     public TextView tv_earning;
     @BindView(R.id.tv_gold)
     public TextView tv_gold;
+    @BindView(R.id.tv_wechatName)
+    public TextView tv_wechatName;
     @BindView(R.id.mine_head)
     public CircleImageView mine_head;
-    private String phone,balance,earnings,gold,my_invite_code,user_id,headimgurl,invite_code;
+    private String phone,balance,earnings,gold,my_invite_code,user_id,headimgurl,invite_code,name;
     private MyReceiver myReceiver;
     @Override
     protected View getResLayout(LayoutInflater inflater, ViewGroup container) {
@@ -127,7 +129,11 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         earnings=(String)SPUtils.get(getActivity(),"earnings","0");
         headimgurl=(String)SPUtils.get(getActivity(),"head_portrait","");
         invite_code=(String)SPUtils.get(getActivity(),"invite_code","");
-        if (!TextUtils.isEmpty(invite_code)){
+        name=(String)SPUtils.get(getActivity(),"name","");
+        if (TextUtils.isEmpty(invite_code)){
+            re_WriteCode.setVisibility(View.VISIBLE);
+            view_inviteCode.setVisibility(View.VISIBLE);
+        }else{
             re_WriteCode.setVisibility(View.GONE);
             view_inviteCode.setVisibility(View.GONE);
         }
@@ -137,8 +143,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         tv_InvitationCode.setText(my_invite_code);
         tv_earning.setText(earnings);
         tv_gold.setText(gold);
-
-
+        tv_wechatName.setText("微信号:"+name);
     }
     @Override
     protected void initData() {
@@ -244,7 +249,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         switch(requestCode){
             case 100:
                 //好友邀请码写完，返回后隐藏该条目
-                re_WriteCode.setVisibility(View.GONE);
+                setValue();
                 break;
             default:
                 break;

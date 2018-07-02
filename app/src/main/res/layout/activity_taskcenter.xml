@@ -96,6 +96,34 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     >
+                    <!--未签到-->
+                    <LinearLayout
+                        android:layout_centerHorizontal="true"
+                        android:id="@+id/firstDay_none_ll"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:orientation="vertical"
+                        android:gravity="center_horizontal"
+                        android:background="@mipmap/alreadyreceived_icon"
+                        >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp_10"
+                            android:text="已领"
+                            android:textColor="@color/white"
+                            android:textSize="10sp"
+                            />
+                        <TextView
+                            android:textColor="@color/white"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="+100"
+                            android:textSize="10sp"
+
+                            />
+                    </LinearLayout>
                     <!--已签到-->
                     <LinearLayout
                         android:layout_centerHorizontal="true"
@@ -112,35 +140,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="100"
-                            />
-                    </LinearLayout>
-                    <!--未签到-->
-                    <LinearLayout
-                        android:layout_centerHorizontal="true"
-                        android:id="@+id/firstDay_none_ll"
-                        android:layout_width="45dp"
-                        android:layout_height="45dp"
-                        android:orientation="vertical"
-                        android:gravity="center_horizontal"
-                        android:background="@mipmap/alreadyreceived_icon"
-                        >
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/dp_10"
-                            android:text="未领"
-                            android:textColor="@color/white"
-                            android:textSize="10sp"
-
-                            />
-                        <TextView
-                            android:textColor="@color/white"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="+100"
-                            android:textSize="10sp"
-
                             />
                     </LinearLayout>
                     <!--时间-->
@@ -163,6 +162,34 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     >
+                    <!--未签到-->
+                    <LinearLayout
+                        android:layout_centerHorizontal="true"
+                        android:id="@+id/secondDay_none_ll"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:orientation="vertical"
+                        android:gravity="center_horizontal"
+                        android:background="@mipmap/alreadyreceived_icon"
+                        >
+                        <TextView
+                            android:layout_marginTop="@dimen/dp_10"
+                            android:textColor="@color/white"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="已领"
+                            android:textSize="10sp"
+
+                            />
+                        <TextView
+                            android:textColor="@color/white"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="+100"
+                            android:textSize="10sp"
+
+                            />
+                    </LinearLayout>
                     <!--已签到-->
                     <LinearLayout
                         android:layout_centerHorizontal="true"
@@ -179,35 +206,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="100"
-
-                            />
-                    </LinearLayout>
-                    <!--未签到-->
-                    <LinearLayout
-                        android:layout_centerHorizontal="true"
-                        android:id="@+id/secondDay_none_ll"
-                        android:layout_width="45dp"
-                        android:layout_height="45dp"
-                        android:orientation="vertical"
-                        android:gravity="center_horizontal"
-                        android:background="@mipmap/alreadyreceived_icon"
-                        >
-                        <TextView
-                            android:layout_marginTop="@dimen/dp_10"
-                            android:textColor="@color/white"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="未领"
-                            android:textSize="10sp"
-
-                            />
-                        <TextView
-                            android:textColor="@color/white"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="+100"
-                            android:textSize="10sp"
-
                             />
                     </LinearLayout>
                     <!--时间-->
@@ -230,6 +228,34 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     >
+                    <!--未签到-->
+                    <LinearLayout
+                        android:layout_centerHorizontal="true"
+                        android:id="@+id/thirdDay_none_ll"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:orientation="vertical"
+                        android:gravity="center_horizontal"
+                        android:background="@mipmap/alreadyreceived_icon"
+                        >
+                        <TextView
+                            android:layout_marginTop="@dimen/dp_10"
+                            android:textColor="@color/white"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="已领"
+                            android:textSize="10sp"
+
+                            />
+                        <TextView
+                            android:textColor="@color/white"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="+100"
+                            android:textSize="10sp"
+
+                            />
+                    </LinearLayout>
                     <!--已签到-->
                     <LinearLayout
                         android:layout_centerHorizontal="true"
@@ -246,35 +272,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="100"
-
-                            />
-                    </LinearLayout>
-                    <!--未签到-->
-                    <LinearLayout
-                        android:layout_centerHorizontal="true"
-                        android:id="@+id/thirdDay_none_ll"
-                        android:layout_width="45dp"
-                        android:layout_height="45dp"
-                        android:orientation="vertical"
-                        android:gravity="center_horizontal"
-                        android:background="@mipmap/alreadyreceived_icon"
-                        >
-                        <TextView
-                            android:layout_marginTop="@dimen/dp_10"
-                            android:textColor="@color/white"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="未领"
-                            android:textSize="10sp"
-
-                            />
-                        <TextView
-                            android:textColor="@color/white"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="+100"
-                            android:textSize="10sp"
-
                             />
                     </LinearLayout>
                     <!--时间-->
@@ -297,6 +294,33 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     >
+                    <!--未签到-->
+                    <LinearLayout
+                        android:layout_centerHorizontal="true"
+                        android:id="@+id/fourthDay_none_ll"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:orientation="vertical"
+                        android:gravity="center_horizontal"
+                        android:background="@mipmap/alreadyreceived_icon"
+                        >
+                        <TextView
+                            android:layout_marginTop="@dimen/dp_10"
+                            android:textColor="@color/white"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="已领"
+                            android:textSize="10sp"
+
+                            />
+                        <TextView
+                            android:textColor="@color/white"
+                            android:layout_width="wrap_content"
+                            android:textSize="10sp"
+                            android:layout_height="wrap_content"
+                            android:text="+100"
+                            />
+                    </LinearLayout>
                     <!--已签到-->
                     <LinearLayout
                         android:layout_centerHorizontal="true"
@@ -313,35 +337,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="100"
-
-                            />
-                    </LinearLayout>
-                    <!--未签到-->
-                    <LinearLayout
-                        android:layout_centerHorizontal="true"
-                        android:id="@+id/fourthDay_none_ll"
-                        android:layout_width="45dp"
-                        android:layout_height="45dp"
-                        android:orientation="vertical"
-                        android:gravity="center_horizontal"
-                        android:background="@mipmap/alreadyreceived_icon"
-                        >
-                        <TextView
-                            android:layout_marginTop="@dimen/dp_10"
-                            android:textColor="@color/white"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="未领"
-                            android:textSize="10sp"
-
-                            />
-                        <TextView
-                            android:textColor="@color/white"
-                            android:layout_width="wrap_content"
-                            android:textSize="10sp"
-                            android:layout_height="wrap_content"
-                            android:text="+100"
-
                             />
                     </LinearLayout>
                     <!--时间-->
@@ -355,7 +350,6 @@
                         android:textColor="@color/white"
                         android:textSize="14sp"
                         />
-
                 </RelativeLayout>
                 <!--第五天-->
                 <RelativeLayout
@@ -364,6 +358,33 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     >
+                    <!--未签到-->
+                    <LinearLayout
+                        android:layout_centerHorizontal="true"
+                        android:id="@+id/fifthDay_none_ll"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:orientation="vertical"
+                        android:gravity="center_horizontal"
+                        android:background="@mipmap/alreadyreceived_icon"
+                        >
+                        <TextView
+                            android:layout_marginTop="@dimen/dp_10"
+                            android:textColor="@color/white"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="已领"
+                            android:textSize="10sp"
+
+                            />
+                        <TextView
+                            android:textColor="@color/white"
+                            android:textSize="10sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="+100"
+                            />
+                    </LinearLayout>
                     <!--已签到-->
                     <LinearLayout
                         android:layout_centerHorizontal="true"
@@ -380,35 +401,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="100"
-
-                            />
-                    </LinearLayout>
-                    <!--未签到-->
-                    <LinearLayout
-                        android:layout_centerHorizontal="true"
-                        android:id="@+id/fifthDay_none_ll"
-                        android:layout_width="45dp"
-                        android:layout_height="45dp"
-                        android:orientation="vertical"
-                        android:gravity="center_horizontal"
-                        android:background="@mipmap/alreadyreceived_icon"
-                        >
-                        <TextView
-                            android:layout_marginTop="@dimen/dp_10"
-                            android:textColor="@color/white"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="未领"
-                            android:textSize="10sp"
-
-                            />
-                        <TextView
-                            android:textColor="@color/white"
-                            android:textSize="10sp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="+100"
-
                             />
                     </LinearLayout>
                     <!--时间-->
@@ -431,25 +423,6 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     >
-                    <!--已签到-->
-                    <LinearLayout
-                        android:layout_centerHorizontal="true"
-                        android:id="@+id/sixthDay_already_ll"
-                        android:layout_width="45dp"
-                        android:layout_height="45dp"
-                        android:orientation="vertical"
-                        android:gravity="center_horizontal"
-                        android:background="@mipmap/received_icon"
-                        >
-                        <TextView
-                            android:layout_marginTop="@dimen/dp_10"
-                            android:textColor="@color/white"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="100"
-
-                            />
-                    </LinearLayout>
                     <!--未签到-->
                     <LinearLayout
                         android:layout_centerHorizontal="true"
@@ -466,7 +439,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="10sp"
-                            android:text="未领"
+                            android:text="已领"
 
                             />
                         <TextView
@@ -475,6 +448,25 @@
                             android:textSize="10sp"
                             android:layout_height="wrap_content"
                             android:text="+100"
+
+                            />
+                    </LinearLayout>
+                    <!--已签到-->
+                    <LinearLayout
+                        android:layout_centerHorizontal="true"
+                        android:id="@+id/sixthDay_already_ll"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:orientation="vertical"
+                        android:gravity="center_horizontal"
+                        android:background="@mipmap/received_icon"
+                        >
+                        <TextView
+                            android:layout_marginTop="@dimen/dp_10"
+                            android:textColor="@color/white"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="100"
 
                             />
                     </LinearLayout>
@@ -497,25 +489,6 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     >
-                    <!--已签到-->
-                    <LinearLayout
-                        android:layout_centerHorizontal="true"
-                        android:id="@+id/seventhDay_already_ll"
-                        android:layout_width="45dp"
-                        android:layout_height="45dp"
-                        android:orientation="vertical"
-                        android:gravity="center_horizontal"
-                        android:background="@mipmap/received_icon"
-                        >
-                        <TextView
-                            android:layout_marginTop="@dimen/dp_10"
-                            android:textColor="@color/white"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="100"
-
-                            />
-                    </LinearLayout>
                     <!--未签到-->
                     <LinearLayout
                         android:layout_centerHorizontal="true"
@@ -532,7 +505,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="10sp"
-                            android:text="未领"
+                            android:text="已领"
 
                             />
                         <TextView
@@ -541,6 +514,25 @@
                             android:textSize="10sp"
                             android:layout_height="wrap_content"
                             android:text="+100"
+
+                            />
+                    </LinearLayout>
+                    <!--已签到-->
+                    <LinearLayout
+                        android:layout_centerHorizontal="true"
+                        android:id="@+id/seventhDay_already_ll"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:orientation="vertical"
+                        android:gravity="center_horizontal"
+                        android:background="@mipmap/received_icon"
+                        >
+                        <TextView
+                            android:layout_marginTop="@dimen/dp_10"
+                            android:textColor="@color/white"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="100"
 
                             />
                     </LinearLayout>

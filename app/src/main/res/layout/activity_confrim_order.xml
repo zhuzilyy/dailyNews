@@ -1,185 +1,239 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:orientation="vertical"
+    android:layout_height="match_parent"
     android:background="@color/white"
-    android:layout_height="match_parent">
+    android:orientation="vertical">
+
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    <include layout="@layout/layout_title"/>
-    <TextView
-        android:textSize="16sp"
-        android:gravity="center"
-        android:textColor="@color/main_red"
-        android:text="第一步:关注【每日速报】公众号"
-        android:layout_width="match_parent"
-        android:layout_height="40dp" />
-    <TextView
-        android:layout_marginRight="10dp"
-        android:text="方法一, 请使用另一台手机上的微信直接扫描此二维码,提现会转账至扫码微信账户。"
-        android:layout_marginLeft="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <TextView
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
-        android:text="方法二, 把此界面截图发送到另一台手机的微信,使用自己的微信扫描此二维码关注公众号。"
-        android:layout_marginLeft="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <TextView
-        android:layout_marginTop="10dp"
-        android:text="注：长按图片识别不能关注,需要使用微信扫一扫识别"
-        android:layout_marginLeft="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <ImageView
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
-        android:scaleType="fitXY"
-        android:src="@mipmap/gongzhonghao"
-        android:layout_width="90dp"
-        android:layout_height="90dp" />
-    <TextView
-        android:layout_marginTop="20dp"
-        android:textSize="16sp"
-        android:gravity="center"
-        android:textColor="@color/main_red"
-        android:text="第二步:填写验证码"
-        android:layout_width="match_parent"
-        android:layout_height="40dp" />
-    <TextView
-        android:layout_marginTop="10dp"
-        android:layout_gravity="center_horizontal"
-        android:text="进入公众号,点击下方“验证码”按钮,获取验证码"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <View
-        android:layout_marginTop="10dp"
-        android:layout_gravity="center_horizontal"
-        android:background="@color/main_red"
-        android:layout_width="280dp"
-        android:layout_height="0.5dp"/>
-    <LinearLayout
-        android:focusableInTouchMode="true"
-        android:focusable="true"
-        android:layout_gravity="center_horizontal"
-        android:orientation="horizontal"
-        android:layout_width="280dp"
-        android:layout_height="50dp">
-        <View
-            android:background="@color/main_red"
-            android:layout_width="@dimen/dp_0.5"
-            android:layout_height="match_parent"/>
-        <EditText
-            android:inputType="number"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical">
+
+        <include layout="@layout/layout_title" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
             android:gravity="center"
-            android:maxLength="1"
-            android:id="@+id/et1"
-            android:background="@null"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent" />
-        <View
-            android:background="@color/main_red"
-            android:layout_width="@dimen/dp_0.5"
-            android:layout_height="match_parent"/>
-        <EditText
-            android:inputType="number"
+            android:text="第一步:关注【每日速报】公众号"
+            android:textColor="@color/main_red"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:text="方法一, 请使用另一台手机上的微信直接扫描此二维码,提现会转账至扫码微信账户。" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:text="方法二, 把此界面截图发送到另一台手机的微信,使用自己的微信扫描此二维码关注公众号。" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:text="注：长按图片识别不能关注,需要使用微信扫一扫识别" />
+
+        <ImageView
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:scaleType="fitXY"
+            android:src="@mipmap/gongzhonghao" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="20dp"
             android:gravity="center"
-            android:maxLength="1"
-            android:id="@+id/et2"
-            android:background="@null"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent" />
-        <View
-            android:background="@color/main_red"
-            android:layout_width="@dimen/dp_0.5"
-            android:layout_height="match_parent"/>
-        <EditText
-            android:inputType="number"
+            android:text="第二步:填写验证码"
+            android:textColor="@color/main_red"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:text="进入公众号,点击下方“验证码”按钮,获取验证码" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="280dp"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:orientation="vertical">
+                <View
+                    android:layout_width="280dp"
+                    android:layout_height="0.5dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/main_red" />
+                <LinearLayout
+                    android:layout_width="280dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_horizontal"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:orientation="horizontal">
+
+                    <View
+                        android:layout_width="@dimen/dp_0.5"
+                        android:layout_height="match_parent"
+                        android:background="@color/main_red" />
+
+                    <TextView
+                        android:focusable="false"
+                        android:id="@+id/et1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:gravity="center"
+                        android:inputType="number"
+                        android:maxLength="1" />
+
+                    <View
+                        android:layout_width="@dimen/dp_0.5"
+                        android:layout_height="match_parent"
+                        android:background="@color/main_red" />
+
+                    <TextView
+                        android:focusable="false"
+                        android:id="@+id/et2"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:gravity="center"
+                        android:inputType="number"
+                        android:maxLength="1" />
+
+                    <View
+                        android:layout_width="@dimen/dp_0.5"
+                        android:layout_height="match_parent"
+                        android:background="@color/main_red" />
+
+                    <TextView
+                        android:focusable="false"
+                        android:id="@+id/et3"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:gravity="center"
+                        android:inputType="number"
+                        android:maxLength="1" />
+
+                    <View
+                        android:layout_width="@dimen/dp_0.5"
+                        android:layout_height="match_parent"
+                        android:background="@color/main_red" />
+
+                    <TextView
+                        android:focusable="false"
+                        android:id="@+id/et4"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:gravity="center"
+                        android:inputType="number"
+                        android:maxLength="1" />
+
+                    <View
+                        android:layout_width="@dimen/dp_0.5"
+                        android:layout_height="match_parent"
+                        android:background="@color/main_red" />
+
+                    <TextView
+                        android:focusable="false"
+                        android:id="@+id/et5"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:gravity="center"
+                        android:inputType="number"
+                        android:maxLength="1" />
+
+                    <View
+                        android:layout_width="@dimen/dp_0.5"
+                        android:layout_height="match_parent"
+                        android:background="@color/main_red" />
+
+                    <TextView
+                        android:focusable="false"
+                        android:id="@+id/et6"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:gravity="center"
+                        android:inputType="number"
+                        android:maxLength="1" />
+
+                    <View
+                        android:layout_width="@dimen/dp_0.5"
+                        android:layout_height="match_parent"
+                        android:background="@color/main_red" />
+                </LinearLayout>
+                <View
+                    android:layout_width="280dp"
+                    android:layout_height="0.5dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@color/main_red" />
+            </LinearLayout>
+            <EditText
+                android:inputType="number"
+                android:cursorVisible="false"
+                android:background="@null"
+                android:textColor="@color/transparent"
+                android:layout_centerHorizontal="true"
+                android:maxLength="6"
+                android:id="@+id/et_confirmCode"
+                android:layout_width="300dp"
+                android:layout_height="60dp" />
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
             android:gravity="center"
-            android:maxLength="1"
-            android:id="@+id/et3"
-            android:background="@null"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent" />
-        <View
-            android:background="@color/main_red"
-            android:layout_width="@dimen/dp_0.5"
-            android:layout_height="match_parent"/>
-        <EditText
-            android:inputType="number"
-            android:gravity="center"
-            android:maxLength="1"
-            android:id="@+id/et4"
-            android:background="@null"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent" />
-        <View
-            android:background="@color/main_red"
-            android:layout_width="@dimen/dp_0.5"
-            android:layout_height="match_parent"/>
-        <EditText
-            android:inputType="number"
-            android:gravity="center"
-            android:maxLength="1"
-            android:id="@+id/et5"
-            android:background="@null"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent" />
-        <View
-            android:background="@color/main_red"
-            android:layout_width="@dimen/dp_0.5"
-            android:layout_height="match_parent"/>
-        <EditText
-            android:inputType="number"
-            android:gravity="center"
-            android:maxLength="1"
-            android:id="@+id/et6"
-            android:background="@null"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent" />
-        <View
-            android:background="@color/main_red"
-            android:layout_width="@dimen/dp_0.5"
-            android:layout_height="match_parent"/>
+            android:text="温馨提示"
+            android:textColor="@color/main_red"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:text="由于微信要求转账必须实名认证,请提前确认自己的微信是否有实名认证,无实名认证转账会失败" />
     </LinearLayout>
-    <View
-        android:layout_gravity="center_horizontal"
-        android:background="@color/main_red"
-        android:layout_width="280dp"
-        android:layout_height="0.5dp"/>
-    <TextView
-        android:layout_marginTop="10dp"
-        android:textSize="16sp"
-        android:gravity="center"
-        android:textColor="@color/main_red"
-        android:text="温馨提示"
-        android:layout_width="match_parent"
-        android:layout_height="40dp" />
-    <TextView
-        android:layout_marginRight="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_gravity="center_horizontal"
-        android:text="由于微信要求转账必须实名认证,请提前确认自己的微信是否有实名认证,无实名认证转账会失败"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    </LinearLayout>
+
     <Button
-        android:layout_alignParentBottom="true"
         android:id="@+id/btn_confrim"
         android:layout_width="match_parent"
         android:layout_height="45dp"
+        android:layout_alignParentBottom="true"
         android:background="@color/main_red"
         android:text="确认提现"
         android:textColor="@color/white"
