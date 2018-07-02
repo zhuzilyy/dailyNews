@@ -45,6 +45,7 @@
                         android:orientation="vertical"
                         >
                         <TextView
+                            android:id="@+id/tv_wechatName"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="微信号"
@@ -237,6 +238,7 @@
                 >
                 <!--填写邀请码-->
                 <RelativeLayout
+                    android:visibility="gone"
                     android:id="@+id/re_WriteCode"
                     android:layout_width="match_parent"
                     android:layout_height="45dp">
@@ -269,9 +271,9 @@
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         />
-                    
                 </RelativeLayout>
                 <View
+                    android:visibility="gone"
                     android:id="@+id/view_inviteCode"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_0.5"

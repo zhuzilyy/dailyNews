@@ -42,7 +42,6 @@ public class WriteInvitationActivity extends BaseActivity {
             }
         });
     }
-
     @Override
     protected void initData() {
 
@@ -56,7 +55,6 @@ public class WriteInvitationActivity extends BaseActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_write_invitation_code);
-
     }
 
     @Override
@@ -76,13 +74,11 @@ public class WriteInvitationActivity extends BaseActivity {
     protected void setStatusBarColor() {
 
     }
-
     /****
      * 填写好友邀请码
      * @param codeOfFriend
      */
     private void writeInvatiCode(String codeOfFriend) {
-
         String userid = (String) SPUtils.get(WriteInvitationActivity.this, "user_id", "");
         if (TextUtils.isEmpty(userid)) {
             return;
@@ -117,7 +113,6 @@ public class WriteInvitationActivity extends BaseActivity {
         if (TextUtils.isEmpty(userid)) {
             return;
         }
-
         ApiAccount.getUserInfo(ApiConstant.GET_USER_INFO, userid, new RequestCallBack<String>() {
             @Override
             public void onSuccess(Call call, Response response, final String s) {
@@ -126,7 +121,6 @@ public class WriteInvitationActivity extends BaseActivity {
                     @Override
                     public void run() {
                         try {
-
                             JSONObject jsonObject = new JSONObject(s);
                             String code = jsonObject.getString("code");
                             if("0000".equals(code)){
@@ -150,7 +144,6 @@ public class WriteInvitationActivity extends BaseActivity {
                                 SPUtils.put(WriteInvitationActivity.this, "balance", balance);
                                 SPUtils.put(WriteInvitationActivity.this, "earnings", earnings);
                                 SPUtils.put(WriteInvitationActivity.this, "invite_code", invite_code);
-
                                 Intent intent = new Intent();
                                 setResult(200,intent);
                                 finish();

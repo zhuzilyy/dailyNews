@@ -277,11 +277,11 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
                 int signDay = Integer.parseInt(countinuous);
                 for (int i = 0; i <signDay; i++) {
                     if (i<signDay){
-                        signedDays.get(i).setVisibility(View.VISIBLE);
-                        unsignDays.get(i).setVisibility(View.GONE);
-                    }else{
                         signedDays.get(i).setVisibility(View.GONE);
                         unsignDays.get(i).setVisibility(View.VISIBLE);
+                    }else{
+                        signedDays.get(i).setVisibility(View.VISIBLE);
+                        unsignDays.get(i).setVisibility(View.GONE);
                     }
                 }
             }
@@ -510,7 +510,7 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
     }
     private void shareFriendCircle() {
         WXWebpageObject webpage = new WXWebpageObject();
-        webpage.webpageUrl = ApiConstant.DAILY_SHARE_URL;
+        webpage.webpageUrl = ApiConstant.DAILY_SHARE_URL+userId;
         WXMediaMessage msg = new WXMediaMessage(webpage);
         msg.title = "每日速报";
         msg.description = "每日速报是一款基于数据挖掘的推荐引擎产品，它为用户推荐有价值的、个性化的信息，提供连接人与信息的新型服务。";
@@ -573,7 +573,7 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
 
         // 设置 Bitmap 类型的图片到视频对象里         设置缩略图。 注意：最终压缩过的缩略图大小不得超过 32kb。
         mediaObject.setThumbImage(bitmap);
-        mediaObject.actionUrl = ApiConstant.DAILY_SHARE_URL;
+        mediaObject.actionUrl = ApiConstant.DAILY_SHARE_URL+userId;
         mediaObject.defaultText = "每日速报是一款基于数据挖掘的推荐引擎产品，它为用户推荐有价值的、个性化的信息，提供连接人与信息的新型服务。";
         WeiboMultiMessage message = new WeiboMultiMessage();
         message.mediaObject = mediaObject;
@@ -614,7 +614,7 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
     //分享到微信
     private void shareFriends() {
         WXWebpageObject webpage = new WXWebpageObject();
-        webpage.webpageUrl = ApiConstant.DAILY_SHARE_URL;
+        webpage.webpageUrl = ApiConstant.DAILY_SHARE_URL+userId;
         WXMediaMessage msg = new WXMediaMessage(webpage);
         msg.title = "每日速报";
         msg.description = "每日速报是一款基于数据挖掘的推荐引擎产品，它为用户推荐有价值的、个性化的信息，提供连接人与信息的新型服务。";
