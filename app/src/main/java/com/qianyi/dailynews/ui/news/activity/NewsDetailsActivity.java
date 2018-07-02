@@ -544,6 +544,7 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
                    getReward2();
                    //金币哗啦哗啦的声音
                    playSound(R.raw.mm);
+
                }
             }
 
