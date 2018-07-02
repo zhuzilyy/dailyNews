@@ -35,7 +35,9 @@ import com.qianyi.dailynews.api.ApiNews;
 import com.qianyi.dailynews.application.MyApplication;
 import com.qianyi.dailynews.base.BaseActivity;
 import com.qianyi.dailynews.callback.RequestCallBack;
+import com.qianyi.dailynews.dialog.SelfDialog;
 import com.qianyi.dailynews.fragment.NewsFragment;
+import com.qianyi.dailynews.ui.account.activity.LoginActivity;
 import com.qianyi.dailynews.ui.news.adapter.HotCommentAdapterNews;
 import com.qianyi.dailynews.ui.news.adapter.NewsDetailsAdapter;
 import com.qianyi.dailynews.ui.news.bean.CommPublishBean;
@@ -494,12 +496,40 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
 
                 break;
             case R.id.re_comm:
+
+                String userid = (String) SPUtils.get(NewsDetailsActivity.this,"user_id","");
+                if(TextUtils.isEmpty(userid)){
+                    showLogin();
+                    return;
+                }
+
                 //发表一级评论
                 PublishFristComm();
                 break;
             default:
             break;
         }
+    }
+
+    private void showLogin() {
+        final SelfDialog quitDialog = new SelfDialog(NewsDetailsActivity.this);
+        quitDialog.setTitle("提示");
+        quitDialog.setMessage("请先登录");
+        quitDialog.setYesOnclickListener("确定", new SelfDialog.onYesOnclickListener() {
+            @Override
+            public void onYesClick() {
+                Intent intent=new Intent(NewsDetailsActivity.this, LoginActivity.class);
+                startActivity(intent);
+                quitDialog.dismiss();
+            }
+        });
+        quitDialog.setNoOnclickListener("取消", new SelfDialog.onNoOnclickListener() {
+            @Override
+            public void onNoClick() {
+                quitDialog.dismiss();
+            }
+        });
+        quitDialog.show();
     }
 
     /***

@@ -12,9 +12,11 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 
@@ -45,16 +47,19 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import butterknife.BindView;
 import okhttp3.Call;
 import okhttp3.Response;
 
-public class PageFragment extends LazyloadFragment implements PullToRefreshView.OnHeaderRefreshListener, PullToRefreshView.OnFooterRefreshListener {
+public class PageFragment extends LazyloadFragment implements PullToRefreshView.OnHeaderRefreshListener, PullToRefreshView.OnFooterRefreshListener{
 
     public PullToRefreshView mPullToRefreshView;
     public ListView listview;
-    private NewsAdapter newsAdapter;
+    public ImageView iv_newPeople_del;
+    public RelativeLayout re_newPeople;
     //private List<NewsTitleBean.NewsTitleData.NewsTypeRes> newsTypeRes;
-
+    public ImageView iv_newPeople_details;
+    private NewsAdapter newsAdapter;
     private int page = 1;
     private List<NewsBean> bigList = new ArrayList<>();
     private CustomLoadingDialog customLoadingDialog;
@@ -68,12 +73,8 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
     public void onStart() {
         super.onStart();
         firstData(NewsFragment.CurrentNewsTitle);
-      //  Toast.makeText(mActivity, "****************************PageFragment********onStart************************", Toast.LENGTH_SHORT).show();
+        //  Toast.makeText(mActivity, "****************************PageFragment********onStart************************", Toast.LENGTH_SHORT).show();
     }
-
-
-
-
 
 
     @Override
@@ -90,22 +91,29 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
     public void init() {
         listview = rootView.findViewById(R.id.listview);
         mPullToRefreshView = rootView.findViewById(R.id.pulltorefreshView);
-        newsAdapter = new NewsAdapter(getActivity(),bigList,"1");
+        iv_newPeople_del = rootView.findViewById(R.id.iv_newPeople_del);
+        iv_newPeople_details = rootView.findViewById(R.id.iv_newPeople_details);
+        re_newPeople=rootView.findViewById(R.id.re_newPeople);
+
+        newsAdapter = new NewsAdapter(getActivity(), bigList, "1");
         listview.setAdapter(newsAdapter);
 
-        customLoadingDialog=new CustomLoadingDialog(getActivity());
+
+        customLoadingDialog = new CustomLoadingDialog(getActivity());
 
         mPullToRefreshView.setmOnHeaderRefreshListener(this);
         mPullToRefreshView.setmOnFooterRefreshListener(this);
+
+
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(getActivity(),NewsDetailsActivity.class);
-                intent.putExtra("title",bigList.get(i).getTitle());
-                intent.putExtra("url",bigList.get(i).getUrl());
-                intent.putExtra("des",bigList.get(i).getContent());
-                intent.putExtra("id",bigList.get(i).getId());
-                intent.putExtra("redMoney",bigList.get(i).getRedMoney());
+                Intent intent = new Intent(getActivity(), NewsDetailsActivity.class);
+                intent.putExtra("title", bigList.get(i).getTitle());
+                intent.putExtra("url", bigList.get(i).getUrl());
+                intent.putExtra("des", bigList.get(i).getContent());
+                intent.putExtra("id", bigList.get(i).getId());
+                intent.putExtra("redMoney", bigList.get(i).getRedMoney());
                 getActivity().startActivity(intent);
             }
         });
@@ -116,34 +124,34 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
             @Override
             public void deleteNews(final String id, View v) {
                 final Dialog dialog = new Dialog(getActivity());
-                View vv=LayoutInflater.from(getActivity()).inflate(R.layout.delete_pop_window,null);
+                View vv = LayoutInflater.from(getActivity()).inflate(R.layout.delete_pop_window, null);
                 dialog.setContentView(vv);
                 vv.findViewById(R.id.button1).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                       deleteNewsOne(id);
-                       dialog.dismiss();
+                        deleteNewsOne(id);
+                        dialog.dismiss();
                     }
                 });
                 vv.findViewById(R.id.button2).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                         deleteNewsOne(id);
-                            dialog.dismiss();
+                        deleteNewsOne(id);
+                        dialog.dismiss();
                     }
                 });
                 vv.findViewById(R.id.button3).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                         deleteNewsOne(id);
-                            dialog.dismiss();
+                        deleteNewsOne(id);
+                        dialog.dismiss();
                     }
                 });
                 vv.findViewById(R.id.button4).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                         deleteNewsOne(id);
-                            dialog.dismiss();
+                        deleteNewsOne(id);
+                        dialog.dismiss();
                     }
                 });
 
@@ -166,8 +174,8 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
      */
     private void deleteNewsOne(String id) {
 
-        for (int i = 0; i <bigList.size() ; i++) {
-            if(bigList.get(i).getId().equals(id)){
+        for (int i = 0; i < bigList.size(); i++) {
+            if (bigList.get(i).getId().equals(id)) {
                 bigList.remove(i);
                 newsAdapter.notifyDataSetChanged();
             }
@@ -178,6 +186,7 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
     public void lazyLoad() {
         firstData(NewsFragment.CurrentNewsTitle);
     }
+
     @Override
     public void
     onFooterRefresh(PullToRefreshView view) {
@@ -191,7 +200,7 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
 
     private void firstData(final int position) {
         mPullToRefreshView.setEnablePullTorefresh(true);
-      //  customLoadingDialog.show();
+        //  customLoadingDialog.show();
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
@@ -211,7 +220,7 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
                         Logger.i(page + "==page==");
                         Logger.i(userid + "==userid==");
 
-                        ApiNews.GetNewsContent(ApiConstant.NEWS_CONTENTS, userid,MyApplication.newsTypeRes.get(NewsFragment.CurrentNewsTitle).getCatId(), page, 12, page, 3, new RequestCallBack<String>() {
+                        ApiNews.GetNewsContent(ApiConstant.NEWS_CONTENTS, userid, MyApplication.newsTypeRes.get(NewsFragment.CurrentNewsTitle).getCatId(), page, 12, page, 3, new RequestCallBack<String>() {
                             @Override
                             public void onSuccess(Call call, Response response, String s) {
                                 customLoadingDialog.dismiss();
@@ -231,8 +240,8 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
                                                     List<NewsBean> newsBeans = dowithNews(adavertContents, newsContentInfos);
                                                     bigList.clear();
                                                     bigList.addAll(newsBeans);
-                                                   // newsAdapter.notifyDataSetChanged();
-                                                    newsAdapter = new NewsAdapter(getActivity(),bigList,"1");
+                                                    // newsAdapter.notifyDataSetChanged();
+                                                    newsAdapter = new NewsAdapter(getActivity(), bigList, "1");
                                                     listview.setAdapter(newsAdapter);
                                                 }
                                             }
@@ -240,6 +249,7 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
                                     }
                                 }
                             }
+
                             @Override
                             public void onEror(Call call, int statusCode, Exception e) {
                                 customLoadingDialog.dismiss();
@@ -383,9 +393,9 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
      */
     private List<NewsBean> dowithNews(List<NewsContentBean.NewsContentData.AdavertContent> adavertContents, List<NewsContentBean.NewsContentData.NewsByType.NewsContentInfo> newsContentInfos) {
         List<NewsBean> newsBeanList = new ArrayList<>();
-        List<NewsBean> newsBeansAd =DoWithNewsForAD(adavertContents);
-        List<NewsBean> newsBeansNews =DoWithNewsForNEWS(newsContentInfos);
-        newsBeanList= dowithNews2(newsBeansAd,newsBeansNews);
+        List<NewsBean> newsBeansAd = DoWithNewsForAD(adavertContents);
+        List<NewsBean> newsBeansNews = DoWithNewsForNEWS(newsContentInfos);
+        newsBeanList = dowithNews2(newsBeansAd, newsBeansNews);
         return newsBeanList;
     }
 
@@ -397,19 +407,19 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
      */
     private List<NewsBean> dowithNews2(List<NewsBean> newsBeansAd, List<NewsBean> newsBeansNews) {
         List<NewsBean> newsBeanList = new ArrayList<>();
-       int size = newsBeansAd.size()+ newsBeansNews.size();
+        int size = newsBeansAd.size() + newsBeansNews.size();
 
-        for (int i = 0; i < size ; i++) {
-            if(((i+1)%5)==0){
-                if(newsBeansAd.size()>0){
+        for (int i = 0; i < size; i++) {
+            if (((i + 1) % 5) == 0) {
+                if (newsBeansAd.size() > 0) {
                     newsBeanList.add(newsBeansAd.get(0));
                     newsBeansAd.remove(0);
                 }
-            }else {
-                if(newsBeansNews.size()>0){
+            } else {
+                if (newsBeansNews.size() > 0) {
                     newsBeanList.add(newsBeansNews.get(0));
                     newsBeansNews.remove(0);
-                }else {
+                } else {
                     return newsBeanList;
                 }
             }
@@ -419,12 +429,13 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
 
     /**
      * 处理新闻
+     *
      * @param newsContentInfos
      * @return
      */
     private List<NewsBean> DoWithNewsForNEWS(List<NewsContentBean.NewsContentData.NewsByType.NewsContentInfo> newsContentInfos) {
         List<NewsBean> newsBeanList = new ArrayList<>();
-        for (int i = 0; i < newsContentInfos.size() ; i++) {
+        for (int i = 0; i < newsContentInfos.size(); i++) {
             NewsBean newsBean = new NewsBean();
             NewsContentBean.NewsContentData.NewsByType.NewsContentInfo news = newsContentInfos.get(i);
             newsBean.setId(news.getId());
@@ -447,12 +458,13 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
 
     /**
      * 处理广告
+     *
      * @param adavertContents
      * @return
      */
     private List<NewsBean> DoWithNewsForAD(List<NewsContentBean.NewsContentData.AdavertContent> adavertContents) {
         List<NewsBean> newsBeanList = new ArrayList<>();
-        for (int i = 0; i <adavertContents.size() ; i++) {
+        for (int i = 0; i < adavertContents.size(); i++) {
             NewsBean newsBean = new NewsBean();
             NewsContentBean.NewsContentData.AdavertContent ad = adavertContents.get(i);
             newsBean.setId(ad.getId());
@@ -465,6 +477,7 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
         }
         return newsBeanList;
     }
+
 
 
 }
