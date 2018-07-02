@@ -165,6 +165,15 @@ public class ApiMine {
         params.put("pageSize",pageSize);
         OkHttpManager.getInstance().postRequest(url,params,callback);
     }
+    /**
+     * 加载的webiew
+     * @param callback
+     */
+    public static void getWebview(String url,String type,RequestCallBack<String> callback){
+        Map<String,String> params=new HashMap<>();
+        params.put("type",type);
+        OkHttpManager.getInstance().postRequest(url,params,callback);
+    }
 
 
 

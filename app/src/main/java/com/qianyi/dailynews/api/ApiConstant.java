@@ -108,6 +108,16 @@ public class ApiConstant {
     public static final String  DO_WITHDRAWAL= BASE_URL+"/api/withdraw/do";
     //提现记录
     public static final String  WITHDRAWAL_RECORD= BASE_URL+"/api/withdraw/detail/page";
+    //Webview
+    public static final String  WEBVIEW= BASE_URL+"/api/user/getOfficial";
+    /*//邀请规则
+    public static final String  INVITE_WEBVIEW= BASE_URL+"/api/user/getOfficial?type=INVITE";
+    //签到规则
+    public static final String  SIGN_IN= BASE_URL+"/api/user/getOfficial?type=SIGN_IN";
+    //赚钱攻略
+    public static final String  MAKEMONEY= BASE_URL+"/api/user/getOfficial?type=MAKEMONEY";
+    //帮助与反馈
+    public static final String  HELP= BASE_URL+"/api/user/getOfficial?type=HELP";*/
     //==========辛振宇==========================================
 
 

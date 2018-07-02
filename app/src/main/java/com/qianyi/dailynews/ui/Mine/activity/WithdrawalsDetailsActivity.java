@@ -2,6 +2,7 @@ package com.qianyi.dailynews.ui.Mine.activity;
 
 import android.content.Intent;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.TextView;
 
 import com.qianyi.dailynews.R;
@@ -35,6 +36,8 @@ public class WithdrawalsDetailsActivity extends BaseActivity {
     private String withdrawalMoney,balance,userId;
     private CustomLoadingDialog customLoadingDialog;
     private double doubleBalance;
+    @BindView(R.id.wv_webview)
+    WebView wv_webview;
     @Override
     protected void initViews() {
         intent=getIntent();
@@ -51,6 +54,36 @@ public class WithdrawalsDetailsActivity extends BaseActivity {
     @Override
     protected void initData() {
         getMoney();
+        getWebview();
+    }
+
+    private void getWebview() {
+        ApiMine.getWebview(ApiConstant.WEBVIEW, "DEPOSIT", new RequestCallBack<String>() {
+            @Override
+            public void onSuccess(Call call, Response response, final String s) {
+                customLoadingDialog.dismiss();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            JSONObject jsonObject=new JSONObject(s);
+                            String return_code = jsonObject.getString("return_code");
+                            String data = jsonObject.getString("data");
+                            if (return_code.equals("SUCCESS")){
+                                wv_webview.loadDataWithBaseURL(null, data, "text/html" , "utf-8", null);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
+
+            @Override
+            public void onEror(Call call, int statusCode, Exception e) {
+                customLoadingDialog.dismiss();
+            }
+        });
     }
     private void getMoney() {
         customLoadingDialog.show();

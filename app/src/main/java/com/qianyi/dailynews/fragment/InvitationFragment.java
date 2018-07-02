@@ -47,6 +47,7 @@ import com.qianyi.dailynews.ui.account.activity.LoginActivity;
 import com.qianyi.dailynews.ui.invitation.activity.ApprenticeActivity;
 import com.qianyi.dailynews.ui.invitation.activity.DailySharingAcitity;
 import com.qianyi.dailynews.ui.invitation.activity.IncomeShowActivity;
+import com.qianyi.dailynews.ui.invitation.activity.InviteRuleActivity;
 import com.qianyi.dailynews.ui.invitation.activity.WBAuthActivity;
 import com.qianyi.dailynews.ui.invitation.activity.WakeFriendsActivity;
 import com.qianyi.dailynews.ui.news.activity.NewsDetailsActivity;
@@ -441,7 +442,7 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
                 showOneKeyShouTu();
                 break;
             case R.id.tv_right:
-                Intent intent = new Intent(getActivity(), WebviewActivity.class);
+                Intent intent = new Intent(getActivity(), InviteRuleActivity.class);
                 intent.putExtra("title", "邀请规则");
                 intent.putExtra("url", "http://www.baidu.com");
                 startActivity(intent);

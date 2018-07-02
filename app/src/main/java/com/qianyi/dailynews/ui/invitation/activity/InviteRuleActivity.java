@@ -1,9 +1,8 @@
-package com.qianyi.dailynews.ui.Mine.activity;
+package com.qianyi.dailynews.ui.invitation.activity;
 
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.qianyi.dailynews.R;
@@ -26,7 +25,7 @@ import okhttp3.Response;
  * Created by Administrator on 2018/6/24.
  */
 
-public class SignRuleActivity extends BaseActivity{
+public class InviteRuleActivity extends BaseActivity{
     @BindView(R.id.tv_title)
     TextView tv_title;
     @BindView(R.id.wv_webview)
@@ -35,7 +34,7 @@ public class SignRuleActivity extends BaseActivity{
     private CustomLoadingDialog customLoadingDialog;
     @Override
     protected void initViews() {
-        tv_title.setText("签到规则");
+        tv_title.setText("邀请规则");
         webSettings=wv_webview.getSettings();
         WebviewUtil.setWebview(wv_webview, webSettings);
         customLoadingDialog=new CustomLoadingDialog(this);
@@ -44,7 +43,7 @@ public class SignRuleActivity extends BaseActivity{
     @Override
     protected void initData() {
         customLoadingDialog.show();
-        ApiMine.getWebview(ApiConstant.WEBVIEW, "SIGN_IN", new RequestCallBack<String>() {
+        ApiMine.getWebview(ApiConstant.WEBVIEW, "INVITE", new RequestCallBack<String>() {
             @Override
             public void onSuccess(Call call, Response response, final String s) {
                 customLoadingDialog.dismiss();

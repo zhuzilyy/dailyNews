@@ -317,9 +317,9 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
         switch(view.getId()){
             case R.id.tv_ProfitMakingStrategy:
                 //赚钱攻略
-                Intent intent_profitMakeingStrategy  = new Intent(TaskCenterActivity.this, WebviewActivity.class);
-                intent_profitMakeingStrategy.putExtra("title","赚钱攻略");
-                intent_profitMakeingStrategy.putExtra("utl","http://www.baidu.com");
+                Intent intent_profitMakeingStrategy  = new Intent(TaskCenterActivity.this, MakeMoneyActivity.class);
+                /*intent_profitMakeingStrategy.putExtra("title","赚钱攻略");
+                intent_profitMakeingStrategy.putExtra("utl","http://www.baidu.com");*/
                 startActivity(intent_profitMakeingStrategy);
                 break;
             case R.id.tv_SignInRules:
