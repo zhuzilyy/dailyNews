@@ -65,9 +65,8 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         newsFragment=new NewsFragment();
         FragmentTransaction ft=fragmentManager.beginTransaction();
         AddOrShowFra(ft,newsFragment);
-
         bar.setMode(BottomNavigationBar.MODE_FIXED);
-        bar.setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_DEFAULT);
+        bar.setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC);
         bar.addItem(new BottomNavigationItem(getResources().getDrawable(R.mipmap.choosenews_icon),"新闻").setActiveColorResource(R.color.main_red))
                 .addItem(new BottomNavigationItem(getResources().getDrawable(R.mipmap.choosevideo_icon),"视频").setActiveColorResource(R.color.main_red))
                 .addItem(new BottomNavigationItem(getResources().getDrawable(R.mipmap.redpack_icon),"邀请").setActiveColorResource(R.color.main_red))
@@ -75,26 +74,19 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
                 .setFirstSelectedPosition(0).initialise();
         bar.setTabSelectedListener(this);
         WbSdk.install(this,new AuthInfo(this, ApiConstant.APP_KEY_WEIBO, ApiConstant.REDIRECT_URL, ApiConstant.SCOPE));
-
-
-
     }
     @Override
     protected void initData() {
 
     }
-
     @Override
     protected void getResLayout() {
         setContentView(R.layout.activity_main);
-
     }
-
     @Override
     protected void initListener() {
 
     }
-
     @Override
     protected void setStatusBarColor() {
 

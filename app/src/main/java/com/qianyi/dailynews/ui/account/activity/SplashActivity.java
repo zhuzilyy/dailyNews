@@ -9,6 +9,7 @@ import android.view.animation.RotateAnimation;
 import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 
+import com.qianyi.dailynews.MainActivity;
 import com.qianyi.dailynews.R;
 import com.qianyi.dailynews.base.BaseActivity;
 import com.qianyi.dailynews.utils.SPUtils;
@@ -78,14 +79,14 @@ public class SplashActivity extends BaseActivity {
      * 跳转下一个页面
      */
     private void jumpNextPage() {
-        jumpActivity(SplashActivity.this,WelcomeActiity.class);
-        /*// 判断之前有没有显示过新手引导
-        boolean isFirst = (boolean) SPUtils.get(this, "isFirst", false);
+        //jumpActivity(SplashActivity.this,WelcomeActiity.class);
+        // 判断之前有没有显示过新手引导
+        boolean isFirst = (boolean) SPUtils.get(this, "isFirst", true);
         if (isFirst){
             jumpActivity(SplashActivity.this,WelcomeActiity.class);
         }else{
-            jumpActivity(SplashActivity.this,LoginActivity.class);
-        }*/
+            jumpActivity(SplashActivity.this,MainActivity.class);
+        }
         finish();
     }
     @Override
