@@ -54,14 +54,6 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
 
 
 
-    //注册送好礼=========================
-    @BindView(R.id.re_newPeople)
-    public RelativeLayout re_newPeople;
-    @BindView(R.id.iv_newPeople_del)
-    public ImageView iv_newPeople_del;
-    @BindView(R.id.iv_newPeople_details)
-    public ImageView iv_newPeople_details;
-
 
     @Override
     protected void initViews() {
@@ -102,12 +94,6 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         WbSdk.install(this,new AuthInfo(this, ApiConstant.APP_KEY_WEIBO, ApiConstant.REDIRECT_URL, ApiConstant.SCOPE));
 
 
-        //--------显示是否显示新手状态----------
-        String userid = (String) SPUtils.get(MainActivity.this,"user_id","");
-        if(TextUtils.isEmpty(userid)){
-           //没有登录就没有注册
-            re_newPeople.setVisibility(View.VISIBLE);
-        }
 
     }
     @Override
@@ -235,60 +221,15 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
     public void onTabReselected(int position) {
 
     }
-    @OnClick({R.id.iv_newPeople_del,R.id.iv_newPeople_details,R.id.re_newPeople})
+
     @Override
     public void onClick(View view) {
          switch (view.getId()){
-             case R.id.iv_newPeople_del:
-                 re_newPeople.setVisibility(View.GONE);
-                 break;
-             case R.id.iv_newPeople_details:
-             case R.id.re_newPeople:
-                 //注册好礼
-                 showNewPeopleGift();
-                 re_newPeople.setVisibility(View.GONE);
-                 break;
+
                  }
     }
 
-    /**
-     *   //注册好礼
-     */
-    private void showNewPeopleGift() {
-        final Dialog dialog = new Dialog(MainActivity.this);
-        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        View contentView = LayoutInflater.from(MainActivity.this).inflate(R.layout.lay_new_register,null);
-        View delete_v =contentView.findViewById(R.id.v_delete);
-        TextView tv_register_details = contentView.findViewById(R.id.tv_register_details);
-        Button btn_register_now = contentView.findViewById(R.id.btn_register_now);
-        dialog.setContentView(contentView);
 
-        delete_v.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog.dismiss();
-            }
-        });
-
-        tv_register_details.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(MainActivity.this, "详情", Toast.LENGTH_SHORT).show();
-                dialog.dismiss();
-            }
-        });
-
-        btn_register_now.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, RegisterActivity.class));
-                dialog.dismiss();
-            }
-        });
-
-        dialog.show();
-
-    }
 
     class MyReceiver extends BroadcastReceiver{
         @Override

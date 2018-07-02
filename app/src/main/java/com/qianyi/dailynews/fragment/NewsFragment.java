@@ -1,5 +1,6 @@
 package com.qianyi.dailynews.fragment;
 
+import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -12,17 +13,22 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.qianyi.dailynews.MainActivity;
 import com.qianyi.dailynews.R;
 import com.qianyi.dailynews.api.ApiConstant;
 import com.qianyi.dailynews.api.ApiNews;
 import com.qianyi.dailynews.application.MyApplication;
 import com.qianyi.dailynews.base.BaseFragment;
 import com.qianyi.dailynews.callback.RequestCallBack;
+import com.qianyi.dailynews.ui.account.activity.RegisterActivity;
 import com.qianyi.dailynews.ui.news.activity.SearchActivity;
 import com.qianyi.dailynews.ui.news.adapter.FmPagerAdapter;
 import com.qianyi.dailynews.ui.news.bean.NewsTitleBean;
@@ -64,6 +70,16 @@ public class NewsFragment extends BaseFragment implements View.OnClickListener {
     private MyReceiver myReceiver;
     public static int CurrentGetCoinNumber=0;
 
+
+    //注册送好礼=========================
+    @BindView(R.id.re_newPeople)
+    public RelativeLayout re_newPeople;
+    @BindView(R.id.iv_newPeople_del)
+    public ImageView iv_newPeople_del;
+    @BindView(R.id.iv_newPeople_details)
+    public ImageView iv_newPeople_details;
+
+
     @Override
     protected View getResLayout(LayoutInflater inflater, ViewGroup container) {
         newsView =  inflater.inflate(R.layout.fragment_news, null);
@@ -80,12 +96,22 @@ public class NewsFragment extends BaseFragment implements View.OnClickListener {
         myReceiver= new MyReceiver();
         IntentFilter filter01=new IntentFilter("getRewardOk");
         IntentFilter filter02=new IntentFilter("loginOk");
+        IntentFilter filter03=new IntentFilter("com.action.quit");
 
         getActivity().registerReceiver(myReceiver,filter01);
         getActivity().registerReceiver(myReceiver,filter02);
+        getActivity().registerReceiver(myReceiver,filter03);
 
         //获取红包奖励数
         getRedPackage();
+
+        //--------显示是否显示新手状态----------
+        String userid = (String) SPUtils.get(getActivity(),"user_id","");
+        if(TextUtils.isEmpty(userid)){
+            //没有登录就没有注册
+            re_newPeople.setVisibility(View.VISIBLE);
+        }
+
 
     }
 
@@ -164,7 +190,7 @@ public class NewsFragment extends BaseFragment implements View.OnClickListener {
     protected void initListener() {
 
     }
-    @OnClick({R.id.re_home_search})
+    @OnClick({R.id.re_home_search,R.id.iv_newPeople_del,R.id.iv_newPeople_details,R.id.re_newPeople})
     @Override
     public void onClick(View v) {
         switch(v.getId()){
@@ -173,9 +199,57 @@ public class NewsFragment extends BaseFragment implements View.OnClickListener {
                 intent.putExtra("tag","news");
                 startActivity(intent);
                 break;
+            case R.id.iv_newPeople_del:
+                re_newPeople.setVisibility(View.GONE);
+                break;
+            case R.id.iv_newPeople_details:
+            case R.id.re_newPeople:
+                //注册好礼
+                showNewPeopleGift();
+                re_newPeople.setVisibility(View.GONE);
+                break;
             default:
                 break;
         }
+    }
+
+    /**
+     *   //注册好礼
+     */
+    private void showNewPeopleGift() {
+        final Dialog dialog = new Dialog(getActivity());
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.lay_new_register,null);
+        View delete_v =contentView.findViewById(R.id.v_delete);
+        TextView tv_register_details = contentView.findViewById(R.id.tv_register_details);
+        Button btn_register_now = contentView.findViewById(R.id.btn_register_now);
+        dialog.setContentView(contentView);
+
+        delete_v.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+
+        tv_register_details.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getActivity(), "详情", Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+            }
+        });
+
+        btn_register_now.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), RegisterActivity.class));
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+
     }
 
     /***
@@ -239,9 +313,16 @@ public class NewsFragment extends BaseFragment implements View.OnClickListener {
                 getRedPackage();
             }
             if("loginOk".equals(action)){
+                //注册送好礼隐藏
+                re_newPeople.setVisibility(View.GONE);
                 ll_redNumber.setVisibility(View.VISIBLE);
                 //获取当前金币新闻总数
                 getRedPackage();
+
+            }
+            if("com.action.quit".equals(action)){
+                //退出登录
+                ll_redNumber.setVisibility(View.GONE);
             }
 
         }

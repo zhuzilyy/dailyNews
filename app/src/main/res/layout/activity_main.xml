@@ -26,35 +26,7 @@
     </LinearLayout>
 
 
-    <RelativeLayout
-        android:clickable="true"
-        android:id="@+id/re_newPeople"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="20dp"
-        android:visibility="gone"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="100dp"
-        android:layout_width="160dp"
-        android:layout_height="wrap_content">
-        <ImageView
-            android:padding="@dimen/dp_20"
-            android:id="@+id/iv_newPeople_del"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:src="@mipmap/delete"
-            android:layout_alignParentRight="true"
-            />
-        <ImageView
-            android:layout_marginTop="@dimen/dp_20"
-            android:id="@+id/iv_newPeople_details"
-            android:layout_width="140dp"
-            android:layout_height="140dp"
-            android:layout_alignParentRight="true"
-            android:src="@mipmap/newpeople_icon"
-            />
 
-
-    </RelativeLayout>
 
 
 </RelativeLayout>

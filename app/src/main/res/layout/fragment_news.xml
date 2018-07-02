@@ -1,146 +1,184 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/light_gray"
-    >
-    <LinearLayout
-
-        android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:background="@color/main_red"
-        android:gravity="center_vertical"
-        android:layout_height="50dp">
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="每日速报"
-            android:textColor="@color/white"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/dp_10"
-            android:src="@mipmap/toptitle_icon"
-            />
-        <RelativeLayout
-            android:id="@+id/re_home_search"
-            android:layout_width="0dp"
-            android:layout_height="30dp"
-            android:layout_weight="1"
-            android:background="@drawable/shape_coner_white"
-            android:layout_marginLeft="@dimen/dp_10"
-            android:layout_marginRight="@dimen/dp_10"
-            >
-            <ImageView
-                android:id="@+id/newsfdj"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:src="@mipmap/search_icon"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/dp_10"
-                />
-            <!--手机号-->
-            <TextView
-                android:layout_toRightOf="@+id/newsfdj"
-                android:id="@+id/tv_newsearch"
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="20dp"
-                android:background="@null"
-                android:hint="请输入关键字"
-                android:gravity="center_vertical"
-                android:singleLine="true"
-                android:textColorHint="@color/gray"
-                android:textCursorDrawable="@null"
-                android:textSize="14sp" />
-
-        </RelativeLayout>
-
-    </LinearLayout>
+    android:orientation="vertical">
+    <!--新闻部分-->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
-        <android.support.design.widget.TabLayout
-            android:id="@+id/tablayout"
-            app:tabTextAppearance="@style/TabLayoutTextStyle"
-            android:layout_width="0dp"
-            android:layout_weight="6"
-            android:layout_height="40dp"
-            app:tabTextColor="#000"
-            app:tabIndicatorHeight="0dp"
-            android:background="@color/white"
-            app:tabSelectedTextColor="#d81e06"/>
-        <!--当前金币新闻获取情况-->
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
         <LinearLayout
 
-            android:visibility="gone"
-            android:id="@+id/ll_redNumber"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:layout_height="match_parent"
-            android:background="@color/white"
-            >
-            <View
-                android:layout_width="@dimen/dp_0.5"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/main_red"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_8"
-                android:layout_marginBottom="@dimen/dp_8"
-                android:background="@color/light_gray5"
-                android:layout_marginRight="@dimen/dp_5"
-                />
-            <LinearLayout
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:src="@mipmap/toptitle_icon"
+                android:text="每日速报"
+                android:textColor="@color/white" />
 
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                >
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:gravity="center"
+            <RelativeLayout
+                android:id="@+id/re_home_search"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                android:layout_weight="1"
+                android:background="@drawable/shape_coner_white">
 
-                    android:layout_height="match_parent">
-                    <ImageView
-                        android:id="@+id/iv_redpackage"
-                        android:layout_width="20dp"
-                        android:layout_height="24dp"
-                        android:src="@mipmap/red_package"
-                        />
-                    <TextView
-                        android:id="@+id/tv_redNumber"
-                        android:layout_alignTop="@+id/iv_redpackage"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="-8dp"
-                        android:layout_toRightOf="@+id/iv_redpackage"
-                        android:layout_marginLeft="-10dp"
-                        android:text="3/15"
-                        android:paddingBottom="@dimen/dp_1"
-                        android:paddingTop="@dimen/dp_1"
-                        android:textColor="@color/white"
-                        android:paddingRight="@dimen/dp_5"
-                        android:paddingLeft="@dimen/dp_5"
-                        android:textSize="10sp"
-                        android:background="@drawable/shape_coner_red"
-                        />
-                </RelativeLayout>
+                <ImageView
+                    android:id="@+id/newsfdj"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:src="@mipmap/search_icon" />
+                <!--手机号-->
+                <TextView
+                    android:id="@+id/tv_newsearch"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_toRightOf="@+id/newsfdj"
+                    android:background="@null"
+                    android:gravity="center_vertical"
+                    android:hint="请输入关键字"
+                    android:singleLine="true"
+                    android:textColorHint="@color/gray"
+                    android:textCursorDrawable="@null"
+                    android:textSize="14sp" />
 
+            </RelativeLayout>
 
-            </LinearLayout>
         </LinearLayout>
 
-    </LinearLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#AAEBEBEB"/>
-    <android.support.v4.view.ViewPager
-        android:id="@+id/viewpager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-</LinearLayout>
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tablayout"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="6"
+                android:background="@color/white"
+                app:tabIndicatorHeight="0dp"
+                app:tabSelectedTextColor="#d81e06"
+                app:tabTextAppearance="@style/TabLayoutTextStyle"
+                app:tabTextColor="#000" />
+            <!--当前金币新闻获取情况-->
+            <LinearLayout
+
+                android:id="@+id/ll_redNumber"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:gravity="center"
+                android:visibility="gone">
+
+                <View
+                    android:layout_width="@dimen/dp_0.5"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dp_8"
+                    android:layout_marginRight="@dimen/dp_5"
+                    android:layout_marginTop="@dimen/dp_8"
+                    android:background="@color/light_gray5" />
+
+                <LinearLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+
+                        android:gravity="center">
+
+                        <ImageView
+                            android:id="@+id/iv_redpackage"
+                            android:layout_width="20dp"
+                            android:layout_height="24dp"
+                            android:src="@mipmap/red_package" />
+
+                        <TextView
+                            android:id="@+id/tv_redNumber"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignTop="@+id/iv_redpackage"
+                            android:layout_marginLeft="-10dp"
+                            android:layout_marginTop="-8dp"
+                            android:layout_toRightOf="@+id/iv_redpackage"
+                            android:background="@drawable/shape_coner_red"
+                            android:paddingBottom="@dimen/dp_1"
+                            android:paddingLeft="@dimen/dp_5"
+                            android:paddingRight="@dimen/dp_5"
+                            android:paddingTop="@dimen/dp_1"
+                            android:text="3/15"
+                            android:textColor="@color/white"
+                            android:textSize="10sp" />
+                    </RelativeLayout>
+
+
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#AAEBEBEB" />
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+    <!--注册送好礼-->
+    <RelativeLayout
+        android:id="@+id/re_newPeople"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="100dp"
+        android:layout_marginRight="20dp"
+        android:clickable="true"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/iv_newPeople_del"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignParentRight="true"
+            android:padding="@dimen/dp_20"
+            android:src="@mipmap/delete" />
+
+        <ImageView
+            android:id="@+id/iv_newPeople_details"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="@dimen/dp_20"
+            android:src="@mipmap/newpeople_icon" />
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -5,9 +5,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.makeramen.roundedimageview.RoundedImageView;
 import com.qianyi.dailynews.R;
+import com.qianyi.dailynews.ui.Mine.bean.FanLiInfo;
 
+import java.util.List;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -15,13 +22,15 @@ import butterknife.ButterKnife;
  */
 public class HighRebateTaskAdapter extends BaseAdapter {
     private Context context;
-    public HighRebateTaskAdapter(Context context) {
+    private List<FanLiInfo> infoList;
+    public HighRebateTaskAdapter(Context context, List<FanLiInfo> infoList) {
         this.context = context;
+        this.infoList = infoList;
     }
 
     @Override
     public int getCount() {
-        return 10;
+        return infoList.size();
     }
 
     @Override
@@ -36,6 +45,7 @@ public class HighRebateTaskAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
+        FanLiInfo info =infoList.get(i);
         ViewHolder viewHolder=null;
         if (view==null){
             view=LayoutInflater.from(context).inflate(R.layout.item_high_rebate_task,null);
@@ -43,10 +53,18 @@ public class HighRebateTaskAdapter extends BaseAdapter {
             view.setTag(viewHolder);
         }else{
             viewHolder= (ViewHolder) view.getTag();
+            Glide.with(context).load(info.getLogo()).into(viewHolder.mine_head);
+            viewHolder.tv_title.setText(info.getTitle());
+            viewHolder.tv_time.setText(info.getTime());
+            viewHolder.tv_state.setText(info.getStatus());
         }
         return view;
     }
     static class ViewHolder{
+        @BindView(R.id.mine_head) public RoundedImageView mine_head;
+        @BindView(R.id.tv_title) public TextView tv_title;
+        @BindView(R.id.tv_time) public TextView tv_time;
+        @BindView(R.id.tv_state) public TextView tv_state;
         public ViewHolder(View view){
             ButterKnife.bind(this,view);
         }

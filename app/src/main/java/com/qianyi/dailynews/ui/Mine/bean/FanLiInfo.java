@@ -6,6 +6,34 @@ package com.qianyi.dailynews.ui.Mine.bean;
 
 public class FanLiInfo {
     private String id;
+
+    public String getLogo() {
+        return logo;
+    }
+
+    public void setLogo(String logo) {
+        this.logo = logo;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
+    }
+
+    public String getRewards() {
+        return rewards;
+    }
+
+    public void setRewards(String rewards) {
+        this.rewards = rewards;
+    }
+
+    private String logo;
+    private String endTime;
+    private String rewards;
     private String title;
     private String description;
     private String cash;

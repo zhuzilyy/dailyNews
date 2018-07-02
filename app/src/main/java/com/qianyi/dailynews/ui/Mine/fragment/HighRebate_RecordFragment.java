@@ -1,5 +1,6 @@
 package com.qianyi.dailynews.ui.Mine.fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,7 +62,7 @@ public class HighRebate_RecordFragment extends BaseFragment implements PullToRef
         infoList=new ArrayList<>();
         mPullToRefreshView.setmOnHeaderRefreshListener(this);
         mPullToRefreshView.setmOnFooterRefreshListener(this);
-        adapter=new HighRebateTaskAdapter(getActivity());
+        adapter=new HighRebateTaskAdapter(getActivity(),infoList);
         listview.setAdapter(adapter);
         userId= (String) SPUtils.get(getActivity(),"user_id","");
 
@@ -89,6 +90,7 @@ public class HighRebate_RecordFragment extends BaseFragment implements PullToRef
         ApiMine.fanliTaskList(ApiConstant.FANLI_TASK_LIST, userId,page,ApiConstant.PAGE_SIZE, new RequestCallBack<String>() {
             @Override
             public void onSuccess(Call call, Response response, final String s) {
+                Log.i("ss",s);
                 infoList.clear();
                 customLoadingDialog.dismiss();
                 getActivity().runOnUiThread(new Runnable() {
