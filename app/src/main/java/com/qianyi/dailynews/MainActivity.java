@@ -84,6 +84,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         AddOrShowFra(ft,newsFragment);
 
         bar.setMode(BottomNavigationBar.MODE_FIXED);
+        bar.setInActiveColor("#808080");
         bar.setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_DEFAULT);
         bar.addItem(new BottomNavigationItem(getResources().getDrawable(R.mipmap.choosenews_icon),"新闻").setActiveColorResource(R.color.main_red))
                 .addItem(new BottomNavigationItem(getResources().getDrawable(R.mipmap.choosevideo_icon),"视频").setActiveColorResource(R.color.main_red))
