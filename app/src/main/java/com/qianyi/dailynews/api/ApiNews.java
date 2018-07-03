@@ -123,8 +123,8 @@ public class ApiNews {
      */
     public static void GetRewardAfterReadNews(String url,String userId,String newsId , RequestCallBack<String> callback){
         Map<String,String> params=new HashMap<>();
-        params.put("userId",userId);
-        params.put("newsId",newsId);
+        params.put("userId","2c9fd8b3635c7e840163631a72190002");
+        params.put("newsId","4028478164322e8301643231be300006");
         OkHttpManager.getInstance().postRequest(url,params,callback);
     }
     /**

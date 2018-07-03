@@ -65,12 +65,6 @@ public class HighRebateDetilsActivity extends BaseActivity implements View.OnCli
     @BindView(R.id.tv_shots) public TextView tv_shots;
     @BindView(R.id.tv_leftTime) public TextView tv_leftTime;
 
-
-
-
-
-
-
     private String id;
     private String type;
     private String time;
@@ -106,8 +100,6 @@ public class HighRebateDetilsActivity extends BaseActivity implements View.OnCli
      */
     private void initWebView(WebView webview) {
         WebviewUtil.setWebview(webview,webview.getSettings());
-
-
     }
 
     @Override
@@ -148,12 +140,45 @@ public class HighRebateDetilsActivity extends BaseActivity implements View.OnCli
      * @param info
      */
     private void setDataForPage(MoneyDetailBean.MoneyDetailData.MoneyDetailInfo info) {
+        if(info!=null){
+            String imgStr = info.getImgs();
+           String []  imgArr = imgStr.split("\\$lvmq\\$");
 
-        Glide.with(HighRebateDetilsActivity.this).load(info.getLogo()).into(moneyLogo_iv);
-        moneyTitle_tv.setText(info.getTitle());
-        moneyNum_tv.setText("+"+info.getCash()+"元");
-        moneyDes_tv.setText(info.getExposition());
-        webview.loadUrl(info.getUrl());
+
+
+            moneyTitle_tv.setText(info.getTitle());
+            moneyNum_tv.setText("+"+info.getCash()+"元");
+            moneyDes_tv.setText(info.getExposition());
+            webview.loadUrl(info.getUrl());
+
+            moneyType2_tv.setText(info.getRewardsType());
+            moneyLeft_tv.setText(info.getParticipantsNum());
+            moneyTime2_tv.setText(info.getTimeLimit());
+
+            if(imgArr.length>0){
+                Glide.with(HighRebateDetilsActivity.this).load(imgArr[0]).into(moneyImg001_iv);
+                if(imgArr.length>=1){
+                    Glide.with(HighRebateDetilsActivity.this).load(imgArr[1]).into(moneyImg002_iv);
+                    if(imgArr.length>=2){
+                        Glide.with(HighRebateDetilsActivity.this).load(imgArr[2]).into(moneyImg003_iv);
+                    }
+                }
+
+
+
+            }
+
+
+
+
+
+        }
+
+
+
+
+
+
 
 
 //        @BindView(R.id.moneyLogo_iv) public RoundedImageView moneyLogo_iv;
@@ -199,6 +224,7 @@ public class HighRebateDetilsActivity extends BaseActivity implements View.OnCli
                 break;
             case R.id.tv_shots:
                 Intent intent  = new Intent(HighRebateDetilsActivity.this,UploadScreenshotsActivity.class);
+                intent.putExtra("id",id);
                 startActivity(intent);
                 break;
             default:

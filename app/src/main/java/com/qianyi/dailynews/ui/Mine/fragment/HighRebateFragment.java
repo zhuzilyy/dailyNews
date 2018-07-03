@@ -69,8 +69,7 @@ public class HighRebateFragment extends BaseFragment implements PullToRefreshVie
         adapter=new HighRebateAdapter(getActivity(),infoList);
         listview.setAdapter(adapter);
         listview.addHeaderView(headview);
-        userId= (String) SPUtils.get(getActivity(),"user_id","");
-
+        userId = (String) SPUtils.get(getActivity(),"user_id","");
     }
 
     @Override

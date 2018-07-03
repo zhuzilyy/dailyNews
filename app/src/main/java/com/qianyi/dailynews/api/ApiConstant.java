@@ -156,6 +156,10 @@ public class ApiConstant {
 
     //上传图片（file）
     public static final String  UPLOAD_PICS= BASE_URL+"/api/makeMoney/uploadImage";
+    //上传图片2
+    public static final String  SAVE_PICS= BASE_URL+"/api/makeMoney/saveImgs";
+
+
 
 
 

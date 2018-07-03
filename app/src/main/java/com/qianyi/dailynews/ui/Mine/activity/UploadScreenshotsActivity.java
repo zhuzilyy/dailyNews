@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.support.v4.content.FileProvider;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -15,15 +16,20 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.qianyi.dailynews.R;
 import com.qianyi.dailynews.api.ApiConstant;
 import com.qianyi.dailynews.api.ApiMine;
 import com.qianyi.dailynews.base.BaseActivity;
+import com.qianyi.dailynews.callback.RequestCallBack;
 import com.qianyi.dailynews.utils.BitmapToBase64;
 import com.qianyi.dailynews.utils.PhotoUtils;
+import com.qianyi.dailynews.utils.SPUtils;
+import com.qianyi.dailynews.utils.dialog.CustomLoadingDialog;
 import com.qianyi.dailynews.utils.dialog.PhotoChioceDialog;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
@@ -37,6 +43,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import okhttp3.Call;
+import okhttp3.Response;
 
 public class UploadScreenshotsActivity extends BaseActivity implements View.OnClickListener {
     @BindView(R.id.iv_back)
@@ -88,6 +96,11 @@ public class UploadScreenshotsActivity extends BaseActivity implements View.OnCl
     private Bitmap bitmap001;
     private Bitmap bitmap002;
     private Bitmap bitmap003;
+    private List<String> imgPaths = new ArrayList<>();
+    List<String> strings = new ArrayList<>();
+    private int totalPicCount;
+    private CustomLoadingDialog customLoadingDialog;
+    private String id;
 
     @Override
     protected void initViews() {
@@ -98,6 +111,8 @@ public class UploadScreenshotsActivity extends BaseActivity implements View.OnCl
             }
         });
         title.setText("上传截图");
+        customLoadingDialog=new CustomLoadingDialog(this);
+        id=getIntent().getStringExtra("id");
     }
 
     @Override
@@ -176,7 +191,7 @@ public class UploadScreenshotsActivity extends BaseActivity implements View.OnCl
                 break;
 
             case R.id.submit_pic:
-                List<String> strings = new ArrayList<>();
+
                 if(bitmap001!=null&&bitmap002!=null&&bitmap003!=null){
                     String base64pic001=BitmapToBase64.Bitmap2StrByBase64(bitmap001);
                     String base64pic002=BitmapToBase64.Bitmap2StrByBase64(bitmap002);
@@ -185,9 +200,9 @@ public class UploadScreenshotsActivity extends BaseActivity implements View.OnCl
                     strings.add(base64pic002);
                     strings.add(base64pic003);
                     if(strings.size()>0){
-                        for (int i = 0; i <strings.size() ; i++) {
-                            submitPics(strings.get(i));
-                        }
+                       // for (int i = 0; i <strings.size() ; i++) {
+                            submitPics(strings.get(0));
+                      //  }
                     }
                 }
                 break;
@@ -216,22 +231,35 @@ public class UploadScreenshotsActivity extends BaseActivity implements View.OnCl
      * 上传截图
      */
     private void submitPics(String filePic) {
-
+        customLoadingDialog.show();
         RequestParams params = new RequestParams(ApiConstant.UPLOAD_PICS);
-        params.addParameter("file",filePic);
-
-
+        params.addParameter("base64",filePic);
         x.http().post(params, new Callback.CacheCallback<String>() {
             @Override
-            public void onSuccess(String result) {
+            public void onSuccess(final String result) {
                 Log.i("uu",result);
+                try {
+                    JSONObject jsonObject = new JSONObject(result);
+                    String  picUrl = jsonObject.getString("data");
+                    imgPaths.add(picUrl);
+                    submitPicSecond();
+                    /*if("0000".equals(code)){
+                       String imgPath = jsonObject.getString("data");
+                       if(TextUtils.isEmpty(imgPath)){
+                           imgPaths.add(imgPath);
 
+                       }
+                    }*/
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
             }
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
                 Log.i("uu",ex.getMessage());
+                customLoadingDialog.dismiss();
             }
 
             @Override
@@ -249,6 +277,145 @@ public class UploadScreenshotsActivity extends BaseActivity implements View.OnCl
                 return false;
             }
         });
+
+    }
+
+    private void submitPicSecond() {
+        RequestParams params = new RequestParams(ApiConstant.UPLOAD_PICS);
+        params.addParameter("base64",strings.get(1));
+        x.http().post(params, new Callback.CacheCallback<String>() {
+            @Override
+            public void onSuccess(final String result) {
+
+                Log.i("uu",result);
+                try {
+                    JSONObject jsonObject = new JSONObject(result);
+                    String  picUrl = jsonObject.getString("data");
+                    imgPaths.add(picUrl);
+                    submitPicThird();
+                   /* if("0000".equals(code)){
+                        String imgPath = jsonObject.getString("data");
+                        if(TextUtils.isEmpty(imgPath)){
+                            imgPaths.add(imgPath);
+                            submitPicThird();
+                        }
+                    }*/
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                Log.i("uu",ex.getMessage());
+                customLoadingDialog.dismiss();
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+
+            @Override
+            public boolean onCache(String result) {
+                return false;
+            }
+        });
+
+    }
+
+    private void submitPicThird() {
+        RequestParams params = new RequestParams(ApiConstant.UPLOAD_PICS);
+        params.addParameter("base64",strings.get(2));
+        x.http().post(params, new Callback.CacheCallback<String>() {
+            @Override
+            public void onSuccess(final String result) {
+                customLoadingDialog.dismiss();
+                Log.i("uu",result);
+                try {
+                    JSONObject jsonObject = new JSONObject(result);
+                    String  picUrl = jsonObject.getString("data");
+                    imgPaths.add(picUrl);
+                    if(imgPaths.size()>=3){
+                        upScreenshot(imgPaths);
+                    }
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                Log.i("uu",ex.getMessage());
+                customLoadingDialog.dismiss();
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+
+            @Override
+            public boolean onCache(String result) {
+                return false;
+            }
+        });
+
+    }
+
+    /***
+     * 上传图片路劲
+     * @param imgPaths
+     */
+    private void upScreenshot(List<String> imgPaths) {
+        Log.i("ss",imgPaths+"");
+
+        String imgStrs =  imgPaths.get(0)+"$lvmq$"+imgPaths.get(1)+"$lvmq$"+imgPaths.get(2);
+        if(TextUtils.isEmpty(imgStrs)){
+            return;
+        }
+        String userid = (String) SPUtils.get(UploadScreenshotsActivity.this, "user_id", "");
+        if (TextUtils.isEmpty(userid)) {
+            return;
+        }
+
+
+        ApiMine.saveImgs(ApiConstant.SAVE_PICS, userid, id, imgStrs, new RequestCallBack<String>() {
+            @Override
+            public void onSuccess(Call call, Response response, String s) {
+                Log.i("ss",s);
+                try {
+                    JSONObject jsonObject = new JSONObject(s);
+                    String code = jsonObject.getString("code");
+                    if("0000".equals(code)){
+                        finish();
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onEror(Call call, int statusCode, Exception e) {
+                Log.i("ss",e.getMessage());
+            }
+        });
+
 
     }
 

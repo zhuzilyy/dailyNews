@@ -422,33 +422,44 @@
                     android:paddingLeft="@dimen/dp_15"
                     android:paddingRight="@dimen/dp_15">
                     <RelativeLayout
-
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+
                         >
                         <ImageView
                             android:id="@+id/moneyImg001_iv"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
+                            android:scaleType="fitXY"
                             android:src="@mipmap/jietu" />
 
                     </RelativeLayout>
+                    <View
+                        android:layout_width="15dp"
+                        android:layout_height="match_parent"/>
 
                     <RelativeLayout
 
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+
                         >
                         <ImageView
                             android:id="@+id/moneyImg002_iv"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:src="@mipmap/jietu" />
+                            android:scaleType="fitXY"
+                            android:src="@mipmap/jietu"/>
                     </RelativeLayout>
+
+                    <View
+                        android:layout_width="15dp"
+                        android:layout_height="match_parent"/>
+
                     <RelativeLayout
 
                         android:layout_width="0dp"
@@ -460,10 +471,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
+                            android:scaleType="fitXY"
                             android:src="@mipmap/jietu" />
                     </RelativeLayout>
-
-
 
                 </LinearLayout>
 

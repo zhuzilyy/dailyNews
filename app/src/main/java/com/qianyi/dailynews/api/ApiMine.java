@@ -220,6 +220,18 @@ public class ApiMine {
         OkHttpManager.getInstance().postRequest(url,params,callback);
     }
 
+    /**
+     * 上传图片路劲
+     * @param callback
+     */
+    public static void saveImgs(String url,String imgUrls,String userId, String id,RequestCallBack<String> callback){
+        Map<String,String> params=new HashMap<>();
+        params.put("userId",userId);
+        params.put("id",id);
+        params.put("imgUrls ",imgUrls );
+        OkHttpManager.getInstance().postRequest(url,params,callback);
+    }
+
 
 
 

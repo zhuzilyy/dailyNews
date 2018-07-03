@@ -1,16 +1,24 @@
 package com.qianyi.dailynews;
 
+import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
@@ -20,6 +28,9 @@ import com.qianyi.dailynews.fragment.InvitationFragment;
 import com.qianyi.dailynews.fragment.MineFragment;
 import com.qianyi.dailynews.fragment.NewsFragment;
 import com.qianyi.dailynews.fragment.VideoFragment;
+import com.qianyi.dailynews.ui.account.activity.RegisterActivity;
+import com.qianyi.dailynews.ui.news.activity.NewsDetailsActivity;
+import com.qianyi.dailynews.utils.SPUtils;
 import com.sina.weibo.sdk.WbSdk;
 import com.sina.weibo.sdk.auth.AuthInfo;
 
@@ -28,8 +39,9 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Locale;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
-public class MainActivity extends BaseActivity implements BottomNavigationBar.OnTabSelectedListener {
+public class MainActivity extends BaseActivity implements BottomNavigationBar.OnTabSelectedListener,View.OnClickListener {
     private NewsFragment newsFragment;
     private VideoFragment videoFragment;
     private InvitationFragment invitationFragment;
@@ -39,6 +51,10 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
     @BindView(R.id.bar)
     public BottomNavigationBar bar;
     private MyReceiver myReceiver;
+
+
+
+
     @Override
     protected void initViews() {
 
@@ -66,9 +82,9 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         newsFragment=new NewsFragment();
         FragmentTransaction ft=fragmentManager.beginTransaction();
         AddOrShowFra(ft,newsFragment);
+
         bar.setMode(BottomNavigationBar.MODE_FIXED);
-        bar.setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC);
-        bar.setInActiveColor("#808080");
+        bar.setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_DEFAULT);
         bar.addItem(new BottomNavigationItem(getResources().getDrawable(R.mipmap.choosenews_icon),"新闻").setActiveColorResource(R.color.main_red))
                 .addItem(new BottomNavigationItem(getResources().getDrawable(R.mipmap.choosevideo_icon),"视频").setActiveColorResource(R.color.main_red))
                 .addItem(new BottomNavigationItem(getResources().getDrawable(R.mipmap.redpack_icon),"邀请").setActiveColorResource(R.color.main_red))
@@ -76,19 +92,26 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
                 .setFirstSelectedPosition(0).initialise();
         bar.setTabSelectedListener(this);
         WbSdk.install(this,new AuthInfo(this, ApiConstant.APP_KEY_WEIBO, ApiConstant.REDIRECT_URL, ApiConstant.SCOPE));
+
+
+
     }
     @Override
     protected void initData() {
 
     }
+
     @Override
     protected void getResLayout() {
         setContentView(R.layout.activity_main);
+
     }
+
     @Override
     protected void initListener() {
 
     }
+
     @Override
     protected void setStatusBarColor() {
 
@@ -198,6 +221,16 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
     public void onTabReselected(int position) {
 
     }
+
+    @Override
+    public void onClick(View view) {
+         switch (view.getId()){
+
+                 }
+    }
+
+
+
     class MyReceiver extends BroadcastReceiver{
         @Override
         public void onReceive(Context context, Intent intent) {
