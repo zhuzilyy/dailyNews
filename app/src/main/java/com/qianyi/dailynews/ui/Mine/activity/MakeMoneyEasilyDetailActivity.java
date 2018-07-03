@@ -316,6 +316,7 @@ public class MakeMoneyEasilyDetailActivity extends BaseActivity implements View.
         shareHandler.registerApp();
         // sendMessage(true, true);
         shareWebPage();
+
     }
 
     private void initLog() {
