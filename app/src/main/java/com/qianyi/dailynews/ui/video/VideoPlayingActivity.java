@@ -19,6 +19,7 @@ import com.qianyi.dailynews.api.ApiConstant;
 import com.qianyi.dailynews.api.ApiVideo;
 import com.qianyi.dailynews.base.BaseActivity;
 import com.qianyi.dailynews.callback.RequestCallBack;
+import com.qianyi.dailynews.dialog.CustomLoadingDialog;
 import com.qianyi.dailynews.fragment.bean.VideoDetailBean;
 import com.qianyi.dailynews.fragment.bean.VideoDetailInfo;
 import com.qianyi.dailynews.fragment.bean.VideoInfo;
@@ -57,11 +58,13 @@ public class VideoPlayingActivity extends BaseActivity {
     private Intent intent;
     private String videoUrl,viewCount,title,videoId;
     private List<VideoDetailInfo> infoList;
+    private CustomLoadingDialog customLoadingDialog;
     @Override
     protected void initViews() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             setTranslucentStatus();
         }
+        customLoadingDialog=new CustomLoadingDialog(this);
         intent=getIntent();
         if (intent!=null){
             videoUrl=intent.getStringExtra("videoUrl");
@@ -91,7 +94,7 @@ public class VideoPlayingActivity extends BaseActivity {
     protected void initData() {
         tv_desc.setText(title);
         tv_viewCount.setText(viewCount+"次播放");
-        Glide.with(this).load(R.mipmap.video_test).into(videoPlayerStandard.thumbImageView);
+        Glide.with(this).load(R.mipmap.video_holder).into(videoPlayerStandard.thumbImageView);
         JCVideoPlayer.setJcUserAction(new MyUserActionStandard());
         videoPlayerStandard.setUp(videoUrl
                 ,JCVideoPlayerStandard.SCREEN_LAYOUT_NORMAL,"");
@@ -101,9 +104,11 @@ public class VideoPlayingActivity extends BaseActivity {
     }
     //获取数据
     private void getData() {
+        customLoadingDialog.show();
         ApiVideo.videoDetail(ApiConstant.VIDEO_DETAIL, "20", new RequestCallBack<String>() {
             @Override
             public void onSuccess(Call call, Response response, final String s) {
+                customLoadingDialog.dismiss();
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -126,6 +131,7 @@ public class VideoPlayingActivity extends BaseActivity {
             }
             @Override
             public void onEror(Call call, int statusCode, Exception e) {
+                customLoadingDialog.dismiss();
                 lv_recommend.setVisibility(View.GONE);
                 no_data_rl.setVisibility(View.GONE);
                 no_internet_rl.setVisibility(View.VISIBLE);

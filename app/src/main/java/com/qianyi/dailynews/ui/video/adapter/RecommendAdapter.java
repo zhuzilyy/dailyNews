@@ -50,8 +50,7 @@ public class RecommendAdapter extends BaseAdapter {
         VideoDetailInfo videoDetailInfo = infoList.get(i);
         tv_title.setText(videoDetailInfo.getTitle());
         tv_viewCount.setText(videoDetailInfo.getViewCount()+"次播放");
-        Glide.with(context).load(videoDetailInfo.getCoverUrl()).placeholder(R.mipmap.video_test).into(iv_videoCover);
+        Glide.with(context).load(videoDetailInfo.getCoverUrl()).placeholder(R.mipmap.video_holder).into(iv_videoCover);
         return view;
     }
-
 }

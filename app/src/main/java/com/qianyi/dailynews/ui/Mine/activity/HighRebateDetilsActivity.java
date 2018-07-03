@@ -163,23 +163,8 @@ public class HighRebateDetilsActivity extends BaseActivity implements View.OnCli
                         Glide.with(HighRebateDetilsActivity.this).load(imgArr[2]).into(moneyImg003_iv);
                     }
                 }
-
-
-
             }
-
-
-
-
-
         }
-
-
-
-
-
-
-
 
 //        @BindView(R.id.moneyLogo_iv) public RoundedImageView moneyLogo_iv;
 //        @BindView(R.id.moneyTitle_tv) public TextView moneyTitle_tv;
