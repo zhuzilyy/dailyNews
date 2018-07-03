@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,9 +19,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.JsonObject;
 import com.qianyi.dailynews.R;
 import com.qianyi.dailynews.api.ApiConstant;
+import com.qianyi.dailynews.api.ApiMine;
 import com.qianyi.dailynews.base.BaseActivity;
+import com.qianyi.dailynews.callback.RequestCallBack;
 import com.qianyi.dailynews.dialog.CustomLoadingDialog;
 import com.qianyi.dailynews.ui.invitation.activity.IncomeShowActivity;
 import com.qianyi.dailynews.utils.SPUtils;
@@ -37,8 +41,13 @@ import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import butterknife.BindView;
 import butterknife.OnClick;
+import okhttp3.Call;
+import okhttp3.Response;
 
 public class MakeMoneyEasilyDetailActivity extends BaseActivity implements View.OnClickListener {
     @BindView(R.id.webview)
@@ -67,6 +76,9 @@ public class MakeMoneyEasilyDetailActivity extends BaseActivity implements View.
     private CustomLoadingDialog customLoadingDialog;
     private String userId;
     private String gold;
+    private String id;
+    private String token;
+    private String ShareUrl;
 
 
     @Override
@@ -78,19 +90,55 @@ public class MakeMoneyEasilyDetailActivity extends BaseActivity implements View.
                 finish();
             }
         });
-
+        id=getIntent().getStringExtra("id");
         title.setText("");
         gold=getIntent().getStringExtra("gold");
         if(!TextUtils.isEmpty(gold)){
             tv_gold.setText("每好友阅读+"+gold+"金币");
         }
 
+        String userid = (String) SPUtils.get(MakeMoneyEasilyDetailActivity.this, "user_id", "");
+        if (!TextUtils.isEmpty(userid)) {
+            ApiMine.BeforeShareForToken(ApiConstant.easyMoneyShare, id, userid, new RequestCallBack<String>() {
+                @Override
+                public void onSuccess(Call call, Response response, String s) {
+                    Log.i("ss",s);
+                    try {
+                        JSONObject jsonObject = new JSONObject(s);
+                        JSONObject jsonObject1 = (JSONObject) jsonObject.get("data");
+                        token= jsonObject1.getString("token");
+                        Log.i("token",token);
+                        //显示分享内容
+                        setData2(token);
+
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+
+                }
+
+                @Override
+                public void onEror(Call call, int statusCode, Exception e) {
+                    Log.i("ss",e.getMessage());
+                }
+            });
+        }
+
+
+    }
+
+    /***
+     * 显示分享内容
+     * @param token
+     */
+    private void setData2(String token) {
 
         WebviewUtil.setWebview(webview, webview.getSettings());
-        webview.loadUrl("http://www.baidu.com");
+        ShareUrl=ApiConstant.ShareUrl+token;
+        webview.loadUrl(ApiConstant.ShareUrl+token);
         loadingWebview();
-
-
         view_share = LayoutInflater.from(MakeMoneyEasilyDetailActivity.this).inflate(R.layout.pw_share, null);
         ll_friendCircle = view_share.findViewById(R.id.ll_friendCircle);
         ll_QQ = view_share.findViewById(R.id.ll_QQ);
@@ -111,6 +159,7 @@ public class MakeMoneyEasilyDetailActivity extends BaseActivity implements View.
 
 
     }
+
     private void loadingWebview() {
         webview.setWebChromeClient(new WebChromeClient() {
             @Override
@@ -151,7 +200,8 @@ public class MakeMoneyEasilyDetailActivity extends BaseActivity implements View.
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_shareNow:
-                shwoSharePw();
+               // shwoSharePw();
+                shareFriendCircle();
                 break;
             case R.id.btn_share:
                 shwoSharePw();
@@ -241,13 +291,13 @@ public class MakeMoneyEasilyDetailActivity extends BaseActivity implements View.
 
     private void shareFriendCircle() {
         WXWebpageObject webpage = new WXWebpageObject();
-        webpage.webpageUrl = "http://www.gaokaoygzy.cn/download";
+        webpage.webpageUrl = ShareUrl;
         WXMediaMessage msg = new WXMediaMessage(webpage);
         msg.title = "每日速报";
         msg.description = "每日速报";
         Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.mipmap.logo);
         Bitmap bitmap = WhiteBgBitmapUtil.drawableBitmapOnWhiteBg(this, bmp);
-        Bitmap thumbBmp = Bitmap.createScaledBitmap(bitmap, 200, 200, true);
+        Bitmap thumbBmp = Bitmap.createScaledBitmap(bitmap, 100, 100, true);
         msg.setThumbImage(thumbBmp);
         bmp.recycle();
         SendMessageToWX.Req req = new SendMessageToWX.Req();

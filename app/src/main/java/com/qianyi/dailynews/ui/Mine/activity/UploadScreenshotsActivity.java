@@ -142,6 +142,7 @@ public class UploadScreenshotsActivity extends BaseActivity implements View.OnCl
         switch (view.getId()) {
             case R.id.tv_jitu:
                 Intent intent = new Intent(UploadScreenshotsActivity.this,ScreenshotExamplesActivity.class);
+                intent.putExtra("id",id);
                 startActivity(intent);
                 break;
             case R.id.re_upload001:
@@ -402,8 +403,8 @@ public class UploadScreenshotsActivity extends BaseActivity implements View.OnCl
                     JSONObject jsonObject = new JSONObject(s);
                     String code = jsonObject.getString("code");
                     if("0000".equals(code)){
+                        Toast.makeText(UploadScreenshotsActivity.this, "上传完成", Toast.LENGTH_SHORT).show();
                         finish();
-
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

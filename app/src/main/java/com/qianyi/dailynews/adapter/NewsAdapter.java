@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
 import com.qianyi.dailynews.R;
 import com.qianyi.dailynews.ui.news.bean.NewsBean;
 
@@ -207,9 +208,9 @@ public class NewsAdapter extends BaseAdapter {
            Holder03.news003_posttime.setText(item.getPublishDate());
            Holder03.news003_read.setText(item.getReadNum());
            Holder03.news003_read.setText(item.getViewCount()+"次阅读");
-           Glide.with(context).load(item.getImgsUrl().get(0)).into(Holder03.news003_pic01);
-           Glide.with(context).load(item.getImgsUrl().get(1)).into(Holder03.news003_pic02);
-           Glide.with(context).load(item.getImgsUrl().get(2)).into(Holder03.news003_pic03);
+           Glide.with(context).load(item.getImgsUrl().get(0)).placeholder(R.mipmap.default002).into(new GlideDrawableImageViewTarget(Holder03.news003_pic01,1));
+           Glide.with(context).load(item.getImgsUrl().get(1)).placeholder(R.mipmap.default002).into(new GlideDrawableImageViewTarget(Holder03.news003_pic02,1));
+           Glide.with(context).load(item.getImgsUrl().get(2)).placeholder(R.mipmap.default002).into(new GlideDrawableImageViewTarget(Holder03.news003_pic03,1));
            //删除条目
            Holder03.news003_delete.setOnClickListener(new View.OnClickListener() {
                @Override
@@ -226,7 +227,7 @@ public class NewsAdapter extends BaseAdapter {
            Holder02.news002_posttime.setText(item.getPublishDate());
            Holder02.news002_read.setText(item.getReadNum());
            Holder02.news002_read.setText(item.getViewCount()+"次阅读");
-           Glide.with(context).load(item.getImgsUrl().get(0)).into(Holder02.news002_pic);
+           Glide.with(context).load(item.getImgsUrl().get(0)).placeholder(R.mipmap.default002).into(new GlideDrawableImageViewTarget(Holder02.news002_pic,1));
            //删除条目
            Holder02.news002_delete.setOnClickListener(new View.OnClickListener() {
                @Override
@@ -256,20 +257,21 @@ public class NewsAdapter extends BaseAdapter {
         if(AD_BIG_PIC == itemType){
             AdCell001Holder  cell001Holder = (AdCell001Holder) view.getTag();
             cell001Holder.ad001_content.setText(item.getTitle());
-            Glide.with(context).load(item.getImgs().get(0)).into(cell001Holder.ad001_bigpic);
+            Glide.with(context).load(item.getImgs().get(0)).placeholder(R.mipmap.default001).into(new GlideDrawableImageViewTarget(cell001Holder.ad001_bigpic,1));
         }
         if(AD_RIGHT_PIC == itemType){
             AdCell002Holder  cell002Holder = (AdCell002Holder) view.getTag();
             cell002Holder.ad002_content.setText(item.getTitle());
-            Glide.with(context).load(item.getImgs().get(0)).into(cell002Holder.ad002_bigpic);
+            Glide.with(context).load(item.getImgs().get(0)).placeholder(R.mipmap.default002).into(new GlideDrawableImageViewTarget(cell002Holder.ad002_bigpic,1));
 
         }
         if(AD_THREE_PIC == itemType){
             AdCell003Holder  cell003Holder = (AdCell003Holder) view.getTag();
             cell003Holder.ad_003_content.setText(item.getTitle());
-            Glide.with(context).load(item.getImgs().get(0)).into(cell003Holder.ad_003_pic001);
-            Glide.with(context).load(item.getImgs().get(1)).into(cell003Holder.ad_003_pic002);
-            Glide.with(context).load(item.getImgs().get(2)).into(cell003Holder.ad_003_pic003);
+            Glide.with(context).load(item.getImgs().get(0)).placeholder(R.mipmap.default002).into(new GlideDrawableImageViewTarget(cell003Holder.ad_003_pic001, 1));
+            Glide.with(context).load(item.getImgs().get(1)).placeholder(R.mipmap.default002).into(new GlideDrawableImageViewTarget(cell003Holder.ad_003_pic002, 1));
+            Glide.with(context).load(item.getImgs().get(2)).placeholder(R.mipmap.default002).into(new GlideDrawableImageViewTarget(cell003Holder.ad_003_pic003, 1));
+          //  Glide.with(this).load(...).into(new GlideDrawableImageViewTarget(iv, 1));
         }
 
         return view;

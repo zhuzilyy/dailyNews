@@ -232,6 +232,27 @@ public class ApiMine {
         OkHttpManager.getInstance().postRequest(url,params,callback);
     }
 
+    /**
+     * 事例图片
+     * @param callback
+     */
+    public static void getMakeMoneyExample(String url,String id, RequestCallBack<String> callback){
+        Map<String,String> params=new HashMap<>();
+        params.put("id",id);
+        OkHttpManager.getInstance().postRequest(url,params,callback);
+    }
+    /**
+     * 事例图片
+     * @param
+     */
+    public static void BeforeShareForToken(String url,String id,String userId ,RequestCallBack<String> callback){
+        Map<String,String> params=new HashMap<>();
+        params.put("id",id);
+        params.put("userId",userId);
+        OkHttpManager.getInstance().postRequest(url,params,callback);
+    }
+
+
 
 
 
