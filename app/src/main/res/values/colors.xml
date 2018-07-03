@@ -11,9 +11,9 @@
     //**************************
     <color name="main_red">#ff5645</color>
     <color name="main_red_no">#f18277</color>
-    <color name="main_blue">#1aa1f3</color>
-    <color name="bg">#fff</color>
-    <color name="white_alpha_0.5">#44ffffff</color>
+    <color name="main_blue">#07131a</color>
+    <color name="bg">#292727</color>
+    <color name="white_alpha_0.5">#242526</color>
     <!-- 选择图片弹窗-->
     <color name="line">#DAD9DB</color>
     <color name="btn_gradient_press">#CACACB</color>

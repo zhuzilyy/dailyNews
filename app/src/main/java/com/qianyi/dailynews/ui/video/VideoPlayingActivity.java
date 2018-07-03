@@ -94,7 +94,7 @@ public class VideoPlayingActivity extends BaseActivity {
         Glide.with(this).load(R.mipmap.video_test).into(videoPlayerStandard.thumbImageView);
         JCVideoPlayer.setJcUserAction(new MyUserActionStandard());
         videoPlayerStandard.setUp(videoUrl
-                , JCVideoPlayerStandard.SCREEN_LAYOUT_NORMAL,"");
+                ,JCVideoPlayerStandard.SCREEN_LAYOUT_NORMAL,"");
         videoPlayerStandard.startVideo();
         getData();
 
@@ -144,7 +144,7 @@ public class VideoPlayingActivity extends BaseActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent=new Intent(VideoPlayingActivity.this,VideoPlayingActivity.class);
                 VideoDetailInfo videoDetailInfo = infoList.get(i);
-                intent.putExtra("videoUrl",videoDetailInfo.getVideoUrls().get(0));
+                intent.putExtra("videoUrl",videoDetailInfo.getUrl());
                 intent.putExtra("viewCount",videoDetailInfo.getViewCount());
                 intent.putExtra("title",videoDetailInfo.getTitle());
                 startActivity(intent);

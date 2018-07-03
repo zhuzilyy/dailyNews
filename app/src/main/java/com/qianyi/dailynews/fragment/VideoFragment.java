@@ -187,7 +187,7 @@ public class VideoFragment extends BaseFragment implements PullToRefreshView.OnH
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent=new Intent(getActivity(),VideoPlayingActivity.class);
                 VideoInfo videoInfo = infoList.get(i);
-                intent.putExtra("videoUrl",videoInfo.getVideoUrls().get(0));
+                intent.putExtra("videoUrl",videoInfo.getUrl());
                 intent.putExtra("viewCount",videoInfo.getViewCount());
                 intent.putExtra("title",videoInfo.getTitle());
                 startActivity(intent);

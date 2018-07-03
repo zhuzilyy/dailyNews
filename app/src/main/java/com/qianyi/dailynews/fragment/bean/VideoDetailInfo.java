@@ -13,7 +13,7 @@ public class VideoDetailInfo {
     private String viewCount;
     private String description;
     private String publishDate;
-    private List<String> videoUrls;
+    private String url;
     public String getTitle() {
         return title;
     }
@@ -61,12 +61,11 @@ public class VideoDetailInfo {
     public void setPublishDate(String publishDate) {
         this.publishDate = publishDate;
     }
-
-    public List<String> getVideoUrls() {
-        return videoUrls;
+    public String getUrl() {
+        return url;
     }
 
-    public void setVideoUrls(List<String> videoUrls) {
-        this.videoUrls = videoUrls;
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

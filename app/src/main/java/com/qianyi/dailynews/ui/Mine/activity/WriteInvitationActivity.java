@@ -9,6 +9,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.qianyi.dailynews.R;
 import com.qianyi.dailynews.api.ApiAccount;
@@ -91,6 +92,8 @@ public class WriteInvitationActivity extends BaseActivity {
                 try {
                     JSONObject jsonObject = new JSONObject(s);
                     String code = jsonObject.getString("code");
+                    String return_msg = jsonObject.getString("return_msg");
+                    Toast.makeText(WriteInvitationActivity.this, return_msg, Toast.LENGTH_SHORT).show();
                     if ("0000".equals(code)) {
                         //更新用户信息
                         updateUserInfo();

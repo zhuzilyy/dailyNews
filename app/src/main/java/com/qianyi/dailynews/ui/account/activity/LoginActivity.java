@@ -255,7 +255,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                                     String balance=data.getString("balance");
                                     String earnings=data.getString("earnings");
                                     String invite_code=data.getString("invite_code");
-                                    //String name=data.getString("name");
+                                    String name=data.getString("name");
                                     boolean oneyuan=data.getBoolean("oneyuan");
                                     SPUtils.put(LoginActivity.this,"user_id",user_id);
                                     SPUtils.put(LoginActivity.this,"phone",phone);
@@ -266,7 +266,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                                     SPUtils.put(LoginActivity.this,"earnings",earnings);
                                     SPUtils.put(LoginActivity.this,"invite_code",invite_code);
                                     SPUtils.put(LoginActivity.this,"oneyuan",oneyuan);
-                                    //SPUtils.put(LoginActivity.this,"name",name);
+                                    SPUtils.put(LoginActivity.this,"name",name);
                                     Intent intent=new Intent();
                                     intent.setAction("com.action.login.success");
                                     sendBroadcast(intent);

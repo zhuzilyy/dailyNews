@@ -30,6 +30,7 @@
                     android:paddingLeft="@dimen/dp_15">
                     <!--头像-->
                     <com.qianyi.dailynews.views.CircleImageView
+                        android:src="@mipmap/headportrait_icon"
                         android:id="@+id/mine_head"
                         android:layout_width="65dp"
                         android:layout_height="65dp"
