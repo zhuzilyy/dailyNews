@@ -137,6 +137,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             re_WriteCode.setVisibility(View.GONE);
             view_inviteCode.setVisibility(View.GONE);
         }
+
         Glide.with(getActivity()).load(headimgurl).error(R.mipmap.headportrait_icon).into(mine_head);
         tv_phone.setText("电话号:"+phone);
         tv_balance.setText(balance);
