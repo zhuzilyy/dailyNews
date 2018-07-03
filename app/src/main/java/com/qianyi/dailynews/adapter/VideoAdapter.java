@@ -65,7 +65,7 @@ public class VideoAdapter extends BaseAdapter {
             viewHolder.tv_duration.setText(videoInfo.getDurationMin()+"秒");
         }
         viewHolder.tv_browseCount.setText(videoInfo.getViewCount()+"次播放");
-        Glide.with(context).load(videoInfo.getCoverUrl()).placeholder(R.mipmap.video_test).into(viewHolder.iv_background);
+        Glide.with(context).load(videoInfo.getCoverUrl()).placeholder(R.mipmap.video_holder).into(viewHolder.iv_background);
         return view;
     }
     static class ViewHolder{
