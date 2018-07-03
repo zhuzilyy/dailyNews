@@ -158,6 +158,13 @@ public class ApiConstant {
     public static final String  UPLOAD_PICS= BASE_URL+"/api/makeMoney/uploadImage";
     //上传图片2
     public static final String  SAVE_PICS= BASE_URL+"/api/makeMoney/saveImgs";
+    //截图事例
+    public static final String  getMakeMoneyExample= BASE_URL+"/api/makeMoney/getMakeMoneyExample";
+
+    //分享之前
+    public static final String  easyMoneyShare= BASE_URL+"/api/makeMoney/easyMoneyShare";
+    //分享拼接
+    public static final String  ShareUrl= "http://47.104.73.127:8080/share/esmy.html?token=";
 
 
 

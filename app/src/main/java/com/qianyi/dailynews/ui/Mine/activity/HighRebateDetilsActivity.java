@@ -157,15 +157,14 @@ public class HighRebateDetilsActivity extends BaseActivity implements View.OnCli
 
             if(imgArr.length>0){
                 Glide.with(HighRebateDetilsActivity.this).load(imgArr[0]).into(moneyImg001_iv);
-                if(imgArr.length>=1){
+                if(imgArr.length>1){
                     Glide.with(HighRebateDetilsActivity.this).load(imgArr[1]).into(moneyImg002_iv);
-                    if(imgArr.length>=2){
+                    if(imgArr.length>2){
                         Glide.with(HighRebateDetilsActivity.this).load(imgArr[2]).into(moneyImg003_iv);
                     }
                 }
             }
         }
-
 //        @BindView(R.id.moneyLogo_iv) public RoundedImageView moneyLogo_iv;
 //        @BindView(R.id.moneyTitle_tv) public TextView moneyTitle_tv;
 //        @BindView(R.id.moneyNum_tv) public TextView moneyNum_tv;
@@ -181,8 +180,6 @@ public class HighRebateDetilsActivity extends BaseActivity implements View.OnCli
 //        @BindView(R.id.moneyImg001_iv) public TextView moneyImg001_iv;
 //        @BindView(R.id.moneyImg002_iv) public TextView moneyImg002_iv;
 //        @BindView(R.id.moneyImg003_iv) public TextView moneyImg003_iv;
-
-
     }
 
     @Override

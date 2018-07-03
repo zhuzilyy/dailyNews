@@ -114,7 +114,9 @@ public class HighRebateFragment extends BaseFragment implements PullToRefreshVie
         ApiMine.fanliList(ApiConstant.FANLI_LIST, userId,page,ApiConstant.PAGE_SIZE, new RequestCallBack<String>() {
             @Override
             public void onSuccess(Call call, Response response, final String s) {
+                Logger.json(s);
                 Logger.i(s);
+
                 infoList.clear();
                 customLoadingDialog.dismiss();
                 getActivity().runOnUiThread(new Runnable() {

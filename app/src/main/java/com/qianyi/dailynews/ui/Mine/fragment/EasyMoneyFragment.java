@@ -80,6 +80,7 @@ public class EasyMoneyFragment extends BaseFragment implements PullToRefreshView
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(getActivity(), MakeMoneyEasilyDetailActivity.class);
                 intent.putExtra("gold",infoList.get(i).getGold());
+                intent.putExtra("id",infoList.get(i).getId());
                 startActivity(intent);
             }
         });
