@@ -1,5 +1,6 @@
 package com.qianyi.dailynews.ui.Mine.fragment;
 
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import com.qianyi.dailynews.api.ApiMine;
 import com.qianyi.dailynews.base.BaseFragment;
 import com.qianyi.dailynews.callback.RequestCallBack;
 import com.qianyi.dailynews.dialog.CustomLoadingDialog;
+import com.qianyi.dailynews.ui.Mine.activity.HighRebateDetilsActivity;
 import com.qianyi.dailynews.ui.Mine.adapter.HighRebateAdapter;
 import com.qianyi.dailynews.ui.Mine.adapter.HighRebateTaskAdapter;
 import com.qianyi.dailynews.ui.Mine.bean.FanLiBean;
@@ -66,7 +68,11 @@ public class HighRebate_RecordFragment extends BaseFragment implements PullToRef
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
+                Intent intent = new Intent(getActivity(), HighRebateDetilsActivity.class);
+                intent.putExtra("id",infoList.get(i).getMkId());
+                intent.putExtra("type",infoList.get(i).getType());
+                intent.putExtra("time",infoList.get(i).getTime());
+                startActivity(intent);
             }
         });
     }
@@ -87,6 +93,7 @@ public class HighRebate_RecordFragment extends BaseFragment implements PullToRef
         ApiMine.fanliTaskList(ApiConstant.FANLI_TASK_LIST, userId,page,ApiConstant.PAGE_SIZE, new RequestCallBack<String>() {
             @Override
             public void onSuccess(Call call, Response response, final String s) {
+                Log.i("ss",s);
                 customLoadingDialog.dismiss();
                 getActivity().runOnUiThread(new Runnable() {
                     @Override

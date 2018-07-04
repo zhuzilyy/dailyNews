@@ -395,7 +395,7 @@ public class UploadScreenshotsActivity extends BaseActivity implements View.OnCl
         }
 
 
-        ApiMine.saveImgs(ApiConstant.SAVE_PICS, userid, id, imgStrs, new RequestCallBack<String>() {
+        ApiMine.saveImgs(ApiConstant.SAVE_PICS, imgStrs,userid, id , new RequestCallBack<String>() {
             @Override
             public void onSuccess(Call call, Response response, String s) {
                 Log.i("ss",s);

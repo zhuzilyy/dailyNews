@@ -60,6 +60,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="手游"
+                                android:visibility="gone"
                                 android:textColor="@color/gray"
                                 android:textSize="14sp"
 
@@ -504,6 +505,7 @@
         >
 
         <LinearLayout
+            android:id="@+id/ll_upLoad"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:orientation="vertical"

@@ -15,6 +15,45 @@ public class FanLiInfo {
     private String type;
     private String status;
     private String time;
+    private String gold;
+    private String mkId;
+
+    public String getMkId() {
+        return mkId;
+    }
+
+    public void setMkId(String mkId) {
+        this.mkId = mkId;
+    }
+
+    public String getGold() {
+        return gold;
+    }
+
+    public void setGold(String gold) {
+        this.gold = gold;
+    }
+
+    public String getCnt() {
+        return cnt;
+    }
+
+    public void setCnt(String cnt) {
+        this.cnt = cnt;
+    }
+
+    public String getFlag() {
+        return flag;
+    }
+
+    public void setFlag(String flag) {
+        this.flag = flag;
+    }
+
+    private String cnt;
+    private String flag;
+
+
 
     public String getLogo() {
         return logo;

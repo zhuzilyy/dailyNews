@@ -88,6 +88,8 @@ public class ApiConstant {
     public static final String  FANLI_TASK_LIST= BASE_URL+"/api/makeMoney/makeMoneyTask";
     //轻松赚钱
     public static final String  MAKE_MONEY= BASE_URL+"/api/makeMoney/easyMoneyList";
+    //轻松赚钱任务列表
+    public static final String  MAKE_MONEY_LIST= BASE_URL+"/api/makeMoney/easyMoneyTask";
     //热词
     public static final String  HOT_WORD= BASE_URL+"/api/news/keywords";
     //更换热词

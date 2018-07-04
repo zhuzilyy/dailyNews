@@ -201,8 +201,14 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
             }
 
             @Override
-            public void onEror(Call call, int statusCode, Exception e) {
-                Log.i("ss",e.getMessage());
+            public void onEror(Call call, int statusCode, final Exception e) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                      //  Log.i("ss",e.getMessage());
+                    }
+                });
+
             }
         });
 
@@ -551,9 +557,9 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
             if(timeOut&&readMore){
                 //是红包新闻
                 if("1".equals(isRed)){
-                    getReward2("1");
-                    //金币哗啦哗啦的声音
-                    playSound(R.raw.mm);
+                        getReward2("1");
+                        //金币哗啦哗啦的声音
+                        playSound(R.raw.mm);
                 }else {
                     //金币新闻[大于25就结束]
                     if( NewsFragment.CurrentGetCoinNumber <= 25){

@@ -1,5 +1,7 @@
 package com.qianyi.dailynews.ui.Mine.fragment;
 
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +17,7 @@ import com.qianyi.dailynews.api.ApiMine;
 import com.qianyi.dailynews.base.BaseFragment;
 import com.qianyi.dailynews.callback.RequestCallBack;
 import com.qianyi.dailynews.dialog.CustomLoadingDialog;
+import com.qianyi.dailynews.ui.Mine.activity.MakeMoneyEasilyDetailActivity;
 import com.qianyi.dailynews.ui.Mine.adapter.EasyMoneyTaskAdapter;
 import com.qianyi.dailynews.ui.Mine.adapter.HighRebateTaskAdapter;
 import com.qianyi.dailynews.ui.Mine.bean.FanLiBean;
@@ -22,6 +25,7 @@ import com.qianyi.dailynews.ui.Mine.bean.FanLiInfo;
 import com.qianyi.dailynews.utils.SPUtils;
 import com.qianyi.dailynews.utils.Utils;
 import com.qianyi.dailynews.views.PullToRefreshView;
+import com.tencent.wxop.stat.EasyActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,14 +68,17 @@ public class EasyMoney_RecordFragment extends BaseFragment  implements PullToRef
         infoList=new ArrayList<>();
         mPullToRefreshView.setmOnHeaderRefreshListener(this);
         mPullToRefreshView.setmOnFooterRefreshListener(this);
-        adapter=new EasyMoneyTaskAdapter(getActivity());
+        adapter=new EasyMoneyTaskAdapter(getActivity(),infoList);
         listview.setAdapter(adapter);
         userId= (String) SPUtils.get(getActivity(),"user_id","");
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(mActivity, "13", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getActivity(), MakeMoneyEasilyDetailActivity.class);
+                intent.putExtra("gold",infoList.get(i).getGold());
+                intent.putExtra("id",infoList.get(i).getId());
+                startActivity(intent);
             }
         });
 
@@ -95,9 +102,11 @@ public class EasyMoney_RecordFragment extends BaseFragment  implements PullToRef
     }
     private void firstData(int page) {
         mPullToRefreshView.setEnablePullTorefresh(true);
-        ApiMine.fanliTaskList(ApiConstant.FANLI_TASK_LIST, userId,page,ApiConstant.PAGE_SIZE, new RequestCallBack<String>() {
+
+        ApiMine.fanliTaskList(ApiConstant.MAKE_MONEY_LIST, userId,page,ApiConstant.PAGE_SIZE, new RequestCallBack<String>() {
             @Override
             public void onSuccess(Call call, Response response, final String s) {
+                Log.i("ssss",s);
                 infoList.clear();
                 customLoadingDialog.dismiss();
                 getActivity().runOnUiThread(new Runnable() {
@@ -133,10 +142,16 @@ public class EasyMoney_RecordFragment extends BaseFragment  implements PullToRef
             }
             @Override
             public void onEror(Call call, int statusCode, Exception e) {
-                customLoadingDialog.dismiss();
-                mPullToRefreshView.setVisibility(View.GONE);
-                no_data_rl.setVisibility(View.GONE);
-                no_internet_rl.setVisibility(View.VISIBLE);
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        customLoadingDialog.dismiss();
+                        mPullToRefreshView.setVisibility(View.GONE);
+                        no_data_rl.setVisibility(View.GONE);
+                        no_internet_rl.setVisibility(View.VISIBLE);
+                    }
+                });
+
             }
         });
 

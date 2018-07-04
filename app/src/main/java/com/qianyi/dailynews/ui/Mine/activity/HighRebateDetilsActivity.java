@@ -1,6 +1,7 @@
 package com.qianyi.dailynews.ui.Mine.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -68,12 +69,14 @@ public class HighRebateDetilsActivity extends BaseActivity implements View.OnCli
     @BindView(R.id.ll_bottom02) public LinearLayout ll_bottom02;
     @BindView(R.id.tv_shots) public TextView tv_shots;
     @BindView(R.id.tv_leftTime) public TextView tv_leftTime;
+    @BindView(R.id.ll_upLoad) public LinearLayout ll_upLoad;
 
     private CustomLoadingDialog  customLoadingDialog;
 
     private String id;
     private String type;
     private String time;
+    private String status;
     @Override
     protected void initViews() {
         customLoadingDialog = new CustomLoadingDialog(HighRebateDetilsActivity.this);
@@ -81,6 +84,10 @@ public class HighRebateDetilsActivity extends BaseActivity implements View.OnCli
         id=getIntent().getStringExtra("id");
         type=getIntent().getStringExtra("type");
         time=getIntent().getStringExtra("time");
+
+
+
+
         if(!TextUtils.isEmpty(time)){
             tv_leftTime.setText(time+" s");
 
@@ -118,18 +125,62 @@ public class HighRebateDetilsActivity extends BaseActivity implements View.OnCli
         }
         ApiMine.highBackMoneyDetails(ApiConstant.HIGH_BACK_MONEY_DETAILS, userid, id, new RequestCallBack<String>() {
             @Override
-            public void onSuccess(Call call, Response response, String s) {
+            public void onSuccess(Call call, Response response, final String s) {
                 Log.i("sss",s);
-                Gson gson = new Gson() ;
-                MoneyDetailBean detailBean = gson.fromJson(s, MoneyDetailBean.class);
-                String code=detailBean.getCode();
-                if("0000".equals(code)){
-                    MoneyDetailBean.MoneyDetailData data = detailBean.getData();
-                    MoneyDetailBean.MoneyDetailData.MoneyDetailInfo detailInfo =data.getMakeMoney();
-                    if(detailInfo!=null){
-                        setDataForPage(detailInfo);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Gson gson = new Gson() ;
+                        MoneyDetailBean detailBean = gson.fromJson(s, MoneyDetailBean.class);
+                        String code=detailBean.getCode();
+
+                        if("0000".equals(code)){
+                            MoneyDetailBean.MoneyDetailData data = detailBean.getData();
+                            status=data.getStatus();
+                            MoneyDetailBean.MoneyDetailData.MoneyDetailInfo detailInfo =data.getMakeMoney();
+
+
+                            if(detailInfo!=null){
+                                setDataForPage(detailInfo);
+                            }
+
+                            if("0".equals(status)){
+
+                            }else if("1".equals(status) || "4".equals(status)){
+                                btn_getMoney.setVisibility(View.GONE);
+                            }else {
+                                if("2".equals(status)){
+                                    btn_getMoney.setEnabled(false);
+                                    ll_bottom02.setVisibility(View.GONE);
+                                    btn_getMoney.setText("待审批");
+                                    btn_getMoney.setTextColor(Color.parseColor("#999999"));
+                                }else if("3".equals(status)){
+                                    btn_getMoney.setEnabled(false);
+                                    ll_bottom02.setVisibility(View.GONE);
+                                    btn_getMoney.setText("审批通过");
+                                    btn_getMoney.setTextColor(Color.parseColor("#999999"));
+                                }else if ("5".equals(status)){
+                                    btn_getMoney.setEnabled(false);
+                                    ll_bottom02.setVisibility(View.GONE);
+                                    btn_getMoney.setText("取消");
+                                    btn_getMoney.setTextColor(Color.parseColor("#999999"));
+                                }else if("6".equals(status)){
+                                    btn_getMoney.setEnabled(false);
+                                    ll_bottom02.setVisibility(View.GONE);
+                                    btn_getMoney.setText("过期");
+                                    btn_getMoney.setTextColor(Color.parseColor("#999999"));
+                                }
+                            }
+
+
+
+                        }
+
+
+
                     }
-                }
+                });
+
 
 
             }
@@ -150,9 +201,7 @@ public class HighRebateDetilsActivity extends BaseActivity implements View.OnCli
     private void setDataForPage(MoneyDetailBean.MoneyDetailData.MoneyDetailInfo info) {
         if(info!=null){
             String imgStr = info.getImgs();
-           String []  imgArr = imgStr.split("\\$lvmq\\$");
-
-
+            String []  imgArr = imgStr.split("\\$lvmq\\$");
 
             moneyTitle_tv.setText(info.getTitle());
             moneyNum_tv.setText("+"+info.getCash()+"元");
@@ -162,6 +211,8 @@ public class HighRebateDetilsActivity extends BaseActivity implements View.OnCli
             moneyType2_tv.setText(info.getRewardsType());
             moneyLeft_tv.setText(info.getParticipantsNum());
             moneyTime2_tv.setText(info.getTimeLimit());
+
+
 
             if(imgArr.length>0){
                 Glide.with(HighRebateDetilsActivity.this).load(imgArr[0]).into(moneyImg001_iv);
@@ -173,21 +224,7 @@ public class HighRebateDetilsActivity extends BaseActivity implements View.OnCli
                 }
             }
         }
-//        @BindView(R.id.moneyLogo_iv) public RoundedImageView moneyLogo_iv;
-//        @BindView(R.id.moneyTitle_tv) public TextView moneyTitle_tv;
-//        @BindView(R.id.moneyNum_tv) public TextView moneyNum_tv;
-//        @BindView(R.id.moneyDes_tv) public TextView moneyDes_tv;
-//        @BindView(R.id.moneyTime_tv) public TextView moneyTime_tv;
-//        @BindView(R.id.moneyPhone_tv) public TextView moneyPhone_tv;
-//        @BindView(R.id.moneyType_tv) public TextView moneyType_tv;
-//        @BindView(R.id.moneyNum2_tv) public TextView moneyNum2_tv;
-//        @BindView(R.id.moneyType2_tv) public TextView moneyType2_tv;
-//        @BindView(R.id.moneyTime2_tv) public TextView moneyTime2_tv;
-//        @BindView(R.id.moneyLeft_tv) public TextView moneyLeft_tv;
-//        @BindView(R.id.moneyCycle_tv) public TextView moneyCycle_tv;
-//        @BindView(R.id.moneyImg001_iv) public TextView moneyImg001_iv;
-//        @BindView(R.id.moneyImg002_iv) public TextView moneyImg002_iv;
-//        @BindView(R.id.moneyImg003_iv) public TextView moneyImg003_iv;
+
     }
 
     @Override
@@ -209,10 +246,10 @@ public class HighRebateDetilsActivity extends BaseActivity implements View.OnCli
     public void onClick(View v) {
         switch(v.getId()){
             case R.id.btn_getMoney:
-
-                takePartIn();
-
-
+                // 0:表示没有参与  1：待上传   2：待审批  3：审批通过   4：审批不通过  5：取消   6：过期
+               // if("0".equals(status)){
+                    takePartIn();
+               // }
                 break;
             case R.id.tv_shots:
                 Intent intent  = new Intent(HighRebateDetilsActivity.this,UploadScreenshotsActivity.class);

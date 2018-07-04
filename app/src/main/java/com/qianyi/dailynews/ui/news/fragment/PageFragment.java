@@ -71,8 +71,8 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
 
     @Override
     public void onStart() {
-        super.onStart();
-        firstData(NewsFragment.CurrentNewsTitle);
+          super.onStart();
+//        firstData(NewsFragment.CurrentNewsTitle);
         //  Toast.makeText(mActivity, "****************************PageFragment********onStart************************", Toast.LENGTH_SHORT).show();
     }
 

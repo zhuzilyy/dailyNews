@@ -38,6 +38,10 @@ public class MoneyDetailBean {
     private String return_msg;
     private MoneyDetailData data;
 
+
+
+
+
     public class MoneyDetailData{
         public MoneyDetailInfo getMakeMoney() {
             return makeMoney;
@@ -48,6 +52,26 @@ public class MoneyDetailBean {
         }
 
         private MoneyDetailInfo makeMoney;
+
+        public String getStatus() {
+            return status;
+        }
+
+        public void setStatus(String status) {
+            this.status = status;
+        }
+
+        public String getEndTime() {
+            return endTime;
+        }
+
+        public void setEndTime(String endTime) {
+            this.endTime = endTime;
+        }
+
+        private String status;
+        private String endTime;
+
 
         public class MoneyDetailInfo{
             private String id;

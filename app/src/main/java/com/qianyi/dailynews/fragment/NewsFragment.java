@@ -180,7 +180,7 @@ public class NewsFragment extends BaseFragment implements View.OnClickListener {
 
             @Override
             public void onEror(Call call, int statusCode, Exception e) {
-                Log.i("sss",e.getMessage());
+               // Log.i("sss",e.getMessage());
             }
         });
 
@@ -297,7 +297,7 @@ public class NewsFragment extends BaseFragment implements View.OnClickListener {
 
             @Override
             public void onEror(Call call, int statusCode, Exception e) {
-                Log.i("ss",e.getMessage());
+               // Log.i("ss",e.getMessage());
             }
         });
 

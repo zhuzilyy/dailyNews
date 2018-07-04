@@ -102,6 +102,7 @@ public class HighRebateFragment extends BaseFragment implements PullToRefreshVie
                     intent.putExtra("id",infoList.get(i-1).getId());
                     intent.putExtra("type",infoList.get(i-1).getType());
                     intent.putExtra("time",infoList.get(i-1).getTime());
+                    intent.putExtra("status",infoList.get(i-1).getStatus());
                     startActivity(intent);
                 }
 
