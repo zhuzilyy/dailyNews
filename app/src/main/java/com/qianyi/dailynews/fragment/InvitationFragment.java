@@ -321,6 +321,7 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
         }
     }
 
+
     @Override
     protected void initData() {
         getData();
