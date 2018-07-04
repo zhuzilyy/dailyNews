@@ -126,6 +126,11 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
 
     //红包奖励数
     private String redMoney;
+    //已读未读
+    private String ifread;
+    //是否是红包新闻
+    private String isRed;
+
 
     ///**********************************
     //计时
@@ -143,6 +148,9 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
         contentStr=contentStr.substring(0,50);
         redMoney=getIntent().getStringExtra("redMoney");
         subTitle=getIntent().getStringExtra("title");
+        ifread=getIntent().getStringExtra("ifread");
+        isRed=getIntent().getStringExtra("isRed");
+
         int redMoneyStr=Integer.parseInt(redMoney);
         if(redMoneyStr>0){
             re_money.setVisibility(View.VISIBLE);
@@ -532,23 +540,34 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
      * 点击阅读更多，并阅读15秒获得奖励
      */
     private void getReward() {
-        if(timeOut&&readMore){
-            //是红包新闻
-            if(Integer.parseInt(redMoney)>0){
-                getReward2();
-                //金币哗啦哗啦的声音
-                playSound(R.raw.mm);
-            }else {
-                //金币新闻[大于25就结束]
-               if( NewsFragment.CurrentGetCoinNumber <= 25){
-                   getReward2();
-                   //金币哗啦哗啦的声音
-                   playSound(R.raw.mm);
-
-               }
-            }
-
+        String userid = (String) SPUtils.get(NewsDetailsActivity.this,"user_id","");
+        if(TextUtils.isEmpty(userid)){
+            return;
         }
+        if("1".equals(ifread)){
+            //该新闻是已读，不走金币
+            return;
+        }else {
+            if(timeOut&&readMore){
+                //是红包新闻
+                if("1".equals(isRed)){
+                    getReward2("1");
+                    //金币哗啦哗啦的声音
+                    playSound(R.raw.mm);
+                }else {
+                    //金币新闻[大于25就结束]
+                    if( NewsFragment.CurrentGetCoinNumber <= 25){
+                        getReward2("0");
+                        //金币哗啦哗啦的声音
+                        playSound(R.raw.mm);
+
+                    }
+                }
+
+            }
+        }
+
+
     }
 
     /**
@@ -592,20 +611,21 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
     /***
      * 符合规则，获取阅读奖励
      */
-    private void getReward2() {
+    private void getReward2(String ifreadPackage) {
         String userid = (String) SPUtils.get(NewsDetailsActivity.this,"user_id","");
         if(TextUtils.isEmpty(userid)){
             return;
         }
-        ApiNews.GetRewardAfterReadNews(ApiConstant.GET_REWARD_AFTER_READ_NEWS, userid, newsId, new RequestCallBack<String>() {
+        ApiNews.GetRewardAfterReadNews(ApiConstant.GET_REWARD_AFTER_READ_NEWS, userid, newsId,ifreadPackage, new RequestCallBack<String>() {
             @Override
             public void onSuccess(Call call, Response response, String s) {
-                Log.i("yuuuuuuu",s);
+                Log.i("8900",s);
                 try {
                     JSONObject jsonObject =new JSONObject(s);
                     String code=jsonObject.getString("code");
                     if("0000".equals(code)){
                         //更新阅读奖励数
+                        Log.i("8900","广播发送成功");
                         sendBroadcast(new Intent("getRewardOk"));
                     }
                 } catch (JSONException e) {

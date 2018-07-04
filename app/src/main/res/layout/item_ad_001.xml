@@ -16,7 +16,7 @@
             android:paddingBottom="@dimen/dp_10"
             android:paddingTop="@dimen/dp_10"
             android:maxLines="2"
-            android:text="近段时间噢is机构计算机二宫机构我we机构为一文化宫F考生们赶快来"
+            android:text=""
             android:textSize="17sp"
             android:textColor="@color/black"
             />
@@ -25,7 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="140dp"
             android:scaleType="centerCrop"
-            android:src="@color/main_red"/>
+            />
         <LinearLayout
             android:layout_width="match_parent"
             android:gravity="center_vertical"
@@ -35,7 +35,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dp_5"
-                android:text="广告"
+                android:text=""
                 android:textColor="@color/gray"
                 android:textSize="12sp"
                 android:paddingTop="@dimen/dp_2"

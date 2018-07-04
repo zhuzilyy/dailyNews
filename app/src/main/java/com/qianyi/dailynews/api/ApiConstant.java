@@ -165,6 +165,8 @@ public class ApiConstant {
     public static final String  easyMoneyShare= BASE_URL+"/api/makeMoney/easyMoneyShare";
     //分享拼接
     public static final String  ShareUrl= "http://47.104.73.127:8080/share/esmy.html?token=";
+    //分享拼接
+    public static final String  takePartInUrl= BASE_URL+"/api/makeMoney/takePartIn";
 
 
 

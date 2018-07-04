@@ -121,10 +121,11 @@ public class ApiNews {
      * 到新闻详情界面首先调该接口
      * @param callback
      */
-    public static void GetRewardAfterReadNews(String url,String userId,String newsId , RequestCallBack<String> callback){
+    public static void GetRewardAfterReadNews(String url,String userId,String newsId ,String ifreadPackage, RequestCallBack<String> callback){
         Map<String,String> params=new HashMap<>();
-        params.put("userId","2c9fd8b3635c7e840163631a72190002");
-        params.put("newsId","4028478164322e8301643231be300006");
+        params.put("userId",userId);
+        params.put("newsId",newsId);
+        params.put("ifReadPackage",ifreadPackage);
         OkHttpManager.getInstance().postRequest(url,params,callback);
     }
     /**
