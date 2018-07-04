@@ -6,6 +6,15 @@ package com.qianyi.dailynews.ui.Mine.bean;
 
 public class FanLiInfo {
     private String id;
+    private String logo;
+    private String endTime;
+    private String rewards;
+    private String title;
+    private String description;
+    private String cash;
+    private String type;
+    private String status;
+    private String time;
 
     public String getLogo() {
         return logo;
@@ -31,15 +40,6 @@ public class FanLiInfo {
         this.rewards = rewards;
     }
 
-    private String logo;
-    private String endTime;
-    private String rewards;
-    private String title;
-    private String description;
-    private String cash;
-    private String type;
-    private String status;
-    private String time;
     public String getId() {
         return id;
     }

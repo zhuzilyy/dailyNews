@@ -60,16 +60,13 @@ public class HighRebate_RecordFragment extends BaseFragment implements PullToRef
     protected void initViews() {
         customLoadingDialog=new CustomLoadingDialog(getActivity());
         infoList=new ArrayList<>();
-        mPullToRefreshView.setmOnHeaderRefreshListener(this);
-        mPullToRefreshView.setmOnFooterRefreshListener(this);
+        userId= (String) SPUtils.get(getActivity(),"user_id","");
         adapter=new HighRebateTaskAdapter(getActivity(),infoList);
         listview.setAdapter(adapter);
-        userId= (String) SPUtils.get(getActivity(),"user_id","");
-
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(mActivity, "4563", Toast.LENGTH_SHORT).show();
+
             }
         });
     }
@@ -90,8 +87,6 @@ public class HighRebate_RecordFragment extends BaseFragment implements PullToRef
         ApiMine.fanliTaskList(ApiConstant.FANLI_TASK_LIST, userId,page,ApiConstant.PAGE_SIZE, new RequestCallBack<String>() {
             @Override
             public void onSuccess(Call call, Response response, final String s) {
-                Log.i("ss",s);
-                infoList.clear();
                 customLoadingDialog.dismiss();
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
@@ -176,12 +171,14 @@ public class HighRebate_RecordFragment extends BaseFragment implements PullToRef
 
     @Override
     protected void initListener() {
-
+        mPullToRefreshView.setmOnHeaderRefreshListener(this);
+        mPullToRefreshView.setmOnFooterRefreshListener(this);
     }
 
     @Override
     public void onHeaderRefresh(PullToRefreshView view) {
         page=1;
+        infoList.clear();
         firstData(page);
     }
     @Override

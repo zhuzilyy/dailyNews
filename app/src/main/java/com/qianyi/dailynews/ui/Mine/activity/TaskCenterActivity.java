@@ -753,5 +753,11 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
         }
     }
 
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (myReceiver!=null){
+            unregisterReceiver(myReceiver);
+        }
+    }
 }

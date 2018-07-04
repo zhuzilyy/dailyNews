@@ -53,10 +53,23 @@ public class HighRebateTaskAdapter extends BaseAdapter {
             view.setTag(viewHolder);
         }else{
             viewHolder= (ViewHolder) view.getTag();
-            Glide.with(context).load(info.getLogo()).into(viewHolder.mine_head);
-            viewHolder.tv_title.setText(info.getTitle());
-            viewHolder.tv_time.setText(info.getTime());
-            viewHolder.tv_state.setText(info.getStatus());
+        }
+        Glide.with(context).load(info.getLogo()).into(viewHolder.mine_head);
+        viewHolder.tv_title.setText(info.getTitle());
+        viewHolder.tv_time.setText("结束时间:"+info.getEndTime());
+        String status = info.getStatus();
+        if (status.equals("1")){
+            viewHolder.tv_state.setText("待上传");
+        }else if(status.equals("2")){
+            viewHolder.tv_state.setText("待审批");
+        }else if(status.equals("3")){
+            viewHolder.tv_state.setText("审批通过");
+        }else if(status.equals("4")){
+            viewHolder.tv_state.setText("审批不通过");
+        }else if(status.equals("5")){
+            viewHolder.tv_state.setText("取消");
+        }else if(status.equals("6")){
+            viewHolder.tv_state.setText("过期");
         }
         return view;
     }
