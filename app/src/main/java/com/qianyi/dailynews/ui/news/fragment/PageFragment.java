@@ -286,9 +286,7 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
                         mActivity.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-
                                 String userid = (String) SPUtils.get(getActivity(), "user_id", "");
-
                                 Log.i("tag", "url" + ApiConstant.NEWS_CONTENTS);
                                 Log.i("tag", userid + "==userid==");
                                 Log.i("tag", MyApplication.newsTypeRes.get(position).getCatId() + "==getCatId==");
@@ -309,7 +307,6 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
                                                     if (newsByTypes.size() > 0) {
                                                         List<NewsContentBean.NewsContentData.AdavertContent> adavertContents = contentData.getAdvertArray();
                                                         List<NewsContentBean.NewsContentData.NewsByType.NewsContentInfo> newsContentInfos = newsByTypes.get(0).getNewsInfoArray();
-
                                                         if (adavertContents.size() > 0 || newsContentInfos.size() > 0) {
                                                             List<NewsBean> newsBeans = dowithNews(adavertContents, newsContentInfos);
                                                             bigList.addAll(newsBeans);
@@ -320,7 +317,6 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
                                             }
                                         }
                                     }
-
                                     @Override
                                     public void onEror(Call call, int statusCode, Exception e) {
                                         Log.i("ttt", "e" + e.getMessage());

@@ -159,7 +159,7 @@
         <TextView
             android:layout_marginTop="5dp"
             android:layout_marginLeft="10dp"
-            android:text="1.完成上面5个任务，会开启提现奖励"
+            android:text="1.完成上面4个任务，会开启提现奖励"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <TextView

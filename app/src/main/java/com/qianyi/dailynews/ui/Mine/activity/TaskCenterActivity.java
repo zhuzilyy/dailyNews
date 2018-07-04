@@ -149,6 +149,7 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
     public LinearLayout ll_weibo;//分享到微博
     private IWXAPI mWxApi;
     private WbShareHandler shareHandler;
+    private boolean oneYuan;
     @Override
     protected void initViews() {
         back.setOnClickListener(new View.OnClickListener() {
@@ -158,6 +159,7 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
             }
         });
         userId= (String) SPUtils.get(TaskCenterActivity.this,"user_id","");
+        oneYuan= (boolean) SPUtils.get(TaskCenterActivity.this,"oneyuan",false);
         customLoadingDialog=new CustomLoadingDialog(this);
         signedDays=new ArrayList<>();
         unsignDays=new ArrayList<>();
@@ -234,19 +236,19 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
                     mission2 = missionArr[1];
                     mission3 = missionArr[2];
                     mission4 = missionArr[3];
-                    if (mission1.equals("1")){
+                    if (!mission1.equals("0")){
                         btn_bandwx.setText("已完成");
                         btn_bandwx.setBackgroundResource(R.drawable.new_mission_finish);
                     }
-                    if (mission2.equals("1")){
+                    if (!mission2.equals("0")||oneYuan){
                         btn_oneyuan.setText("已完成");
                         btn_oneyuan.setBackgroundResource(R.drawable.new_mission_finish);
                     }
-                    if (mission3.equals("1")){
+                    if (!mission3.equals("0")){
                         btn_Questionnaire.setText("已完成");
                         btn_Questionnaire.setBackgroundResource(R.drawable.new_mission_finish);
                     }
-                    if (mission4.equals("1")){
+                    if (!mission4.equals("0")){
                         btn_answerAward.setText("已完成");
                         btn_answerAward.setBackgroundResource(R.drawable.new_mission_finish);
                     }
@@ -346,7 +348,6 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
                     ll_oneYuan002.setVisibility(View.VISIBLE);
                 }
                 closeOtherAll(ll_oneYuan002);
-
                 break;
             case R.id.ll_Questionnaire001:
                 //问卷调查
@@ -413,28 +414,28 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
                 break;
 
             case R.id.btn_bandwx:
-                if (mission1.equals("1")){
+                if (!mission1.equals("0")){
                     return;
                 }
                 //去绑定微信
                 initWx();
                 break;
             case R.id.btn_oneyuan:
-                if (mission2.equals("1")){
+                if (!mission2.equals("0")||oneYuan){
                     return;
                 }
                 //去完成提现
                 jumpActivity(this,ActivityZoneActivity.class);
                 break;
             case R.id.btn_Questionnaire:
-                if (mission3.equals("1")){
+                if (!mission3.equals("0")){
                     return;
                 }
                 jumpActivity(this,QuestionSurveyActivity.class);
                 //去调查
                 break;
             case R.id.btn_answerAward:
-                if (mission4.equals("1")){
+                if (!mission4.equals("0")){
                     return;
                 }
                 //去答题

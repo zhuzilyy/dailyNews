@@ -145,6 +145,7 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
     private LinearLayout ll_friendCircle, ll_qq, ll_wechat, ll_weibo,ll_copyLianjie,ll_shouTu;
     private IWXAPI mWxApi;
     private List<String> charBannerArray;
+    private List<BannerImgInfo> imgBannerArray;
     private WbShareHandler shareHandler;
     private MyReceiver myReceiver;
     private TextView tv_cancle;
@@ -158,6 +159,7 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
     protected void initViews() {
         WbSdk.install(getActivity(), new AuthInfo(getActivity(), ApiConstant.APP_KEY_WEIBO, ApiConstant.REDIRECT_URL, ApiConstant.SCOPE));
         charBannerArray = new ArrayList<>();
+        imgBannerArray=new ArrayList<>();
         view_onekeyshoutu = LayoutInflater.from(getActivity()).inflate(R.layout.pw_onekeyshoutu, null);
         ll_friendCircle = view_onekeyshoutu.findViewById(R.id.ll_friendCircle);
         ll_qq = view_onekeyshoutu.findViewById(R.id.ll_qq);
@@ -363,12 +365,11 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-
                         Gson gson = new Gson();
                         InviteBean inviteBean = gson.fromJson(s, InviteBean.class);
                         String code = inviteBean.getCode();
                         if (code.equals(ApiConstant.SUCCESS_CODE)) {
-                            List<BannerImgInfo> imgBannerArray = inviteBean.getData().getImgBannerArray();
+                            imgBannerArray= inviteBean.getData().getImgBannerArray();
                             charBannerArray = inviteBean.getData().getCharBannerArray();
                             setValue(imgBannerArray, charBannerArray);
                         }
@@ -426,7 +427,7 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
             @Override
             public void OnBannerClick(int position) {
                 Intent intent = new Intent(getActivity(), WebviewActivity.class);
-                intent.putExtra("url", charBannerArray.get(position));
+                intent.putExtra("url", imgBannerArray.get(position).getUrl());
                 intent.putExtra("title", "详情");
                 startActivity(intent);
             }
@@ -438,9 +439,7 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
 
             }
         });
-
     }
-
     @OnClick({R.id.tv_right, R.id.ll_FriendIncome, R.id.ll_FriendNum, R.id.ll_MyInvitationCode,
             R.id.ll_DailySharing, R.id.ll_ShowIncome, R.id.ll_WakeUpFriends, R.id.btn_onekey_shoutu,
             R.id.et_invation
