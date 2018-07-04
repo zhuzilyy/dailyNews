@@ -125,7 +125,9 @@ public class WithdrawalsActivity extends BaseActivity implements View.OnClickLis
                     JSONObject jsonObject=new JSONObject(s);
                     JSONObject data = jsonObject.getJSONObject("data");
                     oneyuan= data.getBoolean("oneyuan");
+                    if (oneyuan){
 
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -158,6 +160,10 @@ public class WithdrawalsActivity extends BaseActivity implements View.OnClickLis
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ll_01yuan:
+                if (oneyuan){
+                    Toast.makeText(this, "1元提现只能提现一次", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 showWithdrawals(tv_01yuan);
                 withdrawalMoney="1元";
                 break;

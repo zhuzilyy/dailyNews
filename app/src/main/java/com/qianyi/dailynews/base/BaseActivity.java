@@ -55,7 +55,6 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         initConfigure();
     }
@@ -63,7 +62,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         //加载布局
         getResLayout();
         unbinder= ButterKnife.bind(this);
-        ListActivity.list.add(this);
+        //ListActivity.list.add(this);
         //初始化控件
         initViews();
         //初始化数据

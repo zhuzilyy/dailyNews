@@ -120,10 +120,6 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         IntentFilter intentFilterWithdrawal=new IntentFilter();
         intentFilterWithdrawal.addAction("com.action.withdrawal.success");
         getActivity().registerReceiver(myReceiver,intentFilterWithdrawal);
-
-
-
-
     }
     private void setValue() {
         phone= (String) SPUtils.get(getActivity(),"phone","");
@@ -284,9 +280,31 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 public void onSuccess(Call call, Response response, String s) {
                     try {
                         JSONObject jsonObject=new JSONObject(s);
-                        JSONObject data = jsonObject.getJSONObject("data");
-                        String  gold= data.getString("gold");
-                        tv_gold.setText(gold);
+                        JSONObject code = jsonObject.getJSONObject("code");
+                        if (code.equals(ApiConstant.SUCCESS_CODE)){
+                            JSONObject data = jsonObject.getJSONObject("data");
+                            String user_id=data.getString("user_id");
+                            String phone=data.getString("phone");
+                            String head_portrait=data.getString("head_portrait");
+                            String gold=data.getString("gold");
+                            String my_invite_code=data.getString("my_invite_code");
+                            String balance=data.getString("balance");
+                            String earnings=data.getString("earnings");
+                            String invite_code=data.getString("invite_code");
+                            String name=data.getString("name");
+                            boolean oneyuan=data.getBoolean("oneyuan");
+                            SPUtils.put(getActivity(),"user_id",user_id);
+                            SPUtils.put(getActivity(),"phone",phone);
+                            SPUtils.put(getActivity(),"head_portrait",head_portrait);
+                            SPUtils.put(getActivity(),"gold",gold);
+                            SPUtils.put(getActivity(),"my_invite_code",my_invite_code);
+                            SPUtils.put(getActivity(),"balance",balance);
+                            SPUtils.put(getActivity(),"earnings",earnings);
+                            SPUtils.put(getActivity(),"invite_code",invite_code);
+                            SPUtils.put(getActivity(),"oneyuan",oneyuan);
+                            SPUtils.put(getActivity(),"name",name);
+                            tv_gold.setText(gold);
+                        }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

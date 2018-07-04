@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">dailyNews</string>
+    <string name="app_name">每日速报</string>
     <string name="weibosdk_demo_obtain_token_via_sso">SSO 授权（仅客户端）</string>
     <string name="weibosdk_demo_obtain_token_via_web">SSO 授权（Web）</string>
     <string name="weibosdk_demo_obtain_token_logout">用户登出</string>
