@@ -93,7 +93,6 @@ public class EasyMoney_RecordFragment extends BaseFragment  implements PullToRef
     protected void initListener() {
 
     }
-
     private void firstData(int page) {
         mPullToRefreshView.setEnablePullTorefresh(true);
         ApiMine.fanliTaskList(ApiConstant.FANLI_TASK_LIST, userId,page,ApiConstant.PAGE_SIZE, new RequestCallBack<String>() {

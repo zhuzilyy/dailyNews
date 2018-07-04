@@ -117,6 +117,10 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         intentFilterSign.addAction("com.action.sign.success");
         getActivity().registerReceiver(myReceiver,intentFilterSign);
 
+        IntentFilter intentFilterWithdrawal=new IntentFilter();
+        intentFilterWithdrawal.addAction("com.action.withdrawal.success");
+        getActivity().registerReceiver(myReceiver,intentFilterWithdrawal);
+
 
 
 
@@ -264,14 +268,13 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             getActivity().unregisterReceiver(myReceiver);
         }
     }
-
     public class MyReceiver extends BroadcastReceiver{
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
             if (action.equals("com.action.login.success")||action.equals("com.action.quit")){
                 setValue();
-            }else if(action.equals("com.action.sign.success")){
+            }else if(action.equals("com.action.sign.success")||action.equals("com.action.withdrawal.success")){
                 getUserInfo();
             }
         }

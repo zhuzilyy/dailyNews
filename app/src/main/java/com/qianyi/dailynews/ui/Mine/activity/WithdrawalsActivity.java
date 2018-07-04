@@ -15,6 +15,7 @@ import com.qianyi.dailynews.api.ApiMine;
 import com.qianyi.dailynews.base.BaseActivity;
 import com.qianyi.dailynews.callback.RequestCallBack;
 import com.qianyi.dailynews.dialog.CustomLoadingDialog;
+import com.qianyi.dailynews.utils.ListActivity;
 import com.qianyi.dailynews.utils.SPUtils;
 
 import org.json.JSONException;
@@ -65,8 +66,10 @@ public class WithdrawalsActivity extends BaseActivity implements View.OnClickLis
     private List<TextView> textViews = new ArrayList<>();
     private double doubleBalance;
     private CustomLoadingDialog customLoadingDialog;
+    private boolean oneyuan;
     @Override
     protected void initViews() {
+        ListActivity.list.add(this);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -111,6 +114,27 @@ public class WithdrawalsActivity extends BaseActivity implements View.OnClickLis
         textViews.add(tv_100yuan);
         textViews.add(tv_1000yuan);
         getMoney();
+        getUserInfo();
+    }
+
+    private void getUserInfo() {
+        ApiMine.getUserInfo(ApiConstant.GET_USERINFO, userId, new RequestCallBack<String>() {
+            @Override
+            public void onSuccess(Call call, Response response, String s) {
+                try {
+                    JSONObject jsonObject=new JSONObject(s);
+                    JSONObject data = jsonObject.getJSONObject("data");
+                    oneyuan= data.getBoolean("oneyuan");
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            @Override
+            public void onEror(Call call, int statusCode, Exception e) {
+
+            }
+        });
     }
 
     @Override

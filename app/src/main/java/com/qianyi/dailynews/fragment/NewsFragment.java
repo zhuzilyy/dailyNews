@@ -327,6 +327,11 @@ public class NewsFragment extends BaseFragment implements View.OnClickListener {
 
         }
     }
-
-
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (myReceiver!=null){
+            getActivity().unregisterReceiver(myReceiver);
+        }
+    }
 }

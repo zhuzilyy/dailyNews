@@ -316,7 +316,9 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
     @Override
     public void onPause() {
         super.onPause();
-        autotext.stopAutoScroll();
+        if (autotext!=null){
+            autotext.stopAutoScroll();
+        }
     }
 
     @Override

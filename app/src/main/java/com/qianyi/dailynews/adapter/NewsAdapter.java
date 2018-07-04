@@ -235,8 +235,6 @@ public class NewsAdapter extends BaseAdapter {
                    deleteNewsListener.deleteNews(item.getId(),Holder02.news002_delete);
                }
            });
-
-
        }
         if(NEWS_NOPIC == itemType){
             //新闻没有图的

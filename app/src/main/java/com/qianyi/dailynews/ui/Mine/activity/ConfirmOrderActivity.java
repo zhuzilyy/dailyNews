@@ -15,6 +15,7 @@ import com.qianyi.dailynews.api.ApiMine;
 import com.qianyi.dailynews.base.BaseActivity;
 import com.qianyi.dailynews.callback.RequestCallBack;
 import com.qianyi.dailynews.dialog.CustomLoadingDialog;
+import com.qianyi.dailynews.utils.ListActivity;
 import com.qianyi.dailynews.utils.SPUtils;
 
 import org.json.JSONException;
@@ -31,7 +32,6 @@ import okhttp3.Response;
 /**
  * Created by Administrator on 2018/6/27.
  */
-
 public class ConfirmOrderActivity extends BaseActivity {
     @BindView(R.id.tv_title)
     TextView tv_title;
@@ -55,6 +55,7 @@ public class ConfirmOrderActivity extends BaseActivity {
     private List<TextView> textViewList;
     @Override
     protected void initViews() {
+        ListActivity.list.add(this);
         tv_title.setText("确认订单");
         userId= (String) SPUtils.get(this,"user_id","");
         customLoadingDialog=new CustomLoadingDialog(this);
@@ -166,8 +167,11 @@ public class ConfirmOrderActivity extends BaseActivity {
                             String return_msg = jsonObject.getString("return_msg");
                             Toast.makeText(ConfirmOrderActivity.this, return_msg, Toast.LENGTH_SHORT).show();
                             if (return_code.equals(ApiConstant.SUCCESS)){
-                                finish();
+                                Intent intent=new Intent();
+                                intent.setAction("com.action.withdrawal.success");
+                                sendBroadcast(intent);
                             }
+                            ListActivity.close();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

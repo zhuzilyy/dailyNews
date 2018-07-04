@@ -11,6 +11,7 @@ import com.qianyi.dailynews.api.ApiMine;
 import com.qianyi.dailynews.base.BaseActivity;
 import com.qianyi.dailynews.callback.RequestCallBack;
 import com.qianyi.dailynews.dialog.CustomLoadingDialog;
+import com.qianyi.dailynews.utils.ListActivity;
 import com.qianyi.dailynews.utils.SPUtils;
 
 import org.json.JSONException;
@@ -40,6 +41,7 @@ public class WithdrawalsDetailsActivity extends BaseActivity {
     WebView wv_webview;
     @Override
     protected void initViews() {
+        ListActivity.list.add(this);
         intent=getIntent();
         if (intent!=null){
             withdrawalMoney=intent.getStringExtra("withdrawalMoney");
