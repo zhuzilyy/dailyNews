@@ -117,10 +117,22 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         intentFilterSign.addAction("com.action.sign.success");
         getActivity().registerReceiver(myReceiver,intentFilterSign);
 
+    }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        getCurrentUserInfo();
 
 
     }
+
+    /***
+     * 每次进来更新用户信息
+     */
+    private void getCurrentUserInfo() {
+    }
+
     private void setValue() {
         phone= (String) SPUtils.get(getActivity(),"phone","");
         gold=(String)SPUtils.get(getActivity(),"gold","0");

@@ -1,6 +1,8 @@
 package com.qianyi.dailynews.adapter;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,7 +33,7 @@ public class NewsAdapter extends BaseAdapter {
     private int NEWS_THREE_PIC = 3;
     private int NEWS_RIGHT_PIC = 4;
     private int NEWS_NOPIC = 5;
-    private DeleteNewsListener deleteNewsListener;
+    public DeleteNewsListener deleteNewsListener;
     private String type;
 
     public NewsAdapter(Context context, List<NewsBean> newsBeans, String type) {
@@ -106,7 +108,7 @@ public class NewsAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
+    public View getView(final int i, View view, ViewGroup viewGroup) {
         final NewsBean item = newsBeans.get(i);
        int itemType= getItemViewType(i);
        if(AD_BIG_PIC == itemType){
@@ -211,13 +213,53 @@ public class NewsAdapter extends BaseAdapter {
            Glide.with(context).load(item.getImgsUrl().get(0)).placeholder(R.mipmap.default002).into(new GlideDrawableImageViewTarget(Holder03.news003_pic01,1));
            Glide.with(context).load(item.getImgsUrl().get(1)).placeholder(R.mipmap.default002).into(new GlideDrawableImageViewTarget(Holder03.news003_pic02,1));
            Glide.with(context).load(item.getImgsUrl().get(2)).placeholder(R.mipmap.default002).into(new GlideDrawableImageViewTarget(Holder03.news003_pic03,1));
+
+           if("1".equals(item.getIfRead())){
+               //已读
+               Holder03.news003_content.setTextColor(Color.parseColor("#999999"));
+           }
            //删除条目
            Holder03.news003_delete.setOnClickListener(new View.OnClickListener() {
                @Override
                public void onClick(View v) {
-                   deleteNewsListener.deleteNews(item.getId(),Holder03.news003_delete);
+                  // deleteNewsListener.deleteNews(item.getId(),Holder03.news003_delete);
+                   final Dialog dialog = new Dialog(context);
+                   View vv = LayoutInflater.from(context).inflate(R.layout.delete_pop_window, null);
+                   dialog.setContentView(vv);
+                   vv.findViewById(R.id.button1).setOnClickListener(new View.OnClickListener() {
+                       @Override
+                       public void onClick(View v) {
+                           deleteNewsOne(newsBeans.get(i).getId());
+                           dialog.dismiss();
+                       }
+                   });
+                   vv.findViewById(R.id.button2).setOnClickListener(new View.OnClickListener() {
+                       @Override
+                       public void onClick(View v) {
+                           deleteNewsOne(newsBeans.get(i).getId());
+                           dialog.dismiss();
+                       }
+                   });
+                   vv.findViewById(R.id.button3).setOnClickListener(new View.OnClickListener() {
+                       @Override
+                       public void onClick(View v) {
+                           deleteNewsOne(newsBeans.get(i).getId());
+                           dialog.dismiss();
+                       }
+                   });
+                   vv.findViewById(R.id.button4).setOnClickListener(new View.OnClickListener() {
+                       @Override
+                       public void onClick(View v) {
+                           deleteNewsOne(newsBeans.get(i).getId());
+                           dialog.dismiss();
+                       }
+                   });
+
+                   dialog.show();
                }
            });
+
+
        }
        if(NEWS_RIGHT_PIC == itemType){
            //新闻右边图
@@ -228,13 +270,53 @@ public class NewsAdapter extends BaseAdapter {
            Holder02.news002_read.setText(item.getReadNum());
            Holder02.news002_read.setText(item.getViewCount()+"次阅读");
            Glide.with(context).load(item.getImgsUrl().get(0)).placeholder(R.mipmap.default002).into(new GlideDrawableImageViewTarget(Holder02.news002_pic,1));
+
+           if("1".equals(item.getIfRead())){
+               //已读
+               Holder02.news002_content.setTextColor(Color.parseColor("#999999"));
+           }
            //删除条目
            Holder02.news002_delete.setOnClickListener(new View.OnClickListener() {
                @Override
                public void onClick(View v) {
-                   deleteNewsListener.deleteNews(item.getId(),Holder02.news002_delete);
+                //   deleteNewsListener.deleteNews(item.getId(),Holder02.news002_delete);
+                   // deleteNewsListener.deleteNews(item.getId(),Holder03.news003_delete);
+                   final Dialog dialog = new Dialog(context);
+                   View vv = LayoutInflater.from(context).inflate(R.layout.delete_pop_window, null);
+                   dialog.setContentView(vv);
+                   vv.findViewById(R.id.button1).setOnClickListener(new View.OnClickListener() {
+                       @Override
+                       public void onClick(View v) {
+                           deleteNewsOne(newsBeans.get(i).getId());
+                           dialog.dismiss();
+                       }
+                   });
+                   vv.findViewById(R.id.button2).setOnClickListener(new View.OnClickListener() {
+                       @Override
+                       public void onClick(View v) {
+                           deleteNewsOne(newsBeans.get(i).getId());
+                           dialog.dismiss();
+                       }
+                   });
+                   vv.findViewById(R.id.button3).setOnClickListener(new View.OnClickListener() {
+                       @Override
+                       public void onClick(View v) {
+                           deleteNewsOne(newsBeans.get(i).getId());
+                           dialog.dismiss();
+                       }
+                   });
+                   vv.findViewById(R.id.button4).setOnClickListener(new View.OnClickListener() {
+                       @Override
+                       public void onClick(View v) {
+                           deleteNewsOne(newsBeans.get(i).getId());
+                           dialog.dismiss();
+                       }
+                   });
+
+                   dialog.show();
                }
            });
+
 
 
        }
@@ -246,11 +328,50 @@ public class NewsAdapter extends BaseAdapter {
             Holder01.news001_posttime.setText(item.getPublishDate());
             Holder01.news001_read.setText(item.getReadNum());
             Holder01.news001_read.setText(item.getViewCount()+"次阅读");
+
+            if("1".equals(item.getIfRead())){
+                //已读
+                Holder01.news001_content.setTextColor(Color.parseColor("#999999"));
+            }
             //删除条目
             Holder01.news001_delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    deleteNewsListener.deleteNews(item.getId(),Holder01.news001_delete);
+                   // deleteNewsListener.deleteNews(item.getId(),Holder01.news001_delete);
+                    // deleteNewsListener.deleteNews(item.getId(),Holder03.news003_delete);
+                    final Dialog dialog = new Dialog(context);
+                    View vv = LayoutInflater.from(context).inflate(R.layout.delete_pop_window, null);
+                    dialog.setContentView(vv);
+                    vv.findViewById(R.id.button1).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            deleteNewsOne(newsBeans.get(i).getId());
+                            dialog.dismiss();
+                        }
+                    });
+                    vv.findViewById(R.id.button2).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            deleteNewsOne(newsBeans.get(i).getId());
+                            dialog.dismiss();
+                        }
+                    });
+                    vv.findViewById(R.id.button3).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            deleteNewsOne(newsBeans.get(i).getId());
+                            dialog.dismiss();
+                        }
+                    });
+                    vv.findViewById(R.id.button4).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            deleteNewsOne(newsBeans.get(i).getId());
+                            dialog.dismiss();
+                        }
+                    });
+
+                    dialog.show();
                 }
             });
         }
@@ -336,5 +457,18 @@ public class NewsAdapter extends BaseAdapter {
     }
 
 
+    /***
+     * 删除该条新闻
+     * @param id
+     */
+    private void deleteNewsOne(String id) {
+
+        for (int i = 0; i <newsBeans .size(); i++) {
+            if (newsBeans.get(i).getId().equals(id)) {
+                newsBeans.remove(i);
+                notifyDataSetChanged();
+            }
+        }
+    }
 
 }

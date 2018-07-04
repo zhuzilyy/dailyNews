@@ -20,10 +20,14 @@ import com.qianyi.dailynews.api.ApiConstant;
 import com.qianyi.dailynews.api.ApiMine;
 import com.qianyi.dailynews.base.BaseActivity;
 import com.qianyi.dailynews.callback.RequestCallBack;
+import com.qianyi.dailynews.dialog.CustomLoadingDialog;
 import com.qianyi.dailynews.ui.Mine.bean.MoneyDetailBean;
 import com.qianyi.dailynews.utils.CodeTimerTask;
 import com.qianyi.dailynews.utils.SPUtils;
 import com.qianyi.dailynews.utils.WebviewUtil;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -65,11 +69,15 @@ public class HighRebateDetilsActivity extends BaseActivity implements View.OnCli
     @BindView(R.id.tv_shots) public TextView tv_shots;
     @BindView(R.id.tv_leftTime) public TextView tv_leftTime;
 
+    private CustomLoadingDialog  customLoadingDialog;
+
     private String id;
     private String type;
     private String time;
     @Override
     protected void initViews() {
+        customLoadingDialog = new CustomLoadingDialog(HighRebateDetilsActivity.this);
+
         id=getIntent().getStringExtra("id");
         type=getIntent().getStringExtra("type");
         time=getIntent().getStringExtra("time");
@@ -113,7 +121,7 @@ public class HighRebateDetilsActivity extends BaseActivity implements View.OnCli
             public void onSuccess(Call call, Response response, String s) {
                 Log.i("sss",s);
                 Gson gson = new Gson() ;
-                MoneyDetailBean detailBean=gson.fromJson(s, MoneyDetailBean.class);
+                MoneyDetailBean detailBean = gson.fromJson(s, MoneyDetailBean.class);
                 String code=detailBean.getCode();
                 if("0000".equals(code)){
                     MoneyDetailBean.MoneyDetailData data = detailBean.getData();
@@ -201,8 +209,10 @@ public class HighRebateDetilsActivity extends BaseActivity implements View.OnCli
     public void onClick(View v) {
         switch(v.getId()){
             case R.id.btn_getMoney:
-                btn_getMoney.setVisibility(View.GONE);
-                CodeTimerTask.getInstence(time).starrTimer(tv_leftTime);
+
+                takePartIn();
+
+
                 break;
             case R.id.tv_shots:
                 Intent intent  = new Intent(HighRebateDetilsActivity.this,UploadScreenshotsActivity.class);
@@ -212,5 +222,41 @@ public class HighRebateDetilsActivity extends BaseActivity implements View.OnCli
             default:
                 break;
         }
+    }
+
+    /***
+     * 参与高额返利
+     */
+    private void takePartIn() {
+        String userid = (String) SPUtils.get(HighRebateDetilsActivity.this, "user_id", "");
+        if (TextUtils.isEmpty(userid)) {
+            return;
+        }
+        customLoadingDialog.show();
+        ApiMine.takePartIn(ApiConstant.takePartInUrl, id, userid, new RequestCallBack<String>() {
+            @Override
+            public void onSuccess(Call call, Response response, String s) {
+                customLoadingDialog.dismiss();
+                Log.i("ss",s);
+                try {
+                    JSONObject jsonObject = new JSONObject(s);
+                    String code  = jsonObject.getString("code");
+                    if("0000".equals(code)){
+                        btn_getMoney.setVisibility(View.GONE);
+                        CodeTimerTask.getInstence(time).starrTimer(tv_leftTime);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+
+            @Override
+            public void onEror(Call call, int statusCode, Exception e) {
+                customLoadingDialog.dismiss();
+                Log.i("ss",e.getMessage());
+            }
+        });
     }
 }

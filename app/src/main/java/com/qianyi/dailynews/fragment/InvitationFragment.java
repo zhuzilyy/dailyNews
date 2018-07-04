@@ -375,7 +375,7 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
 
             @Override
             public void onEror(Call call, int statusCode, Exception e) {
-
+            Log.i("sss" ,e.getMessage());
             }
         });
     }
@@ -384,7 +384,7 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
     private void setValue(List<BannerImgInfo> imgBannerArray, List<String> charBannerArray) {
         images = new ArrayList<>();
         for (int i = 0; i < imgBannerArray.size(); i++) {
-            images.add(imgBannerArray.get(i).getUrl());
+            images.add(imgBannerArray.get(i).getImgUrl());
         }
         //设置banner
         banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);//设置圆形指示器与标题

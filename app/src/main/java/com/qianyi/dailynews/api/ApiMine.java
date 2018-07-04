@@ -251,7 +251,16 @@ public class ApiMine {
         params.put("userId",userId);
         OkHttpManager.getInstance().postRequest(url,params,callback);
     }
-
+    /**
+     * 事例图片
+     * @param
+     */
+    public static void takePartIn(String url,String id,String userId ,RequestCallBack<String> callback){
+        Map<String,String> params=new HashMap<>();
+        params.put("id",id);
+        params.put("userId",userId);
+        OkHttpManager.getInstance().postRequest(url,params,callback);
+    }
 
 
 

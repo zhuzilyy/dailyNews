@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:textColor="@color/black"
         android:textSize="17sp"
-        android:text="住校小积分可使肌肤开发商开发尽快回王府解放军势力诶回复我就诶发咖啡壶为发我二姐佛"
+        android:text=""
         />
     <!--3张图片-->
     <LinearLayout
@@ -27,7 +27,6 @@
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
             android:layout_weight="1"
-            android:src="@color/main_red"
             />
         <View
             android:layout_width="2dp"
@@ -38,7 +37,6 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:src="@color/main_red"
             />
         <View
             android:layout_width="2dp"
@@ -49,7 +47,6 @@
             android:scaleType="centerCrop"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:src="@color/main_red"
             />
     </LinearLayout>
     <!--bottom-->
@@ -63,7 +60,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dp_5"
-            android:text="广告"
+            android:text=""
             android:textColor="@color/gray"
             android:textSize="12sp"
             android:paddingTop="@dimen/dp_2"

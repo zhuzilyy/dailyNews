@@ -114,50 +114,53 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
                 intent.putExtra("des", bigList.get(i).getContent());
                 intent.putExtra("id", bigList.get(i).getId());
                 intent.putExtra("redMoney", bigList.get(i).getRedMoney());
+                intent.putExtra("ifread", bigList.get(i).getIfRead());
+                intent.putExtra("isRed",bigList.get(i).getRedpackage());
+
                 getActivity().startActivity(intent);
             }
         });
         /***
          * 删除某条新闻
          */
-        newsAdapter.setDeleteNewsListener(new NewsAdapter.DeleteNewsListener() {
-            @Override
-            public void deleteNews(final String id, View v) {
-                final Dialog dialog = new Dialog(getActivity());
-                View vv = LayoutInflater.from(getActivity()).inflate(R.layout.delete_pop_window, null);
-                dialog.setContentView(vv);
-                vv.findViewById(R.id.button1).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        deleteNewsOne(id);
-                        dialog.dismiss();
-                    }
-                });
-                vv.findViewById(R.id.button2).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        deleteNewsOne(id);
-                        dialog.dismiss();
-                    }
-                });
-                vv.findViewById(R.id.button3).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        deleteNewsOne(id);
-                        dialog.dismiss();
-                    }
-                });
-                vv.findViewById(R.id.button4).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        deleteNewsOne(id);
-                        dialog.dismiss();
-                    }
-                });
-
-                dialog.show();
-            }
-        });
+//        newsAdapter.setDeleteNewsListener(new NewsAdapter.DeleteNewsListener() {
+//            @Override
+//            public void deleteNews(final String id, View v) {
+//                final Dialog dialog = new Dialog(getActivity());
+//                View vv = LayoutInflater.from(getActivity()).inflate(R.layout.delete_pop_window, null);
+//                dialog.setContentView(vv);
+//                vv.findViewById(R.id.button1).setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        deleteNewsOne(id);
+//                        dialog.dismiss();
+//                    }
+//                });
+//                vv.findViewById(R.id.button2).setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        deleteNewsOne(id);
+//                        dialog.dismiss();
+//                    }
+//                });
+//                vv.findViewById(R.id.button3).setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        deleteNewsOne(id);
+//                        dialog.dismiss();
+//                    }
+//                });
+//                vv.findViewById(R.id.button4).setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        deleteNewsOne(id);
+//                        dialog.dismiss();
+//                    }
+//                });
+//
+//                dialog.show();
+//            }
+//        });
 
     }
 
@@ -209,16 +212,16 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
                     @Override
                     public void run() {
                         String userid = (String) SPUtils.get(MyApplication.getApplication(), "user_id", "");
-                        Log.i("tag", "url" + ApiConstant.NEWS_CONTENTS);
-                        Log.i("tag", userid + "==userid==");
-                        Log.i("tag", MyApplication.newsTypeRes.get(position).getCatId() + "==getCatId==");
-                        Log.i("tag", page + "==page==");
-                        Log.i("tag", userid + "==userid==");
-                        Logger.i("url" + ApiConstant.NEWS_CONTENTS);
-                        Logger.i(userid + "==userid==");
-                        Logger.i(MyApplication.newsTypeRes.get(position).getCatId() + "==getCatId==");
-                        Logger.i(page + "==page==");
-                        Logger.i(userid + "==userid==");
+//                        Log.i("tag", "url" + ApiConstant.NEWS_CONTENTS);
+//                        Log.i("tag", userid + "==userid==");
+//                        Log.i("tag", MyApplication.newsTypeRes.get(position).getCatId() + "==getCatId==");
+//                        Log.i("tag", page + "==page==");
+//                        Log.i("tag", userid + "==userid==");
+//                        Logger.i("url" + ApiConstant.NEWS_CONTENTS);
+//                        Logger.i(userid + "==userid==");
+//                        Logger.i(MyApplication.newsTypeRes.get(position).getCatId() + "==getCatId==");
+//                        Logger.i(page + "==page==");
+//                        Logger.i(userid + "==userid==");
 
                         ApiNews.GetNewsContent(ApiConstant.NEWS_CONTENTS, userid, MyApplication.newsTypeRes.get(NewsFragment.CurrentNewsTitle).getCatId(), page, 12, page, 3, new RequestCallBack<String>() {
                             @Override

@@ -15,7 +15,7 @@
         android:textColor="@color/black"
         android:textSize="16sp"
         android:maxLines="2"
-        android:text="住校小积分可使肌肤开发商开发尽快回王府解放军势力诶回复我就诶发咖啡壶为发我二姐佛"
+        android:text=""
         />
 
     <!--bottom-->
@@ -51,7 +51,7 @@
             android:layout_marginLeft="@dimen/dp_10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="柏圆发布"
+            android:text=""
             android:maxLength="6"
             android:textSize="12sp"
             android:textColor="@color/black"
@@ -61,7 +61,7 @@
             android:layout_marginLeft="@dimen/dp_10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="1小时前"
+            android:text=""
             android:textSize="12sp"
             android:textColor="@color/black"
             />
@@ -70,7 +70,7 @@
             android:layout_marginLeft="@dimen/dp_10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="2252次阅读"
+            android:text=""
             android:textSize="12sp"
             android:textColor="@color/black"
             />

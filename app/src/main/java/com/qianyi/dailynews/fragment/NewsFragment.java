@@ -264,7 +264,7 @@ public class NewsFragment extends BaseFragment implements View.OnClickListener {
         ApiNews.GetNewsAward(ApiConstant.NEWS_REWARD, userid, new RequestCallBack<String>() {
             @Override
             public void onSuccess(Call call, Response response, String s) {
-                Log.i("ss",s);
+                Log.i("8900","getOk="+s);
               //  Toast.makeText(mActivity, "99999", Toast.LENGTH_SHORT).show();
                 try {
                     JSONObject jsonObject = new JSONObject(s);
