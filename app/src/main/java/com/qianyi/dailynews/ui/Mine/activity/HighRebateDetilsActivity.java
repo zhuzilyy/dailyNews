@@ -2,6 +2,7 @@ package com.qianyi.dailynews.ui.Mine.activity;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.CountDownTimer;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -89,7 +90,28 @@ public class HighRebateDetilsActivity extends BaseActivity implements View.OnCli
 
 
         if(!TextUtils.isEmpty(time)){
-            tv_leftTime.setText(time+" s");
+            int time2 = Integer.parseInt(time);
+            if(time2>0){
+                /** 倒计时60秒，一次1秒 */
+                CountDownTimer timer = new CountDownTimer(time2, 1000) {
+                    @Override
+                    public void onTick(long millisUntilFinished) {
+                        // TODO Auto-generated method stub
+                        if(tv_leftTime!=null){
+                            tv_leftTime.setText("还剩"+millisUntilFinished/1000+"秒");
+                        }
+                    }
+                    @Override
+                    public void onFinish() {
+
+
+                    }
+                }.start();
+            }
+
+
+
+
 
         }
         if("1".equals(type)){
@@ -139,13 +161,10 @@ public class HighRebateDetilsActivity extends BaseActivity implements View.OnCli
                             status=data.getStatus();
                             MoneyDetailBean.MoneyDetailData.MoneyDetailInfo detailInfo =data.getMakeMoney();
 
-
                             if(detailInfo!=null){
                                 setDataForPage(detailInfo);
                             }
-
                             if("0".equals(status)){
-
                             }else if("1".equals(status) || "4".equals(status)){
                                 btn_getMoney.setVisibility(View.GONE);
                             }else {

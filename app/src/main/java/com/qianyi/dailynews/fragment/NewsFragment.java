@@ -97,10 +97,12 @@ public class NewsFragment extends BaseFragment implements View.OnClickListener {
         IntentFilter filter01=new IntentFilter("getRewardOk");
         IntentFilter filter02=new IntentFilter("loginOk");
         IntentFilter filter03=new IntentFilter("com.action.quit");
+        IntentFilter filter04=new IntentFilter("registerOk");
 
         getActivity().registerReceiver(myReceiver,filter01);
         getActivity().registerReceiver(myReceiver,filter02);
         getActivity().registerReceiver(myReceiver,filter03);
+        getActivity().registerReceiver(myReceiver,filter04);
 
         //获取红包奖励数
         getRedPackage();
@@ -323,6 +325,10 @@ public class NewsFragment extends BaseFragment implements View.OnClickListener {
             if("com.action.quit".equals(action)){
                 //退出登录
                 ll_redNumber.setVisibility(View.GONE);
+            }
+            if("registerOk".equals(action)){
+                //注册成功，注册送好礼就消失
+                re_newPeople.setVisibility(View.GONE);
             }
 
         }

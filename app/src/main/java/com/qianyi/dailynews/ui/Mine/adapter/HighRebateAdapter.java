@@ -1,6 +1,9 @@
 package com.qianyi.dailynews.ui.Mine.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +14,8 @@ import com.qianyi.dailynews.R;
 import com.qianyi.dailynews.ui.Mine.bean.FanLiInfo;
 
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -81,11 +86,36 @@ public class HighRebateAdapter extends BaseAdapter {
             }else{
                 moneyHolder= (MoneyHolder) view.getTag();
             }
-            FanLiInfo fanLiInfo = infoList.get(i);
+            final FanLiInfo fanLiInfo = infoList.get(i);
             moneyHolder.tv_title.setText(fanLiInfo.getTitle());
             moneyHolder.tv_cash.setText(fanLiInfo.getCash()+"金币");
             moneyHolder.tv_rate.setText(fanLiInfo.getDescription());
-            moneyHolder.tv_time.setText("剩余时间 ："+fanLiInfo.getTime()+"秒");
+            moneyHolder.tv_time.setText(fanLiInfo.getTime());
+            String status= fanLiInfo.getStatus();
+            if("0".equals(status)){
+
+            }else if("1".equals(status) || "4".equals(status)){
+                moneyHolder.tv_time.setText("待上传截图");
+            }else {
+                if("2".equals(status)){
+
+                    moneyHolder.tv_time.setText("待审批");
+                    moneyHolder.tv_time.setTextColor(Color.parseColor("#ffffff"));
+                }else if("3".equals(status)){
+
+                    moneyHolder.tv_time.setText("审批通过");
+                    moneyHolder.tv_time.setTextColor(Color.parseColor("#ffffff"));
+                }else if ("5".equals(status)){
+
+                    moneyHolder.tv_time.setText("取消");
+                    moneyHolder.tv_time.setTextColor(Color.parseColor("#ffffff"));
+                }else if("6".equals(status)){
+
+                    moneyHolder.tv_time.setText("已过期");
+                    moneyHolder.tv_time.setTextColor(Color.parseColor("#ffffff"));
+                }
+            }
+
         }
         return view;
     }
