@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -28,9 +29,6 @@ import com.qianyi.dailynews.base.BaseActivity;
 import com.qianyi.dailynews.callback.RequestCallBack;
 import com.qianyi.dailynews.dialog.CustomLoadingDialog;
 import com.qianyi.dailynews.ui.Mine.bean.SignBean;
-import com.qianyi.dailynews.ui.WebviewActivity;
-import com.qianyi.dailynews.ui.account.activity.LoginActivity;
-import com.qianyi.dailynews.ui.invitation.activity.IncomeShowActivity;
 import com.qianyi.dailynews.utils.SPUtils;
 import com.qianyi.dailynews.utils.WhiteBgBitmapUtil;
 import com.sina.weibo.sdk.api.WebpageObject;
@@ -38,18 +36,19 @@ import com.sina.weibo.sdk.api.WeiboMultiMessage;
 import com.sina.weibo.sdk.share.WbShareHandler;
 import com.sina.weibo.sdk.statistic.WBAgent;
 import com.sina.weibo.sdk.utils.Utility;
+import com.tencent.connect.share.QQShare;
 import com.tencent.mm.sdk.modelmsg.SendAuth;
 import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
 import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
+import com.tencent.tauth.IUiListener;
+import com.tencent.tauth.Tencent;
+import com.tencent.tauth.UiError;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.xutils.common.Callback;
-import org.xutils.http.RequestParams;
-import org.xutils.x;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -122,6 +121,7 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
     //签到规则
     @BindView(R.id.tv_SignInRules) public TextView tv_SignInRules;
     @BindView(R.id.btn_sign) public Button btn_sign;
+    @BindView(R.id.btn_readingAward) public Button btn_readingAward;
 
     @BindView(R.id.back) public ImageView back;
     private List<LinearLayout> OtherLineralayout=new ArrayList<>();
@@ -134,13 +134,12 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
     private CustomLoadingDialog customLoadingDialog;
     private String openid, unionid, nickname, headimgurl,language,city,province,country,user_id;
     private int sex;
-    private String wxBindState,tixianState,questionState,awardState;
     //新手任务
     @BindView(R.id.btn_bandwx) public Button btn_bandwx;
     @BindView(R.id.btn_oneyuan) public TextView btn_oneyuan;
     @BindView(R.id.btn_answerAward) public TextView btn_answerAward;
     @BindView(R.id.btn_Questionnaire) public TextView btn_Questionnaire;
-    private String mission1,mission2,mission3,mission4;
+    private String mission1,mission2,mission3,mission4,dailyMission1,dailyMission2,dailyMission3,dailyMission4,dailyMission5;
     private PopupWindow pw_share;
     private View view_share;
     public LinearLayout ll_friendCircle;//分享到盆友圈
@@ -150,8 +149,12 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
     private IWXAPI mWxApi;
     private WbShareHandler shareHandler;
     private boolean oneYuan;
+    private static final String APP_ID = "101488066"; //获取的APPID
+    private Tencent mTencent;
     @Override
     protected void initViews() {
+        //传入参数APPID
+        mTencent = Tencent.createInstance(APP_ID, getApplicationContext());
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -218,8 +221,37 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
         OtherLineralayout.add(ll_commentAward002);
         customLoadingDialog.show();
         getSignState();
+        getDailyMissionState();
         getUesrInfo();
 
+    }
+    private void getDailyMissionState() {
+        ApiMine.dailyMission(ApiConstant.DAILY_MISSION, user_id, new RequestCallBack<String>() {
+            @Override
+            public void onSuccess(Call call, Response response, String s) {
+                try {
+                    JSONObject jsonObject=new JSONObject(s);
+                    String newer_mission = jsonObject.getString("data");
+                    String[] missionArr=newer_mission.split("\\|");
+                    dailyMission1 = missionArr[0];
+                    dailyMission2 = missionArr[1];
+                    dailyMission3 = missionArr[2];
+                    dailyMission4 = missionArr[3];
+                    dailyMission5 = missionArr[4];
+                    if (dailyMission2.equals("200")){
+                        btn_readingAward.setText("已完成");
+                        btn_readingAward.setBackgroundResource(R.drawable.new_mission_finish);
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            @Override
+            public void onEror(Call call, int statusCode, Exception e) {
+
+            }
+        });
     }
     //获取新手任务状态
     private void getUesrInfo() {
@@ -442,6 +474,7 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
                 jumpActivity(this,GreenHandsGuideActivity.class);
                 break;
             case R.id.btn_inviteFriends:
+
                 //去邀请
                 intent=new Intent();
                 intent.setAction("com.action.invite");
@@ -449,6 +482,9 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
                 finish();
                 break;
             case R.id.btn_readingAward:
+                if (dailyMission2.equalsIgnoreCase("200")){
+                    return;
+                }
                 //去阅读
                 intent=new Intent();
                 intent.setAction("com.action.read");
@@ -496,6 +532,8 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
                 //Toast.makeText(this, "朋友圈分享", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.ll_QQ:
+                shareQQ();
+                pw_share.dismiss();
                 //QQ分享
                 //Toast.makeText(this, "QQ分享", Toast.LENGTH_SHORT).show();
               /*  shareFriends();
@@ -509,6 +547,39 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
                 break;
         }
     }
+    //QQ分享
+    private void shareQQ() {
+        final Bundle params = new Bundle();
+        params.putInt(QQShare.SHARE_TO_QQ_KEY_TYPE, QQShare.SHARE_TO_QQ_TYPE_DEFAULT);//分享的类型
+        params.putString(QQShare.SHARE_TO_QQ_TITLE, "每日速报");//分享标题
+        params.putString(QQShare.SHARE_TO_QQ_SUMMARY,"每日速报是一款基于数据挖掘的推荐引擎产品，它为用户推荐有价值的、个性化的信息，提供连接人与信息的新型服务");//要分享的内容摘要
+        params.putString(QQShare.SHARE_TO_QQ_TARGET_URL,ApiConstant.DAILY_SHARE_URL+userId);//内容地址
+        params.putString(QQShare.SHARE_TO_QQ_IMAGE_URL,ApiConstant.QQ_SHARE_LOGO);//分享的图片URL
+        params.putString(QQShare.SHARE_TO_QQ_APP_NAME, "每日速报");//应用名称
+        mTencent.shareToQQ(this, params, new ShareUiListener());
+    }
+    /**
+     * 自定义监听器实现IUiListener，需要3个方法
+     * onComplete完成 onError错误 onCancel取消
+     */
+    private class ShareUiListener implements IUiListener {
+        @Override
+        public void onComplete(Object response) {
+            //分享成功
+        }
+        @Override
+        public void onError(UiError uiError) {
+            //分享失败
+
+        }
+        @Override
+        public void onCancel() {
+            //分享取消
+
+        }
+    }
+
+
     private void shareFriendCircle() {
         WXWebpageObject webpage = new WXWebpageObject();
         webpage.webpageUrl = ApiConstant.DAILY_SHARE_URL+userId;

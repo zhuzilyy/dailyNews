@@ -8,7 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
-import android.net.Uri;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
@@ -19,7 +19,6 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -29,18 +28,16 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.orhanobut.logger.Logger;
 import com.paradoxie.autoscrolltextview.VerticalTextview;
-import com.qianyi.dailynews.MainActivity;
 import com.qianyi.dailynews.R;
 import com.qianyi.dailynews.api.ApiAccount;
 import com.qianyi.dailynews.api.ApiConstant;
 import com.qianyi.dailynews.api.ApiInvite;
-import com.qianyi.dailynews.api.ApiNews;
 import com.qianyi.dailynews.base.BaseFragment;
 import com.qianyi.dailynews.callback.RequestCallBack;
-import com.qianyi.dailynews.dialog.CustomLoadingDialog;
 import com.qianyi.dailynews.dialog.SelfDialog;
 import com.qianyi.dailynews.fragment.bean.BannerImgInfo;
 import com.qianyi.dailynews.fragment.bean.InviteBean;
+import com.qianyi.dailynews.ui.Mine.activity.TaskCenterActivity;
 import com.qianyi.dailynews.ui.Mine.activity.WriteInvitationActivity;
 import com.qianyi.dailynews.ui.WebviewActivity;
 import com.qianyi.dailynews.ui.account.activity.LoginActivity;
@@ -48,11 +45,8 @@ import com.qianyi.dailynews.ui.invitation.activity.ApprenticeActivity;
 import com.qianyi.dailynews.ui.invitation.activity.DailySharingAcitity;
 import com.qianyi.dailynews.ui.invitation.activity.IncomeShowActivity;
 import com.qianyi.dailynews.ui.invitation.activity.InviteRuleActivity;
-import com.qianyi.dailynews.ui.invitation.activity.WBAuthActivity;
 import com.qianyi.dailynews.ui.invitation.activity.WakeFriendsActivity;
-import com.qianyi.dailynews.ui.news.activity.NewsDetailsActivity;
 import com.qianyi.dailynews.utils.SPUtils;
-import com.qianyi.dailynews.utils.ToastUtils;
 import com.qianyi.dailynews.utils.Utils;
 import com.qianyi.dailynews.utils.WhiteBgBitmapUtil;
 import com.qianyi.dailynews.utils.loader.GlideImageLoader;
@@ -66,11 +60,15 @@ import com.sina.weibo.sdk.auth.AuthInfo;
 import com.sina.weibo.sdk.share.WbShareHandler;
 import com.sina.weibo.sdk.statistic.WBAgent;
 import com.sina.weibo.sdk.utils.Utility;
+import com.tencent.connect.share.QQShare;
 import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
 import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
+import com.tencent.tauth.IUiListener;
+import com.tencent.tauth.Tencent;
+import com.tencent.tauth.UiError;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.listener.OnBannerListener;
@@ -78,12 +76,8 @@ import com.youth.banner.listener.OnBannerListener;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -126,7 +120,7 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
     public TextView tv_friendCount;
     private PopupWindow pw_share;
     private PopupWindow pw_onekeyshoutu;
-    private View view_share, view_onekeyshoutu;
+    private View  view_onekeyshoutu;
     @BindView(R.id.ll_invitation)
     public LinearLayout ll_invitation;
     //上下滚动
@@ -149,6 +143,8 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
     private WbShareHandler shareHandler;
     private MyReceiver myReceiver;
     private TextView tv_cancle;
+    private static final String APP_ID = "101488066"; //获取的APPID
+    private Tencent mTencent;
     @Override
     protected View getResLayout(LayoutInflater inflater, ViewGroup container) {
         newsView = inflater.inflate(R.layout.fragment_invitation, null);
@@ -157,12 +153,13 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
 
     @Override
     protected void initViews() {
+        mTencent = Tencent.createInstance(APP_ID, getActivity().getApplicationContext());
         WbSdk.install(getActivity(), new AuthInfo(getActivity(), ApiConstant.APP_KEY_WEIBO, ApiConstant.REDIRECT_URL, ApiConstant.SCOPE));
         charBannerArray = new ArrayList<>();
         imgBannerArray=new ArrayList<>();
         view_onekeyshoutu = LayoutInflater.from(getActivity()).inflate(R.layout.pw_onekeyshoutu, null);
         ll_friendCircle = view_onekeyshoutu.findViewById(R.id.ll_friendCircle);
-        ll_qq = view_onekeyshoutu.findViewById(R.id.ll_qq);
+        ll_qq = view_onekeyshoutu.findViewById(R.id.ll_shareQQ);
         ll_wechat = view_onekeyshoutu.findViewById(R.id.ll_wechat);
         ll_weibo = view_onekeyshoutu.findViewById(R.id.ll_weibo);
         ll_copyLianjie = view_onekeyshoutu.findViewById(R.id.ll_copyLianjie);
@@ -397,16 +394,7 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
         banner.setImageLoader(new GlideImageLoader());
         banner.setImages(images);//设置图片源
         //banner.setBannerTitles(titles);//设置标题源
-        banner.setOnBannerListener(new OnBannerListener() {
-            @Override
-            public void OnBannerClick(int position) {
-
-            }
-        });
-
-
         banner.start();
-
         //设置上下跑马灯
         ArrayList<String> titleList = new ArrayList<>();
         for (int i = 0; i < charBannerArray.size(); i++) {
@@ -520,7 +508,9 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
                 shareFriendCircle();
                 pw_onekeyshoutu.dismiss();
                 break;
-            case R.id.ll_QQ:
+            case R.id.ll_shareQQ:
+                shareQQ();
+                pw_onekeyshoutu.dismiss();
                 break;
             case R.id.ll_weibo:
                 shareWeiBo();
@@ -551,7 +541,37 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
                 break;
         }
     }
+    //QQ分享
+    private void shareQQ() {
+        final Bundle params = new Bundle();
+        params.putInt(QQShare.SHARE_TO_QQ_KEY_TYPE, QQShare.SHARE_TO_QQ_TYPE_DEFAULT);//分享的类型
+        params.putString(QQShare.SHARE_TO_QQ_TITLE, "每日速报");//分享标题
+        params.putString(QQShare.SHARE_TO_QQ_SUMMARY,"每日速报是一款基于数据挖掘的推荐引擎产品，它为用户推荐有价值的、个性化的信息，提供连接人与信息的新型服务");//要分享的内容摘要
+        params.putString(QQShare.SHARE_TO_QQ_TARGET_URL,ApiConstant.DOWN_SHARE_URL);//内容地址
+        params.putString(QQShare.SHARE_TO_QQ_IMAGE_URL,ApiConstant.QQ_SHARE_LOGO);//分享的图片URL
+        params.putString(QQShare.SHARE_TO_QQ_APP_NAME, "每日速报");//应用名称
+        mTencent.shareToQQ(getActivity(), params, new ShareUiListener());
+    }
+    /**
+     * 自定义监听器实现IUiListener，需要3个方法
+     * onComplete完成 onError错误 onCancel取消
+     */
+    private class ShareUiListener implements IUiListener {
+        @Override
+        public void onComplete(Object response) {
+            //分享成功
+        }
+        @Override
+        public void onError(UiError uiError) {
+            //分享失败
 
+        }
+        @Override
+        public void onCancel() {
+            //分享取消
+
+        }
+    }
     private void showLogin() {
         final SelfDialog quitDialog = new SelfDialog(getActivity());
         quitDialog.setTitle("提示");
@@ -608,8 +628,6 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
         message.imageObject= imageObject;
 
         message.mediaObject= mediaObj;*/
-
-
         WebpageObject mediaObject = new WebpageObject();
         mediaObject.identify = Utility.generateGUID();
         mediaObject.title = "每日速报";
@@ -631,7 +649,6 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
     private void sendMessage(boolean hasText, boolean hasImage) {
         sendMultiMessage(hasText, hasImage);
     }
-
     /**
      * 第三方应用发送请求消息到微博，唤起微博分享界面。
      */
@@ -779,7 +796,7 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
     }
 
     private void shwoSharePw() {
-        pw_share = new PopupWindow(getActivity());
+     /*   pw_share = new PopupWindow(getActivity());
         pw_share.setContentView(view_share);
         pw_share.setWidth(LinearLayout.LayoutParams.MATCH_PARENT);
         pw_share.setHeight(LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -795,7 +812,7 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
             public void onDismiss() {
                 backgroundAlpha(1f);
             }
-        });
+        });*/
     }
 
     /**

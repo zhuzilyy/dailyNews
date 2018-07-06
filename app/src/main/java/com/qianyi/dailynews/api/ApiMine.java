@@ -174,6 +174,15 @@ public class ApiMine {
         params.put("type",type);
         OkHttpManager.getInstance().postRequest(url,params,callback);
     }
+    /**
+     *
+     * @param callback
+     */
+    public static void dailyMission(String url,String userId ,RequestCallBack<String> callback){
+        Map<String,String> params=new HashMap<>();
+        params.put("userId",userId);
+        OkHttpManager.getInstance().postRequest(url,params,callback);
+    }
 
 
 

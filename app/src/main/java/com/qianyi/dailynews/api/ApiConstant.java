@@ -19,6 +19,7 @@ public class ApiConstant {
     public static final String DOWN_SHARE_URL="http://47.104.73.127:8080/download/download.html";
     public static final String LIANJIE_URL="http://mrsb.qianyiwangluo.com";
     public static final String INCOME_SHOW="http://47.104.73.127:8080/share/index.html?id=";
+    public static final String QQ_SHARE_LOGO="http://47.104.73.127:8080/share/share_logo.png";
 
 
     public static final String PAGE_SIZE="10";
@@ -112,6 +113,8 @@ public class ApiConstant {
     public static final String  WITHDRAWAL_RECORD= BASE_URL+"/api/withdraw/detail/page";
     //Webview
     public static final String  WEBVIEW= BASE_URL+"/api/user/getOfficial";
+    //日常任务状态
+    public static final String  DAILY_MISSION= BASE_URL+"/api/daymission/state";
     /*//邀请规则
     public static final String  INVITE_WEBVIEW= BASE_URL+"/api/user/getOfficial?type=INVITE";
     //签到规则

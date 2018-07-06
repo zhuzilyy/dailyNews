@@ -5,7 +5,7 @@ android {
         config {
             keyAlias 'android.keystore'
             keyPassword '031424'
-            storeFile file('D:/AndroidContent/keystory/android.keystore')
+            storeFile file('C:/Program Files/Java/jre1.8.0_131/bin/android.keystore')
             storePassword '031424'
         }
     }
@@ -88,4 +88,5 @@ dependencies {
     // 此处以JCore 1.1.9 版本为例。
     implementation files('libs/libammsdk.jar')
     compile 'com.sina.weibo.sdk:core:4.1.0:openDefaultRelease@aar'
+    implementation files('libs/open_sdk_r5793.jar')
 }
