@@ -100,10 +100,7 @@ public class HighRebateDetilsActivity extends BaseActivity implements View.OnCli
                         if(tv_leftTime!=null){
                             tv_leftTime.setText("还剩"+millisUntilFinished/1000+"秒");
                         }
-
-
                     }
-
                     @Override
                     public void onFinish() {
 

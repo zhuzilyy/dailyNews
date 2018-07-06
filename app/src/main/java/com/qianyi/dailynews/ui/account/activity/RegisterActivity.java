@@ -141,6 +141,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                            ToastUtils.show(RegisterActivity.this,return_msg);
                            if (code.equals(ApiConstant.SUCCESS_CODE)){
                                //jumpActivity(RegisterActivity.this,LoginActivity.class);
+                               sendBroadcast(new Intent("registerOk"));
                                finish();
                            }
                        } catch (JSONException e) {
