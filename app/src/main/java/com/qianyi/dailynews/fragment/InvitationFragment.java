@@ -397,12 +397,7 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
         banner.setImageLoader(new GlideImageLoader());
         banner.setImages(images);//设置图片源
         //banner.setBannerTitles(titles);//设置标题源
-        banner.setOnBannerListener(new OnBannerListener() {
-            @Override
-            public void OnBannerClick(int position) {
 
-            }
-        });
 
 
         banner.start();
