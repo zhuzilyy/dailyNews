@@ -148,7 +148,6 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
         if(contentStr.length()>51){
             contentStr=contentStr.substring(0,50);
         }
-
         redMoney=getIntent().getStringExtra("redMoney");
         subTitle=getIntent().getStringExtra("title");
         ifread=getIntent().getStringExtra("ifread");
