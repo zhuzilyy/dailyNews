@@ -24,6 +24,7 @@ import com.qianyi.dailynews.callback.RequestCallBack;
 import com.qianyi.dailynews.dialog.CustomLoadingDialog;
 import com.qianyi.dailynews.utils.SPUtils;
 import com.qianyi.dailynews.views.ClearEditText;
+import com.sina.weibo.sdk.constant.WBConstants;
 import com.tencent.mm.sdk.modelmsg.SendAuth;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
@@ -64,6 +65,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
     private int sex;
     @Override
     protected void initViews() {
+        BaseActivity.addActivity2(this);
         String account =login_account_cet.getText().toString().trim();
         String pwd = login_pwd_cet.getText().toString().trim();
         if(!TextUtils.isEmpty(account)&&!TextUtils.isEmpty(pwd)){
@@ -364,4 +366,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
             unregisterReceiver(myReceiver);
         }
     }
+
+
+
+
 }
