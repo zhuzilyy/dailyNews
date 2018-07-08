@@ -9,6 +9,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.qianyi.dailynews.MainActivity;
 import com.qianyi.dailynews.R;
 import com.qianyi.dailynews.api.ApiAccount;
 import com.qianyi.dailynews.api.ApiConstant;
@@ -210,6 +211,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                                 sendBroadcast(new Intent("loginOk"));
                                 //关闭登录
                                 BaseActivity.removeActivity2();
+                              //  startActivity(new Intent(RegisterActivity.this,MainActivity.class));
                                 finish();
                             }
                         } catch (JSONException e) {
