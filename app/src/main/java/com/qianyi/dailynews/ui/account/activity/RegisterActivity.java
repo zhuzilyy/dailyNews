@@ -7,13 +7,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.qianyi.dailynews.MainActivity;
 import com.qianyi.dailynews.R;
 import com.qianyi.dailynews.api.ApiAccount;
 import com.qianyi.dailynews.api.ApiConstant;
 import com.qianyi.dailynews.base.BaseActivity;
 import com.qianyi.dailynews.callback.RequestCallBack;
 import com.qianyi.dailynews.dialog.CustomLoadingDialog;
+import com.qianyi.dailynews.utils.SPUtils;
 import com.qianyi.dailynews.utils.ToastUtils;
 import com.qianyi.dailynews.views.ClearEditText;
 import com.qianyi.dailynews.views.MyCountDownTimer;
@@ -125,12 +128,12 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         }
     }
     //注册
-    private void register(String account,  String pwd, String confrimCode,String inviteCode) {
+    private void register(final String account, final String pwd, String confrimCode, String inviteCode) {
         customLoadingDialog.show();
         ApiAccount.register(ApiConstant.REGISTER, account, pwd, confrimCode, inviteCode, new RequestCallBack<String>() {
             @Override
             public void onSuccess(Call call, Response response, final String s) {
-                customLoadingDialog.dismiss();
+              //  customLoadingDialog.dismiss();
                 runOnUiThread(new Runnable() {
                    @Override
                    public void run() {
@@ -142,6 +145,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                            if (code.equals(ApiConstant.SUCCESS_CODE)){
                                //jumpActivity(RegisterActivity.this,LoginActivity.class);
                                sendBroadcast(new Intent("registerOk"));
+                               AutoLogin(account,pwd);
                                finish();
                            }
                        } catch (JSONException e) {
@@ -154,6 +158,72 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             public void onEror(Call call, int statusCode, Exception e) {
                 customLoadingDialog.dismiss();
                 ToastUtils.show(RegisterActivity.this,"网络错误");
+            }
+        });
+    }
+
+    /****
+     * 注册完成后自动登录
+     * @param account
+     * @param pwd
+     */
+    //登录的方法
+    private void AutoLogin(String account, String pwd) {
+      //  customLoadingDialog.show();
+        ApiAccount.login(ApiConstant.LOGIN, account, pwd, new RequestCallBack<String>() {
+            @Override
+            public void onSuccess(final Call call, Response response, final String s) {
+                Log.i("tag",s);
+                customLoadingDialog.dismiss();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            JSONObject jsonObject=new JSONObject(s);
+                            String code = jsonObject.getString("code");
+                            String return_msg = jsonObject.getString("return_msg");
+                            Toast.makeText(RegisterActivity.this, return_msg, Toast.LENGTH_SHORT).show();
+                            if (code.equals(ApiConstant.SUCCESS_CODE)){
+                                JSONObject data = jsonObject.getJSONObject("data");
+                                String user_id=data.getString("user_id");
+                                String phone=data.getString("phone");
+                                String head_portrait=data.getString("head_portrait");
+                                String gold=data.getString("gold");
+                                String my_invite_code=data.getString("my_invite_code");
+                                String balance=data.getString("balance");
+                                String earnings=data.getString("earnings");
+                                String invite_code=data.getString("invite_code");
+                                String name=data.getString("name");
+                                boolean oneyuan=data.getBoolean("oneyuan");
+                                SPUtils.put(RegisterActivity.this,"user_id",user_id);
+                                SPUtils.put(RegisterActivity.this,"phone",phone);
+                                SPUtils.put(RegisterActivity.this,"head_portrait",head_portrait);
+                                SPUtils.put(RegisterActivity.this,"gold",gold);
+                                SPUtils.put(RegisterActivity.this,"my_invite_code",my_invite_code);
+                                SPUtils.put(RegisterActivity.this,"balance",balance);
+                                SPUtils.put(RegisterActivity.this,"earnings",earnings);
+                                SPUtils.put(RegisterActivity.this,"invite_code",invite_code);
+                                SPUtils.put(RegisterActivity.this,"oneyuan",oneyuan);
+                                SPUtils.put(RegisterActivity.this,"name",name);
+                                Intent intent=new Intent();
+                                intent.setAction("com.action.login.success");
+                                sendBroadcast(intent);
+                                sendBroadcast(new Intent("loginOk"));
+                                //关闭登录
+                                BaseActivity.removeActivity2();
+                              //  startActivity(new Intent(RegisterActivity.this,MainActivity.class));
+                                finish();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
+            @Override
+            public void onEror(Call call, int statusCode, Exception e) {
+                Log.i("tag",e.getMessage());
+                customLoadingDialog.dismiss();
             }
         });
     }

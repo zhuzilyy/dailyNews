@@ -168,6 +168,8 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
 
     @Override
     public void lazyLoad() {
+        bigList.clear();
+        newsAdapter.notifyDataSetChanged();
         firstData(NewsFragment.CurrentNewsTitle);
     }
 
@@ -227,6 +229,13 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
                                                     // newsAdapter.notifyDataSetChanged();
                                                     newsAdapter = new NewsAdapter(getActivity(), bigList, "1");
                                                     listview.setAdapter(newsAdapter);
+
+                                                    //判断是不是没有更多数据了
+                                                    if (bigList.size() < Integer.parseInt(ApiConstant.PAGE_SIZE)) {
+                                                        mPullToRefreshView.onFooterRefreshComplete(true);
+                                                    }else{
+                                                        mPullToRefreshView.onFooterRefreshComplete(false);
+                                                    }
                                                 }
                                             }
                                         }
@@ -281,7 +290,7 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
                                         NewsContentBean contentBean = gson.fromJson(s, NewsContentBean.class);
                                         if (contentBean != null) {
                                             String code = contentBean.getCode();
-                                            if ("0000".equals(code)) {
+                                        //    if ("0000".equals(code)) {
                                                 NewsContentBean.NewsContentData contentData = contentBean.getData();
                                                 if (contentData != null) {
                                                     List<NewsContentBean.NewsContentData.NewsByType> newsByTypes = contentData.getNewsByType();
@@ -292,10 +301,17 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
                                                             List<NewsBean> newsBeans = dowithNews(adavertContents, newsContentInfos);
                                                             bigList.addAll(newsBeans);
                                                             newsAdapter.notifyDataSetChanged();
+
+                                                            //判断是不是没有更多数据了
+                                                            if (bigList.size() < Integer.parseInt(ApiConstant.PAGE_SIZE)) {
+                                                                mPullToRefreshView.onFooterRefreshComplete(true);
+                                                            }else{
+                                                                mPullToRefreshView.onFooterRefreshComplete(false);
+                                                            }
                                                         }
                                                     }
                                                 }
-                                            }
+                                        //    }
                                         }
                                     }
                                     @Override
