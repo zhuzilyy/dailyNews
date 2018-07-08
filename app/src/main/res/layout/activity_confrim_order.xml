@@ -199,6 +199,7 @@
                     android:background="@color/main_red" />
             </LinearLayout>
             <EditText
+                android:focusable="true"
                 android:inputType="number"
                 android:cursorVisible="false"
                 android:background="@null"
@@ -208,17 +209,27 @@
                 android:id="@+id/et_confirmCode"
                 android:layout_width="300dp"
                 android:layout_height="60dp" />
+            <TextView
+                android:visibility="gone"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:layout_alignLeft="@+id/et_confirmCode"
+                android:text="粘贴"
+                android:id="@+id/tv_paste"
+                android:background="@drawable/bg_paste"
+                android:maxLength="6"
+                android:layout_width="60dp"
+                android:layout_height="30dp" />
         </RelativeLayout>
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="20dp"
             android:layout_marginTop="10dp"
             android:gravity="center"
             android:text="温馨提示"
             android:textColor="@color/main_red"
             android:textSize="16sp" />
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

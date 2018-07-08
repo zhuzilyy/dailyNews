@@ -8,9 +8,11 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.qianyi.dailynews.R;
 import com.qianyi.dailynews.fragment.bean.TudiInfo;
+import com.qianyi.dailynews.views.CircleImageView;
 
 import java.util.List;
 
@@ -67,6 +69,7 @@ public class ApprenticeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             String lastName = userName.substring(7, userName.length());
             ((MyViewHolder) holder).nick.setText(firstName+"****"+lastName);
              ((MyViewHolder) holder).money.setText(infoList.get(position).getCash());
+            Glide.with(mContext).load(infoList.get(position).getHeadPortrait()).placeholder(R.mipmap.logo).into(((MyViewHolder) holder).head);
             // Picasso.with(mContext).load(datas.get(position).getUrl()).into(((MyViewHolder) holder).iv);//加载网络图片
             if(mOnItemClickListener!=null){
                 ((ApprenticeAdapter.MyViewHolder) holder).apprentic_item_ll.setOnClickListener(new View.OnClickListener() {
@@ -90,7 +93,7 @@ public class ApprenticeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     //自定义ViewHolder，用于加载图片
     class MyViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.apprentic_item_head)
-        public RoundedImageView head;
+        public CircleImageView head;
         @BindView(R.id.apprentic_item_account)
         public TextView account;
         @BindView(R.id.apprentic_item_nick)

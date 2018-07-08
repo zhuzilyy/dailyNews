@@ -118,7 +118,9 @@ public class IncomeShowActivity extends BaseActivity implements View.OnClickList
                     JSONObject data = jsonObject.getJSONObject("data");
                     String income = data.getString("income");
                     String url = data.getString("url");
-                    tv_income.setText(income+"元");
+                    double doubleIncome = Double.parseDouble(income);
+                    int intIncome = (int) doubleIncome;
+                    tv_income.setText(intIncome+"元");
                     Glide.with(IncomeShowActivity.this).load(url).into(iv_erweima);
                 } catch (JSONException e) {
                     e.printStackTrace();

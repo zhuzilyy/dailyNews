@@ -40,7 +40,6 @@
                 android:layout_height="100dp"
                 android:src="@mipmap/code"
                 />
-
         </RelativeLayout>
         <Button
             android:layout_marginTop="20dp"

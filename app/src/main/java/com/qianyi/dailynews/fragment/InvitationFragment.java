@@ -34,6 +34,7 @@ import com.qianyi.dailynews.api.ApiConstant;
 import com.qianyi.dailynews.api.ApiInvite;
 import com.qianyi.dailynews.base.BaseFragment;
 import com.qianyi.dailynews.callback.RequestCallBack;
+import com.qianyi.dailynews.dialog.ErWeiMaDialog;
 import com.qianyi.dailynews.dialog.SelfDialog;
 import com.qianyi.dailynews.fragment.bean.BannerImgInfo;
 import com.qianyi.dailynews.fragment.bean.InviteBean;
@@ -145,6 +146,7 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
     private TextView tv_cancle;
     private static final String APP_ID = "101488066"; //获取的APPID
     private Tencent mTencent;
+    private ErWeiMaDialog erWeiMaDialog;
     @Override
     protected View getResLayout(LayoutInflater inflater, ViewGroup container) {
         newsView = inflater.inflate(R.layout.fragment_invitation, null);
@@ -203,12 +205,16 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
                 return false;
             }
         });
-
-
         myReceiver=new MyReceiver();
         IntentFilter intentFilter=new IntentFilter();
         intentFilter.addAction("com.action.login.success");
         getActivity().registerReceiver(myReceiver,intentFilter);
+
+        IntentFilter intentFilterQuit=new IntentFilter();
+        intentFilterQuit.addAction("com.action.quit");
+        getActivity().registerReceiver(myReceiver,intentFilterQuit);
+
+        erWeiMaDialog=new ErWeiMaDialog(getActivity());
 
     }
 
@@ -434,6 +440,7 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
     })
     @Override
     public void onClick(View v) {
+        String userId = (String) SPUtils.get(getActivity(), "user_id", "");
         switch (v.getId()) {
             case R.id.btn_onekey_shoutu:
                 //一键收徒
@@ -521,6 +528,7 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
                 pw_onekeyshoutu.dismiss();
                 break;
             case R.id.ll_shouTu:
+                erWeiMaDialog.show();
                 pw_onekeyshoutu.dismiss();
                 break;
             case R.id.tv_cancle:
@@ -832,6 +840,10 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
             String action = intent.getAction();
             if (action.equals("com.action.login.success")){
                 getInviteData();
+            }else if(action.equals("com.action.quit")){
+                tv_income.setText( "0金币");
+                tv_friendCount.setText( "0个");
+                tv_myCode.setText("");
             }
         }
     }

@@ -209,7 +209,6 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
                 SPUtils.put(SettingsActivity.this,"user_id","");
                 jumpActivity(SettingsActivity.this,LoginActivity.class);
                 quitDialog.dismiss();
-
                 Intent intent=new Intent();
                 intent.setAction("com.action.quit");
                 sendBroadcast(intent);

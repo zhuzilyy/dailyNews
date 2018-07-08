@@ -1,5 +1,7 @@
 package com.qianyi.dailynews.ui.Mine.activity;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Intent;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -49,6 +51,8 @@ public class ConfirmOrderActivity extends BaseActivity {
     TextView textView6;
     @BindView(R.id.et_confirmCode)
     EditText et_confirmCode;
+    @BindView(R.id.tv_paste)
+    TextView tv_paste;
     private String userId,withdrawalMoney,subMoney;
     private CustomLoadingDialog customLoadingDialog;
     private Intent intent;
@@ -71,6 +75,14 @@ public class ConfirmOrderActivity extends BaseActivity {
         textViewList.add(textView4);
         textViewList.add(textView5);
         textViewList.add(textView6);
+
+        et_confirmCode.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                tv_paste.setVisibility(View.VISIBLE);
+                return false;
+            }
+        });
     }
     @Override
     protected void initData() {
@@ -109,7 +121,7 @@ public class ConfirmOrderActivity extends BaseActivity {
     protected void setStatusBarColor() {
 
     }
-    @OnClick({R.id.iv_back,R.id.btn_confrim})
+    @OnClick({R.id.iv_back,R.id.btn_confrim,R.id.tv_paste})
     public void click(View view){
         switch (view.getId()){
             case R.id.iv_back:
@@ -147,6 +159,25 @@ public class ConfirmOrderActivity extends BaseActivity {
                     return;
                 }
                 doWithDrawal(first,second,third,fourth,fifth,sixth);
+                break;
+            case R.id.tv_paste:
+                ClipboardManager cm = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+                ClipData data = cm.getPrimaryClip();
+                ClipData.Item item = data.getItemAt(0);
+                String content = item.getText().toString();
+                if(TextUtils.isEmpty(content)){
+                    Toast.makeText(this, "粘贴板内容位空", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                tv_paste.setVisibility(View.GONE);
+                for (int j = 0; j <textViewList.size() ; j++) {
+                    textViewList.get(j).setText("");
+                }
+                for (int j = 0; j <content.length() ; j++) {
+                    char c = content.charAt(j);
+                    textViewList.get(j).setText(c+"");
+                }
+                et_confirmCode.setText(content);
                 break;
         }
     }
