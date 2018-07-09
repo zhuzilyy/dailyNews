@@ -15,7 +15,7 @@ public class WhiteBgBitmapUtil {
         Bitmap newBitmap =null;
         //Bitmap newBitmap = Bitmap.createBitmap(120, 120, Bitmap.Config.ARGB_8888);
         String manufacturer = Build.MANUFACTURER;
-        if (manufacturer.equalsIgnoreCase("xiaomi")){
+        if (manufacturer.equalsIgnoreCase("xiaomi")||manufacturer.equalsIgnoreCase("oppo")){
             newBitmap=Bitmap.createBitmap(200, 200, Bitmap.Config.ARGB_8888);
         }else{
             newBitmap=Bitmap.createBitmap(120, 120, Bitmap.Config.ARGB_8888);

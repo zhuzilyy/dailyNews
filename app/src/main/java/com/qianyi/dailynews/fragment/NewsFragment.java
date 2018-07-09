@@ -202,13 +202,10 @@ public class NewsFragment extends BaseFragment implements View.OnClickListener {
                                   }
                               });
                           }
-
                        }
                    }
                 }
-
             }
-
             @Override
             public void onEror(Call call, int statusCode, Exception e) {
                // Log.i("sss",e.getMessage());

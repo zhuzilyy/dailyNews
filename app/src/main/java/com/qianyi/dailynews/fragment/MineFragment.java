@@ -120,6 +120,10 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         IntentFilter intentFilterWithdrawal=new IntentFilter();
         intentFilterWithdrawal.addAction("com.action.withdrawal.success");
         getActivity().registerReceiver(myReceiver,intentFilterWithdrawal);
+
+        IntentFilter intentFilterBindWx=new IntentFilter();
+        intentFilterBindWx.addAction("com.action.bindWx.success");
+        getActivity().registerReceiver(myReceiver,intentFilterBindWx);
     }
     private void setValue() {
         phone= (String) SPUtils.get(getActivity(),"phone","");
@@ -137,7 +141,6 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             re_WriteCode.setVisibility(View.GONE);
             view_inviteCode.setVisibility(View.GONE);
         }
-
         Glide.with(getActivity()).load(headimgurl).error(R.mipmap.headportrait_icon).into(mine_head);
         tv_phone.setText("电话号:"+phone);
         tv_balance.setText(balance);
@@ -222,6 +225,11 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 break;
         }
     }
+    @Override
+    public void onResume() {
+        super.onResume();
+       // getUserInfo();
+    }
 
     private void showLogin() {
         final SelfDialog quitDialog = new SelfDialog(getActivity());
@@ -264,23 +272,25 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             getActivity().unregisterReceiver(myReceiver);
         }
     }
-    public class MyReceiver extends BroadcastReceiver{
+    public class MyReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
-            if (action.equals("com.action.login.success")||action.equals("com.action.quit")){
+            if (action.equals("com.action.login.success") || action.equals("com.action.quit")) {
                 setValue();
-            }else if(action.equals("com.action.sign.success")||action.equals("com.action.withdrawal.success")){
+            } else if (action.equals("com.action.sign.success") || action.equals("com.action.withdrawal.success") || action.equals("com.action.bindWx.success")) {
                 getUserInfo();
             }
         }
+    }
         private void getUserInfo() {
+            user_id= (String) SPUtils.get(getActivity(),"user_id","");
             ApiMine.getUserInfo(ApiConstant.GET_USERINFO, user_id, new RequestCallBack<String>() {
                 @Override
                 public void onSuccess(Call call, Response response, String s) {
                     try {
                         JSONObject jsonObject=new JSONObject(s);
-                        JSONObject code = jsonObject.getJSONObject("code");
+                        String code = jsonObject.getString("code");
                         if (code.equals(ApiConstant.SUCCESS_CODE)){
                             JSONObject data = jsonObject.getJSONObject("data");
                             String user_id=data.getString("user_id");
@@ -304,6 +314,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                             SPUtils.put(getActivity(),"oneyuan",oneyuan);
                             SPUtils.put(getActivity(),"name",name);
                             tv_gold.setText(gold);
+                            setValue();
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -315,6 +326,5 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 }
             });
         }
-    }
 
 }

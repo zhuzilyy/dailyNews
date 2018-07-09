@@ -223,8 +223,8 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
         getSignState();
         getDailyMissionState();
         getUesrInfo();
-
     }
+    //获取日常任务的状态
     private void getDailyMissionState() {
         ApiMine.dailyMission(ApiConstant.DAILY_MISSION, user_id, new RequestCallBack<String>() {
             @Override
@@ -242,7 +242,6 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
                         btn_readingAward.setText("已完成");
                         btn_readingAward.setBackgroundResource(R.drawable.new_mission_finish);
                     }
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

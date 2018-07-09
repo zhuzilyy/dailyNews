@@ -84,6 +84,7 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
                     JSONObject data = jsonObject.getJSONObject("data");
                     String newer_mission = data.getString("newer_mission");
                     String[] missionArr=newer_mission.split("\\|");
+
                     missionWxBind = missionArr[0];
                     if (missionWxBind.equals("1")){
                         btn_bind.setText("已绑定");
@@ -184,6 +185,9 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
                     JSONObject jsonObject=new JSONObject(s);
                     String return_msg = jsonObject.getString("return_msg");
                     Toast.makeText(SettingsActivity.this, return_msg, Toast.LENGTH_SHORT).show();
+                    Intent intent=new Intent();
+                    intent.setAction("com.action.bindWx.success");
+                    sendBroadcast(intent);
                     getUserInfo();
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -220,6 +224,7 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
                 SPUtils.put(SettingsActivity.this,"balance","");
                 SPUtils.put(SettingsActivity.this,"earnings","");
                 SPUtils.put(SettingsActivity.this,"invite_code","");
+                SPUtils.put(SettingsActivity.this,"name","");
                 finish();
             }
         });

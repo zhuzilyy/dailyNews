@@ -1,13 +1,19 @@
 package com.qianyi.dailynews.ui.news.fragment;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
+import com.qianyi.dailynews.fragment.NewsFragment;
 
 /**
  * Created by apple on 17/11/30.
@@ -18,7 +24,6 @@ public abstract class LazyloadFragment extends Fragment {
     private boolean isInitView = false;
     private boolean isVisible = false;
     protected Activity mActivity;
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -53,7 +58,6 @@ public abstract class LazyloadFragment extends Fragment {
         //所以条件是view初始化完成并且对用户可见
         if(isInitView && isVisible ){
             lazyLoad();
-
             //防止重复加载数据
             isInitView = false;
             isVisible = false;
@@ -75,5 +79,6 @@ public abstract class LazyloadFragment extends Fragment {
      * 加载要显示的数据
      */
     protected abstract void lazyLoad();
+
 
 }
