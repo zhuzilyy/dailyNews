@@ -37,6 +37,8 @@ import com.qianyi.dailynews.base.BaseActivity;
 import com.qianyi.dailynews.callback.RequestCallBack;
 import com.qianyi.dailynews.dialog.SelfDialog;
 import com.qianyi.dailynews.fragment.NewsFragment;
+import com.qianyi.dailynews.ui.Mine.activity.SettingsActivity;
+import com.qianyi.dailynews.ui.WebviewActivity;
 import com.qianyi.dailynews.ui.account.activity.LoginActivity;
 import com.qianyi.dailynews.ui.news.adapter.HotCommentAdapterNews;
 import com.qianyi.dailynews.ui.news.adapter.NewsDetailsAdapter;
@@ -153,13 +155,16 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
         ifread=getIntent().getStringExtra("ifread");
         isRed=getIntent().getStringExtra("isRed");
 
-        int redMoneyStr=Integer.parseInt(redMoney);
-        if(redMoneyStr>0){
-            re_money.setVisibility(View.VISIBLE);
-           tv_money2.setText("+"+redMoneyStr+"");
-        }else {
-            re_money.setVisibility(View.GONE);
+        if(redMoney!=null){
+            int redMoneyStr=Integer.parseInt(redMoney);
+            if(redMoneyStr>0){
+                re_money.setVisibility(View.VISIBLE);
+                tv_money2.setText("+"+redMoneyStr+"");
+            }else {
+                re_money.setVisibility(View.GONE);
+            }
         }
+
         if(!TextUtils.isEmpty(newsId)){
             //先调阅读新闻
             readNews(newsId);
@@ -267,11 +272,32 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
                                         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                             @Override
                                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                                Intent intent=new Intent(NewsDetailsActivity.this,NewsDetailsActivity.class);
-                                                intent.putExtra("title",bigCommendList.get(position).getTitle());
-                                                intent.putExtra("url",bigCommendList.get(position).getUrl());
-                                                intent.putExtra("id",bigCommendList.get(position).getId());
-                                                startActivity(intent);
+                                                String adType = bigCommendList.get(position).getAdType();
+                                                if(adType!=null){
+                                                    Intent intent=new Intent(NewsDetailsActivity.this,WebviewActivity.class);
+                                                    intent.putExtra("url",bigCommendList.get(position).getUrl());
+                                                    intent.putExtra("title","广告");
+                                                    startActivity(intent);
+                                                }else {
+                                                    Intent intent=new Intent(NewsDetailsActivity.this,NewsDetailsActivity.class);
+//                                                intent.putExtra("title",bigCommendList.get(position).getTitle());
+//                                                intent.putExtra("url",bigCommendList.get(position).getUrl());
+//                                                intent.putExtra("id",bigCommendList.get(position).getId());
+
+                                                    intent.putExtra("title", bigCommendList.get(position).getTitle());
+                                                    intent.putExtra("url", bigCommendList.get(position).getUrl());
+                                                    intent.putExtra("des", bigCommendList.get(position).getContent());
+                                                    intent.putExtra("id", bigCommendList.get(position).getId());
+                                                    intent.putExtra("redMoney", bigCommendList.get(position).getRedMoney());
+                                                    intent.putExtra("ifread", bigCommendList.get(position).getIfRead());
+                                                    intent.putExtra("isRed",bigCommendList.get(position).getRedpackage());
+
+
+                                                    startActivity(intent);
+                                                }
+
+
+
                                                 finish();
                                             }
                                         });
@@ -289,6 +315,9 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
             }
         });
     }
+
+
+
     /**
      * 将新闻和广告按11排列
      *
@@ -296,6 +325,106 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
      * @param newsContentInfos
      * @return
      */
+    private List<NewsBean> dowithNews(List<NewsContentBean.NewsContentData.AdavertContent> adavertContents, List<NewsContentBean.NewsContentData.NewsByType.NewsContentInfo> newsContentInfos) {
+        List<NewsBean> newsBeanList = new ArrayList<>();
+        List<NewsBean> newsBeansAd = DoWithNewsForAD(adavertContents);
+        List<NewsBean> newsBeansNews = DoWithNewsForNEWS(newsContentInfos);
+        newsBeanList = dowithNews2(newsBeansAd, newsBeansNews);
+        return newsBeanList;
+    }
+
+
+    /***
+     *
+     * @param newsBeansAd
+     * @param newsBeansNews
+     * @return
+     */
+    private List<NewsBean> dowithNews2(List<NewsBean> newsBeansAd, List<NewsBean> newsBeansNews) {
+        List<NewsBean> newsBeanList = new ArrayList<>();
+        int size = newsBeansAd.size() + newsBeansNews.size();
+
+        for (int i = 0; i < size; i++) {
+            if (((i + 1) % 2) == 0) {
+                if (newsBeansAd.size() > 0) {
+                    newsBeanList.add(newsBeansAd.get(0));
+                    newsBeansAd.remove(0);
+                }
+            } else {
+                if (newsBeansNews.size() > 0) {
+                    newsBeanList.add(newsBeansNews.get(0));
+                    newsBeansNews.remove(0);
+                } else {
+                    return newsBeanList;
+                }
+            }
+        }
+        return newsBeanList;
+    }
+
+
+    /**
+     * 处理新闻
+     *
+     * @param newsContentInfos
+     * @return
+     */
+    private List<NewsBean> DoWithNewsForNEWS(List<NewsContentBean.NewsContentData.NewsByType.NewsContentInfo> newsContentInfos) {
+        List<NewsBean> newsBeanList = new ArrayList<>();
+        for (int i = 0; i < newsContentInfos.size(); i++) {
+            NewsBean newsBean = new NewsBean();
+            NewsContentBean.NewsContentData.NewsByType.NewsContentInfo news = newsContentInfos.get(i);
+            newsBean.setId(news.getId());
+            newsBean.setPublishDate(news.getPublishDate());
+            newsBean.setPosterScreenName(news.getPosterScreenName());
+            newsBean.setUrl(news.getUrl());
+            newsBean.setTitle(news.getTitle());
+            newsBean.setPosterId(news.getPosterId());
+            newsBean.setViewCount(news.getViewCount());
+            newsBean.setContent(news.getContent());
+            newsBean.setImgsUrl(news.getImgsUrl());
+            newsBean.setIfRead(news.getIfRead());
+            newsBean.setNewsType(news.getNewsTyps());
+            newsBean.setRedpackage(news.getRedpackage());
+            newsBean.setRedMoney(news.getRedMoney());
+            newsBeanList.add(newsBean);
+        }
+        return newsBeanList;
+    }
+
+    /**
+     * 处理广告
+     *
+     * @param adavertContents
+     * @return
+     */
+    private List<NewsBean> DoWithNewsForAD(List<NewsContentBean.NewsContentData.AdavertContent> adavertContents) {
+        List<NewsBean> newsBeanList = new ArrayList<>();
+        for (int i = 0; i < adavertContents.size(); i++) {
+            NewsBean newsBean = new NewsBean();
+            NewsContentBean.NewsContentData.AdavertContent ad = adavertContents.get(i);
+            newsBean.setId(ad.getId());
+            newsBean.setTitle(ad.getTitle());
+            newsBean.setUrl(ad.getUrl());
+            newsBean.setReadNum(ad.getReadNum());
+            newsBean.setImgs(ad.getImgs());
+            newsBean.setAdType(ad.getAdType());
+            newsBeanList.add(newsBean);
+        }
+        return newsBeanList;
+    }
+
+
+
+
+
+    /*  *//**
+     * 将新闻和广告按11排列
+     *
+     * @param adavertContents
+     * @param newsContentInfos
+     * @return
+     *//*
     private List<NewsBean> dowithNews(List<NewsContentBean.NewsContentData.AdavertContent> adavertContents, List<NewsContentBean.NewsContentData.NewsByType.NewsContentInfo> newsContentInfos) {
         List<NewsBean> newsBeanList = new ArrayList<>();
         boolean isNews = newsContentInfos.size() > 0 ? true : false;
@@ -375,6 +504,8 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
         }
         return newsBeanList;
     }
+
+   */
     /***
      * 获取热门评论
      */

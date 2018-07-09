@@ -1,34 +1,54 @@
 package com.qianyi.dailynews.ui.news.fragment;
 
+import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
+
 
 import com.google.gson.Gson;
+import com.orhanobut.logger.Logger;
 import com.qianyi.dailynews.R;
 import com.qianyi.dailynews.adapter.NewsAdapter;
+import com.qianyi.dailynews.api.ApiAccount;
 import com.qianyi.dailynews.api.ApiConstant;
 import com.qianyi.dailynews.api.ApiNews;
 import com.qianyi.dailynews.application.MyApplication;
 import com.qianyi.dailynews.callback.RequestCallBack;
 import com.qianyi.dailynews.dialog.CustomLoadingDialog;
 import com.qianyi.dailynews.fragment.NewsFragment;
+import com.qianyi.dailynews.ui.Mine.activity.AccountDetailsActivity;
+import com.qianyi.dailynews.ui.WebviewActivity;
 import com.qianyi.dailynews.ui.news.activity.NewsDetailsActivity;
 import com.qianyi.dailynews.ui.news.bean.NewsBean;
 import com.qianyi.dailynews.ui.news.bean.NewsContentBean;
+import com.qianyi.dailynews.ui.news.bean.NewsTitleBean;
 import com.qianyi.dailynews.utils.SPUtils;
 import com.qianyi.dailynews.views.PullToRefreshView;
+
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import butterknife.BindView;
 import okhttp3.Call;
 import okhttp3.Response;
 
@@ -53,8 +73,7 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
     @Override
     public void onStart() {
           super.onStart();
-//        firstData(NewsFragment.CurrentNewsTitle);
-        //  Toast.makeText(mActivity, "****************************PageFragment********onStart************************", Toast.LENGTH_SHORT).show();
+
     }
 
 
@@ -78,27 +97,37 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
 
         newsAdapter = new NewsAdapter(getActivity(), bigList, "1");
         listview.setAdapter(newsAdapter);
-
-
         customLoadingDialog = new CustomLoadingDialog(getActivity());
-
         mPullToRefreshView.setmOnHeaderRefreshListener(this);
         mPullToRefreshView.setmOnFooterRefreshListener(this);
+
 
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(getActivity(), NewsDetailsActivity.class);
-                intent.putExtra("title", bigList.get(i).getTitle());
-                intent.putExtra("url", bigList.get(i).getUrl());
-                intent.putExtra("des", bigList.get(i).getContent());
-                intent.putExtra("id", bigList.get(i).getId());
-                intent.putExtra("redMoney", bigList.get(i).getRedMoney());
-                intent.putExtra("ifread", bigList.get(i).getIfRead());
-                intent.putExtra("isRed",bigList.get(i).getRedpackage());
 
-                getActivity().startActivity(intent);
+                String adType = bigList.get(i).getAdType();
+                if(adType!=null){
+                    Intent intent=new Intent(getActivity(),WebviewActivity.class);
+                    intent.putExtra("url",bigList.get(i).getUrl());
+                    intent.putExtra("title","广告");
+                    startActivity(intent);
+                }else {
+                    Intent intent = new Intent(getActivity(), NewsDetailsActivity.class);
+                    intent.putExtra("title", bigList.get(i).getTitle());
+                    intent.putExtra("url", bigList.get(i).getUrl());
+                    intent.putExtra("des", bigList.get(i).getContent());
+                    intent.putExtra("id", bigList.get(i).getId());
+                    intent.putExtra("redMoney", bigList.get(i).getRedMoney());
+                    intent.putExtra("ifread", bigList.get(i).getIfRead());
+                    intent.putExtra("isRed", bigList.get(i).getRedpackage());
+                    getActivity().startActivity(intent);
+                    //将该条新闻设置为已读
+                    bigList.get(i).setIfRead("1");
+
+                    newsAdapter.notifyDataSetChanged();
+                }
             }
         });
         /***
@@ -148,7 +177,7 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
     @Override
     public void onResume() {
         super.onResume();
-        firstData(NewsFragment.CurrentNewsTitle);
+     //   firstData(NewsFragment.CurrentNewsTitle);
     }
 
 
@@ -168,6 +197,7 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
 
     @Override
     public void lazyLoad() {
+       // Toast.makeText(mActivity, "777777777777777777888888888888888888889999999999999999999", Toast.LENGTH_SHORT).show();
         bigList.clear();
         newsAdapter.notifyDataSetChanged();
         firstData(NewsFragment.CurrentNewsTitle);

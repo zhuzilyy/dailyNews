@@ -211,7 +211,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                                 sendBroadcast(new Intent("loginOk"));
                                 //关闭登录
                                 BaseActivity.removeActivity2();
-                              //  startActivity(new Intent(RegisterActivity.this,MainActivity.class));
+                              //startActivity(new Intent(RegisterActivity.this,MainActivity.class));
                                 finish();
                             }
                         } catch (JSONException e) {
