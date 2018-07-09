@@ -57,7 +57,7 @@ public class NewsFragment extends BaseFragment implements View.OnClickListener {
     @BindView(R.id.viewpager)
     public ViewPager viewPager;
     private ArrayList<Fragment> fragments = new ArrayList<>();
-    public PageFragment pageFragment = new PageFragment();
+    public PageFragment pageFragment;
     @BindView(R.id.re_home_search) public RelativeLayout re_home_search;
     public static int CurrentNewsTitle = 0;
 
@@ -80,6 +80,7 @@ public class NewsFragment extends BaseFragment implements View.OnClickListener {
     public ImageView iv_newPeople_details;
 
 
+
     @Override
     protected View getResLayout(LayoutInflater inflater, ViewGroup container) {
         newsView =  inflater.inflate(R.layout.fragment_news, null);
@@ -93,6 +94,7 @@ public class NewsFragment extends BaseFragment implements View.OnClickListener {
 
     @Override
     protected void initViews() {
+       // Toast.makeText(mActivity, "NewsFragment ===  initViews", Toast.LENGTH_SHORT).show();
         myReceiver= new MyReceiver();
         IntentFilter filter01=new IntentFilter("getRewardOk");
         IntentFilter filter02=new IntentFilter("loginOk");
@@ -114,27 +116,35 @@ public class NewsFragment extends BaseFragment implements View.OnClickListener {
             re_newPeople.setVisibility(View.VISIBLE);
         }
 
-
     }
+
+
 
     @Override
     public void onResume() {
         super.onResume();
+
     }
 
     @Override
     protected void initData() {
+
+     //   Toast.makeText(mActivity, "NewsFragment ===  initData", Toast.LENGTH_SHORT).show();
+
         CurrentNewsTitle = 0;
         fragments.clear();
         ApiNews.GetNewsTitles(ApiConstant.NEWS_TITLES, new RequestCallBack<String>() {
             @Override
             public void onSuccess(Call call, Response response, String s) {
+
+
                 Log.i("ss",s);
                 Gson gson = new Gson();
                 NewsTitleBean newsTitleBean = gson.fromJson(s,NewsTitleBean.class);
                 if(newsTitleBean!=null){
                    String code = newsTitleBean.getCode();
                    if("0000".equals(code)){
+
                        NewsTitleBean.NewsTitleData newsTitleData = newsTitleBean.getData();
                        if(newsTitleData!=null){
                           List<NewsTitleBean.NewsTitleData.NewsTypeRes> newsTypeRes = newsTitleData.getNewsTypeRes();
@@ -144,7 +154,26 @@ public class NewsFragment extends BaseFragment implements View.OnClickListener {
                              viewPager.setOffscreenPageLimit(3);
                               for(int i=0;i<newsTypeRes.size();i++){
                                   tabLayout.addTab(tabLayout.newTab());
-                                  fragments.add(new PageFragment());
+                                  if(pageFragment==null){
+                                      fragments.add(new PageFragment());
+                                 /*     getActivity().runOnUiThread(new Runnable() {
+                                          @Override
+                                          public void run() {
+                                              Toast.makeText(mActivity, "NewsFragment ===  onSuccess  00001", Toast.LENGTH_SHORT).show();
+
+                                          }
+                                      });*/
+                                  }else {
+                                      fragments.add(pageFragment);
+                                  /*    getActivity().runOnUiThread(new Runnable() {
+                                          @Override
+                                          public void run() {
+                                              Toast.makeText(mActivity, "NewsFragment ===  onSuccess  00002", Toast.LENGTH_SHORT).show();
+
+                                          }
+                                      });*/
+                                  }
+
                               }
                               viewPager.setAdapter(new FmPagerAdapter(fragments,getActivity().getSupportFragmentManager()));
                               tabLayout.setupWithViewPager(viewPager);
@@ -183,6 +212,13 @@ public class NewsFragment extends BaseFragment implements View.OnClickListener {
             @Override
             public void onEror(Call call, int statusCode, Exception e) {
                // Log.i("sss",e.getMessage());
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(mActivity, "NewsFragment ===  onEror", Toast.LENGTH_SHORT).show();
+
+                    }
+                });
             }
         });
 
