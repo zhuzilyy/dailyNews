@@ -195,7 +195,7 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
         final Bundle params = new Bundle();
         params.putInt(QQShare.SHARE_TO_QQ_KEY_TYPE, QQShare.SHARE_TO_QQ_TYPE_DEFAULT);//分享的类型
         params.putString(QQShare.SHARE_TO_QQ_TITLE, "每日速报");//分享标题
-        params.putString(QQShare.SHARE_TO_QQ_SUMMARY,"每日速报是一款基于数据挖掘的推荐引擎产品，它为用户推荐有价值的、个性化的信息，提供连接人与信息的新型服务");//要分享的内容摘要
+        params.putString(QQShare.SHARE_TO_QQ_SUMMARY,"每日分享的分享");//要分享的内容摘要
         params.putString(QQShare.SHARE_TO_QQ_TARGET_URL,ApiConstant.DAILY_SHARE_URL);//内容地址
         params.putString(QQShare.SHARE_TO_QQ_IMAGE_URL,ApiConstant.QQ_SHARE_LOGO);//分享的图片URL
         params.putString(QQShare.SHARE_TO_QQ_APP_NAME, "每日速报");//应用名称
@@ -228,7 +228,7 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
         webpage.webpageUrl = ApiConstant.DAILY_SHARE_URL;
         WXMediaMessage msg = new WXMediaMessage(webpage);
         msg.title = "每日速报";
-        msg.description = "每日速报是一款基于数据挖掘的推荐引擎产品，它为用户推荐有价值的、个性化的信息，提供连接人与信息的新型服务";
+        msg.description = "每日分享的分享";
         Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.mipmap.logo);
         Bitmap bitmap = WhiteBgBitmapUtil.drawableBitmapOnWhiteBg(this, bmp);
         Bitmap thumbBmp = Bitmap.createScaledBitmap(bitmap, 200, 200, true);
@@ -283,7 +283,7 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
         WebpageObject mediaObject = new WebpageObject();
         mediaObject.identify = Utility.generateGUID();
         mediaObject.title = "每日速报";
-        mediaObject.description = "每日速报是一款基于数据挖掘的推荐引擎产品，它为用户推荐有价值的、个性化的信息，提供连接人与信息的新型服务";
+        mediaObject.description = "每日分享的分享";
        /* Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.logo);
 
         // 设置 Bitmap 类型的图片到视频对象里         设置缩略图。 注意：最终压缩过的缩略图大小不得超过 32kb。
@@ -293,7 +293,7 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
         Bitmap thumbBmp = Bitmap.createScaledBitmap(bitmap, 200, 200, true);
         mediaObject.setThumbImage(thumbBmp);
         mediaObject.actionUrl = ApiConstant.DAILY_SHARE_URL;
-        mediaObject.defaultText = "每日速报是一款基于数据挖掘的推荐引擎产品，它为用户推荐有价值的、个性化的信息，提供连接人与信息的新型服务";
+        mediaObject.defaultText = "每日分享的分享";
         WeiboMultiMessage message = new WeiboMultiMessage();
         message.mediaObject = mediaObject;
         shareHandler.shareMessage(message, false);
@@ -347,7 +347,7 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
         webpage.webpageUrl = ApiConstant.DAILY_SHARE_URL;
         WXMediaMessage msg = new WXMediaMessage(webpage);
         msg.title = "每日速报";
-        msg.description = "每日速报是一款基于数据挖掘的推荐引擎产品，它为用户推荐有价值的、个性化的信息，提供连接人与信息的新型服务";
+        msg.description = "每日分享的分享";
         Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.mipmap.logo);
         Bitmap bitmap = WhiteBgBitmapUtil.drawableBitmapOnWhiteBg(this, bmp);
         Bitmap thumbBmp = Bitmap.createScaledBitmap(bitmap, 200, 200, true);
