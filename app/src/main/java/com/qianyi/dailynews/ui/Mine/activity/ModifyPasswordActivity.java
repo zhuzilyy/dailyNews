@@ -58,7 +58,6 @@ public class ModifyPasswordActivity extends BaseActivity {
     protected void initData() {
 
     }
-
     @Override
     protected void getResLayout() {
         setContentView(R.layout.activity_modifypwd);
@@ -68,7 +67,6 @@ public class ModifyPasswordActivity extends BaseActivity {
     protected void initListener() {
 
     }
-
     @Override
     protected void setStatusBarColor() {
 
@@ -98,6 +96,10 @@ public class ModifyPasswordActivity extends BaseActivity {
                 }
                 if (!newPwd.equals(confirmPwd)){
                     Toast.makeText(this, "两次密码不一致", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (oldPwd.equals(newPwd)){
+                    Toast.makeText(this, "新密码不能与原密码一致", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 modifyPwd(oldPwd,newPwd,confirmPwd);

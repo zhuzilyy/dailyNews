@@ -82,7 +82,9 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
                 case BaseResp.ErrCode.ERR_OK:
                     //分享成功
                     Toast.makeText(WXEntryActivity.this, "分享成功", Toast.LENGTH_LONG).show();
-                    shareSuccess();
+                    if (ApiConstant.SHARE_TAG.equals("dailyShare")){
+                        shareSuccess();
+                    }
                     break;
                 case BaseResp.ErrCode.ERR_USER_CANCEL:
                     //分享取消

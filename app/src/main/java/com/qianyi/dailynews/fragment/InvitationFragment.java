@@ -512,6 +512,7 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
                 startActivity(intent_wakefriend);
                 break;
             case R.id.ll_friendCircle:
+                ApiConstant.SHARE_TAG="invitationShare";
                 shareFriendCircle();
                 pw_onekeyshoutu.dismiss();
                 break;
@@ -524,6 +525,7 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
                 pw_onekeyshoutu.dismiss();
                 break;
             case R.id.ll_wechat:
+                ApiConstant.SHARE_TAG="invitationShare";
                 shareFriends();
                 pw_onekeyshoutu.dismiss();
                 break;

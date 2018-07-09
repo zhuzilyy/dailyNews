@@ -20,7 +20,7 @@ public class ApiConstant {
     public static final String LIANJIE_URL="http://mrsb.qianyiwangluo.com";
     public static final String INCOME_SHOW="http://47.104.73.127:8080/share/index.html?id=";
     public static final String QQ_SHARE_LOGO="http://47.104.73.127:8080/share/share_logo.png";
-
+    public static String SHARE_TAG="";
 
     public static final String PAGE_SIZE="10";
     public static final String SUCCESS_CODE="0000";
