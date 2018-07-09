@@ -101,8 +101,6 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
         mPullToRefreshView.setmOnHeaderRefreshListener(this);
         mPullToRefreshView.setmOnFooterRefreshListener(this);
 
-
-
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -125,7 +123,12 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
                     getActivity().startActivity(intent);
                     //将该条新闻设置为已读
                     bigList.get(i).setIfRead("1");
-
+                    //将阅读数加+1
+                    String readNumStr = bigList.get(i).getViewCount();
+                    if(readNumStr!=null){
+                        int intNum = Integer.parseInt(readNumStr);
+                        bigList.get(i).setViewCount((intNum+1)+"");
+                    }
                     newsAdapter.notifyDataSetChanged();
                 }
             }
@@ -177,8 +180,12 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
     @Override
     public void onResume() {
         super.onResume();
+
      //   firstData(NewsFragment.CurrentNewsTitle);
     }
+
+
+
 
 
     /***

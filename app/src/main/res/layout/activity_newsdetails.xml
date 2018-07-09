@@ -386,6 +386,16 @@
         </LinearLayout>
 
     </RelativeLayout>
+    <!--奖励动画-->
+    <ImageView
+        android:id="@+id/iv_getReward"
+        android:layout_width="1dp"
+        android:visibility="visible"
+        android:layout_height="1dp"
+        android:src="@mipmap/readmoney_icon"
+        android:layout_centerInParent="true"
+        />
+
 
 
 

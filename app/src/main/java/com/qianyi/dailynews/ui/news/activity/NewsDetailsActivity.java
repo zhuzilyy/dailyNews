@@ -1,5 +1,7 @@
 package com.qianyi.dailynews.ui.news.activity;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -15,6 +17,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.LinearInterpolator;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -66,6 +69,7 @@ import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -99,6 +103,8 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
     @BindView(R.id.ll_QQ) public LinearLayout ll_QQ;//分享到QQ
     @BindView(R.id.ll_wechat) public LinearLayout ll_wechat;//分享到微信
     @BindView(R.id.ll_weibo) public LinearLayout ll_weibo;//分享到微博
+
+    @BindView(R.id.iv_getReward) public ImageView iv_getReward; //获得奖励的动画
 
     //****************************
     //评论
@@ -333,6 +339,51 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
         return newsBeanList;
     }
 
+    /***
+     * 获得金币的动画（俗称金币洒落的动画）
+     */
+    public void CoinAnimator(int type, final View view){
+        if(1==type){
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    //进入动画
+                    view.setVisibility(View.VISIBLE);
+                    AnimatorSet animatorSet = new AnimatorSet();//组合动画
+                    ObjectAnimator anim = ObjectAnimator.ofFloat(view, "alpha", 0.01f, 0.1f, 0.2f, 0.5f, 1f);
+                    //缩放
+                    ObjectAnimator scaleX = ObjectAnimator.ofFloat(view, "scaleX", 0, 150.0f);
+                    ObjectAnimator scaleY = ObjectAnimator.ofFloat(view, "scaleY", 0, 150.0f);
+                    animatorSet.setDuration(800);
+                    animatorSet.setInterpolator(new LinearInterpolator());
+                    animatorSet.playTogether(scaleX,scaleY,anim);
+                    animatorSet.start();
+                }
+            });
+
+
+        }else if(2==type){
+            //退出动画
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    //进入动画
+                    AnimatorSet animatorSet = new AnimatorSet();//组合动画
+                    ObjectAnimator anim = ObjectAnimator.ofFloat(view, "alpha", 1f, 0.8f, 0.5f, 0.2f, 0.01f);
+                    //缩放
+                    ObjectAnimator scaleX = ObjectAnimator.ofFloat(view, "scaleX", 150.0f, 0.0f);
+                    ObjectAnimator scaleY = ObjectAnimator.ofFloat(view, "scaleY", 150.0f, 0.0f);
+                    animatorSet.setDuration(800);
+                    animatorSet.setInterpolator(new LinearInterpolator());
+                    animatorSet.playTogether(scaleX,scaleY,anim);
+                    animatorSet.start();
+
+                }
+            });
+        }
+    }
+
+
 
     /***
      *
@@ -418,94 +469,7 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
 
 
 
-    /*  *//**
-     * 将新闻和广告按11排列
-     *
-     * @param adavertContents
-     * @param newsContentInfos
-     * @return
-     *//*
-    private List<NewsBean> dowithNews(List<NewsContentBean.NewsContentData.AdavertContent> adavertContents, List<NewsContentBean.NewsContentData.NewsByType.NewsContentInfo> newsContentInfos) {
-        List<NewsBean> newsBeanList = new ArrayList<>();
-        boolean isNews = newsContentInfos.size() > 0 ? true : false;
-        boolean isAd = isNews == true ? false : true;
-        int size = (adavertContents.size() + newsContentInfos.size());
-        for (int i = 1; i <= size; i++) {
-            if (isNews) {
-                if ((newsContentInfos.size() > 0)) {
-                    for (int j = 0; j < newsContentInfos.size(); j++) {
-                        NewsBean newsBean = new NewsBean();
-                        NewsContentBean.NewsContentData.NewsByType.NewsContentInfo news = newsContentInfos.get(j);
-                        newsBean.setId(news.getId());
-                        newsBean.setPublishDate(news.getPublishDate());
-                        newsBean.setPosterScreenName(news.getPosterScreenName());
-                        newsBean.setUrl(news.getUrl());
-                        newsBean.setTitle(news.getTitle());
-                        newsBean.setPosterId(news.getPosterId());
-                        newsBean.setViewCount(news.getViewCount());
-                        newsBean.setContent(news.getContent());
-                        newsBean.setImgsUrl(news.getImgsUrl());
-                        newsBean.setIfRead(news.getIfRead());
-                        newsBean.setNewsType(news.getNewsTyps());
-                        newsBeanList.add(newsBean);
-                        newsContentInfos.remove(0);
-                        break;
-                    }
-                    if (0 == 0) {
-                        isAd = true;
-                        isNews = false;
-                    }
-                    continue;
-                } else {
-                    isAd = true;
-                    isNews = false;
-                }
-            } else if (isAd) {
-                if ((adavertContents.size() > 0)) {
-                    for (int j = 0; j < adavertContents.size(); j++) {
-                        NewsBean newsBean = new NewsBean();
-                        NewsContentBean.NewsContentData.AdavertContent ad = adavertContents.get(j);
-                        newsBean.setId(ad.getId());
-                        newsBean.setTitle(ad.getTitle());
-                        newsBean.setUrl(ad.getUrl());
-                        newsBean.setReadNum(ad.getReadNum());
-                        newsBean.setImgs(ad.getImgs());
-                        newsBean.setAdType(ad.getAdType());
-                        newsBeanList.add(newsBean);
-                        adavertContents.remove(0);
-                        break;
-                    }
-                    isAd = false;
-                    isNews = true;
-                    continue;
-                } else {
-                    for (int j = 0; j < newsContentInfos.size(); j++) {
-                        NewsBean newsBean = new NewsBean();
-                        NewsContentBean.NewsContentData.NewsByType.NewsContentInfo news = newsContentInfos.get(j);
-                        newsBean.setId(news.getId());
-                        newsBean.setPublishDate(news.getPublishDate());
-                        newsBean.setPosterScreenName(news.getPosterScreenName());
-                        newsBean.setUrl(news.getUrl());
-                        newsBean.setTitle(news.getTitle());
-                        newsBean.setPosterId(news.getPosterId());
-                        newsBean.setViewCount(news.getViewCount());
-                        newsBean.setContent(news.getContent());
-                        newsBean.setImgsUrl(news.getImgsUrl());
-                        newsBean.setIfRead(news.getIfRead());
-                        newsBean.setNewsType(news.getNewsTyps());
-                        newsBeanList.add(newsBean);
-                        newsContentInfos.remove(0);
-                        break;
-                    }
-                    isAd = false;
-                    isNews = true;
-                }
-            }
-        }
-        return newsBeanList;
-    }
 
-   */
     /***
      * 获取热门评论
      */
@@ -696,9 +660,19 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
                 }else {
                     //金币新闻[大于25就结束]
                     if( NewsFragment.CurrentGetCoinNumber <= 25){
+
                         getReward2("0");
                         //金币哗啦哗啦的声音
                         playSound(R.raw.mm);
+                        //动画
+                        CoinAnimator(1,iv_getReward);
+                        try {
+                            Thread.sleep(2000);
+                            CoinAnimator(2,iv_getReward);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+
 
                     }
                 }
