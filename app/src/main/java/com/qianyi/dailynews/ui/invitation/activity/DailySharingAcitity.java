@@ -165,10 +165,12 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
             case R.id.ll_wechat:
                 //微信分享
                 //Toast.makeText(this, "微信分享", Toast.LENGTH_SHORT).show();
+                ApiConstant.SHARE_TAG="dailyShare";
                 shareFriends();
                 pw_share.dismiss();
                 break;
             case R.id.ll_friendCircle:
+                ApiConstant.SHARE_TAG="dailyShare";
                 shareFriendCircle();
                 pw_share.dismiss();
                 //朋友圈分享

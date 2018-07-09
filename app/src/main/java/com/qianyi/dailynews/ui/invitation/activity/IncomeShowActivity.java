@@ -45,6 +45,8 @@ import com.tencent.tauth.UiError;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 import okhttp3.Call;
@@ -118,8 +120,8 @@ public class IncomeShowActivity extends BaseActivity implements View.OnClickList
                     String income = data.getString("income");
                     String url = data.getString("url");
                     double doubleIncome = Double.parseDouble(income);
-                    int intIncome = (int) doubleIncome;
-                    tv_income.setText(intIncome+"元");
+                    String strIncome = doubleToString(doubleIncome);
+                    tv_income.setText(strIncome+"元");
                     Glide.with(IncomeShowActivity.this).load(url).into(iv_erweima);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -140,7 +142,10 @@ public class IncomeShowActivity extends BaseActivity implements View.OnClickList
     protected void initListener() {
 
     }
-
+    public static String doubleToString(double num){
+        //使用0.00不足位补0，#.##仅保留有效位
+        return new DecimalFormat("0.00").format(num);
+    }
     @Override
     protected void setStatusBarColor() {
 
@@ -155,10 +160,12 @@ public class IncomeShowActivity extends BaseActivity implements View.OnClickList
             case R.id.ll_wechat:
                 //微信分享
                 //Toast.makeText(this, "微信分享", Toast.LENGTH_SHORT).show();
+                ApiConstant.SHARE_TAG="incomeShare";
                 shareFriends();
                 pw_share.dismiss();
                 break;
             case R.id.ll_friendCircle:
+                ApiConstant.SHARE_TAG="incomeShare";
                 shareFriendCircle();
                 pw_share.dismiss();
                 //朋友圈分享
@@ -337,7 +344,6 @@ public class IncomeShowActivity extends BaseActivity implements View.OnClickList
         req.scene = SendMessageToWX.Req.WXSceneSession;
         mWxApi.sendReq(req);
     }
-
     private void shwoSharePw() {
         pw_share = new PopupWindow(IncomeShowActivity.this);
         pw_share.setContentView(view_share);
