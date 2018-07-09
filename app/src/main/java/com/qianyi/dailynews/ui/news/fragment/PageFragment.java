@@ -180,7 +180,6 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
     @Override
     public void onResume() {
         super.onResume();
-
      //   firstData(NewsFragment.CurrentNewsTitle);
     }
 
