@@ -210,11 +210,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
             case R.id.login_wxlogin_iv:
                 //微信登录
                 loginWx();
+                //jumpActivity(this,BindWxActivity.class);
                 break;
             default:
             break;
-
-
         }
     }
 
@@ -341,10 +340,26 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                             SPUtils.put(LoginActivity.this,"invite_code",invite_code);
                             Toast.makeText(LoginActivity.this, return_msg, Toast.LENGTH_SHORT).show();
                             if (code.equals(ApiConstant.SUCCESS_CODE)){
-                                Intent intent=new Intent();
-                                intent.setAction("com.action.login.success");
-                                sendBroadcast(intent);
-                                finish();
+                                //绑定过手机号
+                                if (!TextUtils.isEmpty(phone)){
+                                    Intent intent=new Intent();
+                                    intent.setAction("com.action.login.success");
+                                    sendBroadcast(intent);
+                                    finish();
+                                    //没绑定过手机跳转到绑定手机的界面
+                                }else{
+                                    Intent intent=new Intent(LoginActivity.this,BindWxActivity.class);
+                                    intent.putExtra("openid",openid);
+                                    intent.putExtra("nickname",nickname);
+                                    intent.putExtra("sex",sex);
+                                    intent.putExtra("language",language);
+                                    intent.putExtra("city",city);
+                                    intent.putExtra("province",province);
+                                    intent.putExtra("country",country);
+                                    intent.putExtra("headimgurl",headimgurl);
+                                    intent.putExtra("unionid",unionid);
+                                    startActivity(intent);
+                                }
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
