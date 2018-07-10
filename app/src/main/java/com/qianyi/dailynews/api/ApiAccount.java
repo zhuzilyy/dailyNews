@@ -117,6 +117,27 @@ public class ApiAccount {
         params.put("unionid",unionid);
         OkHttpManager.getInstance().postRequest(url,params,callback);
     }
+    /***
+     * 微信手机
+     */
+    public static void bindPhone(String url,String user_id,String phone,String password,String captcha,String inviteCode,String openid,String nickname,String sex,String language,String city,String province,String country,String headimgurl,String unionid,RequestCallBack<String> callback) {
+        Map<String,String> params=new HashMap<>();
+        params.put("userId",user_id);
+        params.put("phone",phone);
+        params.put("password",password);
+        params.put("captcha",captcha);
+        params.put("inviteCode",inviteCode);
+        params.put("openid",openid);
+        params.put("nickname",nickname);
+        params.put("sex",sex);
+        params.put("language",language);
+        params.put("city",city);
+        params.put("province",province);
+        params.put("country",country);
+        params.put("headimgurl",headimgurl);
+        params.put("unionid",unionid);
+        OkHttpManager.getInstance().postRequest(url,params,callback);
+    }
 
 
     //=======以下辛振宇=================================================================

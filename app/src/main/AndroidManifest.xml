@@ -232,6 +232,10 @@
         <activity android:name=".ui.Mine.activity.ConfirmOrderActivity"
             android:screenOrientation="portrait"
             />
+        <!-- 绑定微信 -->
+        <activity android:name=".ui.account.activity.BindWxActivity"
+            android:screenOrientation="portrait"
+            />
         //********************************************************************
         <provider
             android:name="android.support.v4.content.FileProvider"

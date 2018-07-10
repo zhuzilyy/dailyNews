@@ -115,6 +115,8 @@ public class ApiConstant {
     public static final String  WEBVIEW= BASE_URL+"/api/user/getOfficial";
     //日常任务状态
     public static final String  DAILY_MISSION= BASE_URL+"/api/daymission/state";
+    //
+    public static final String  BIND_PHONE= BASE_URL+"/api/wx/bindphone";
     /*//邀请规则
     public static final String  INVITE_WEBVIEW= BASE_URL+"/api/user/getOfficial?type=INVITE";
     //签到规则
