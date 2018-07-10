@@ -33,6 +33,7 @@ import com.qianyi.dailynews.ui.Mine.activity.TaskCenterActivity;
 import com.qianyi.dailynews.ui.Mine.activity.WithdrawalsActivity;
 import com.qianyi.dailynews.ui.Mine.activity.WriteInvitationActivity;
 import com.qianyi.dailynews.ui.account.activity.LoginActivity;
+import com.qianyi.dailynews.ui.news.activity.NewsDetailsActivity;
 import com.qianyi.dailynews.utils.SPUtils;
 import com.qianyi.dailynews.utils.Utils;
 import com.qianyi.dailynews.views.CircleImageView;
@@ -149,6 +150,10 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         tv_gold.setText(gold);
         tv_wechatName.setText("微信号:"+name);
     }
+
+
+
+
     @Override
     protected void initData() {
 
@@ -228,7 +233,11 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     @Override
     public void onResume() {
         super.onResume();
-       // getUserInfo();
+        String userid = (String) SPUtils.get(getActivity(),"user_id","");
+        if(!TextUtils.isEmpty(userid)){
+            getUserInfo(userid);
+        }
+
     }
 
     private void showLogin() {
