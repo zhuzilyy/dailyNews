@@ -133,10 +133,10 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         ApiAccount.register(ApiConstant.REGISTER, account, pwd, confrimCode, inviteCode, new RequestCallBack<String>() {
             @Override
             public void onSuccess(Call call, Response response, final String s) {
-              //  customLoadingDialog.dismiss();
                 runOnUiThread(new Runnable() {
                    @Override
                    public void run() {
+                       customLoadingDialog.dismiss();
                        try {
                            JSONObject jsonObject=new JSONObject(s);
                            String code = jsonObject.getString("code");
@@ -174,11 +174,11 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             @Override
             public void onSuccess(final Call call, Response response, final String s) {
                 Log.i("tag",s);
-                customLoadingDialog.dismiss();
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         try {
+                            customLoadingDialog.dismiss();
                             JSONObject jsonObject=new JSONObject(s);
                             String code = jsonObject.getString("code");
                             String return_msg = jsonObject.getString("return_msg");
@@ -233,10 +233,10 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         ApiAccount.getConfirmCode(ApiConstant.CONFIRMCODE, phoneNumber, new RequestCallBack<String>() {
             @Override
             public void onSuccess(Call call, final Response response, final String s) {
-                customLoadingDialog.dismiss();
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        customLoadingDialog.dismiss();
                         try {
                             JSONObject jsonObject=new JSONObject(s);
                             String return_msg=jsonObject.getString("return_msg");
