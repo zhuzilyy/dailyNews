@@ -279,11 +279,11 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             if (action.equals("com.action.login.success") || action.equals("com.action.quit")) {
                 setValue();
             } else if (action.equals("com.action.sign.success") || action.equals("com.action.withdrawal.success") || action.equals("com.action.bindWx.success")) {
-                getUserInfo();
+                getUserInfo(user_id);
             }
         }
     }
-        private void getUserInfo() {
+        private void getUserInfo(String user_id) {
             user_id= (String) SPUtils.get(getActivity(),"user_id","");
             ApiMine.getUserInfo(ApiConstant.GET_USERINFO, user_id, new RequestCallBack<String>() {
                 @Override

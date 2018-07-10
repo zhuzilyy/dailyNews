@@ -183,6 +183,7 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
             webSettings = news_webview.getSettings();
             WebviewUtil.setWebview(news_webview,webSettings);
             news_webview.loadUrl(urlStr);
+         // news_webview.setVisibility(View.GONE);
             WebviewUtil.setWebview(bottom_web,webSettings);
             bottom_web.loadUrl(urlStr);
         }
