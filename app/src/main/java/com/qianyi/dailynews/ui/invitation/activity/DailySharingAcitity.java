@@ -6,12 +6,16 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -67,6 +71,8 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
     public ImageView back;
     @BindView(R.id.ll_share)
     public LinearLayout ll_share;
+    @BindView(R.id.btn_share)
+    Button btn_share;
     private CustomLoadingDialog customLoadingDialog;
     private String userId;
     private PopupWindow pw_share;
@@ -81,6 +87,7 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
     private static final String APP_ID = "101488066"; //获取的APPID
     private Tencent mTencent;
     private String count;
+    private  CountDownTimer timer;
     @Override
     protected void initViews() {
         mTencent = Tencent.createInstance(APP_ID,getApplicationContext());
@@ -126,12 +133,13 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
             public void onSuccess(Call call, Response response, final String s) {
                 customLoadingDialog.dismiss();
                 try {
-                    JSONObject jsonObject=new JSONObject(s);
+                    JSONObject jsonObject = new JSONObject(s);
                     JSONObject data = jsonObject.getJSONObject("data");
                     String lastTime = data.getString("lastTime");
                     count = data.getString("count");
                     tv_time.setText(count+"次");
-                    tv_intervel.setText(lastTime);
+                    startTime(tv_intervel,lastTime);
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -141,6 +149,56 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
                 customLoadingDialog.dismiss();
             }
         });
+    }
+
+    /***
+     * 进行倒计时
+     * @param tv_intervel
+     * @param lastTime
+     */
+    private void startTime(final TextView tv_intervel, String lastTime) {
+
+
+
+
+
+        if(!TextUtils.isEmpty(lastTime)){
+            int time2 = Integer.parseInt(lastTime);
+
+            if(time2>0){
+                btn_share.setEnabled(false);
+                btn_share.setTextColor(Color.parseColor("#999999"));
+            }
+
+
+            if(time2>0){
+                /** 倒计时一次1秒 */
+                timer = new CountDownTimer(time2*1000, 1000) {
+                    @Override
+                    public void onTick(long millisUntilFinished) {
+                        // TODO Auto-generated method stub
+                        if(tv_intervel!=null){
+                            tv_intervel.setText("还剩"+(millisUntilFinished/1000)+"秒");
+                        }
+                    }
+                    @Override
+                    public void onFinish() {
+                        tv_intervel.setText("还剩0秒");
+                        btn_share.setEnabled(true);
+                        btn_share.setTextColor(Color.parseColor("#ffffff"));
+
+
+                    }
+                }.start();
+            }
+
+
+
+
+
+        }
+
+
     }
 
     @Override
@@ -419,6 +477,11 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
         if (myReceiver!=null){
             unregisterReceiver(myReceiver);
         }
+        if(timer!=null){
+            timer.cancel();
+        }
+
+
     }
     //分享的回调
     @Override
@@ -465,5 +528,7 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
             }
         }
     }
+
+
 
 }
