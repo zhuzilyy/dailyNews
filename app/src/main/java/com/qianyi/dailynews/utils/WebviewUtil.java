@@ -20,7 +20,7 @@ public class WebviewUtil {
 			@Override
 			public boolean shouldOverrideUrlLoading(WebView view,
 					String url) {
-				//view.loadUrl(url);
+				view.loadUrl(url);
 				return false;
 			}
 	       });

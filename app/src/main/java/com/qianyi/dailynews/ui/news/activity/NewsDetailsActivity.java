@@ -51,6 +51,7 @@ import com.qianyi.dailynews.ui.news.bean.NewsBean;
 import com.qianyi.dailynews.ui.news.bean.NewsContentBean;
 import com.qianyi.dailynews.ui.news.views.KeyMapDailog;
 import com.qianyi.dailynews.ui.news.views.MySingListView;
+import com.qianyi.dailynews.ui.news.views.NoScrollWebView;
 import com.qianyi.dailynews.utils.RegUtil;
 import com.qianyi.dailynews.utils.SPUtils;
 import com.qianyi.dailynews.utils.WebviewUtil;
@@ -138,6 +139,7 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
     private String ifread;
     //是否是红包新闻
     private String isRed;
+    private  Timer timer;
 
 
     ///**********************************
@@ -183,9 +185,10 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
             webSettings = news_webview.getSettings();
             WebviewUtil.setWebview(news_webview,webSettings);
             news_webview.loadUrl(urlStr);
-         // news_webview.setVisibility(View.GONE);
-            WebviewUtil.setWebview(bottom_web,webSettings);
-            bottom_web.loadUrl(urlStr);
+
+//            WebSettings webSettings2 = bottom_web.getSettings();
+//            WebviewUtil.setWebview(bottom_web,webSettings2);
+//            bottom_web.loadUrl(urlStr);
         }
     }
 
@@ -229,7 +232,8 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void startTimer() {
-        new Timer().schedule(new TimerTask() {
+        timer= new Timer();
+        timer.schedule(new TimerTask() {
             @Override
             public void run() {
                 timeOut=true;
@@ -349,16 +353,19 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
                 @Override
                 public void run() {
                     //进入动画
-                    view.setVisibility(View.VISIBLE);
-                    AnimatorSet animatorSet = new AnimatorSet();//组合动画
-                    ObjectAnimator anim = ObjectAnimator.ofFloat(view, "alpha", 0.01f, 0.1f, 0.2f, 0.5f, 1f);
-                    //缩放
-                    ObjectAnimator scaleX = ObjectAnimator.ofFloat(view, "scaleX", 0, 150.0f);
-                    ObjectAnimator scaleY = ObjectAnimator.ofFloat(view, "scaleY", 0, 150.0f);
-                    animatorSet.setDuration(800);
-                    animatorSet.setInterpolator(new LinearInterpolator());
-                    animatorSet.playTogether(scaleX,scaleY,anim);
-                    animatorSet.start();
+                    if(view!=null){
+                        view.setVisibility(View.VISIBLE);
+                        AnimatorSet animatorSet = new AnimatorSet();//组合动画
+                        ObjectAnimator anim = ObjectAnimator.ofFloat(view, "alpha", 0.01f, 0.1f, 0.2f, 0.5f, 1f);
+                        //缩放
+                        ObjectAnimator scaleX = ObjectAnimator.ofFloat(view, "scaleX", 0, 150.0f);
+                        ObjectAnimator scaleY = ObjectAnimator.ofFloat(view, "scaleY", 0, 150.0f);
+                        animatorSet.setDuration(800);
+                        animatorSet.setInterpolator(new LinearInterpolator());
+                        animatorSet.playTogether(scaleX,scaleY,anim);
+                        animatorSet.start();
+                    }
+
                 }
             });
 
@@ -369,15 +376,18 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
                 @Override
                 public void run() {
                     //进入动画
-                    AnimatorSet animatorSet = new AnimatorSet();//组合动画
-                    ObjectAnimator anim = ObjectAnimator.ofFloat(view, "alpha", 1f, 0.8f, 0.5f, 0.2f, 0.01f);
-                    //缩放
-                    ObjectAnimator scaleX = ObjectAnimator.ofFloat(view, "scaleX", 150.0f, 0.0f);
-                    ObjectAnimator scaleY = ObjectAnimator.ofFloat(view, "scaleY", 150.0f, 0.0f);
-                    animatorSet.setDuration(800);
-                    animatorSet.setInterpolator(new LinearInterpolator());
-                    animatorSet.playTogether(scaleX,scaleY,anim);
-                    animatorSet.start();
+                    if(view!=null){
+                        AnimatorSet animatorSet = new AnimatorSet();//组合动画
+                        ObjectAnimator anim = ObjectAnimator.ofFloat(view, "alpha", 1f, 0.8f, 0.5f, 0.2f, 0.01f);
+                        //缩放
+                        ObjectAnimator scaleX = ObjectAnimator.ofFloat(view, "scaleX", 150.0f, 0.0f);
+                        ObjectAnimator scaleY = ObjectAnimator.ofFloat(view, "scaleY", 150.0f, 0.0f);
+                        animatorSet.setDuration(800);
+                        animatorSet.setInterpolator(new LinearInterpolator());
+                        animatorSet.playTogether(scaleX,scaleY,anim);
+                        animatorSet.start();
+                    }
+
 
                 }
             });
@@ -575,6 +585,7 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
         switch(view.getId()){
             case R.id.ll_wechat:
                 //微信分享
+
                 shareFriends();
                 break;
             case R.id.ll_friendCircle:
@@ -594,11 +605,18 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
             break;
             case R.id.tv_news_more:
                 re_newsmore.setVisibility(View.GONE);
-                top_web_re.setVisibility(View.GONE);
-                bottom_web.setVisibility(View.VISIBLE);
+               // top_web_re.setVisibility(View.GONE);
+               // bottom_web.setVisibility(View.VISIBLE);
                 ll_share.setVisibility(View.VISIBLE);
                 sc.fullScroll(View.FOCUS_UP);
                 readMore=true;
+                //重写底部webview 的高度
+                RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) news_webview.getLayoutParams();
+                //layoutParams.height=RelativeLayout.LayoutParams.WRAP_CONTENT;
+
+                int  mWebViewTotalHeight = news_webview.getHeight() - sc.getHeight();
+                layoutParams.height=mWebViewTotalHeight;
+                news_webview.setLayoutParams(layoutParams);
                 //获得奖励
                 getReward();
 
@@ -972,4 +990,10 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        timer.cancel();
+
+    }
 }

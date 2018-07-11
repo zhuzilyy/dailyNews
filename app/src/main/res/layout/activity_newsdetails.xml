@@ -83,6 +83,7 @@
                 android:orientation="vertical"
                 android:descendantFocusability="blocksDescendants"
                 >
+
                 <ProgressBar
                     android:id="@+id/pb_webview"
                     style="?android:attr/progressBarStyleHorizontal"
@@ -91,6 +92,11 @@
                     android:indeterminateOnly="false"
                     android:max="100"
                     android:progressDrawable="@drawable/progress_bar_states" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </RelativeLayout>
                 <!--top-webview-->
                 <RelativeLayout
                     android:id="@+id/top_web_re"
@@ -109,7 +115,7 @@
                         android:background="@drawable/shape_grand_white"
                         >
                         <TextView
-                            android:visibility="gone"
+                            android:visibility="visible"
                             android:id="@+id/tv_news_more"
                             android:layout_marginRight="35dp"
                             android:layout_alignParentBottom="true"
@@ -130,7 +136,7 @@
                     android:visibility="gone"
                     android:id="@+id/bottom_web"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="1dp"/>
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="10dp"
@@ -257,7 +263,6 @@
                         android:background="@color/light_gray5"
                         />
                 </LinearLayout>
-
                 <!--相关推荐,热门评论-->
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -338,10 +343,6 @@
                         android:layout_height="20dp"/>
 
                 </LinearLayout>
-
-
-
-
             </LinearLayout>
 
 
