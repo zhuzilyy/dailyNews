@@ -23,10 +23,10 @@ public class WhiteBgBitmapUtil {
         Canvas canvas = new Canvas(newBitmap);
         canvas.drawColor(context.getResources().getColor(android.R.color.white));
         Paint paint=new Paint();
-        if (manufacturer.equalsIgnoreCase("xiaomi")){
-            canvas.drawBitmap(bitmap, 10, 10, paint); //将原图使用给定的画笔画到画布上
-        }else{
+        if (manufacturer.equalsIgnoreCase("meizu")){
             canvas.drawBitmap(bitmap, 0, 0, paint); //将原图使用给定的画笔画到画布上
+        }else{
+            canvas.drawBitmap(bitmap, 10, 10, paint); //将原图使用给定的画笔画到画布上
         }
         //canvas.drawBitmap(bitmap, 1, 1, paint); //将原图使用给定的画笔画到画布上
         return newBitmap;

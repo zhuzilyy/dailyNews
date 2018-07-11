@@ -9,6 +9,7 @@ import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.NestedScrollView;
 import android.text.TextUtils;
@@ -43,6 +44,7 @@ import com.qianyi.dailynews.fragment.NewsFragment;
 import com.qianyi.dailynews.ui.Mine.activity.SettingsActivity;
 import com.qianyi.dailynews.ui.WebviewActivity;
 import com.qianyi.dailynews.ui.account.activity.LoginActivity;
+import com.qianyi.dailynews.ui.invitation.activity.DailySharingAcitity;
 import com.qianyi.dailynews.ui.news.adapter.HotCommentAdapterNews;
 import com.qianyi.dailynews.ui.news.adapter.NewsDetailsAdapter;
 import com.qianyi.dailynews.ui.news.bean.CommPublishBean;
@@ -60,11 +62,15 @@ import com.sina.weibo.sdk.api.WeiboMultiMessage;
 import com.sina.weibo.sdk.share.WbShareHandler;
 import com.sina.weibo.sdk.statistic.WBAgent;
 import com.sina.weibo.sdk.utils.Utility;
+import com.tencent.connect.share.QQShare;
 import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
 import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
+import com.tencent.tauth.IUiListener;
+import com.tencent.tauth.Tencent;
+import com.tencent.tauth.UiError;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -138,7 +144,8 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
     private String ifread;
     //是否是红包新闻
     private String isRed;
-
+    private Tencent mTencent;
+    private static final String APP_ID = "101488066"; //获取的APPID
 
     ///**********************************
     //计时
@@ -187,6 +194,7 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
             WebviewUtil.setWebview(bottom_web,webSettings);
             bottom_web.loadUrl(urlStr);
         }
+        mTencent = Tencent.createInstance(APP_ID,getApplicationContext());
     }
 
     /***
@@ -583,7 +591,7 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.ll_QQ:
                 //QQ分享
-                Toast.makeText(this, "QQ分享", Toast.LENGTH_SHORT).show();
+                shareQQ();
                 break;
             case R.id.ll_weibo:
                 //微博分享
@@ -616,6 +624,36 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
                 break;
             default:
             break;
+        }
+    }
+    //QQ分享
+    private void shareQQ() {
+        final Bundle params = new Bundle();
+        params.putInt(QQShare.SHARE_TO_QQ_KEY_TYPE, QQShare.SHARE_TO_QQ_TYPE_DEFAULT);//分享的类型
+        params.putString(QQShare.SHARE_TO_QQ_TITLE, "每日速报");//分享标题
+        params.putString(QQShare.SHARE_TO_QQ_SUMMARY,contentStr);//要分享的内容摘要
+        params.putString(QQShare.SHARE_TO_QQ_TARGET_URL,urlStr);//内容地址
+        params.putString(QQShare.SHARE_TO_QQ_IMAGE_URL,ApiConstant.QQ_SHARE_LOGO);//分享的图片URL
+        params.putString(QQShare.SHARE_TO_QQ_APP_NAME, "每日速报");//应用名称
+        mTencent.shareToQQ(this, params, new ShareUiListener());
+    }
+    /**
+     * 自定义监听器实现IUiListener，需要3个方法
+     * onComplete完成 onError错误 onCancel取消
+     */
+    private class ShareUiListener implements IUiListener {
+        @Override
+        public void onComplete(Object response) {
+
+        }
+        @Override
+        public void onError(UiError uiError) {
+            //分享失败
+        }
+        @Override
+        public void onCancel() {
+            //分享取消
+
         }
     }
 
