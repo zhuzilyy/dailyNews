@@ -214,6 +214,7 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
         intentFilterQuit.addAction("com.action.quit");
         getActivity().registerReceiver(myReceiver,intentFilterQuit);
 
+
         erWeiMaDialog=new ErWeiMaDialog(getActivity());
 
     }

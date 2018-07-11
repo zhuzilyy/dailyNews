@@ -449,13 +449,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="+860金币"
+                    android:text="+1000金币"
                     android:layout_marginLeft="@dimen/dp_10"
                     android:layout_marginRight="@dimen/dp_15"
                     android:textColor="@color/main_red"
                     android:gravity="center_vertical"
                     />
-
             </LinearLayout>
             <View
                 android:layout_width="wrap_content"

@@ -1196,7 +1196,7 @@
                             android:layout_width="0dp"
                             android:layout_weight="2"
                             android:layout_height="wrap_content"
-                            android:text="阅读文章可获得5金币,每日最多200次并不是每次阅读都会产生阅读奖励,系统会根据深度和质量测评,请保持正常心态,作弊会导致严重的封号行为"
+                            android:text="阅读文章可获得20金币,每日最多25次并不是每次阅读都会产生阅读奖励,系统会根据深度和质量测评,请保持正常心态,作弊会导致严重的封号行为"
                             />
                         <LinearLayout
                             android:layout_width="0dp"

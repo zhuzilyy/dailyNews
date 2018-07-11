@@ -216,7 +216,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
             break;
         }
     }
-
     /***
      * 微信登录
      */

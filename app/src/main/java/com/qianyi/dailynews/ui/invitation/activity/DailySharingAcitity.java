@@ -80,6 +80,7 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
     private MyReceiver myReceiver;
     private static final String APP_ID = "101488066"; //获取的APPID
     private Tencent mTencent;
+    private String count;
     @Override
     protected void initViews() {
         mTencent = Tencent.createInstance(APP_ID,getApplicationContext());
@@ -116,6 +117,9 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
 
     @Override
     protected void initData() {
+        getData();
+    }
+    private void getData() {
         customLoadingDialog.show();
         ApiInvite.sharePre(ApiConstant.SHARE_PRE, userId, new RequestCallBack<String>() {
             @Override
@@ -125,7 +129,7 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
                     JSONObject jsonObject=new JSONObject(s);
                     JSONObject data = jsonObject.getJSONObject("data");
                     String lastTime = data.getString("lastTime");
-                    String count = data.getString("count");
+                    count = data.getString("count");
                     tv_time.setText(count+"次");
                     tv_intervel.setText(lastTime);
                 } catch (JSONException e) {
@@ -137,7 +141,6 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
                 customLoadingDialog.dismiss();
             }
         });
-
     }
 
     @Override
@@ -160,6 +163,10 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.btn_share:
+                if (count.equals("0")){
+                    Toast.makeText(this, "今日分享次数已经用尽", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 shwoSharePw();
                 break;
             case R.id.ll_wechat:
@@ -452,7 +459,9 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
             if (action.equals("com.action.share.success")){
-                finish();
+                getData();
+               /* Toast.makeText(DailySharingAcitity.this, "3333333333333333333", Toast.LENGTH_SHORT).show();
+                finish();*/
             }
         }
     }

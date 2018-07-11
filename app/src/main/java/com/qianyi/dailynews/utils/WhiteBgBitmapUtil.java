@@ -15,18 +15,18 @@ public class WhiteBgBitmapUtil {
         Bitmap newBitmap =null;
         //Bitmap newBitmap = Bitmap.createBitmap(120, 120, Bitmap.Config.ARGB_8888);
         String manufacturer = Build.MANUFACTURER;
-        if (manufacturer.equalsIgnoreCase("xiaomi")||manufacturer.equalsIgnoreCase("oppo")){
-            newBitmap=Bitmap.createBitmap(200, 200, Bitmap.Config.ARGB_8888);
-        }else{
+        if (manufacturer.equalsIgnoreCase("meizu")){
             newBitmap=Bitmap.createBitmap(120, 120, Bitmap.Config.ARGB_8888);
+        }else{
+            newBitmap=Bitmap.createBitmap(200, 200, Bitmap.Config.ARGB_8888);
         }
         Canvas canvas = new Canvas(newBitmap);
         canvas.drawColor(context.getResources().getColor(android.R.color.white));
         Paint paint=new Paint();
-        if (manufacturer.equalsIgnoreCase("xiaomi")){
-            canvas.drawBitmap(bitmap, 10, 10, paint); //将原图使用给定的画笔画到画布上
-        }else{
+        if (manufacturer.equalsIgnoreCase("meizu")){
             canvas.drawBitmap(bitmap, 0, 0, paint); //将原图使用给定的画笔画到画布上
+        }else{
+            canvas.drawBitmap(bitmap, 10, 10, paint); //将原图使用给定的画笔画到画布上
         }
         //canvas.drawBitmap(bitmap, 1, 1, paint); //将原图使用给定的画笔画到画布上
         return newBitmap;

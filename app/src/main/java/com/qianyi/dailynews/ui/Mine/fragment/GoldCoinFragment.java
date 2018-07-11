@@ -41,7 +41,7 @@ public class GoldCoinFragment extends BaseFragment implements PullToRefreshView.
     RelativeLayout no_data_rl;
     @BindView(R.id.no_internet_rl)
     RelativeLayout no_internet_rl;
-    private int page=0;
+    private int page=1;
     private CustomLoadingDialog customLoadingDialog;
     private GoldAdapter goldAdapter;
     private List<GoldCoinData> infoList;
