@@ -364,6 +364,7 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
                         animatorSet.setInterpolator(new LinearInterpolator());
                         animatorSet.playTogether(scaleX,scaleY,anim);
                         animatorSet.start();
+
                     }
 
                 }
