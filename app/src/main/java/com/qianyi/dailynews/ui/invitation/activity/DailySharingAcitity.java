@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -65,8 +66,8 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
     public TextView title;
     @BindView(R.id.tv_time)
     public TextView tv_time;
-    @BindView(R.id.tv_intervel)
-    public TextView tv_intervel;
+//    @BindView(R.id.tv_intervel)
+//    public TextView tv_intervel;
     @BindView(R.id.iv_back)
     public ImageView back;
     @BindView(R.id.ll_share)
@@ -88,6 +89,13 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
     private Tencent mTencent;
     private String count;
     private  CountDownTimer timer;
+    @BindView(R.id.tvtime1) public TextView tvtime1;
+    @BindView(R.id.tvtime2) public TextView tvtime2;
+    @BindView(R.id.tvtime3) public TextView tvtime3;
+    @BindView(R.id.ll_time) public LinearLayout ll_time;
+    private Handler handler= new Handler();
+    private int time;
+
     @Override
     protected void initViews() {
         mTencent = Tencent.createInstance(APP_ID,getApplicationContext());
@@ -138,7 +146,17 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
                     String lastTime = data.getString("lastTime");
                     count = data.getString("count");
                     tv_time.setText(count+"次");
-                    startTime(tv_intervel,lastTime);
+                   // startTime(tv_intervel,lastTime);
+                    time=Integer.parseInt(lastTime);
+                    if(time>0){
+                        ll_time.setVisibility(View.VISIBLE);
+                        handler.postDelayed(runnable, 1000);
+                        btn_share.setEnabled(false);
+                        btn_share.setTextColor(Color.parseColor("#999999"));
+                    }else {
+                        btn_share.setEnabled(true);
+                        btn_share.setTextColor(Color.parseColor("#ffffff"));
+                    }
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -151,16 +169,59 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
         });
     }
 
+
+    Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            time--;
+            String formatLongToTimeStr = formatLongToTimeStr((long) time);
+            String[] split = formatLongToTimeStr.split("：");
+            for (int i = 0; i < split.length; i++) {
+                if(i==0){
+                    tvtime1.setText(split[0]+"小时");
+                }
+                if(i==1){
+                    tvtime2.setText(split[1]+"分钟");
+                }
+                if(i==2){
+                    tvtime3.setText(split[2]+"秒");
+                }
+
+            }
+            if(time>0){
+                handler.postDelayed(this, 1000);
+            }
+        }
+    };
+
+    public  String formatLongToTimeStr(Long l) {
+        int hour = 0;
+        int minute = 0;
+        int second = 0;
+        second = l.intValue() ;
+        if (second > 60) {
+            minute = second / 60;         //取整
+            second = second % 60;         //取余
+        }
+
+        if (minute > 60) {
+            hour = minute / 60;
+            minute = minute % 60;
+        }
+        String strtime = hour+"："+minute+"："+second;
+        return strtime;
+
+    }
+
+
+
+
     /***
      * 进行倒计时
      * @param tv_intervel
      * @param lastTime
      */
     private void startTime(final TextView tv_intervel, String lastTime) {
-
-
-
-
 
         if(!TextUtils.isEmpty(lastTime)){
             int time2 = Integer.parseInt(lastTime);
@@ -169,7 +230,6 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
                 btn_share.setEnabled(false);
                 btn_share.setTextColor(Color.parseColor("#999999"));
             }
-
 
             if(time2>0){
                 /** 倒计时一次1秒 */
@@ -186,19 +246,10 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
                         tv_intervel.setText("还剩0秒");
                         btn_share.setEnabled(true);
                         btn_share.setTextColor(Color.parseColor("#ffffff"));
-
-
                     }
                 }.start();
             }
-
-
-
-
-
         }
-
-
     }
 
     @Override
