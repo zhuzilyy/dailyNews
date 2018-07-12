@@ -14,7 +14,8 @@ public class WebviewUtil {
 	        mWebSettings.setBuiltInZoomControls(true); 
 	        mWebSettings.setLightTouchEnabled(true); 
 	        mWebSettings.setSupportZoom(false); 
-	        webView.setHapticFeedbackEnabled(false); 
+	        webView.setHapticFeedbackEnabled(false);
+
 	        mWebSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
 	        webView.setWebViewClient(new WebViewClient() {
 			@Override

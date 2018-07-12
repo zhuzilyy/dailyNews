@@ -107,7 +107,7 @@
                 android:textSize="16sp"
                 android:textColor="@color/black"
                 />
-            <TextView
+           <!-- <TextView
                 android:id="@+id/tv_intervel"
                 android:layout_marginLeft="@dimen/dp_10"
                 android:layout_width="wrap_content"
@@ -115,7 +115,52 @@
                 android:text=""
                 android:textSize="16sp"
                 android:textColor="@color/black"
-                />
+                />-->
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/ll_time"
+                android:layout_marginLeft="@dimen/dp_20"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvtime1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tvtime2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dp"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tvtime3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dp"
+                    android:gravity="center"
+                    android:textColor="@color/black"
+                    android:text=""
+                    android:textSize="16sp" />
+
+            </LinearLayout>
 
         </LinearLayout>
         <Button
