@@ -146,6 +146,7 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
                     String lastTime = data.getString("lastTime");
                     count = data.getString("count");
                     tv_time.setText(count+"次");
+
                    // startTime(tv_intervel,lastTime);
                     time=Integer.parseInt(lastTime);
                     if(time>0){
