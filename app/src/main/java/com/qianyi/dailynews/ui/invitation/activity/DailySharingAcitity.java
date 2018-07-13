@@ -52,6 +52,9 @@ import com.tencent.tauth.UiError;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 import okhttp3.Call;
@@ -74,6 +77,16 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
     public LinearLayout ll_share;
     @BindView(R.id.btn_share)
     Button btn_share;
+    @BindView(R.id.iv_share1)
+    ImageView iv_share1;
+    @BindView(R.id.iv_share2)
+    ImageView iv_share2;
+    @BindView(R.id.iv_share3)
+    ImageView iv_share3;
+    @BindView(R.id.iv_share4)
+    ImageView iv_share4;
+    @BindView(R.id.iv_share5)
+    ImageView iv_share5;
     private CustomLoadingDialog customLoadingDialog;
     private String userId;
     private PopupWindow pw_share;
@@ -95,9 +108,15 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
     @BindView(R.id.ll_time) public LinearLayout ll_time;
     private Handler handler= new Handler();
     private int time;
-
+    private List<ImageView> shareImageList;
     @Override
     protected void initViews() {
+        shareImageList=new ArrayList<>();
+        shareImageList.add(iv_share1);
+        shareImageList.add(iv_share2);
+        shareImageList.add(iv_share3);
+        shareImageList.add(iv_share4);
+        shareImageList.add(iv_share5);
         mTencent = Tencent.createInstance(APP_ID,getApplicationContext());
         title.setText("每日分享");
         back.setOnClickListener(new View.OnClickListener() {
@@ -146,7 +165,6 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
                     String lastTime = data.getString("lastTime");
                     count = data.getString("count");
                     tv_time.setText(count+"次");
-
                    // startTime(tv_intervel,lastTime);
                     time=Integer.parseInt(lastTime);
                     if(time>0){
@@ -158,7 +176,11 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
                         btn_share.setEnabled(true);
                         btn_share.setTextColor(Color.parseColor("#ffffff"));
                     }
-
+                    //设置分享的图片的颜色
+                    int intCount=Integer.parseInt(count);
+                    for (int i = 0; i <5-intCount ; i++) {
+                        shareImageList.get(i).setImageResource(R.mipmap.already_share_icon_);
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -179,15 +201,21 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
             String[] split = formatLongToTimeStr.split("：");
             for (int i = 0; i < split.length; i++) {
                 if(i==0){
-                    tvtime1.setText(split[0]+"小时");
+                    if (!TextUtils.isEmpty(split[0])){
+                        tvtime1.setText(split[0]+"小时");
+                    }
                 }
                 if(i==1){
-                    tvtime2.setText(split[1]+"分钟");
+                    if (!TextUtils.isEmpty(split[2])){
+                        tvtime2.setText(split[1]+"分钟");
+                    }
                 }
                 if(i==2){
-                    tvtime3.setText(split[2]+"秒");
-                }
+                    if (!TextUtils.isEmpty(split[1])){
+                        tvtime3.setText(split[2]+"秒");
+                    }
 
+                }
             }
             if(time>0){
                 handler.postDelayed(this, 1000);
@@ -373,6 +401,7 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
         shareWebPage();
     }
     private void shareWebPage() {
+        String my_invite_code = (String) SPUtils.get(DailySharingAcitity.this, "my_invite_code", "");
       /*  WebpageObject mediaObj =new WebpageObject();
         //创建文本消息对象
         TextObject textObject =new TextObject();
@@ -412,7 +441,7 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
         Bitmap thumbBmp = Bitmap.createScaledBitmap(bitmap, 200, 200, true);
         mediaObject.setThumbImage(thumbBmp);
         mediaObject.actionUrl = ApiConstant.DAILY_SHARE_URL;
-        mediaObject.defaultText = "每日分享的分享";
+        mediaObject.defaultText = "陪我一起阅读，每天做不一样的自己，阅读拆红包，每天都有不一样的惊喜，阅读邀请码"+my_invite_code;
         WeiboMultiMessage message = new WeiboMultiMessage();
         message.mediaObject = mediaObject;
         shareHandler.shareMessage(message, false);
@@ -526,6 +555,7 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        handler.removeCallbacks(runnable);
         if (myReceiver!=null){
             unregisterReceiver(myReceiver);
         }
@@ -575,12 +605,7 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
             String action = intent.getAction();
             if (action.equals("com.action.share.success")){
                 getData();
-               /* Toast.makeText(DailySharingAcitity.this, "3333333333333333333", Toast.LENGTH_SHORT).show();
-                finish();*/
             }
         }
     }
-
-
-
 }

@@ -5,6 +5,7 @@ import android.widget.TextView;
 
 import com.qianyi.dailynews.R;
 import com.qianyi.dailynews.base.BaseActivity;
+import com.qianyi.dailynews.utils.ListActivity;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -19,6 +20,7 @@ public class GreenHandsGuideActivity extends BaseActivity{
     @Override
     protected void initViews() {
         tv_title.setText("新手学习");
+        ListActivity.list.add(this);
     }
 
     @Override

@@ -1298,7 +1298,7 @@
                             android:layout_width="0dp"
                             android:layout_weight="2"
                             android:layout_height="wrap_content"
-                            android:text="将您喜欢的文章分享到朋友圈后，您好友的每一次有效阅读都会为你带来80金币的收益"
+                            android:text="将您喜欢的文章分享到朋友圈后，您好友的每一次有效阅读都会为你带来100金币的收益"
                             />
                         <LinearLayout
                             android:layout_width="0dp"
