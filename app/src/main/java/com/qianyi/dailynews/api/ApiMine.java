@@ -175,10 +175,19 @@ public class ApiMine {
         OkHttpManager.getInstance().postRequest(url,params,callback);
     }
     /**
-     *
+     *日常任务状态
      * @param callback
      */
     public static void dailyMission(String url,String userId ,RequestCallBack<String> callback){
+        Map<String,String> params=new HashMap<>();
+        params.put("userId",userId);
+        OkHttpManager.getInstance().postRequest(url,params,callback);
+    }
+    /**
+     *日常任务晒收入奖励
+     * @param callback
+     */
+    public static void dailyMissionShare(String url,String userId ,RequestCallBack<String> callback){
         Map<String,String> params=new HashMap<>();
         params.put("userId",userId);
         OkHttpManager.getInstance().postRequest(url,params,callback);

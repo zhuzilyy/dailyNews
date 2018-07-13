@@ -10,6 +10,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.qianyi.dailynews.api.ApiConstant;
 import com.qianyi.dailynews.api.ApiInvite;
+import com.qianyi.dailynews.api.ApiMine;
 import com.qianyi.dailynews.callback.RequestCallBack;
 import com.qianyi.dailynews.ui.account.bean.WXAccessTokenInfo;
 import com.qianyi.dailynews.ui.account.bean.WXErrorInfo;
@@ -84,6 +85,8 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
                     Toast.makeText(WXEntryActivity.this, "分享成功", Toast.LENGTH_LONG).show();
                     if (ApiConstant.SHARE_TAG.equals("dailyShare")){
                         shareSuccess();
+                    }else if(ApiConstant.SHARE_TAG.equals("taskCenterShare")){
+                        dialyShareSuccess();
                     }
                     break;
                 case BaseResp.ErrCode.ERR_USER_CANCEL:
@@ -98,6 +101,31 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
             }
         }
         finish();
+    }
+    //日常任务分享完成
+    private void dialyShareSuccess() {
+        userId= (String) SPUtils.get(WXEntryActivity.this,"user_id","");
+        ApiMine.dailyMissionShare(ApiConstant.DAILY_MISSION_SHARE, userId, new RequestCallBack<String>() {
+            @Override
+            public void onSuccess(Call call, Response response, final String s) {
+                try {
+                    JSONObject jsonObject=new JSONObject(s);
+                    String code = jsonObject.getString("code");
+                    if (code.equals("SUCCESSS")){
+                        Intent intent=new Intent();
+                        intent.setAction("com.action.share.success");
+                        sendBroadcast(intent);
+                        finish();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            @Override
+            public void onEror(Call call, int statusCode, Exception e) {
+
+            }
+        });
     }
     //分享成功
     private void shareSuccess() {

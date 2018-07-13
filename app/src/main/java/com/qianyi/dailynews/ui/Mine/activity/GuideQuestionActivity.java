@@ -16,6 +16,7 @@ import com.qianyi.dailynews.base.BaseActivity;
 import com.qianyi.dailynews.callback.RequestCallBack;
 import com.qianyi.dailynews.dialog.CustomLoadingDialog;
 import com.qianyi.dailynews.ui.account.activity.LoginActivity;
+import com.qianyi.dailynews.utils.ListActivity;
 import com.qianyi.dailynews.utils.SPUtils;
 
 import org.json.JSONException;
@@ -92,8 +93,8 @@ public class GuideQuestionActivity extends BaseActivity{
         tv_title.setText("新手答题");
         userId= (String)SPUtils.get(GuideQuestionActivity.this,"user_id","");
         customLoadingDialog=new CustomLoadingDialog(this);
+        ListActivity.list.add(this);
     }
-
     @Override
     protected void initData() {
 
@@ -193,7 +194,7 @@ public class GuideQuestionActivity extends BaseActivity{
                         Intent intent=new Intent();
                         intent.setAction("com.action.update.mission");
                         sendBroadcast(intent);
-                        finish();
+                        ListActivity.close();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

@@ -152,7 +152,6 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
         newsView = inflater.inflate(R.layout.fragment_invitation, null);
         return newsView;
     }
-
     @Override
     protected void initViews() {
         mTencent = Tencent.createInstance(APP_ID, getActivity().getApplicationContext());
@@ -631,29 +630,25 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
         // 设置 Bitmap 类型的图片到视频对象里        设置缩略图。 注意：最终压缩过的缩略图大小 不得超过 32kb。
 
         Bitmap bitmap = BitmapFactory.decodeResource(getResources() , R.drawable.test);
-
         imageObject.setImageObject(bitmap);
-
         message.textObject= textObject;
-
         message.imageObject= imageObject;
-
         message.mediaObject= mediaObj;*/
+        String my_invite_code = (String) SPUtils.get(getActivity(), "my_invite_code", "");
         WebpageObject mediaObject = new WebpageObject();
         mediaObject.identify = Utility.generateGUID();
         mediaObject.title = "每日速报";
-        mediaObject.description = "每日速报是一款基于数据挖掘的推荐引擎产品，它为用户推荐有价值的、个性化的信息，提供连接人与信息的新型服务";
+        mediaObject.description = "陪我一起阅读，每天做不一样的自己，阅读拆红包，每天都有不一样的惊喜，阅读邀请码"+my_invite_code;
         Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.mipmap.logo);
         Bitmap bitmap = WhiteBgBitmapUtil.drawableBitmapOnWhiteBg(getActivity(), bmp);
         Bitmap thumbBmp = Bitmap.createScaledBitmap(bitmap, 200, 200, true);
         mediaObject.setThumbImage(thumbBmp);
         mediaObject.actionUrl = ApiConstant.DOWN_SHARE_URL;
-        mediaObject.defaultText = "每日速报是一款基于数据挖掘的推荐引擎产品，它为用户推荐有价值的、个性化的信息，提供连接人与信息的新型服务。";
+        mediaObject.defaultText = "陪我一起阅读，每天做不一样的自己，阅读拆红包，每天都有不一样的惊喜，阅读邀请码"+my_invite_code;
         WeiboMultiMessage message = new WeiboMultiMessage();
         message.mediaObject = mediaObject;
         shareHandler.shareMessage(message, false);
     }
-
     /**
      * 第三方应用发送请求消息到微博，唤起微博分享界面。
      */

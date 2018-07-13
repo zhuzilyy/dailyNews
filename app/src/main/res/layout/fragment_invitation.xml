@@ -185,7 +185,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="200"
+                        android:text="2000"
                         android:textColor="@color/goldcolor"
                         android:textSize="16sp"
                         />

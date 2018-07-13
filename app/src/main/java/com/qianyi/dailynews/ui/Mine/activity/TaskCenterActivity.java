@@ -31,8 +31,10 @@ import com.qianyi.dailynews.dialog.CustomLoadingDialog;
 import com.qianyi.dailynews.ui.Mine.bean.SignBean;
 import com.qianyi.dailynews.utils.SPUtils;
 import com.qianyi.dailynews.utils.WhiteBgBitmapUtil;
+import com.qianyi.dailynews.wxapi.WXEntryActivity;
 import com.sina.weibo.sdk.api.WebpageObject;
 import com.sina.weibo.sdk.api.WeiboMultiMessage;
+import com.sina.weibo.sdk.share.WbShareCallback;
 import com.sina.weibo.sdk.share.WbShareHandler;
 import com.sina.weibo.sdk.statistic.WBAgent;
 import com.sina.weibo.sdk.utils.Utility;
@@ -62,7 +64,7 @@ import okhttp3.Response;
  * Created by Administrator on 2018/5/3.
  */
 
-public class TaskCenterActivity extends BaseActivity implements View.OnClickListener {
+public class TaskCenterActivity extends BaseActivity implements View.OnClickListener ,WbShareCallback {
     //微信绑定
     @BindView(R.id.ll_bandwx001) public LinearLayout ll_bandwx001;
     @BindView(R.id.ll_bandwx002) public LinearLayout ll_bandwx002;
@@ -122,6 +124,8 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
     @BindView(R.id.tv_SignInRules) public TextView tv_SignInRules;
     @BindView(R.id.btn_sign) public Button btn_sign;
     @BindView(R.id.btn_readingAward) public Button btn_readingAward;
+    @BindView(R.id.btn_sunincome) public TextView btn_sunincome;
+    @BindView(R.id.btn_commentAward) public TextView btn_commentAward;
 
     @BindView(R.id.back) public ImageView back;
     private List<LinearLayout> OtherLineralayout=new ArrayList<>();
@@ -191,6 +195,10 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
         intentFilterUpdateMission.addAction("com.action.update.mission");
         registerReceiver(myReceiver, intentFilterUpdateMission);
 
+        IntentFilter intentFilterDailyShare= new IntentFilter();
+        intentFilterDailyShare.addAction("com.action.share.success");
+        registerReceiver(myReceiver, intentFilterDailyShare);
+
 
         view_share = LayoutInflater.from(TaskCenterActivity.this).inflate(R.layout.pw_share, null);
         ll_friendCircle=view_share.findViewById(R.id.ll_friendCircle);
@@ -238,9 +246,17 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
                     dailyMission3 = missionArr[2];
                     dailyMission4 = missionArr[3];
                     dailyMission5 = missionArr[4];
-                    if (dailyMission2.equals("200")){
+                    if (dailyMission2.equals("25")){
                         btn_readingAward.setText("已完成");
                         btn_readingAward.setBackgroundResource(R.drawable.new_mission_finish);
+                    }
+                    if (!dailyMission4.equals("0")){
+                        btn_sunincome.setText("已完成");
+                        btn_sunincome.setBackgroundResource(R.drawable.new_mission_finish);
+                    }
+                    if (!dailyMission5.equals("0")){
+                        btn_commentAward.setText("已完成");
+                        btn_commentAward.setBackgroundResource(R.drawable.new_mission_finish);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -473,7 +489,6 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
                 jumpActivity(this,GreenHandsGuideActivity.class);
                 break;
             case R.id.btn_inviteFriends:
-
                 //去邀请
                 intent=new Intent();
                 intent.setAction("com.action.invite");
@@ -498,11 +513,18 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
                 finish();
                 break;
             case R.id.btn_sunincome:
+                if (!dailyMission4.equals("0")){
+                    return;
+                }
                 shwoSharePw();
+
                 //晒收入
                //jumpActivity(TaskCenterActivity.this, IncomeShowActivity.class);
                 break;
             case R.id.btn_commentAward:
+                if (!dailyMission5.equals("0")){
+                    return;
+                }
                 //去评论
                 //去邀请
                 intent=new Intent();
@@ -559,6 +581,21 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
         params.putString(QQShare.SHARE_TO_QQ_APP_NAME, "每日速报");//应用名称
         mTencent.shareToQQ(this, params, new ShareUiListener());
     }
+    //微博分享的回调
+    @Override
+    public void onWbShareSuccess() {
+        dialyShareSuccess();
+    }
+    @Override
+    public void onWbShareCancel() {
+
+    }
+
+    @Override
+    public void onWbShareFail() {
+
+    }
+
     /**
      * 自定义监听器实现IUiListener，需要3个方法
      * onComplete完成 onError错误 onCancel取消
@@ -567,6 +604,7 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
         @Override
         public void onComplete(Object response) {
             //分享成功
+            dialyShareSuccess();
         }
         @Override
         public void onError(UiError uiError) {
@@ -578,6 +616,31 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
             //分享取消
 
         }
+    }
+    private void dialyShareSuccess() {
+        userId= (String) SPUtils.get(TaskCenterActivity.this,"user_id","");
+        ApiMine.dailyMissionShare(ApiConstant.DAILY_MISSION_SHARE, userId, new RequestCallBack<String>() {
+            @Override
+            public void onSuccess(Call call, Response response, final String s) {
+                try {
+                    JSONObject jsonObject=new JSONObject(s);
+                    String code = jsonObject.getString("code");
+                    if (code.equals(ApiConstant.SUCCESS_CODE)){
+                        Intent intent=new Intent();
+                        intent.setAction("com.action.share.success");
+                        sendBroadcast(intent);
+                        finish();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+
+                }
+            }
+            @Override
+            public void onEror(Call call, int statusCode, Exception e) {
+
+            }
+        });
     }
 
 
@@ -761,8 +824,10 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
                 headimgurl = intent.getStringExtra("headimgurl");
                 unionid = intent.getStringExtra("unionid");
                 bindWx();
-            }else if(action.equals(" com.action.update.mission")){
+            }else if(action.equals("com.action.update.mission")){
                getUesrInfo();
+            }else if(action.equals("com.action.share.success")){
+                getDailyMissionState();
             }
         }
     }
