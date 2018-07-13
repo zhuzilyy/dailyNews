@@ -152,27 +152,20 @@ public class NewsFragment extends BaseFragment implements View.OnClickListener {
                               MyApplication.newsTypeRes=newsTypeRes;
                               //赋值数据
                              viewPager.setOffscreenPageLimit(3);
+                              fragments.clear();
+
                               for(int i=0;i<newsTypeRes.size();i++){
                                   tabLayout.addTab(tabLayout.newTab());
-                                  if(pageFragment==null){
-                                      fragments.add(new PageFragment());
-                                 /*     getActivity().runOnUiThread(new Runnable() {
-                                          @Override
-                                          public void run() {
-                                              Toast.makeText(mActivity, "NewsFragment ===  onSuccess  00001", Toast.LENGTH_SHORT).show();
+                                  PageFragment pageFragment = new PageFragment();
+                                  fragments.add(pageFragment);
 
-                                          }
-                                      });*/
+                                /*  if(pageFragment==null){
+
+                                      fragments.add(new PageFragment());
+
                                   }else {
                                       fragments.add(pageFragment);
-                                  /*    getActivity().runOnUiThread(new Runnable() {
-                                          @Override
-                                          public void run() {
-                                              Toast.makeText(mActivity, "NewsFragment ===  onSuccess  00002", Toast.LENGTH_SHORT).show();
-
-                                          }
-                                      });*/
-                                  }
+                                 */
 
                               }
                               viewPager.setAdapter(new FmPagerAdapter(fragments,getActivity().getSupportFragmentManager()));

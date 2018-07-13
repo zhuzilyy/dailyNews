@@ -38,7 +38,7 @@ android {
         }
     }
     dexOptions {
-        // incremental true
+        //  incremental true
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_7
@@ -89,4 +89,9 @@ dependencies {
     implementation files('libs/libammsdk.jar')
     compile 'com.sina.weibo.sdk:core:4.1.0:openDefaultRelease@aar'
     implementation files('libs/open_sdk_r5793.jar')
+    //友盟统计
+    compile 'com.umeng.analytics:analytics:latest.integration'
+   // compile 'com.umeng.sdk:analytics:latest.integration'
+
+
 }

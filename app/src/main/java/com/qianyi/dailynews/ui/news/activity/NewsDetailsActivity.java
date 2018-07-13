@@ -2,6 +2,7 @@ package com.qianyi.dailynews.ui.news.activity;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -153,6 +154,7 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
     private boolean readMore=false;
     private static final String APP_ID = "101488066"; //获取的APPID
     private Tencent mTencent;
+    @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void initViews() {
         mWxApi = WXAPIFactory.createWXAPI(this, ApiConstant.APP_ID, false);
@@ -190,12 +192,22 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
       //  tv_money.setText("+"+NewsFragment.Gold);
         if(!TextUtils.isEmpty(urlStr)){
             webSettings = news_webview.getSettings();
+
+
+
             WebviewUtil.setWebview(news_webview,webSettings);
+
+
+
+
+
+
+
             news_webview.loadUrl(urlStr);
 
-//            WebSettings webSettings2 = bottom_web.getSettings();
-//            WebviewUtil.setWebview(bottom_web,webSettings2);
-//            bottom_web.loadUrl(urlStr);
+            WebSettings webSettings2 = bottom_web.getSettings();
+            WebviewUtil.setWebview(bottom_web,webSettings2);
+            bottom_web.loadUrl(urlStr);
         }
         mTencent = Tencent.createInstance(APP_ID,getApplicationContext());
     }
@@ -613,8 +625,8 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
             break;
             case R.id.tv_news_more:
                 re_newsmore.setVisibility(View.GONE);
-               // top_web_re.setVisibility(View.GONE);
-               // bottom_web.setVisibility(View.VISIBLE);
+                top_web_re.setVisibility(View.GONE);
+                bottom_web.setVisibility(View.VISIBLE);
                 ll_share.setVisibility(View.VISIBLE);
                 sc.fullScroll(View.FOCUS_UP);
                 readMore=true;

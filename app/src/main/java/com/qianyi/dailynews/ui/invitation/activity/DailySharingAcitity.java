@@ -151,7 +151,7 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
                     time=Integer.parseInt(lastTime);
                     if(time>0){
                         ll_time.setVisibility(View.VISIBLE);
-                        handler.postDelayed(runnable, 1000);
+                        handler.postDelayed(runnable2, 1000);
                         btn_share.setEnabled(false);
                         btn_share.setTextColor(Color.parseColor("#999999"));
                     }else {
@@ -171,7 +171,7 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
     }
 
 
-    Runnable runnable = new Runnable() {
+    Runnable runnable2 = new Runnable() {
         @Override
         public void run() {
             time--;
@@ -448,7 +448,7 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
        /* msg.setThumbImage(thumbBmp);
         bmp.recycle();*/
 
-      /*  Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_logo);
+      /* Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_logo);
 
         // 设置 Bitmap 类型的图片到视频对象里         设置缩略图。 注意：最终压缩过的缩略图大小不得超过 32kb。
         mediaObject.setThumbImage(bitmap);*/
