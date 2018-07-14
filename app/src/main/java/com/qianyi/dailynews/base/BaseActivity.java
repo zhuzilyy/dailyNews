@@ -27,6 +27,7 @@ import android.widget.Toast;
 
 import com.qianyi.dailynews.MainActivity;
 import com.qianyi.dailynews.utils.ListActivity;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,10 +50,28 @@ public abstract class BaseActivity extends AppCompatActivity {
     private RequestPermissionCallBack mRequestPermissionCallBack;
     private final int mRequestCode = 1024;
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //友盟统计分析——session统计
+        MobclickAgent.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        //友盟统计分析——session统计
+        MobclickAgent.onPause(this);
+    }
+
     @Override
     public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
         //super.onSaveInstanceState(outState, outPersistentState);
     }
+
+
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

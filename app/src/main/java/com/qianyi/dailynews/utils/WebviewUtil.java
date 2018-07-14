@@ -9,12 +9,35 @@ import android.webkit.WebViewClient;
 
 public class WebviewUtil {
 	public static void setWebview(final WebView webView, WebSettings mWebSettings){
-		 mWebSettings = webView.getSettings(); 
-	        mWebSettings.setJavaScriptEnabled(true); 
-	        mWebSettings.setBuiltInZoomControls(true); 
-	        mWebSettings.setLightTouchEnabled(true); 
-	        mWebSettings.setSupportZoom(false); 
+		 mWebSettings = webView.getSettings();
+	        mWebSettings.setJavaScriptEnabled(true);
+	        mWebSettings.setBuiltInZoomControls(true);
+	        mWebSettings.setLightTouchEnabled(true);
+	        mWebSettings.setSupportZoom(false);
 	        webView.setHapticFeedbackEnabled(false);
+
+	        //***************************************
+	//	 WebSettings s = webView.getSettings();
+
+//		webView.getSettings().setSupportZoom(true);
+//		mWebSettings.setBuiltInZoomControls(true);
+//		mWebSettings.setUseWideViewPort(true);
+//		mWebSettings.setLoadWithOverviewMode(true);
+//		mWebSettings.setDefaultTextEncodingName("utf-8");
+//
+//		webView.getSettings().setJavaScriptEnabled(true);
+//		webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
+//		webView.requestFocus();
+
+
+
+
+
+
+
+	    //*******************************************
+
+
 
 	        mWebSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
 	        webView.setWebViewClient(new WebViewClient() {

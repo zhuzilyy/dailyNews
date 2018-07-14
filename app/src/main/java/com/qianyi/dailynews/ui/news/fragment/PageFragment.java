@@ -77,6 +77,7 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
     }
 
 
+
     @Override
     public int setContentView() {
         return R.layout.fragment_page;
@@ -244,9 +245,16 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
 
                         ApiNews.GetNewsContent(ApiConstant.NEWS_CONTENTS, userid, MyApplication.newsTypeRes.get(NewsFragment.CurrentNewsTitle).getCatId(), page, 12, page, 3, new RequestCallBack<String>() {
                             @Override
-                            public void onSuccess(Call call, Response response, String s) {
+                            public void onSuccess(Call call, Response response, final String s) {
                                 customLoadingDialog.dismiss();
-                                Log.i("ttt", "s" + s);
+                              //  Log.i("ttt", "s" + s);
+
+//                                getActivity().runOnUiThread(new Runnable() {
+//                                    @Override
+//                                    public void run() {
+//                                        Toast.makeText(mActivity, ""+s, Toast.LENGTH_SHORT).show();
+//                                    }
+//                                });
                                 Gson gson = new Gson();
                                 NewsContentBean contentBean = gson.fromJson(s, NewsContentBean.class);
                                 if (contentBean != null) {

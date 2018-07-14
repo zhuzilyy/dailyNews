@@ -8,6 +8,7 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,7 +45,7 @@ public abstract class LazyloadFragment extends Fragment {
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-
+        Log.i("{}{}{}{}{}}","[][]="+isVisibleToUser+"");
         //isVisibleToUser这个boolean值表示:该Fragment的UI 用户是否可见，获取该标志记录下来
         if(isVisibleToUser){
             isVisible = true;
@@ -52,6 +53,8 @@ public abstract class LazyloadFragment extends Fragment {
         }else{
             isVisible = false;
         }
+
+
     }
 
     private void isCanLoadData(){

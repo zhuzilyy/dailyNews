@@ -124,6 +124,9 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         if (myReceiver!=null){
             unregisterReceiver(myReceiver);
         }
+
+
+
     }
     /***
      * 显示隐藏Fragment
