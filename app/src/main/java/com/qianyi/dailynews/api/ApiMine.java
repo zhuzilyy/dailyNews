@@ -192,6 +192,16 @@ public class ApiMine {
         params.put("userId",userId);
         OkHttpManager.getInstance().postRequest(url,params,callback);
     }
+    /**
+     *新手任务分享到朋友圈
+     * @param callback
+     */
+    public static void greenHandMissionShare(String url,String userId ,String fo ,RequestCallBack<String> callback){
+        Map<String,String> params=new HashMap<>();
+        params.put("userId",userId);
+        params.put("fo",fo);
+        OkHttpManager.getInstance().postRequest(url,params,callback);
+    }
 
 
 

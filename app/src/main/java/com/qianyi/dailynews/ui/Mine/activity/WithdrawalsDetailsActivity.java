@@ -1,6 +1,8 @@
 package com.qianyi.dailynews.ui.Mine.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.TextView;
@@ -11,6 +13,9 @@ import com.qianyi.dailynews.api.ApiMine;
 import com.qianyi.dailynews.base.BaseActivity;
 import com.qianyi.dailynews.callback.RequestCallBack;
 import com.qianyi.dailynews.dialog.CustomLoadingDialog;
+import com.qianyi.dailynews.dialog.SelfDialog;
+import com.qianyi.dailynews.dialog.WithdrawalDialog;
+import com.qianyi.dailynews.ui.account.activity.LoginActivity;
 import com.qianyi.dailynews.utils.ListActivity;
 import com.qianyi.dailynews.utils.SPUtils;
 
@@ -39,6 +44,7 @@ public class WithdrawalsDetailsActivity extends BaseActivity {
     private double doubleBalance;
     @BindView(R.id.wv_webview)
     WebView wv_webview;
+    private WithdrawalDialog withdrawalDialog;
     @Override
     protected void initViews() {
         ListActivity.list.add(this);
@@ -58,7 +64,6 @@ public class WithdrawalsDetailsActivity extends BaseActivity {
         getMoney();
         getWebview();
     }
-
     private void getWebview() {
         ApiMine.getWebview(ApiConstant.WEBVIEW, "DEPOSIT", new RequestCallBack<String>() {
             @Override
@@ -139,10 +144,62 @@ public class WithdrawalsDetailsActivity extends BaseActivity {
                 if (doubleSubMoney<1){
                     return;
                 }
-                Intent intent=new Intent(WithdrawalsDetailsActivity.this,ConfirmOrderActivity.class);
-                intent.putExtra("withdrawalMoney",withdrawalMoney);
-                startActivity(intent);
+                getZoneData();
                 break;
         }
+    }
+    private void getZoneData() {
+        customLoadingDialog.show();
+        ApiMine.activityZone(ApiConstant.ACTIVITY_ZONE,userId,new RequestCallBack<String>() {
+            @Override
+            public void onSuccess(Call call, Response response, final String s) {
+                Log.i("tag",s);
+                customLoadingDialog.dismiss();
+                try {
+                    JSONObject jsonObject=new JSONObject(s);
+                    JSONObject data = jsonObject.getJSONObject("data");
+                    String sign =data.getString("sign");
+                    String search = data.getString("search");
+                    String  read =data.getString("read");
+                    String share =data.getString("share");
+                    if (!sign.equals("1")||!search.equals("2")||!read.equals("10")||!share.equals("1")){
+                        showWithdrawalDialog("完成新手任务才能提现1元");
+                    }else{
+                        Intent intent=new Intent(WithdrawalsDetailsActivity.this,ConfirmOrderActivity.class);
+                        intent.putExtra("withdrawalMoney",withdrawalMoney);
+                        startActivity(intent);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            @Override
+            public void onEror(Call call, int statusCode, Exception e) {
+                customLoadingDialog.dismiss();
+                Log.i("tag",e.getMessage());
+            }
+        });
+
+    }
+    //显示提现的对话框
+    private void showWithdrawalDialog(String content) {
+        final SelfDialog quitDialog = new SelfDialog(this);
+        quitDialog.setTitle("提示");
+        quitDialog.setMessage(content);
+        quitDialog.setYesOnclickListener("确定", new SelfDialog.onYesOnclickListener() {
+            @Override
+            public void onYesClick() {
+                quitDialog.dismiss();
+                Intent intent=new Intent(WithdrawalsDetailsActivity.this, ActivityZoneActivity.class);
+                startActivity(intent);
+            }
+        });
+        quitDialog.setNoOnclickListener("取消", new SelfDialog.onNoOnclickListener() {
+            @Override
+            public void onNoClick() {
+                quitDialog.dismiss();
+            }
+        });
+        quitDialog.show();
     }
 }

@@ -52,7 +52,6 @@ public class AccountDetailsActivity extends BaseActivity implements View.OnClick
         titles.add("金币");
         titles.add("提现");
         myPageAdapter.setTitles(titles);
-
         viewpager.setAdapter(myPageAdapter);
         // 将ViewPager与TabLayout相关联
         tab.setupWithViewPager(viewpager);

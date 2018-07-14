@@ -87,6 +87,8 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
                         shareSuccess();
                     }else if(ApiConstant.SHARE_TAG.equals("taskCenterShare")){
                         dialyShareSuccess();
+                    }else if(ApiConstant.SHARE_TAG.equals("greenHandMission")){
+                        greenHandMissionShare();
                     }
                     break;
                 case BaseResp.ErrCode.ERR_USER_CANCEL:
@@ -101,6 +103,31 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
             }
         }
         finish();
+    }
+    //新手任务的分享
+    private void greenHandMissionShare() {
+        userId= (String) SPUtils.get(WXEntryActivity.this,"user_id","");
+        ApiMine.greenHandMissionShare(ApiConstant.DAILY_MISSION_SHARE, userId,"Y", new RequestCallBack<String>() {
+            @Override
+            public void onSuccess(Call call, Response response, final String s) {
+                try {
+                    JSONObject jsonObject=new JSONObject(s);
+                    String code = jsonObject.getString("code");
+                    if (code.equals("SUCCESSS")){
+                        Intent intent=new Intent();
+                        intent.setAction("com.action.greend.hand.share.success");
+                        sendBroadcast(intent);
+                        finish();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            @Override
+            public void onEror(Call call, int statusCode, Exception e) {
+
+            }
+        });
     }
     //日常任务分享完成
     private void dialyShareSuccess() {

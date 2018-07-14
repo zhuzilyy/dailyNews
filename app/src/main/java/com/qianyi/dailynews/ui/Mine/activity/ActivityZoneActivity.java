@@ -82,13 +82,16 @@ public class ActivityZoneActivity extends BaseActivity {
         IntentFilter intentFilterShare=new IntentFilter();
         intentFilterShare.addAction("com.action.wechat");
         registerReceiver(myReceiver,intentFilterShare);
+        //分享到朋友圈的广播
+        IntentFilter intentFilterGreenHand=new IntentFilter();
+        intentFilterGreenHand.addAction("com.action.greend.hand.share.success");
+        registerReceiver(myReceiver,intentFilterGreenHand);
     }
     @Override
     protected void initData() {
         customLoadingDialog.show();
         getData();
     }
-
     private void getData() {
         ApiMine.activityZone(ApiConstant.ACTIVITY_ZONE,user_id,new RequestCallBack<String>() {
             @Override
@@ -181,6 +184,7 @@ public class ActivityZoneActivity extends BaseActivity {
                 if (share.equals("1")){
                     return;
                 }
+                ApiConstant.SHARE_TAG="greenHandMission";
                 shareFriendCircle();
                 break;
             case R.id.tv_readState:
@@ -235,7 +239,7 @@ public class ActivityZoneActivity extends BaseActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
-            if (action.equals("com.action.search.mission")||action.equals("com.action.wechat")){
+            if (action.equals("com.action.search.mission")||action.equals("com.action.greend.hand.share.success")){
                 getData();
             }
         }

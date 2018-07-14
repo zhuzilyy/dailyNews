@@ -28,7 +28,6 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:text="提示消息" />
-
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"

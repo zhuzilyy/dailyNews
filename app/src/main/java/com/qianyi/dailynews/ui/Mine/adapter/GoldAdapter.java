@@ -55,7 +55,12 @@ public class GoldAdapter extends BaseAdapter {
         GoldCoinData goldCoinInfo = infoList.get(i);
         viewHolder.tv_name.setText(goldCoinInfo.getName());
         viewHolder.tv_time.setText(goldCoinInfo.getTime());
-        viewHolder.tv_coinCount.setText("+"+goldCoinInfo.getCnt()+"金币");
+        String type=goldCoinInfo.getType();
+        if(type.equals("balance")){
+            viewHolder.tv_coinCount.setText("+"+goldCoinInfo.getCnt()+"元");
+        }else if(type.equals("gold")){
+            viewHolder.tv_coinCount.setText("+"+goldCoinInfo.getCnt()+"金币");
+        }
         return view;
     }
     static class ViewHolder{

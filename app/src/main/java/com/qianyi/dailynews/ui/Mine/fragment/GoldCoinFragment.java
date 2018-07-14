@@ -41,7 +41,7 @@ public class GoldCoinFragment extends BaseFragment implements PullToRefreshView.
     RelativeLayout no_data_rl;
     @BindView(R.id.no_internet_rl)
     RelativeLayout no_internet_rl;
-    private int page=1;
+    private int page=0;
     private CustomLoadingDialog customLoadingDialog;
     private GoldAdapter goldAdapter;
     private List<GoldCoinData> infoList;
@@ -51,7 +51,6 @@ public class GoldCoinFragment extends BaseFragment implements PullToRefreshView.
     protected View getResLayout(LayoutInflater inflater, ViewGroup container) {
         return inflater.inflate(R.layout.fragment_gold_coin,null);
     }
-
     @Override
     protected void initViews() {
         customLoadingDialog=new CustomLoadingDialog(getActivity());
@@ -60,7 +59,6 @@ public class GoldCoinFragment extends BaseFragment implements PullToRefreshView.
         listview.setAdapter(goldAdapter);
         userId= (String) SPUtils.get(getActivity(),"user_id","");
     }
-
     @Override
     protected void initData() {
         if (!Utils.hasInternet()){
