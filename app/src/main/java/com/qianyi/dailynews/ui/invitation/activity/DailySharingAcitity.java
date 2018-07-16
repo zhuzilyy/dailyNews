@@ -8,9 +8,11 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
+import android.support.annotation.RequiresApi;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -169,7 +171,7 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
                     time=Integer.parseInt(lastTime);
                     if(time>0){
                         ll_time.setVisibility(View.VISIBLE);
-                        handler.postDelayed(runnable2, 1000);
+                        handler.postDelayed(runnable, 1000);
                         btn_share.setEnabled(false);
                         btn_share.setTextColor(Color.parseColor("#999999"));
                     }else {
@@ -193,7 +195,7 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
     }
 
 
-    Runnable runnable2 = new Runnable() {
+    Runnable runnable = new Runnable() {
         @Override
         public void run() {
             time--;
@@ -516,6 +518,7 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
         mWxApi.sendReq(req);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.CUPCAKE)
     private void shwoSharePw() {
         pw_share = new PopupWindow(DailySharingAcitity.this);
         pw_share.setContentView(view_share);

@@ -107,13 +107,13 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
     //新手任务的分享
     private void greenHandMissionShare() {
         userId= (String) SPUtils.get(WXEntryActivity.this,"user_id","");
-        ApiMine.greenHandMissionShare(ApiConstant.DAILY_MISSION_SHARE, userId,"Y", new RequestCallBack<String>() {
+        ApiMine.greenHandMissionShare(ApiConstant.SHARE_AFTER, userId,"Y", new RequestCallBack<String>() {
             @Override
             public void onSuccess(Call call, Response response, final String s) {
                 try {
                     JSONObject jsonObject=new JSONObject(s);
                     String code = jsonObject.getString("code");
-                    if (code.equals("SUCCESSS")){
+                    if (code.equals("SUCCESS")){
                         Intent intent=new Intent();
                         intent.setAction("com.action.greend.hand.share.success");
                         sendBroadcast(intent);
@@ -125,7 +125,7 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
             }
             @Override
             public void onEror(Call call, int statusCode, Exception e) {
-
+                Log.i("tag",e.getMessage());
             }
         });
     }
@@ -138,7 +138,7 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
                 try {
                     JSONObject jsonObject=new JSONObject(s);
                     String code = jsonObject.getString("code");
-                    if (code.equals("SUCCESSS")){
+                    if (code.equals("SUCCESS")){
                         Intent intent=new Intent();
                         intent.setAction("com.action.share.success");
                         sendBroadcast(intent);

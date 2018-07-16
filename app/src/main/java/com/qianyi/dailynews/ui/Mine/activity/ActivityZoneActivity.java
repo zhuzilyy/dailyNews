@@ -113,25 +113,21 @@ public class ActivityZoneActivity extends BaseActivity {
                         tv_signState.setBackgroundResource(R.drawable.bg_activity_finish);
                         tv_signState.setTextColor(Color.parseColor("#999999"));
                         tv_signState.setText("已完成");
-                        count++;
                     }
                     if (share.equals("1")){
                         tv_shareState.setBackgroundResource(R.drawable.bg_activity_finish);
                         tv_shareState.setTextColor(Color.parseColor("#999999"));
                         tv_shareState.setText("已完成");
-                        count++;
                     }
                     if (read.equals("10")){
                         tv_readState.setBackgroundResource(R.drawable.bg_activity_finish);
                         tv_readState.setTextColor(Color.parseColor("#999999"));
                         tv_readState.setText("已完成");
-                        count++;
                     }
                     if (search.equals("2")){
                         tv_searchState.setBackgroundResource(R.drawable.bg_activity_finish);
                         tv_searchState.setTextColor(Color.parseColor("#999999"));
                         tv_searchState.setText("已完成");
-                        count++;
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -166,7 +162,7 @@ public class ActivityZoneActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.btn_confrim:
-                if (count!=4){
+                if (!sign.equals("1")||!share.equals("1")||!read.equals("10")||!search.equals("2")){
                     Toast.makeText(this, "先去完成新手任务", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -228,6 +224,13 @@ public class ActivityZoneActivity extends BaseActivity {
     public static String buildTransaction(final String type) {
         return (type == null) ? String.valueOf(System.currentTimeMillis()) : type + System.currentTimeMillis();
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getData();
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
