@@ -3,6 +3,7 @@ package com.qianyi.dailynews.ui.news.activity;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
+import android.app.Application;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -728,6 +729,10 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
                         playSound(R.raw.mm);
                 }else {
                     //金币新闻[大于25就结束]
+
+                    if(NewsFragment.CurrentGetCoinNumber == 25){
+                        NewsFragment.CurrentGetCoinNumber++;
+                    }
                     if( NewsFragment.CurrentGetCoinNumber <= 25){
 
                         getReward2("0");
@@ -758,6 +763,8 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
      * 消耗资源较小
      */
     public static void playSound(int rawId) {
+      //  Toast.makeText(MyApplication.getApplication(), "适合播放声音短，文件小", Toast.LENGTH_SHORT).show();
+        Log.i("***()()()[][][]", "适合播放声音短，文件小");
         SoundPool soundPool;
         if (Build.VERSION.SDK_INT >= 21) {
             SoundPool.Builder builder = new SoundPool.Builder();
