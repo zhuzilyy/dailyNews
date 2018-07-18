@@ -309,7 +309,6 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
         });
 
     }
-
     //开始滚动
     @Override
     public void onResume() {
@@ -418,17 +417,19 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
         autotext.setPadding(5, 5, 0, 5);
         autotext.startAutoScroll();
     }
-
     @Override
     protected void initListener() {
         //banner点击事件
         banner.setOnBannerListener(new OnBannerListener() {
             @Override
             public void OnBannerClick(int position) {
-                Intent intent = new Intent(getActivity(), WebviewActivity.class);
-                intent.putExtra("url", imgBannerArray.get(position).getUrl());
-                intent.putExtra("title", "详情");
-                startActivity(intent);
+                String bannerUrl=imgBannerArray.get(position).getUrl();
+                if (!TextUtils.isEmpty(bannerUrl)){
+                    Intent intent = new Intent(getActivity(), WebviewActivity.class);
+                    intent.putExtra("url", imgBannerArray.get(position).getUrl());
+                    intent.putExtra("title", "详情");
+                    startActivity(intent);
+                }
             }
         });
         //对单条文字的点击监听
@@ -563,10 +564,11 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
     }
     //QQ分享
     private void shareQQ() {
+        String my_invite_code= (String) SPUtils.get(getActivity(),"my_invite_code","");
         final Bundle params = new Bundle();
         params.putInt(QQShare.SHARE_TO_QQ_KEY_TYPE, QQShare.SHARE_TO_QQ_TYPE_DEFAULT);//分享的类型
         params.putString(QQShare.SHARE_TO_QQ_TITLE, "每日速报");//分享标题
-        params.putString(QQShare.SHARE_TO_QQ_SUMMARY,"每日速报是一款基于数据挖掘的推荐引擎产品，它为用户推荐有价值的、个性化的信息，提供连接人与信息的新型服务");//要分享的内容摘要
+        params.putString(QQShare.SHARE_TO_QQ_SUMMARY,"看资讯送零花，立马可提现，你也快来领吧！填我邀请码"+my_invite_code);//要分享的内容摘要
         params.putString(QQShare.SHARE_TO_QQ_TARGET_URL,ApiConstant.DOWN_SHARE_URL);//内容地址
         params.putString(QQShare.SHARE_TO_QQ_IMAGE_URL,ApiConstant.QQ_SHARE_LOGO);//分享的图片URL
         params.putString(QQShare.SHARE_TO_QQ_APP_NAME, "每日速报");//应用名称
@@ -749,11 +751,12 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
     }
     //分享到微信
     private void shareFriends() {
+        String my_invite_code= (String) SPUtils.get(getActivity(),"my_invite_code","");
         WXWebpageObject webpage = new WXWebpageObject();
         webpage.webpageUrl = ApiConstant.DOWN_SHARE_URL;
         WXMediaMessage msg = new WXMediaMessage(webpage);
         msg.title = "每日速报";
-        msg.description = "每日速报是一款基于数据挖掘的推荐引擎产品，它为用户推荐有价值的、个性化的信息，提供连接人与信息的新型服务。";
+        msg.description = "看资讯送零花，立马可提现，你也快来领吧！填我邀请码"+my_invite_code;
         Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.mipmap.logo);
         Bitmap bitmap = WhiteBgBitmapUtil.drawableBitmapOnWhiteBg(getActivity(), bmp);
         Bitmap thumbBmp = Bitmap.createScaledBitmap(bitmap, 200, 200, true);
@@ -768,11 +771,12 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
     }
 
     private void shareFriendCircle() {
+        String my_invite_code= (String) SPUtils.get(getActivity(),"my_invite_code","");
         WXWebpageObject webpage = new WXWebpageObject();
         webpage.webpageUrl = ApiConstant.DOWN_SHARE_URL;
         WXMediaMessage msg = new WXMediaMessage(webpage);
         msg.title = "每日速报";
-        msg.description = "每日速报是一款基于数据挖掘的推荐引擎产品，它为用户推荐有价值的、个性化的信息，提供连接人与信息的新型服务。";
+        msg.description = "看资讯送零花，立马可提现，你也快来领吧！填我邀请码"+my_invite_code;
         Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.mipmap.logo);
         Bitmap bitmap = WhiteBgBitmapUtil.drawableBitmapOnWhiteBg(getActivity(), bmp);
         Bitmap thumbBmp = Bitmap.createScaledBitmap(bitmap, 200, 200, true);

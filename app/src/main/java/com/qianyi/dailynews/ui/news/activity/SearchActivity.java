@@ -154,6 +154,7 @@ public class SearchActivity extends BaseActivity {
                     e1.printStackTrace();
                 }
                 final Intent it = new Intent(Intent.ACTION_VIEW, uri);
+                it.setAction("android.intent.action.VIEW");
                 Timer timer = new Timer();
                 TimerTask task = new TimerTask() {
                     @Override

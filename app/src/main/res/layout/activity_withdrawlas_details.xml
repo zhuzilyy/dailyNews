@@ -71,6 +71,7 @@
                 android:background="@color/light_gray5"
                 />
             <WebView
+                android:layout_marginBottom="45dp"
                 android:id="@+id/wv_webview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
