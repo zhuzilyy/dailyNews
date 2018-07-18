@@ -232,6 +232,11 @@ public class HighRebateDetilsActivity extends BaseActivity implements View.OnCli
             moneyTime2_tv.setText(info.getTimeLimit());
 
 
+            moneyTime_tv.setText(info.getLineOne());
+            moneyPhone_tv.setText(info.getLineTwo());
+            moneyType_tv.setText(info.getLineThree());
+            moneyNum2_tv.setText(info.getLineFour());
+
 
             if(imgArr.length>0){
                 Glide.with(HighRebateDetilsActivity.this).load(imgArr[0]).into(moneyImg001_iv);
