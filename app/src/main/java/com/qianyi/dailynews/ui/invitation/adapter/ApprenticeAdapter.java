@@ -2,6 +2,7 @@ package com.qianyi.dailynews.ui.invitation.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,12 +63,21 @@ public class ApprenticeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         //将数据与item视图进行绑定，如果是MyViewHolder就加载网络图片，如果是MyViewHolder2就显示页数
         if (holder instanceof ApprenticeAdapter.MyViewHolder) {
-             ((MyViewHolder) holder).account.setText(infoList.get(position).getUserName());
             TudiInfo tudiInfo = infoList.get(position);
             String userName = tudiInfo.getUserName();
-            String firstName = userName.substring(0, 3);
-            String lastName = userName.substring(7, userName.length());
-            ((MyViewHolder) holder).nick.setText(firstName+"****"+lastName);
+            String nickName = tudiInfo.getNickName();
+            if (!TextUtils.isEmpty(userName)){
+                ((MyViewHolder) holder).account.setText(userName);
+                String firstName = userName.substring(0, 3);
+                String lastName = userName.substring(7, userName.length());
+                ((MyViewHolder) holder).nick.setText(firstName+"****"+lastName);
+            }else if(!TextUtils.isEmpty(nickName)){
+                ((MyViewHolder) holder).account.setText(nickName);
+                ((MyViewHolder) holder).nick.setText(nickName);
+            }else{
+                ((MyViewHolder) holder).account.setText("每日速报");
+                ((MyViewHolder) holder).nick.setText("每日速报");
+            }
              ((MyViewHolder) holder).money.setText(infoList.get(position).getCash());
             Glide.with(mContext).load(infoList.get(position).getHeadPortrait()).placeholder(R.mipmap.logo).into(((MyViewHolder) holder).head);
             // Picasso.with(mContext).load(datas.get(position).getUrl()).into(((MyViewHolder) holder).iv);//加载网络图片

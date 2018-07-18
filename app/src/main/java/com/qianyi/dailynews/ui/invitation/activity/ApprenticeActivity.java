@@ -2,6 +2,7 @@ package com.qianyi.dailynews.ui.invitation.activity;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -85,6 +86,7 @@ public class ApprenticeActivity extends BaseActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        Log.i("tag",s);
                         Gson gson=new Gson();
                         TudiBean tudiBean = gson.fromJson(s, TudiBean.class);
                         String cash = tudiBean.getData().getCash();
