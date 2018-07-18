@@ -147,9 +147,12 @@ public class SearchActivity extends BaseActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 String hotWord = data.get(i);
-                Uri uri = null;
+                Intent intent=new Intent(SearchActivity.this,SearchWebviewActivity.class);
+                intent.putExtra("hotWord",hotWord);
+                startActivity(intent);
+              /*  Uri uri = null;
                 try {
-                    uri = Uri.parse("http://www.baidu.com/s?&ie=utf-8&oe=UTF-8&wd=" + URLEncoder.encode(hotWord,"UTF-8"));
+                    uri = Uri.parse("https://www.baidu.com/s?wd=" + URLEncoder.encode(hotWord,"UTF-8"));
                 } catch (UnsupportedEncodingException e1) {
                     e1.printStackTrace();
                 }
@@ -162,7 +165,7 @@ public class SearchActivity extends BaseActivity {
                         startActivity(it);
                     }
                 };
-                timer.schedule(task, 0);
+                timer.schedule(task, 0);*/
                 if (tag.equals("mission")){
                     mission();
                 }
