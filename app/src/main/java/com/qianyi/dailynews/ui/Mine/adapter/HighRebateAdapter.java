@@ -76,7 +76,7 @@ public class HighRebateAdapter extends BaseAdapter {
             }
             FanLiInfo fanLiInfo = infoList.get(i);
             registerHolder.tv_title.setText(fanLiInfo.getTitle());
-            registerHolder.tv_coin.setText(fanLiInfo.getCash()+"金币");
+            registerHolder.tv_coin.setText(fanLiInfo.getCash()+"元");
             registerHolder.tv_type.setText(fanLiInfo.getDescription());
         }else {
             if (moneyHolder==null){
@@ -88,7 +88,7 @@ public class HighRebateAdapter extends BaseAdapter {
             }
             final FanLiInfo fanLiInfo = infoList.get(i);
             moneyHolder.tv_title.setText(fanLiInfo.getTitle());
-            moneyHolder.tv_cash.setText(fanLiInfo.getCash()+"金币");
+            moneyHolder.tv_cash.setText(fanLiInfo.getCash()+"元");
             moneyHolder.tv_rate.setText(fanLiInfo.getDescription());
             moneyHolder.tv_time.setText(fanLiInfo.getTime());
             String status= fanLiInfo.getStatus();
