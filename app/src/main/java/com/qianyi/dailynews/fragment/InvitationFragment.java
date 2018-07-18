@@ -85,6 +85,8 @@ import butterknife.OnClick;
 import okhttp3.Call;
 import okhttp3.Response;
 
+import static com.qianyi.dailynews.utils.SPUtils.get;
+
 /**
  * Created by Administrator on 2018/4/30.
  */
@@ -147,6 +149,7 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
     private static final String APP_ID = "101488066"; //获取的APPID
     private Tencent mTencent;
     private ErWeiMaDialog erWeiMaDialog;
+    private  String codeOfFriend;
     @Override
     protected View getResLayout(LayoutInflater inflater, ViewGroup container) {
         newsView = inflater.inflate(R.layout.fragment_invitation, null);
@@ -182,7 +185,7 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
         rightTv.setVisibility(View.VISIBLE);
       //  customLoadingDialog = new CustomLoadingDialog(getActivity());
         //****是否展示填写邀请码**********
-        String invite_code = (String) SPUtils.get(getActivity(), "invite_code", "----");
+        String invite_code = (String) get(getActivity(), "invite_code", "----");
         if (!TextUtils.isEmpty(invite_code)) {
             //有邀请码，隐藏输入框
             ll_invation.setVisibility(View.GONE);
@@ -196,9 +199,9 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (EditorInfo.IME_ACTION_SEARCH == actionId) {
-                    String codeOfFriend = et_invation.getText().toString().trim();
+                     codeOfFriend = et_invation.getText().toString().trim();
                     if (!TextUtils.isEmpty(codeOfFriend)) {
-                        writeInvatiCode(codeOfFriend);
+                        writeInvatiCode();
                     }
                 }
                 return false;
@@ -217,18 +220,14 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
         erWeiMaDialog=new ErWeiMaDialog(getActivity());
 
     }
-
     /****
      * 填写好友邀请码
-     * @param codeOfFriend
      */
-    private void writeInvatiCode(String codeOfFriend) {
-
-        String userid = (String) SPUtils.get(getActivity(), "user_id", "");
+    private void writeInvatiCode() {
+        String userid = (String) get(getActivity(), "user_id", "");
         if (TextUtils.isEmpty(userid)) {
             return;
         }
-
         ApiInvite.writeCode(ApiConstant.WRITE_CODE, userid, codeOfFriend, new RequestCallBack<String>() {
             @Override
             public void onSuccess(Call call, Response response, String s) {
@@ -257,7 +256,7 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
      * 更新用户信息
      */
     private void updateUserInfo() {
-        String userid = (String) SPUtils.get(getActivity(), "user_id", "");
+        String userid = (String) get(getActivity(), "user_id", "");
         if (TextUtils.isEmpty(userid)) {
             return;
         }
@@ -315,8 +314,14 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
     @Override
     public void onResume() {
         super.onResume();
+        getInviteData();
+        String invite_code= (String) get(getActivity(),"invite_code","");
+        if (TextUtils.isEmpty(invite_code)){
+            ll_invation.setVisibility(View.VISIBLE);
+        }else{
+            ll_invation.setVisibility(View.GONE);
+        }
     }
-
     //停止滚动
     @Override
     public void onPause() {
@@ -335,7 +340,7 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
 
     //获取邀请数据的值
     private void getInviteData() {
-        userId = (String) SPUtils.get(getActivity(), "user_id", "");
+        userId = (String) get(getActivity(), "user_id", "");
         ApiInvite.inviteDetail(ApiConstant.INVITE_DETAIL, userId, new RequestCallBack<String>() {
             @Override
             public void onSuccess(Call call, Response response, String s) {
@@ -440,7 +445,7 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
     })
     @Override
     public void onClick(View v) {
-        String userId = (String) SPUtils.get(getActivity(), "user_id", "");
+        String userId = (String) get(getActivity(), "user_id", "");
         switch (v.getId()) {
             case R.id.btn_onekey_shoutu:
                 //一键收徒
@@ -546,6 +551,11 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
                 }
                 break;
             case R.id.et_invation:
+                userId= (String) get(getActivity(),"user_id","");
+                if (TextUtils.isEmpty(userId)){
+                    showLogin();
+                    return;
+                }
                 intent=new Intent(getActivity(), WriteInvitationActivity.class);
                 startActivity(intent);
                 break;
@@ -634,7 +644,7 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
         message.textObject= textObject;
         message.imageObject= imageObject;
         message.mediaObject= mediaObj;*/
-        String my_invite_code = (String) SPUtils.get(getActivity(), "my_invite_code", "");
+        String my_invite_code = (String) get(getActivity(), "my_invite_code", "");
         WebpageObject mediaObject = new WebpageObject();
         mediaObject.identify = Utility.generateGUID();
         mediaObject.title = "每日速报";
@@ -842,6 +852,7 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
                 tv_income.setText( "0金币");
                 tv_friendCount.setText( "0个");
                 tv_myCode.setText("");
+                ll_invation.setVisibility(View.VISIBLE);
             }
         }
     }

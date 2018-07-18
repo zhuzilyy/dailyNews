@@ -51,10 +51,6 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
     @BindView(R.id.bar)
     public BottomNavigationBar bar;
     private MyReceiver myReceiver;
-
-
-
-
     @Override
     protected void initViews() {
 
@@ -232,9 +228,6 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
 
                  }
     }
-
-
-
     class MyReceiver extends BroadcastReceiver{
         @Override
         public void onReceive(Context context, Intent intent) {
