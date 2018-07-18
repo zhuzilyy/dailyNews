@@ -222,6 +222,7 @@ public class HighRebateDetilsActivity extends BaseActivity implements View.OnCli
             String imgStr = info.getImgs();
             String []  imgArr = imgStr.split("\\$lvmq\\$");
 
+
             moneyTitle_tv.setText(info.getTitle());
             moneyNum_tv.setText("+"+info.getCash()+"元");
             moneyDes_tv.setText(info.getExposition());
