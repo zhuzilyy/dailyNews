@@ -2,10 +2,12 @@ package com.qianyi.dailynews.ui.Mine.activity;
 
 import android.content.Intent;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,6 +50,8 @@ public class WithdrawalsActivity extends BaseActivity implements View.OnClickLis
     public LinearLayout ll_100yuan;
     @BindView(R.id.ll_1000yuan)
     public LinearLayout ll_1000yuan;
+    @BindView(R.id.bg_oneYuan)
+    public RelativeLayout bg_oneYuan;
 
     @BindView(R.id.tv_01yuan)
     public TextView tv_01yuan;
@@ -124,9 +128,9 @@ public class WithdrawalsActivity extends BaseActivity implements View.OnClickLis
                 try {
                     JSONObject jsonObject=new JSONObject(s);
                     JSONObject data = jsonObject.getJSONObject("data");
-                    oneyuan= data.getBoolean("oneyuan");
+                    oneyuan= data.getBoolean("waitingWithdraw");
                     if (oneyuan){
-
+                        bg_oneYuan.setBackgroundResource(R.mipmap.unpacket_icon);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
