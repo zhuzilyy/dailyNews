@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -198,11 +199,11 @@ public class ConfirmOrderActivity extends BaseActivity {
                             String return_msg = jsonObject.getString("return_msg");
                             Toast.makeText(ConfirmOrderActivity.this, return_msg, Toast.LENGTH_SHORT).show();
                             if (return_code.equals(ApiConstant.SUCCESS)){
+                                ListActivity.close();
                                 Intent intent=new Intent();
                                 intent.setAction("com.action.withdrawal.success");
                                 sendBroadcast(intent);
                             }
-                            ListActivity.close();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

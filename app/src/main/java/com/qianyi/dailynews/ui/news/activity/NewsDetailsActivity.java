@@ -162,8 +162,6 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
         // 将该app注册到微信
         mWxApi.registerApp(ApiConstant.APP_ID);
         newsId=getIntent().getStringExtra("id");
-        Toast.makeText(this, newsId, Toast.LENGTH_SHORT).show();
-        Log.i("tag",newsId+"=======newsId======");
         urlStr=getIntent().getStringExtra("url");
         contentStr=getIntent().getStringExtra("des");
         contentStr=RegUtil.replaceSpecialStr(contentStr);
