@@ -161,6 +161,8 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
         // 将该app注册到微信
         mWxApi.registerApp(ApiConstant.APP_ID);
         newsId=getIntent().getStringExtra("id");
+        Toast.makeText(this, newsId, Toast.LENGTH_SHORT).show();
+        Log.i("tag",newsId+"=======newsId======");
         urlStr=getIntent().getStringExtra("url");
         contentStr=getIntent().getStringExtra("des");
         contentStr=RegUtil.replaceSpecialStr(contentStr);
@@ -192,19 +194,8 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
       //  tv_money.setText("+"+NewsFragment.Gold);
         if(!TextUtils.isEmpty(urlStr)){
             webSettings = news_webview.getSettings();
-
-
-
             WebviewUtil.setWebview(news_webview,webSettings);
-
-
-
-
-
-
-
             news_webview.loadUrl(urlStr);
-
             WebSettings webSettings2 = bottom_web.getSettings();
             WebviewUtil.setWebview(bottom_web,webSettings2);
             bottom_web.loadUrl(urlStr);

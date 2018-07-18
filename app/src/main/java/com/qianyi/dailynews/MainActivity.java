@@ -117,12 +117,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (myReceiver!=null){
-            unregisterReceiver(myReceiver);
-        }
-
-
-
+        unregisterReceiver(myReceiver);
     }
     /***
      * 显示隐藏Fragment
@@ -249,8 +244,5 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
             }
         }
     }
-
-
-
 
 }
