@@ -174,7 +174,7 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
         isRed=getIntent().getStringExtra("isRed");
 
         if(redMoney!=null){
-            int redMoneyStr=Integer.parseInt(redMoney);
+            double redMoneyStr=Double.parseDouble(redMoney);
             if(redMoneyStr>0){
                 re_money.setVisibility(View.VISIBLE);
                 tv_money2.setText("+"+redMoneyStr+"");
@@ -779,7 +779,7 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
         });
         //第一个参数id，即传入池中的顺序，第二个和第三个参数为左右声道，第四个参数为优先级，第五个是否循环播放，0不循环，-1循环
         //最后一个参数播放比率，范围0.5到2，通常为1表示正常播放
-//        soundPool.play(1, 1, 1, 0, 0, 1);
+        //soundPool.play(1, 1, 1, 0, 0, 1);
         //回收Pool中的资源
         //soundPool.release();
 

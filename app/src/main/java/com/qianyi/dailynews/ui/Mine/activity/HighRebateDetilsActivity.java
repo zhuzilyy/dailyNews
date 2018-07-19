@@ -222,20 +222,23 @@ public class HighRebateDetilsActivity extends BaseActivity implements View.OnCli
             String imgStr = info.getImgs();
             String []  imgArr = imgStr.split("\\$lvmq\\$");
 
+
             moneyTitle_tv.setText(info.getTitle());
             moneyNum_tv.setText("+"+info.getCash()+"元");
             moneyDes_tv.setText(info.getExposition());
+
             webview.loadUrl(info.getUrl());
 
             moneyType2_tv.setText(info.getRewardsType());
             moneyLeft_tv.setText(info.getParticipantsNum());
-            moneyTime2_tv.setText(info.getTimeLimit());
+            moneyTime2_tv.setText(info.getTimeLimit()+"分钟");
+            moneyCycle_tv.setText(info.getCycle()+"小时");
 
 
-            moneyTime_tv.setText(info.getLineOne());
+            moneyTime_tv.setText(info.getLineOne()+"分钟");
             moneyPhone_tv.setText(info.getLineTwo());
             moneyType_tv.setText(info.getLineThree());
-            moneyNum2_tv.setText(info.getLineFour());
+            moneyNum2_tv.setText(info.getLineFour()+"元");
 
 
             if(imgArr.length>0){
