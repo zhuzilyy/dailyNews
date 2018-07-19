@@ -119,6 +119,10 @@ public class ApiConstant {
     public static final String  DAILY_MISSION_SHARE= BASE_URL+"/api/daymission/show";
     //
     public static final String  BIND_PHONE= BASE_URL+"/api/wx/bindphone";
+    //消息分页
+    public static final String  MESSAGE_LIST= BASE_URL+"/api/message/page";
+    //消息红点
+    public static final String  MESSAGE_DOT= BASE_URL+"/api/message/redot";
     /*//邀请规则
     public static final String  INVITE_WEBVIEW= BASE_URL+"/api/user/getOfficial?type=INVITE";
     //签到规则

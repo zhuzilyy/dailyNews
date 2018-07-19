@@ -148,15 +148,13 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
         IntentFilter intentFilter=new IntentFilter();
         intentFilter.addAction("com.action.share.success");
         registerReceiver(myReceiver,intentFilter);
-
     }
-
     @Override
     protected void initData() {
+        customLoadingDialog.show();
         getData();
     }
     private void getData() {
-        customLoadingDialog.show();
         ApiInvite.sharePre(ApiConstant.SHARE_PRE, userId, new RequestCallBack<String>() {
             @Override
             public void onSuccess(Call call, Response response, final String s) {
@@ -341,10 +339,11 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
     }
     //QQ分享
     private void shareQQ() {
+        String my_invite_code= (String) SPUtils.get(DailySharingAcitity.this,"my_invite_code","");
         final Bundle params = new Bundle();
         params.putInt(QQShare.SHARE_TO_QQ_KEY_TYPE, QQShare.SHARE_TO_QQ_TYPE_DEFAULT);//分享的类型
         params.putString(QQShare.SHARE_TO_QQ_TITLE, "每日速报");//分享标题
-        params.putString(QQShare.SHARE_TO_QQ_SUMMARY,"每日分享的分享");//要分享的内容摘要
+        params.putString(QQShare.SHARE_TO_QQ_SUMMARY,"看新闻还能赚钱~赶快抓住机会试试呀，填我邀请码"+my_invite_code);//要分享的内容摘要
         params.putString(QQShare.SHARE_TO_QQ_TARGET_URL,ApiConstant.DAILY_SHARE_URL);//内容地址
         params.putString(QQShare.SHARE_TO_QQ_IMAGE_URL,ApiConstant.QQ_SHARE_LOGO);//分享的图片URL
         params.putString(QQShare.SHARE_TO_QQ_APP_NAME, "每日速报");//应用名称
@@ -373,11 +372,12 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
     }
 
     private void shareFriendCircle() {
+        String my_invite_code= (String) SPUtils.get(DailySharingAcitity.this,"my_invite_code","");
         WXWebpageObject webpage = new WXWebpageObject();
         webpage.webpageUrl = ApiConstant.DAILY_SHARE_URL;
         WXMediaMessage msg = new WXMediaMessage(webpage);
         msg.title = "每日速报";
-        msg.description = "每日分享的分享";
+        msg.description = "看新闻还能赚钱~赶快抓住机会试试呀，填我邀请码"+my_invite_code;
         Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.mipmap.logo);
         Bitmap bitmap = WhiteBgBitmapUtil.drawableBitmapOnWhiteBg(this, bmp);
         Bitmap thumbBmp = Bitmap.createScaledBitmap(bitmap, 200, 200, true);
@@ -403,7 +403,6 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
         shareWebPage();
     }
     private void shareWebPage() {
-        String my_invite_code = (String) SPUtils.get(DailySharingAcitity.this, "my_invite_code", "");
       /*  WebpageObject mediaObj =new WebpageObject();
         //创建文本消息对象
         TextObject textObject =new TextObject();
@@ -429,11 +428,11 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
 
         message.mediaObject= mediaObj;*/
 
-
+        String my_invite_code= (String) SPUtils.get(DailySharingAcitity.this,"my_invite_code","");
         WebpageObject mediaObject = new WebpageObject();
         mediaObject.identify = Utility.generateGUID();
         mediaObject.title = "每日速报";
-        mediaObject.description = "每日分享的分享";
+        mediaObject.description = "看新闻还能赚钱~赶快抓住机会试试呀，填我邀请码"+my_invite_code;
        /* Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.logo);
 
         // 设置 Bitmap 类型的图片到视频对象里         设置缩略图。 注意：最终压缩过的缩略图大小不得超过 32kb。
@@ -443,7 +442,7 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
         Bitmap thumbBmp = Bitmap.createScaledBitmap(bitmap, 200, 200, true);
         mediaObject.setThumbImage(thumbBmp);
         mediaObject.actionUrl = ApiConstant.DAILY_SHARE_URL;
-        mediaObject.defaultText = "陪我一起阅读，每天做不一样的自己，阅读拆红包，每天都有不一样的惊喜，阅读邀请码"+my_invite_code;
+        mediaObject.defaultText = "新闻还能赚钱~赶快抓住机会试试呀，填我邀请码"+my_invite_code;
         WeiboMultiMessage message = new WeiboMultiMessage();
         message.mediaObject = mediaObject;
         shareHandler.shareMessage(message, false);
@@ -493,11 +492,12 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
 
     //分享到微信
     private void shareFriends() {
+        String my_invite_code= (String) SPUtils.get(DailySharingAcitity.this,"my_invite_code","");
         WXWebpageObject webpage = new WXWebpageObject();
         webpage.webpageUrl = ApiConstant.DAILY_SHARE_URL;
         WXMediaMessage msg = new WXMediaMessage(webpage);
         msg.title = "每日速报";
-        msg.description = "每日分享的分享";
+        msg.description = "看新闻还能赚钱~赶快抓住机会试试呀，填我邀请码"+my_invite_code;
         Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.mipmap.logo);
         Bitmap bitmap = WhiteBgBitmapUtil.drawableBitmapOnWhiteBg(this, bmp);
         Bitmap thumbBmp = Bitmap.createScaledBitmap(bitmap, 200, 200, true);

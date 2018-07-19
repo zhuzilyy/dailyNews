@@ -147,6 +147,10 @@
            android:exported="true"
            android:screenOrientation="portrait"
            />
+        <!--消息中心-->
+       <activity android:name=".ui.Mine.activity.MessageDetailActivity"
+           android:screenOrientation="portrait"
+           />
         <!--欢迎界面-->
         <activity android:name=".ui.account.activity.SplashActivity"
             android:screenOrientation="portrait"

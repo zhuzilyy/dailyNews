@@ -33,6 +33,7 @@ import com.qianyi.dailynews.ui.Mine.activity.TaskCenterActivity;
 import com.qianyi.dailynews.ui.Mine.activity.WithdrawalsActivity;
 import com.qianyi.dailynews.ui.Mine.activity.WriteInvitationActivity;
 import com.qianyi.dailynews.ui.account.activity.LoginActivity;
+import com.qianyi.dailynews.ui.account.activity.RegisterActivity;
 import com.qianyi.dailynews.ui.news.activity.NewsDetailsActivity;
 import com.qianyi.dailynews.utils.SPUtils;
 import com.qianyi.dailynews.utils.Utils;
@@ -79,6 +80,10 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     //提现
     @BindView(R.id.ll_tixian)
     public LinearLayout ll_tixian;
+    @BindView(R.id.rl_login)
+    public RelativeLayout rl_login;
+    @BindView(R.id.rl_noLogin)
+    public RelativeLayout rl_noLogin;
     @BindView(R.id.tv_copy)
     public TextView tv_copy;
     @BindView(R.id.tv_InvitationCode)
@@ -158,44 +163,63 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     protected void initData() {
 
     }
-
     @Override
     protected void initListener() {
 
     }
 
     @OnClick({R.id.re_WriteCode, R.id.re_MoneyCenter, R.id.re_MissionCentre, R.id.re_AccountDetails,
-            R.id.re_MessageCentre, R.id.re_HelpBack, R.id.re_Settings, R.id.ll_tixian, R.id.tv_copy,
+            R.id.re_MessageCentre, R.id.re_HelpBack, R.id.re_Settings, R.id.ll_tixian, R.id.tv_copy,R.id.tv_login,R.id.tv_register,R.id.ll_noLoginTiXian
     })
     @Override
     public void onClick(View v) {
-        user_id= (String) SPUtils.get(getActivity(),"user_id","");
-        if (TextUtils.isEmpty(user_id)){
-            showLogin();
-            return;
-        }
         switch (v.getId()) {
             case R.id.re_WriteCode:
+                user_id= (String) SPUtils.get(getActivity(),"user_id","");
+                if (TextUtils.isEmpty(user_id)){
+                    showLogin();
+                    return;
+                }
                 //填写邀请码
                 Intent intent_writecode = new Intent(getActivity(), WriteInvitationActivity.class);
                 startActivityForResult(intent_writecode,100);
                 break;
             case R.id.re_MoneyCenter:
+                user_id= (String) SPUtils.get(getActivity(),"user_id","");
+                if (TextUtils.isEmpty(user_id)){
+                    showLogin();
+                    return;
+                }
                 //赚钱中心
                 Intent intent_makemoney = new Intent(getActivity(), MakeMoneyCenterActivity.class);
                 startActivity(intent_makemoney);
                 break;
             case R.id.re_MissionCentre:
+                user_id= (String) SPUtils.get(getActivity(),"user_id","");
+                if (TextUtils.isEmpty(user_id)){
+                    showLogin();
+                    return;
+                }
                 //任务中心
                 Intent intent_taskcenter = new Intent(getActivity(), TaskCenterActivity.class);
                 startActivity(intent_taskcenter);
                 break;
             case R.id.re_AccountDetails:
+                user_id= (String) SPUtils.get(getActivity(),"user_id","");
+                if (TextUtils.isEmpty(user_id)){
+                    showLogin();
+                    return;
+                }
                 //账户明细
                 Intent intent_accountdetails = new Intent(getActivity(), AccountDetailsActivity.class);
                 startActivity(intent_accountdetails);
                 break;
             case R.id.re_MessageCentre:
+                user_id= (String) SPUtils.get(getActivity(),"user_id","");
+                if (TextUtils.isEmpty(user_id)){
+                    showLogin();
+                    return;
+                }
                 //消息中心
                 Intent intent_msg = new Intent(getActivity(), MessageActivity.class);
                 startActivity(intent_msg);
@@ -208,16 +232,31 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 startActivity(intent_helpback);
                 break;
             case R.id.re_Settings:
+                user_id= (String) SPUtils.get(getActivity(),"user_id","");
+                if (TextUtils.isEmpty(user_id)){
+                    showLogin();
+                    return;
+                }
                 //设置
                 Intent intent_settings = new Intent(getActivity(), SettingsActivity.class);
                 startActivity(intent_settings);
                 break;
             case R.id.ll_tixian:
+                user_id= (String) SPUtils.get(getActivity(),"user_id","");
+                if (TextUtils.isEmpty(user_id)){
+                    showLogin();
+                    return;
+                }
                 //提现
                 Intent intent_withdrawals = new Intent(getActivity(), WithdrawalsActivity.class);
                 startActivity(intent_withdrawals);
                 break;
             case R.id.tv_copy:
+                user_id= (String) SPUtils.get(getActivity(),"user_id","");
+                if (TextUtils.isEmpty(user_id)){
+                    showLogin();
+                    return;
+                }
                 String code = tv_InvitationCode.getText().toString().trim();
                 try {
                     Utils.copy(code, getActivity());
@@ -226,7 +265,17 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                     Logger.i(e.getMessage());
                 }
                 break;
-            default:
+            case R.id.tv_login:
+                Intent intentLogin = new Intent(getActivity(), LoginActivity.class);
+                startActivity(intentLogin);
+                break;
+            case R.id.tv_register:
+                Intent intentRegister = new Intent(getActivity(), RegisterActivity.class);
+                startActivity(intentRegister);
+                break;
+            case R.id.ll_noLoginTiXian:
+                Intent intentTiXian = new Intent(getActivity(), LoginActivity.class);
+                startActivity(intentTiXian);
                 break;
         }
     }
@@ -234,6 +283,13 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     public void onResume() {
         super.onResume();
         String userid = (String) SPUtils.get(getActivity(),"user_id","");
+        if (TextUtils.isEmpty(userid)){
+            rl_noLogin.setVisibility(View.VISIBLE);
+            rl_login.setVisibility(View.GONE);
+        }else{
+            rl_noLogin.setVisibility(View.GONE);
+            rl_login.setVisibility(View.VISIBLE);
+        }
         if(!TextUtils.isEmpty(userid)){
             getUserInfo(userid);
         }

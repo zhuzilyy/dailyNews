@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import okhttp3.Call;
 import okhttp3.Response;
 
@@ -177,5 +178,13 @@ public class GoldCoinFragment extends BaseFragment implements PullToRefreshView.
     public void onFooterRefresh(PullToRefreshView view) {
         page++;
         getMoreData(page);
+    }
+    @OnClick({R.id.reload})
+    public void click(View view){
+        switch (view.getId()){
+            case R.id.reload:
+                getData(0);
+                break;
+        }
     }
 }

@@ -202,6 +202,17 @@ public class ApiMine {
         params.put("fo",fo);
         OkHttpManager.getInstance().postRequest(url,params,callback);
     }
+    /**
+     *获取消息列表
+     * @param callback
+     */
+    public static void getMessageList(String url,String userId ,int curPage, String pageSize,RequestCallBack<String> callback){
+        Map<String,String> params=new HashMap<>();
+        params.put("userId",userId);
+        params.put("curPage",curPage+"");
+        params.put("pageSize",pageSize);
+        OkHttpManager.getInstance().postRequest(url,params,callback);
+    }
 
 
 

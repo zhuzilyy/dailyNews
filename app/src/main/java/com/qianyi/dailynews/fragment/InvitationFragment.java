@@ -769,7 +769,6 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
         req.scene = SendMessageToWX.Req.WXSceneSession;
         mWxApi.sendReq(req);
     }
-
     private void shareFriendCircle() {
         String my_invite_code= (String) SPUtils.get(getActivity(),"my_invite_code","");
         WXWebpageObject webpage = new WXWebpageObject();
