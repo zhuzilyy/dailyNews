@@ -226,6 +226,7 @@ public class HighRebateDetilsActivity extends BaseActivity implements View.OnCli
             moneyTitle_tv.setText(info.getTitle());
             moneyNum_tv.setText("+"+info.getCash()+"元");
             moneyDes_tv.setText(info.getExposition());
+
             webview.loadUrl(info.getUrl());
 
             moneyType2_tv.setText(info.getRewardsType());

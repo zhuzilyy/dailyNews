@@ -1,5 +1,8 @@
 package com.qianyi.dailynews.utils;
 
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnKeyListener;
@@ -16,35 +19,13 @@ public class WebviewUtil {
 	        mWebSettings.setSupportZoom(false);
 	        webView.setHapticFeedbackEnabled(false);
 
-	        //***************************************
-	//	 WebSettings s = webView.getSettings();
-
-//		webView.getSettings().setSupportZoom(true);
-//		mWebSettings.setBuiltInZoomControls(true);
-//		mWebSettings.setUseWideViewPort(true);
-//		mWebSettings.setLoadWithOverviewMode(true);
-//		mWebSettings.setDefaultTextEncodingName("utf-8");
-//
-//		webView.getSettings().setJavaScriptEnabled(true);
-//		webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
-//		webView.requestFocus();
-
-
-
-
-
-
-
-	    //*******************************************
-
-
-
 	        mWebSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
+
 	        webView.setWebViewClient(new WebViewClient() {
 			@Override
 			public boolean shouldOverrideUrlLoading(WebView view,
 					String url) {
-				view.loadUrl(url);
+				//view.loadUrl(url);
 				return false;
 			}
 	       });
@@ -61,4 +42,5 @@ public class WebviewUtil {
 				}
 			});
 	}
+
 }
