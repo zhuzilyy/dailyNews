@@ -100,6 +100,8 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     public TextView tv_wechatName;
     @BindView(R.id.mine_head)
     public CircleImageView mine_head;
+    @BindView(R.id.view_message)
+    public View view_message;
     private String phone,balance,earnings,gold,my_invite_code,user_id,headimgurl,invite_code,name;
     private MyReceiver myReceiver;
     @Override
@@ -161,13 +163,40 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
 
     @Override
     protected void initData() {
+        getMessageState();
+    }
+    //获取消息状态
+    private void getMessageState() {
+        user_id= (String) SPUtils.get(getActivity(),"user_id","");
+        if (TextUtils.isEmpty(user_id)){
+            return;
+        }
+        ApiMine.messageDot(ApiConstant.MESSAGE_DOT, user_id, new RequestCallBack<String>() {
+            @Override
+            public void onSuccess(Call call, Response response, final String s) {
+                try {
+                    JSONObject jsonObject=new JSONObject(s);
+                    boolean showDot = jsonObject.getBoolean("data");
+                    if (showDot){
+                        view_message.setVisibility(View.VISIBLE);
+                    }else{
+                        view_message.setVisibility(View.GONE);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
+            }
+            @Override
+            public void onEror(Call call, int statusCode, Exception e) {
+
+            }
+        });
     }
     @Override
     protected void initListener() {
 
     }
-
     @OnClick({R.id.re_WriteCode, R.id.re_MoneyCenter, R.id.re_MissionCentre, R.id.re_AccountDetails,
             R.id.re_MessageCentre, R.id.re_HelpBack, R.id.re_Settings, R.id.ll_tixian, R.id.tv_copy,R.id.tv_login,R.id.tv_register,R.id.ll_noLoginTiXian
     })
@@ -292,6 +321,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         }
         if(!TextUtils.isEmpty(userid)){
             getUserInfo(userid);
+            getMessageState();
         }
 
     }

@@ -213,6 +213,15 @@ public class ApiMine {
         params.put("pageSize",pageSize);
         OkHttpManager.getInstance().postRequest(url,params,callback);
     }
+    /**
+     *消息红点
+     * @param callback
+     */
+    public static void messageDot(String url,String userId,RequestCallBack<String> callback){
+        Map<String,String> params=new HashMap<>();
+        params.put("userId",userId);
+        OkHttpManager.getInstance().postRequest(url,params,callback);
+    }
 
 
 

@@ -82,7 +82,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         bar.setMode(BottomNavigationBar.MODE_FIXED);
         bar.setInActiveColor("#808080");
         bar.setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_DEFAULT);
-        bar.addItem(new BottomNavigationItem(getResources().getDrawable(R.mipmap.choosenews_icon),"新闻").setActiveColorResource(R.color.main_red))
+        bar.addItem(new BottomNavigationItem(getResources().getDrawable(R.mipmap.choosenews_icon),"首页").setActiveColorResource(R.color.main_red))
                 .addItem(new BottomNavigationItem(getResources().getDrawable(R.mipmap.choosevideo_icon),"视频").setActiveColorResource(R.color.main_red))
                 .addItem(new BottomNavigationItem(getResources().getDrawable(R.mipmap.redpack_icon),"邀请").setActiveColorResource(R.color.main_red))
                 .addItem(new BottomNavigationItem(getResources().getDrawable(R.mipmap.nonemy_icon),"我的").setActiveColorResource(R.color.main_red))

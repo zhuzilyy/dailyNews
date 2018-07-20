@@ -616,7 +616,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
-                                android:text="100金币"
+                                android:text="+100金币"
                                 android:textColor="@color/goldcolor"
                                 android:gravity="center"
                                 android:layout_marginRight="@dimen/dp_10"
@@ -717,7 +717,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
-                                android:text="100金币"
+                                android:text="-1000金币"
                                 android:textColor="@color/goldcolor"
                                 android:gravity="center"
                                 android:layout_marginRight="@dimen/dp_10"
@@ -819,7 +819,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
-                                android:text="100金币"
+                                android:text="+100金币"
                                 android:textColor="@color/goldcolor"
                                 android:gravity="center"
                                 android:layout_marginRight="@dimen/dp_10"
@@ -922,7 +922,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
-                                android:text="100金币"
+                                android:text="+100金币"
                                 android:textColor="@color/goldcolor"
                                 android:gravity="center"
                                 android:layout_marginRight="@dimen/dp_10"
@@ -1055,7 +1055,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
-                                android:text="100金币"
+                                android:text="+1000金币"
                                 android:textColor="@color/goldcolor"
                                 android:gravity="center"
                                 android:layout_marginRight="@dimen/dp_10"
@@ -1096,7 +1096,7 @@
                             android:gravity="center_vertical"
                             android:layout_weight="2.5"
                             android:layout_height="50dp"
-                            android:text="每邀请一名好友可以获得100金币奖励"
+                            android:text="每邀请一名好友可以获得1000金币奖励"
                             />
                         <LinearLayout
                             android:layout_width="0dp"
@@ -1158,7 +1158,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
-                                android:text="100金币"
+                                android:text="+100金币"
                                 android:textColor="@color/goldcolor"
                                 android:gravity="center"
                                 android:layout_marginRight="@dimen/dp_10"
@@ -1256,7 +1256,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
-                                android:text="100金币"
+                                android:text="+100金币"
                                 android:textColor="@color/goldcolor"
                                 android:gravity="center"
                                 android:layout_marginRight="@dimen/dp_10"
@@ -1358,7 +1358,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
-                                android:text="100金币"
+                                android:text="+100金币"
                                 android:textColor="@color/goldcolor"
                                 android:gravity="center"
                                 android:layout_marginRight="@dimen/dp_10"
@@ -1456,7 +1456,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
-                                android:text="100金币"
+                                android:text="+100金币"
                                 android:textColor="@color/goldcolor"
                                 android:gravity="center"
                                 android:layout_marginRight="@dimen/dp_10"
@@ -1521,10 +1521,6 @@
                         android:layout_height="30dp"/>
                 </LinearLayout>
             </LinearLayout>
-
-
-
-
         </LinearLayout>
     </ScrollView>
 

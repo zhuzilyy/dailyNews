@@ -126,6 +126,10 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
     @BindView(R.id.btn_readingAward) public Button btn_readingAward;
     @BindView(R.id.btn_sunincome) public TextView btn_sunincome;
     @BindView(R.id.btn_commentAward) public TextView btn_commentAward;
+    //日常任务
+    @BindView(R.id.btn_inviteFriends) public TextView btn_inviteFriends;
+    @BindView(R.id.btn_share) public TextView btn_share;
+
 
     @BindView(R.id.back) public ImageView back;
     private List<LinearLayout> OtherLineralayout=new ArrayList<>();
@@ -246,9 +250,17 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
                     dailyMission3 = missionArr[2];
                     dailyMission4 = missionArr[3];
                     dailyMission5 = missionArr[4];
-                    if (dailyMission2.equals("25")){
+                    if (!dailyMission1.equals("0")){
+                        btn_inviteFriends.setText("已完成");
+                        btn_inviteFriends.setBackgroundResource(R.drawable.new_mission_finish);
+                    }
+                    if (!dailyMission2.equals("0")){
                         btn_readingAward.setText("已完成");
                         btn_readingAward.setBackgroundResource(R.drawable.new_mission_finish);
+                    }
+                    if (!dailyMission3.equals("0")){
+                        btn_share.setText("已完成");
+                        btn_share.setBackgroundResource(R.drawable.new_mission_finish);
                     }
                     if (!dailyMission4.equals("0")){
                         btn_sunincome.setText("已完成");

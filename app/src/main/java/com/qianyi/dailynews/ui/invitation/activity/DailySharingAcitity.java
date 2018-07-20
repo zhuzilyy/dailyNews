@@ -602,6 +602,12 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getData();
+    }
+
     class MyReceiver extends BroadcastReceiver{
         @Override
         public void onReceive(Context context, Intent intent) {
