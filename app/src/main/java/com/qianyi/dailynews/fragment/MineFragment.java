@@ -323,9 +323,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             getUserInfo(userid);
             getMessageState();
         }
-
     }
-
     private void showLogin() {
         final SelfDialog quitDialog = new SelfDialog(getActivity());
         quitDialog.setTitle("提示");

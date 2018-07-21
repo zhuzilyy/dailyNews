@@ -273,7 +273,7 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="101488066" /> <!-- 获取的APPID -->
+                <data android:scheme="tencent101488066" /> <!-- 获取的APPID -->
             </intent-filter>
         </activity>
 
@@ -281,7 +281,5 @@
             android:name="com.tencent.connect.common.AssistActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:configChanges="orientation|keyboardHidden|screenSize" />
-
-
     </application>
 </manifest>

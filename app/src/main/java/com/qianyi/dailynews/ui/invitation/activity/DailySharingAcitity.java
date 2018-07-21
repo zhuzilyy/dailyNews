@@ -367,6 +367,7 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
         @Override
         public void onCancel() {
             //分享取消
+            Toast.makeText(DailySharingAcitity.this, "onCancel", Toast.LENGTH_SHORT).show();
 
         }
     }
@@ -489,7 +490,6 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
         mediaObject.defaultText = "Webpage 默认文案";
         return mediaObject;
     }
-
     //分享到微信
     private void shareFriends() {
         String my_invite_code= (String) SPUtils.get(DailySharingAcitity.this,"my_invite_code","");
@@ -580,6 +580,11 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
     public void onWbShareFail() {
 
     }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Tencent.onActivityResultData(requestCode,resultCode,data,new ShareUiListener());
+    }
     //分享成功
     private void shareSuccess() {
         ApiInvite.shareAfter(ApiConstant.SHARE_AFTER, userId, new RequestCallBack<String>() {
@@ -589,7 +594,7 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
                     JSONObject jsonObject=new JSONObject(s);
                     String code = jsonObject.getString("code");
                     if (code.equals(ApiConstant.SUCCESS_CODE)){
-                        finish();
+                        getData();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

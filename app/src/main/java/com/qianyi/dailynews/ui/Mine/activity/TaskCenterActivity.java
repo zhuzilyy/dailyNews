@@ -29,6 +29,7 @@ import com.qianyi.dailynews.base.BaseActivity;
 import com.qianyi.dailynews.callback.RequestCallBack;
 import com.qianyi.dailynews.dialog.CustomLoadingDialog;
 import com.qianyi.dailynews.ui.Mine.bean.SignBean;
+import com.qianyi.dailynews.ui.invitation.activity.DailySharingAcitity;
 import com.qianyi.dailynews.utils.SPUtils;
 import com.qianyi.dailynews.utils.WhiteBgBitmapUtil;
 import com.qianyi.dailynews.wxapi.WXEntryActivity;
@@ -628,6 +629,12 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
             //分享取消
 
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Tencent.onActivityResultData(requestCode,resultCode,data,new ShareUiListener());
     }
     private void dialyShareSuccess() {
         userId= (String) SPUtils.get(TaskCenterActivity.this,"user_id","");

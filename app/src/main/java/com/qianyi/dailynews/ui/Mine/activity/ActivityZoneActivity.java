@@ -27,6 +27,7 @@ import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
+import com.tencent.tauth.Tencent;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -202,6 +203,12 @@ public class ActivityZoneActivity extends BaseActivity {
                 break;
         }
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
     //分享到朋友圈
     private void shareFriendCircle() {
         WXWebpageObject webpage = new WXWebpageObject();

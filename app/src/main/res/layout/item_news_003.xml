@@ -47,6 +47,7 @@
         </LinearLayout>
 
         <TextView
+            android:visibility="gone"
             android:id="@+id/news001_publishman"
             android:layout_marginLeft="@dimen/dp_10"
             android:layout_width="wrap_content"

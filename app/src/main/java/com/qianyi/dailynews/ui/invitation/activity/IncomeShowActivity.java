@@ -213,13 +213,17 @@ public class IncomeShowActivity extends BaseActivity implements View.OnClickList
         @Override
         public void onError(UiError uiError) {
             //分享失败
-
         }
         @Override
         public void onCancel() {
             //分享取消
-
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Tencent.onActivityResultData(requestCode, resultCode, data, new ShareUiListener());
     }
 
     private void shareFriendCircle() {

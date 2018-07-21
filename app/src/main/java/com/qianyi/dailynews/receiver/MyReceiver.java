@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.qianyi.dailynews.MainActivity;
 import com.qianyi.dailynews.ui.news.activity.NewsDetailsActivity;
 
 import org.json.JSONException;
@@ -22,7 +23,7 @@ public class MyReceiver extends BroadcastReceiver {
 	public void onReceive(Context context, Intent intent) {
         Bundle bundle = intent.getExtras();
         //Log.d(TAG, "[MyReceiver] onReceive - " + intent.getAction() + ", extras: " + printBundle(bundle));
-		Log.i("tag", "00"+bundle.getString(JPushInterface.EXTRA_ALERT));
+		Log.i("tag", "00"+bundle.getString(JPushInterface.EXTRA_EXTRA));
         if (JPushInterface.ACTION_REGISTRATION_ID.equals(intent.getAction())) {
             String regId = bundle.getString(JPushInterface.EXTRA_REGISTRATION_ID);
             Log.d(TAG, "[MyReceiver] 接收Registration Id : " + regId);
@@ -38,32 +39,48 @@ public class MyReceiver extends BroadcastReceiver {
             Log.i("tag", "33[MyReceiver] 接收到推送下来的通知的ID: " + notifactionId);
         } else if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(intent.getAction())) {
             Log.d(TAG, "[MyReceiver] 用户点击打开了");
-            String json = bundle.getString(JPushInterface.EXTRA_ALERT);
+            String json = bundle.getString(JPushInterface.EXTRA_EXTRA);
             String body="";
             String title="";
             String newsId="";
             String createTime="";
+            String type="";
             String url="";
+			JSONObject jsonObject=null;
+			JSONObject extra=null;
             try {
-                JSONObject jsonObject=new JSONObject(json);
-                body=jsonObject.getString("body");
-                title=jsonObject.getString("title");
-                newsId=jsonObject.getString("newsId");
-                createTime=jsonObject.getString("createTime");
-                url=jsonObject.getString("url");
+				jsonObject=new JSONObject(json);
+				extra=jsonObject.getJSONObject("extra");
+				type=extra.getString("type");
             } catch (JSONException e) {
                 e.printStackTrace();
             }
             //打开自定义的Activity*/
-        	Intent i = new Intent(context, NewsDetailsActivity.class);
-        	//i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        	i.putExtra("id", newsId);
-        	i.putExtra("url", url);
-        	i.putExtra("des", title);
-        	i.putExtra("redMoney", "0");
-        	i.putExtra("isRed", "1");
-        	i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP );
-        	context.startActivity(i);
+			if (type.equals("1")){
+				try {
+					body=extra.getString("body");
+					title=extra.getString("title");
+					newsId=extra.getString("newsId");
+					createTime=extra.getString("createTime");
+					url=extra.getString("url");
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+				Intent i = new Intent(context, NewsDetailsActivity.class);
+				//i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				i.putExtra("id", newsId);
+				i.putExtra("url", url);
+				i.putExtra("des", title);
+				i.putExtra("redMoney", "0");
+				i.putExtra("isRed", "1");
+				i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP );
+				context.startActivity(i);
+			}else{
+				Intent i = new Intent(context, MainActivity.class);
+				//i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP );
+				context.startActivity(i);
+			}
         } else if (JPushInterface.ACTION_RICHPUSH_CALLBACK.equals(intent.getAction())) {
             Log.d(TAG, "[MyReceiver] 用户收到到RICH PUSH CALLBACK: " + bundle.getString(JPushInterface.EXTRA_EXTRA));
             //在这里根�?JPushInterface.EXTRA_EXTRA 的内容处理代码，比如打开新的Activity�?打开�?��网页�?.
