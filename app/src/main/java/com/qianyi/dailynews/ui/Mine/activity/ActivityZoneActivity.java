@@ -20,6 +20,7 @@ import com.qianyi.dailynews.base.BaseActivity;
 import com.qianyi.dailynews.callback.RequestCallBack;
 import com.qianyi.dailynews.dialog.CustomLoadingDialog;
 import com.qianyi.dailynews.ui.news.activity.SearchActivity;
+import com.qianyi.dailynews.utils.ListActivity;
 import com.qianyi.dailynews.utils.SPUtils;
 import com.qianyi.dailynews.utils.WhiteBgBitmapUtil;
 import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
@@ -68,6 +69,7 @@ public class ActivityZoneActivity extends BaseActivity {
     private IWXAPI mWxApi;
     @Override
     protected void initViews() {
+        ListActivity.list2.add(this);
         tv_title.setText("活动专区");
         customLoadingDialog=new CustomLoadingDialog(this);
         user_id= (String) SPUtils.get(ActivityZoneActivity.this,"user_id","");

@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.qianyi.dailynews.R;
 import com.qianyi.dailynews.api.ApiConstant;
@@ -48,6 +49,7 @@ public class WithdrawalsDetailsActivity extends BaseActivity {
     @Override
     protected void initViews() {
         ListActivity.list.add(this);
+        ListActivity.list2.add(this);
         intent=getIntent();
         if (intent!=null){
             withdrawalMoney=intent.getStringExtra("withdrawalMoney");
@@ -141,6 +143,10 @@ public class WithdrawalsDetailsActivity extends BaseActivity {
             case R.id.btn_withdrawal:
                 String subMoney = withdrawalMoney.substring(0, withdrawalMoney.length()-1);
                 double doubleSubMoney = Double.parseDouble(subMoney);
+                if (doubleBalance<doubleSubMoney){
+                    Toast.makeText(this, "余额不足,不能提现", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 if (doubleSubMoney<1){
                     return;
                 }

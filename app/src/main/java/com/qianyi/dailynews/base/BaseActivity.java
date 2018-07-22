@@ -180,7 +180,6 @@ public abstract class BaseActivity extends AppCompatActivity {
      * 从集合中移除activity
      */
     public static void removeActivity2() {
-
         if(activities2.size()>0){
             for (int i = 0; i < activities.size(); i++) {
 

@@ -16,6 +16,7 @@ import com.qianyi.dailynews.api.ApiConstant;
 import com.qianyi.dailynews.base.BaseActivity;
 import com.qianyi.dailynews.callback.RequestCallBack;
 import com.qianyi.dailynews.dialog.CustomLoadingDialog;
+import com.qianyi.dailynews.utils.ListActivity;
 import com.qianyi.dailynews.utils.SPUtils;
 import com.qianyi.dailynews.utils.ToastUtils;
 import com.qianyi.dailynews.views.ClearEditText;
@@ -50,6 +51,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     private CustomLoadingDialog customLoadingDialog;
     @Override
     protected void initViews() {
+        ListActivity.list2.add(this);
         customLoadingDialog=new CustomLoadingDialog(this);
     }
 
@@ -146,7 +148,6 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                                //jumpActivity(RegisterActivity.this,LoginActivity.class);
                                sendBroadcast(new Intent("registerOk"));
                                AutoLogin(account,pwd);
-                               finish();
                            }
                        } catch (JSONException e) {
                            e.printStackTrace();
@@ -211,7 +212,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                                 sendBroadcast(new Intent("loginOk"));
                                 //关闭登录
                                 BaseActivity.removeActivity2();
-                              //startActivity(new Intent(RegisterActivity.this,MainActivity.class));
+                                ListActivity.close2();
                                 finish();
                             }
                         } catch (JSONException e) {

@@ -179,7 +179,9 @@
             android:screenOrientation="portrait"
             />
         <!--调查问卷-->
-        <activity android:name=".ui.Mine.activity.QuestionSurveyActivity"
+        <activity
+            android:windowSoftInputMode="adjustPan"
+            android:name=".ui.Mine.activity.QuestionSurveyActivity"
             android:screenOrientation="portrait"
             />
         <!--新手引导-->

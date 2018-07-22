@@ -74,7 +74,7 @@ public class InviteRuleActivity extends BaseActivity{
 
     @Override
     protected void getResLayout() {
-        setContentView(R.layout.activity_sign_rule);
+        setContentView(R.layout.activity_invite_rule);
     }
 
     @Override

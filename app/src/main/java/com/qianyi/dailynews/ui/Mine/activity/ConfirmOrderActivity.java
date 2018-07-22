@@ -61,6 +61,7 @@ public class ConfirmOrderActivity extends BaseActivity {
     @Override
     protected void initViews() {
         ListActivity.list.add(this);
+        ListActivity.list2.add(this);
         tv_title.setText("确认订单");
         userId= (String) SPUtils.get(this,"user_id","");
         customLoadingDialog=new CustomLoadingDialog(this);
@@ -200,6 +201,7 @@ public class ConfirmOrderActivity extends BaseActivity {
                             Toast.makeText(ConfirmOrderActivity.this, return_msg, Toast.LENGTH_SHORT).show();
                             if (return_code.equals(ApiConstant.SUCCESS)){
                                 ListActivity.close();
+                                ListActivity.close2();
                                 Intent intent=new Intent();
                                 intent.setAction("com.action.withdrawal.success");
                                 sendBroadcast(intent);

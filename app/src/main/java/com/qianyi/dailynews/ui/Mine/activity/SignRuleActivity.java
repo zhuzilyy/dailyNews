@@ -72,7 +72,6 @@ public class SignRuleActivity extends BaseActivity{
         });
 
     }
-
     @Override
     protected void getResLayout() {
         setContentView(R.layout.activity_sign_rule);

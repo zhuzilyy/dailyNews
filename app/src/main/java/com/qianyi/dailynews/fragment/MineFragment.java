@@ -313,6 +313,9 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         super.onResume();
         String userid = (String) SPUtils.get(getActivity(),"user_id","");
         if (TextUtils.isEmpty(userid)){
+            view_message.setVisibility(View.GONE);
+        }
+        if (TextUtils.isEmpty(userid)){
             rl_noLogin.setVisibility(View.VISIBLE);
             rl_login.setVisibility(View.GONE);
         }else{

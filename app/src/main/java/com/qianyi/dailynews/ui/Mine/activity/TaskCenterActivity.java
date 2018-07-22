@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -334,7 +335,7 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
                 String countinuous = signBean.getData().getCountinuous();
                 signed= signBean.getData().isSigned();
                 if (signed){
-                    btn_sign.setText("明天签到可领取100金币");
+                    btn_sign.setText("明天再来领取金币吧");
                 }
                 int signDay = Integer.parseInt(countinuous);
                 for (int i = 0; i <signDay; i++) {
@@ -472,7 +473,6 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
                 }
                 closeOtherAll(ll_commentAward002);
                 break;
-
             case R.id.btn_bandwx:
                 if (!mission1.equals("0")){
                     return;
@@ -883,11 +883,14 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        Log.i("tag",s);
                         Gson gson=new Gson();
                         SignBean signBean = gson.fromJson(s, SignBean.class);
                         String message = signBean.getData().getMessage();
-                        Toast.makeText(TaskCenterActivity.this, message, Toast.LENGTH_SHORT).show();
-                        btn_sign.setText("明天签到可领取100金币");
+                        if (TextUtils.isEmpty(message)){
+                            Toast.makeText(TaskCenterActivity.this, message, Toast.LENGTH_SHORT).show();
+                        }
+                        btn_sign.setText("明天再来领取金币吧");
                         Intent intent=new Intent();
                         intent.setAction("com.action.sign.success");
                         sendBroadcast(intent);
@@ -916,5 +919,12 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
         if (myReceiver!=null){
             unregisterReceiver(myReceiver);
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getUesrInfo();
+        getDailyMissionState();
     }
 }
