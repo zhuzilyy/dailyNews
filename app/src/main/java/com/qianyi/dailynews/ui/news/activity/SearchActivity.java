@@ -118,25 +118,31 @@ public class SearchActivity extends BaseActivity {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if(EditorInfo.IME_ACTION_SEARCH == actionId){
-                    String st = newsSearch_etc.getText().toString();
+                    String hotWord = newsSearch_etc.getText().toString();
                     Uri uri = null;
-                    try {
+                    final Intent intent=new Intent(SearchActivity.this,SearchWebviewActivity.class);
+                    intent.putExtra("hotWord",hotWord);
+                    startActivity(intent);
+                    if (tag.equals("mission")){
+                        mission();
+                    }
+                   /* try {
                         uri = Uri.parse("http://www.baidu.com/s?&ie=utf-8&oe=UTF-8&wd=" + URLEncoder.encode(st,"UTF-8"));
                     } catch (UnsupportedEncodingException e1) {
                         e1.printStackTrace();
                     }
-                    final Intent it = new Intent(Intent.ACTION_VIEW, uri);
-                    Timer timer = new Timer();
+                    final Intent it = new Intent(Intent.ACTION_VIEW, uri);*/
+                   /* Timer timer = new Timer();
                     TimerTask task = new TimerTask() {
                         @Override
                         public void run() {
                             if (tag.equals("mission")){
                                 mission();
                             }
-                            startActivity(it);
+                            startActivity(intent);
                         }
                     };
-                    timer.schedule(task, 0);
+                    timer.schedule(task, 0);*/
                 }
 
                 return false;

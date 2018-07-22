@@ -31,6 +31,7 @@ import com.qianyi.dailynews.callback.RequestCallBack;
 import com.qianyi.dailynews.dialog.CustomLoadingDialog;
 import com.qianyi.dailynews.ui.Mine.bean.SignBean;
 import com.qianyi.dailynews.ui.invitation.activity.DailySharingAcitity;
+import com.qianyi.dailynews.ui.invitation.activity.IncomeShowActivity;
 import com.qianyi.dailynews.utils.SPUtils;
 import com.qianyi.dailynews.utils.WhiteBgBitmapUtil;
 import com.qianyi.dailynews.wxapi.WXEntryActivity;
@@ -65,7 +66,6 @@ import okhttp3.Response;
 /**
  * Created by Administrator on 2018/5/3.
  */
-
 public class TaskCenterActivity extends BaseActivity implements View.OnClickListener ,WbShareCallback {
     //微信绑定
     @BindView(R.id.ll_bandwx001) public LinearLayout ll_bandwx001;
@@ -183,7 +183,6 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
         signedDays.add(fifthDay_already_ll);
         signedDays.add(sixthDay_already_ll);
         signedDays.add(secondDay_already_ll);
-
         unsignDays.add(firstDay_none_ll);
         unsignDays.add(secondDay_none_ll);
         unsignDays.add(thirdDay_none_ll);
@@ -215,11 +214,9 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
         ll_QQ.setOnClickListener(this);
         ll_wechat.setOnClickListener(this);
         ll_weibo.setOnClickListener(this);
-
         mWxApi = WXAPIFactory.createWXAPI(this, ApiConstant.APP_ID, false);
         // 将该app注册到微信
         mWxApi.registerApp(ApiConstant.APP_ID);
-
     }
     @Override
     protected void initData() {
@@ -585,10 +582,11 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
     }
     //QQ分享
     private void shareQQ() {
+        String my_invite_code= (String) SPUtils.get(this,"my_invite_code","");
         final Bundle params = new Bundle();
         params.putInt(QQShare.SHARE_TO_QQ_KEY_TYPE, QQShare.SHARE_TO_QQ_TYPE_DEFAULT);//分享的类型
         params.putString(QQShare.SHARE_TO_QQ_TITLE, "每日速报");//分享标题
-        params.putString(QQShare.SHARE_TO_QQ_SUMMARY,"任务中心的晒收入分享");//要分享的内容摘要
+        params.putString(QQShare.SHARE_TO_QQ_SUMMARY,"看新闻还能赚钱~赶快抓住机会试试呀，填我邀请码"+my_invite_code);//要分享的内容摘要
         params.putString(QQShare.SHARE_TO_QQ_TARGET_URL,ApiConstant.DAILY_SHARE_URL+userId);//内容地址
         params.putString(QQShare.SHARE_TO_QQ_IMAGE_URL,ApiConstant.QQ_SHARE_LOGO);//分享的图片URL
         params.putString(QQShare.SHARE_TO_QQ_APP_NAME, "每日速报");//应用名称
@@ -664,11 +662,12 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
 
 
     private void shareFriendCircle() {
+        String my_invite_code= (String) SPUtils.get(this,"my_invite_code","");
         WXWebpageObject webpage = new WXWebpageObject();
         webpage.webpageUrl = ApiConstant.DAILY_SHARE_URL+userId;
         WXMediaMessage msg = new WXMediaMessage(webpage);
         msg.title = "每日速报";
-        msg.description = "任务中心的晒收入分享";
+        msg.description = "看新闻还能赚钱~赶快抓住机会试试呀，填我邀请码"+my_invite_code;
         Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.mipmap.logo);
         Bitmap bitmap = WhiteBgBitmapUtil.drawableBitmapOnWhiteBg(this, bmp);
         Bitmap thumbBmp = Bitmap.createScaledBitmap(bitmap, 200, 200, true);
@@ -718,12 +717,11 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
         message.imageObject= imageObject;
 
         message.mediaObject= mediaObj;*/
-
-
+        String my_invite_code= (String) SPUtils.get(this,"my_invite_code","");
         WebpageObject mediaObject = new WebpageObject();
         mediaObject.identify = Utility.generateGUID();
         mediaObject.title = "每日速报";
-        mediaObject.description = "任务中心的晒收入分享";
+        mediaObject.description = "看新闻还能赚钱~赶快抓住机会试试呀，填我邀请码"+my_invite_code;
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.logo);
 
         // 设置 Bitmap 类型的图片到视频对象里         设置缩略图。 注意：最终压缩过的缩略图大小不得超过 32kb。
@@ -746,7 +744,6 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
             e.printStackTrace();
         }
     }
-
     /**
      * 创建多媒体（网页）消息对象。
      *
@@ -765,14 +762,14 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
         mediaObject.defaultText = "Webpage 默认文案";
         return mediaObject;
     }
-
     //分享到微信
     private void shareFriends() {
+        String my_invite_code= (String) SPUtils.get(this,"my_invite_code","");
         WXWebpageObject webpage = new WXWebpageObject();
         webpage.webpageUrl = ApiConstant.DAILY_SHARE_URL+userId;
         WXMediaMessage msg = new WXMediaMessage(webpage);
         msg.title = "每日速报";
-        msg.description = "任务中心的晒收入分享";
+        msg.description = "看新闻还能赚钱~赶快抓住机会试试呀，填我邀请码"+my_invite_code;
         Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.mipmap.logo);
         Bitmap bitmap = WhiteBgBitmapUtil.drawableBitmapOnWhiteBg(this, bmp);
         Bitmap thumbBmp = Bitmap.createScaledBitmap(bitmap, 200, 200, true);

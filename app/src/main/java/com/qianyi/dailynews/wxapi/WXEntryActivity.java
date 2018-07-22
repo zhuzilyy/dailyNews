@@ -2,6 +2,7 @@ package com.qianyi.dailynews.wxapi;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.WindowManager;
@@ -41,6 +42,7 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
 
     private IWXAPI iwxapi;
     private String userId;
+    private boolean isFront;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -307,5 +309,30 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
             public void onFinished() {
             }
         });
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                // 如果0.2秒后没有调用onResume，则认为是分享成功并且留着微信。
+                if (!isFront) {
+                    Log.i("TAG", "分享成功，留在微信");
+                }
+            }
+        }, 200);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        isFront=false;
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        isFront=true;
     }
 }
