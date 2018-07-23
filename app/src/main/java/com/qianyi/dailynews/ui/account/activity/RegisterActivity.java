@@ -1,9 +1,11 @@
 package com.qianyi.dailynews.ui.account.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -75,7 +77,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     protected void setStatusBarColor() {
 
     }
-    @OnClick({R.id.register_close_tv,R.id.btn_getCode,R.id.btn_register})
+    @OnClick({R.id.register_close_tv,R.id.btn_getCode,R.id.btn_register,R.id.rl_register})
     @Override
     public void onClick(View view) {
         switch(view.getId()){
@@ -126,6 +128,11 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                     return;
                 }
                 register(account,pwd,confrimCode,inviteCode);
+                break;
+            case R.id.rl_register:
+                InputMethodManager imm = (InputMethodManager)
+                        getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                 break;
         }
     }

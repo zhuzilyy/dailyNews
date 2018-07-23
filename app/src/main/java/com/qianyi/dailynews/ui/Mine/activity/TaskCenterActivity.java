@@ -508,7 +508,7 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
                 finish();
                 break;
             case R.id.btn_readingAward:
-                if (dailyMission2.equalsIgnoreCase("200")){
+                if (!dailyMission2.equalsIgnoreCase("0")){
                     return;
                 }
                 //去阅读
@@ -518,6 +518,9 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
                 finish();
                 break;
             case R.id.btn_share:
+                if (!dailyMission3.equalsIgnoreCase("0")){
+                    return;
+                }
                 //去分享
                 intent=new Intent();
                 intent.setAction("com.action.read");
