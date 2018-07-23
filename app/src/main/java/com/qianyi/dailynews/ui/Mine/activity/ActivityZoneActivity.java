@@ -214,7 +214,7 @@ public class ActivityZoneActivity extends BaseActivity {
     //分享到朋友圈
     private void shareFriendCircle() {
         WXWebpageObject webpage = new WXWebpageObject();
-        webpage.webpageUrl = "http://47.104.73.127:8080/download/download.html";
+        webpage.webpageUrl = ApiConstant.DOWN_SHARE_URL;
         WXMediaMessage msg = new WXMediaMessage(webpage);
         msg.title = "每日速报";
         msg.description = "每日速报是一款基于数据挖掘的推荐引擎产品，它为用户推荐有价值的、个性化的信息，提供连接人与信息的新型服务。";

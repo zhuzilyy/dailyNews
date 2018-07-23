@@ -344,7 +344,7 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
         params.putInt(QQShare.SHARE_TO_QQ_KEY_TYPE, QQShare.SHARE_TO_QQ_TYPE_DEFAULT);//分享的类型
         params.putString(QQShare.SHARE_TO_QQ_TITLE, "每日速报");//分享标题
         params.putString(QQShare.SHARE_TO_QQ_SUMMARY,"看新闻还能赚钱~赶快抓住机会试试呀，填我邀请码"+my_invite_code);//要分享的内容摘要
-        params.putString(QQShare.SHARE_TO_QQ_TARGET_URL,ApiConstant.DAILY_SHARE_URL);//内容地址
+        params.putString(QQShare.SHARE_TO_QQ_TARGET_URL,ApiConstant.DAILY_SHARE_URL+userId);//内容地址
         params.putString(QQShare.SHARE_TO_QQ_IMAGE_URL,ApiConstant.QQ_SHARE_LOGO);//分享的图片URL
         params.putString(QQShare.SHARE_TO_QQ_APP_NAME, "每日速报");//应用名称
         mTencent.shareToQQ(this, params, new ShareUiListener());
@@ -375,7 +375,7 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
     private void shareFriendCircle() {
         String my_invite_code= (String) SPUtils.get(DailySharingAcitity.this,"my_invite_code","");
         WXWebpageObject webpage = new WXWebpageObject();
-        webpage.webpageUrl = ApiConstant.DAILY_SHARE_URL;
+        webpage.webpageUrl = ApiConstant.DAILY_SHARE_URL+userId;
         WXMediaMessage msg = new WXMediaMessage(webpage);
         msg.title = "每日速报";
         msg.description = "看新闻还能赚钱~赶快抓住机会试试呀，填我邀请码"+my_invite_code;
@@ -442,7 +442,7 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
         Bitmap bitmap = WhiteBgBitmapUtil.drawableBitmapOnWhiteBg(this, bmp);
         Bitmap thumbBmp = Bitmap.createScaledBitmap(bitmap, 200, 200, true);
         mediaObject.setThumbImage(thumbBmp);
-        mediaObject.actionUrl = ApiConstant.DAILY_SHARE_URL;
+        mediaObject.actionUrl = ApiConstant.DAILY_SHARE_URL+userId;
         mediaObject.defaultText = "新闻还能赚钱~赶快抓住机会试试呀，填我邀请码"+my_invite_code;
         WeiboMultiMessage message = new WeiboMultiMessage();
         message.mediaObject = mediaObject;
@@ -494,7 +494,7 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
     private void shareFriends() {
         String my_invite_code= (String) SPUtils.get(DailySharingAcitity.this,"my_invite_code","");
         WXWebpageObject webpage = new WXWebpageObject();
-        webpage.webpageUrl = ApiConstant.DAILY_SHARE_URL;
+        webpage.webpageUrl = ApiConstant.DAILY_SHARE_URL+userId;
         WXMediaMessage msg = new WXMediaMessage(webpage);
         msg.title = "每日速报";
         msg.description = "看新闻还能赚钱~赶快抓住机会试试呀，填我邀请码"+my_invite_code;
