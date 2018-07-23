@@ -161,6 +161,8 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
     private boolean oneYuan;
     private static final String APP_ID = "101488066"; //获取的APPID
     private Tencent mTencent;
+    private int signDay;
+    private String[] signDays={"8","18","38","58","88","88","188"};
     @Override
     protected void initViews() {
         //传入参数APPID
@@ -331,10 +333,10 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
                 SignBean signBean = gson.fromJson(s, SignBean.class);
                 String countinuous = signBean.getData().getCountinuous();
                 signed= signBean.getData().isSigned();
+                signDay= Integer.parseInt(countinuous);
                 if (signed){
-                    btn_sign.setText("明天再来领取金币吧");
+                    btn_sign.setText("明日再来签到领取金币吧");
                 }
-                int signDay = Integer.parseInt(countinuous);
                 for (int i = 0; i <signDay; i++) {
                     if (i<signDay){
                         signedDays.get(i).setVisibility(View.GONE);
@@ -506,7 +508,7 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
                 finish();
                 break;
             case R.id.btn_readingAward:
-                if (dailyMission2.equalsIgnoreCase("200")){
+                if (!dailyMission2.equalsIgnoreCase("0")){
                     return;
                 }
                 //去阅读
@@ -516,6 +518,9 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
                 finish();
                 break;
             case R.id.btn_share:
+                if (!dailyMission3.equalsIgnoreCase("0")){
+                    return;
+                }
                 //去分享
                 intent=new Intent();
                 intent.setAction("com.action.read");
@@ -884,10 +889,13 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
                         Gson gson=new Gson();
                         SignBean signBean = gson.fromJson(s, SignBean.class);
                         String message = signBean.getData().getMessage();
-                        if (TextUtils.isEmpty(message)){
-                            Toast.makeText(TaskCenterActivity.this, message, Toast.LENGTH_SHORT).show();
-                        }
-                        btn_sign.setText("明天再来领取金币吧");
+                        Toast.makeText(TaskCenterActivity.this, "签到成功获得"+signDays[signDay]+"金币", Toast.LENGTH_SHORT).show();
+                       /* if (signDay==6){
+                            btn_sign.setText("明日签到可领取"+signDays[6]+"金币");
+                        }else{
+                            btn_sign.setText("明日签到可领取"+signDays[signDay+1]+"金币");
+                        }*/
+                        btn_sign.setText("明日再来签到领取金币吧");
                         Intent intent=new Intent();
                         intent.setAction("com.action.sign.success");
                         sendBroadcast(intent);
