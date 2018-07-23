@@ -70,11 +70,11 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("com.action.wechat");
         registerReceiver(myReceiver, intentFilter);
+        customLoadingDialog.show();
         getUserInfo();
     }
 
     private void getUserInfo() {
-        customLoadingDialog.show();
         ApiMine.getUserInfo(ApiConstant.GET_USERINFO, user_id, new RequestCallBack<String>() {
             @Override
             public void onSuccess(Call call, Response response, String s) {
@@ -243,5 +243,11 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
         if(myReceiver!=null){
             unregisterReceiver(myReceiver);
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getUserInfo();
     }
 }
