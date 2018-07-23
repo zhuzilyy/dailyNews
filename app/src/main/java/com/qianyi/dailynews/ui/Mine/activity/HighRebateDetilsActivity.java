@@ -3,6 +3,7 @@ package com.qianyi.dailynews.ui.Mine.activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -78,6 +79,12 @@ public class HighRebateDetilsActivity extends BaseActivity implements View.OnCli
     private String type;
     private String time;
     private String status;
+    private int time2;
+    Handler handler = new Handler();
+    @BindView(R.id.tvtime1) public TextView tvtime1;
+    @BindView(R.id.tvtime2) public TextView tvtime2;
+    @BindView(R.id.tvtime3) public TextView tvtime3;
+
     @Override
     protected void initViews() {
         customLoadingDialog = new CustomLoadingDialog(HighRebateDetilsActivity.this);
@@ -86,41 +93,19 @@ public class HighRebateDetilsActivity extends BaseActivity implements View.OnCli
         type=getIntent().getStringExtra("type");
         time=getIntent().getStringExtra("time");
 
-
-
-
         if(!TextUtils.isEmpty(time)){
-            int time2 = Integer.parseInt(time);
+            time2 = Integer.parseInt(time);
             if(time2>0){
-                /** 倒计时60秒，一次1秒 */
-                CountDownTimer timer = new CountDownTimer(time2, 1000) {
-                    @Override
-                    public void onTick(long millisUntilFinished) {
-                        // TODO Auto-generated method stub
-                        if(tv_leftTime!=null){
-                            tv_leftTime.setText("还剩"+millisUntilFinished/1000+"秒");
-                        }
-                    }
-                    @Override
-                    public void onFinish() {
-
-
-                    }
-                }.start();
+                handler.postDelayed(runnable, 1000);
             }
-
-
-
-
-
         }
+
         if("1".equals(type)){
             title01.setText("投资期限");
             title02.setText("投资金额");
             title03.setText("年华收益");
             title04.setText("额外返利");
         }
-
         title.setText("试玩应用");
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -129,6 +114,52 @@ public class HighRebateDetilsActivity extends BaseActivity implements View.OnCli
             }
         });
         initWebView(webview);
+    }
+    Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            time2--;
+            String formatLongToTimeStr = formatLongToTimeStr((long) time2);
+            String[] split = formatLongToTimeStr.split("：");
+            for (int i = 0; i < split.length; i++) {
+                if (i == 0) {
+                    if(tvtime1!=null){
+                        tvtime1.setText(split[0] + " 小时 ");
+                    }
+                }
+                if (i == 1) {
+                    if(tvtime2!=null){
+                        tvtime2.setText(split[1] + " 分钟 ");
+                    }
+                }
+                if (i == 2) {
+                    if(tvtime3!=null){
+                        tvtime3.setText(split[2] + " 秒 ");
+                    }
+                }
+            }
+            if (time2 > 0) {
+                handler.postDelayed(this, 1000);
+            }
+        }
+    };
+
+    public String formatLongToTimeStr(Long l) {
+        int hour = 0;
+        int minute = 0;
+        int second = 0;
+        second = l.intValue();
+        if (second > 60) {
+            minute = second / 60;         //取整
+            second = second % 60;         //取余
+        }
+
+        if (minute > 60) {
+            hour = minute / 60;
+            minute = minute % 60;
+        }
+        String strtime = hour + "：" + minute + "：" + second;
+        return strtime;
     }
 
     /***
@@ -307,7 +338,14 @@ public class HighRebateDetilsActivity extends BaseActivity implements View.OnCli
                     String code  = jsonObject.getString("code");
                     if("0000".equals(code)){
                         btn_getMoney.setVisibility(View.GONE);
-                        CodeTimerTask.getInstence(time).starrTimer(tv_leftTime);
+                       // CodeTimerTask.getInstence(time).starrTimer(tv_leftTime);
+                        if(!TextUtils.isEmpty(time)){
+                            time2 = Integer.parseInt(time);
+                            if(time2>0){
+                                handler.postDelayed(runnable, 1000);
+                            }
+                        }
+                        sendBroadcast(new Intent("takePartInOk"));
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -323,4 +361,6 @@ public class HighRebateDetilsActivity extends BaseActivity implements View.OnCli
             }
         });
     }
+
+
 }

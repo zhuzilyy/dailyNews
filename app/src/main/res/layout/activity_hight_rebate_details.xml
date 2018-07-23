@@ -487,7 +487,7 @@
     </ScrollView>
 
     <Button
-        android:visibility="visible"
+        android:visibility="gone"
         android:id="@+id/btn_getMoney"
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -514,21 +514,68 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_weight="1.5"
                 android:gravity="center"
                 android:textSize="12sp"
                 android:text="去做任务"
                 />
             <TextView
                 android:id="@+id/tv_leftTime"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_weight="0.1"
                 android:textSize="14sp"
                 android:text="00:59:23"
                 android:gravity="center"
                 android:textColor="@color/main_red"
                 />
+            <LinearLayout
+                android:visibility="visible"
+                android:id="@+id/ll_time"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvtime1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:text="24小时 "
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tvtime2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dp"
+                    android:gravity="center"
+                    android:text="59分钟 "
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tvtime3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dp"
+                    android:gravity="center"
+                    android:textColor="@color/black"
+                    android:text="56秒"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -545,7 +592,7 @@
                 android:gravity="center"
                 android:background="@color/main_red"
                 android:textColor="@color/white"
-                android:textSize="16sp"
+                android:textSize="12sp"
 
                 />
         </LinearLayout>

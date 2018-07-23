@@ -1,6 +1,9 @@
 package com.qianyi.dailynews.ui.Mine.fragment;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +21,7 @@ import com.qianyi.dailynews.api.ApiMine;
 import com.qianyi.dailynews.base.BaseFragment;
 import com.qianyi.dailynews.callback.RequestCallBack;
 import com.qianyi.dailynews.dialog.CustomLoadingDialog;
+import com.qianyi.dailynews.ui.Mine.activity.AccountDetailsActivity;
 import com.qianyi.dailynews.ui.Mine.activity.HighRebateDetilsActivity;
 import com.qianyi.dailynews.ui.Mine.activity.HightBackMoneyRewardWebViewActivity;
 import com.qianyi.dailynews.ui.Mine.adapter.HighRebateAdapter;
@@ -54,6 +58,7 @@ public class HighRebateFragment extends BaseFragment implements PullToRefreshVie
     private List<FanLiInfo> infoList;
     private CustomLoadingDialog customLoadingDialog;
     private  String userId;
+    private MyReceiver myReceiver;
 
     @Override
     protected View getResLayout(LayoutInflater inflater, ViewGroup container) {
@@ -63,6 +68,11 @@ public class HighRebateFragment extends BaseFragment implements PullToRefreshVie
     protected void initViews() {
         customLoadingDialog=new CustomLoadingDialog(getActivity());
         infoList=new ArrayList<>();
+
+        myReceiver= new MyReceiver();
+        IntentFilter filter = new IntentFilter("myReceiver");
+        getActivity().registerReceiver(myReceiver,filter);
+
         mPullToRefreshView.setmOnHeaderRefreshListener(this);
         mPullToRefreshView.setmOnFooterRefreshListener(this);
         View headview = LayoutInflater.from(getActivity()).inflate(R.layout.hight_head,null);
@@ -220,4 +230,17 @@ public class HighRebateFragment extends BaseFragment implements PullToRefreshVie
                 break;
         }
     }
+
+    public class MyReceiver extends BroadcastReceiver{
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if("takePartInOk".equals(action)){
+                firstData(1);
+            }
+        }
+    }
+
+
 }

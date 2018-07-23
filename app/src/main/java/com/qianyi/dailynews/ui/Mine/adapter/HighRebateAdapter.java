@@ -90,7 +90,7 @@ public class HighRebateAdapter extends BaseAdapter {
             moneyHolder.tv_title.setText(fanLiInfo.getTitle());
             moneyHolder.tv_cash.setText(fanLiInfo.getCash()+"元");
             moneyHolder.tv_rate.setText(fanLiInfo.getDescription());
-            moneyHolder.tv_time.setText(fanLiInfo.getTime());
+            moneyHolder.tv_time.setText(cal(Integer.parseInt(fanLiInfo.getTime())));
             String status= fanLiInfo.getStatus();
             if("0".equals(status)){
 
@@ -143,6 +143,32 @@ public class HighRebateAdapter extends BaseAdapter {
         public MoneyHolder(View view){
             ButterKnife.bind(this,view);
         }
+    }
+
+    public static String cal(int second) {
+        int h = 0;
+        int d = 0;
+        int s = 0;
+        int temp = second % 3600;
+        if (second > 3600) {
+            h = second / 3600;
+            if (temp != 0) {
+                if (temp > 60) {
+                    d = temp / 60;
+                    if (temp % 60 != 0) {
+                        s = temp % 60;
+                    }
+                } else {
+                    s = temp;
+                }
+            }
+        } else {
+            d = second / 60;
+            if (second % 60 != 0) {
+                s = second % 60;
+            }
+        }
+        return h + "时" + d + "分" + s + "秒";
     }
 
 

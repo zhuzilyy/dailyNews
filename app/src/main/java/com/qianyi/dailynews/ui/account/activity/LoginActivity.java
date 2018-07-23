@@ -169,12 +169,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
         }else {
             login_login_btn.setEnabled(false);
         }
-
     }
-
     @Override
     protected void setStatusBarColor() {
-
     }
     @OnClick({R.id.login_close_iv,R.id.login_login_btn,R.id.login_forgetpwd_tv,
             R.id.login_register_tv,R.id.login_wxlogin_iv})
@@ -230,7 +227,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
         req.state = "diandi_wx_login";
         mWxApi.sendReq(req);
     }
-
     //登录的方法
     private void login(String account, String pwd) {
         customLoadingDialog.show();
