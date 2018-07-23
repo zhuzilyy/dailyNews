@@ -650,13 +650,13 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
         WebpageObject mediaObject = new WebpageObject();
         mediaObject.identify = Utility.generateGUID();
         mediaObject.title = "每日速报";
-        mediaObject.description = "陪我一起阅读，每天做不一样的自己，阅读拆红包，每天都有不一样的惊喜，阅读邀请码"+my_invite_code;
+        mediaObject.description = "看资讯送零花，立马可提现，你也快来领吧！填我邀请码"+my_invite_code;
         Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.mipmap.logo);
         Bitmap bitmap = WhiteBgBitmapUtil.drawableBitmapOnWhiteBg(getActivity(), bmp);
         Bitmap thumbBmp = Bitmap.createScaledBitmap(bitmap, 200, 200, true);
         mediaObject.setThumbImage(thumbBmp);
         mediaObject.actionUrl = ApiConstant.DOWN_SHARE_URL;
-        mediaObject.defaultText = "陪我一起阅读，每天做不一样的自己，阅读拆红包，每天都有不一样的惊喜，阅读邀请码"+my_invite_code;
+        mediaObject.defaultText = "看资讯送零花，立马可提现，你也快来领吧！填我邀请码"+my_invite_code;
         WeiboMultiMessage message = new WeiboMultiMessage();
         message.mediaObject = mediaObject;
         shareHandler.shareMessage(message, false);
