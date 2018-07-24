@@ -346,7 +346,7 @@ public class UploadScreenshotsActivity extends BaseActivity implements View.OnCl
                     if(imgPaths.size()>=3){
                         upScreenshot(imgPaths);
                     }
-
+                    sendBroadcast(new Intent("takePartInOk"));
 
                 } catch (JSONException e) {
                     e.printStackTrace();
