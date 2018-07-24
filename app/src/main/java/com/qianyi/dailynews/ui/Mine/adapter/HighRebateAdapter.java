@@ -78,6 +78,30 @@ public class HighRebateAdapter extends BaseAdapter {
             registerHolder.tv_title.setText(fanLiInfo.getTitle());
             registerHolder.tv_coin.setText(fanLiInfo.getCash()+"元");
             registerHolder.tv_type.setText(fanLiInfo.getDescription());
+            String status= fanLiInfo.getStatus();
+            if("0".equals(status)){
+
+            }else if("1".equals(status) || "4".equals(status)){
+                registerHolder.tv_register.setText("待上传截图");
+            }else {
+                if("2".equals(status)){
+
+                    registerHolder.tv_register.setText("待审批");
+                    registerHolder.tv_register.setTextColor(Color.parseColor("#ffffff"));
+                }else if("3".equals(status)){
+
+                    registerHolder.tv_register.setText("审批通过");
+                    registerHolder.tv_register.setTextColor(Color.parseColor("#ffffff"));
+                }else if ("5".equals(status)){
+
+                    registerHolder.tv_register.setText("取消");
+                    registerHolder.tv_register.setTextColor(Color.parseColor("#ffffff"));
+                }else if("6".equals(status)){
+
+                    registerHolder.tv_register.setText("已过期");
+                    registerHolder.tv_register.setTextColor(Color.parseColor("#ffffff"));
+                }
+            }
         }else {
             if (moneyHolder==null){
                 view=LayoutInflater.from(context).inflate(R.layout.item_money,null);
@@ -127,6 +151,8 @@ public class HighRebateAdapter extends BaseAdapter {
         TextView tv_type;
         @BindView(R.id.tv_coin)
         TextView tv_coin;
+        @BindView(R.id.tv_register)
+        TextView tv_register;
         public RegisterHolder(View view){
             ButterKnife.bind(this,view);
         }

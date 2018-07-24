@@ -1,10 +1,12 @@
 package com.qianyi.dailynews.ui.account.activity;
 
+import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.qianyi.dailynews.MainActivity;
 import com.qianyi.dailynews.R;
@@ -13,6 +15,8 @@ import com.qianyi.dailynews.api.ApiConstant;
 import com.qianyi.dailynews.base.BaseActivity;
 import com.qianyi.dailynews.callback.RequestCallBack;
 import com.qianyi.dailynews.dialog.CustomLoadingDialog;
+import com.qianyi.dailynews.utils.ListActivity;
+import com.qianyi.dailynews.utils.SPUtils;
 import com.qianyi.dailynews.utils.ToastUtils;
 import com.qianyi.dailynews.views.ClearEditText;
 import com.qianyi.dailynews.views.MyCountDownTimer;
@@ -111,7 +115,7 @@ public class ForgetPwdActivity extends BaseActivity implements View.OnClickListe
                 break;
         }
     }
-    private void findPwd(String account,String pwd,String confirmCode) {
+    private void findPwd(final String account, final String pwd, String confirmCode) {
         customLoadingDialog.show();
         ApiAccount.updatePwd(ApiConstant.UPDATE_PWD, account, pwd, confirmCode, new RequestCallBack<String>() {
             @Override
@@ -126,7 +130,9 @@ public class ForgetPwdActivity extends BaseActivity implements View.OnClickListe
                             String code=jsonObject.getString("code");
                             if (code.equals(ApiConstant.SUCCESS_CODE)){
                                 //jumpActivity(ForgetPwdActivity.this, MainActivity.class);
-                                finish();
+                              //  finish();
+                                sendBroadcast(new Intent("registerOk"));
+                                AutoLogin(account,pwd);
                             }
                             ToastUtils.show(ForgetPwdActivity.this,return_msg);
                         } catch (JSONException e) {
@@ -169,4 +175,71 @@ public class ForgetPwdActivity extends BaseActivity implements View.OnClickListe
             }
         });
     }
+
+    /****
+     * 注册完成后自动登录
+     * @param account
+     * @param pwd
+     */
+    //登录的方法
+    private void AutoLogin(String account, String pwd) {
+        //  customLoadingDialog.show();
+        ApiAccount.login(ApiConstant.LOGIN, account, pwd, new RequestCallBack<String>() {
+            @Override
+            public void onSuccess(final Call call, Response response, final String s) {
+                Log.i("tag",s);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            customLoadingDialog.dismiss();
+                            JSONObject jsonObject=new JSONObject(s);
+                            String code = jsonObject.getString("code");
+                            String return_msg = jsonObject.getString("return_msg");
+                            Toast.makeText(ForgetPwdActivity.this, return_msg, Toast.LENGTH_SHORT).show();
+                            if (code.equals(ApiConstant.SUCCESS_CODE)){
+                                JSONObject data = jsonObject.getJSONObject("data");
+                                String user_id=data.getString("user_id");
+                                String phone=data.getString("phone");
+                                String head_portrait=data.getString("head_portrait");
+                                String gold=data.getString("gold");
+                                String my_invite_code=data.getString("my_invite_code");
+                                String balance=data.getString("balance");
+                                String earnings=data.getString("earnings");
+                                String invite_code=data.getString("invite_code");
+                                String name=data.getString("name");
+                                boolean oneyuan=data.getBoolean("oneyuan");
+                                SPUtils.put(ForgetPwdActivity.this,"user_id",user_id);
+                                SPUtils.put(ForgetPwdActivity.this,"phone",phone);
+                                SPUtils.put(ForgetPwdActivity.this,"head_portrait",head_portrait);
+                                SPUtils.put(ForgetPwdActivity.this,"gold",gold);
+                                SPUtils.put(ForgetPwdActivity.this,"my_invite_code",my_invite_code);
+                                SPUtils.put(ForgetPwdActivity.this,"balance",balance);
+                                SPUtils.put(ForgetPwdActivity.this,"earnings",earnings);
+                                SPUtils.put(ForgetPwdActivity.this,"invite_code",invite_code);
+                                SPUtils.put(ForgetPwdActivity.this,"oneyuan",oneyuan);
+                                SPUtils.put(ForgetPwdActivity.this,"name",name);
+                                Intent intent=new Intent();
+                                intent.setAction("com.action.login.success");
+                                sendBroadcast(intent);
+                                sendBroadcast(new Intent("loginOk"));
+                                //关闭登录
+                                BaseActivity.removeActivity2();
+                                ListActivity.close2();
+                                finish();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
+            @Override
+            public void onEror(Call call, int statusCode, Exception e) {
+                customLoadingDialog.dismiss();
+            }
+        });
+    }
+
+
 }

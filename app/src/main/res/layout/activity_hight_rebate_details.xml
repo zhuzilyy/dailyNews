@@ -487,7 +487,7 @@
     </ScrollView>
 
     <Button
-        android:visibility="gone"
+        android:visibility="visible"
         android:id="@+id/btn_getMoney"
         android:layout_width="match_parent"
         android:layout_height="50dp"

@@ -70,7 +70,7 @@ public class HighRebateFragment extends BaseFragment implements PullToRefreshVie
         infoList=new ArrayList<>();
 
         myReceiver= new MyReceiver();
-        IntentFilter filter = new IntentFilter("myReceiver");
+        IntentFilter filter = new IntentFilter("takePartInOk");
         getActivity().registerReceiver(myReceiver,filter);
 
         mPullToRefreshView.setmOnHeaderRefreshListener(this);
@@ -237,10 +237,17 @@ public class HighRebateFragment extends BaseFragment implements PullToRefreshVie
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
             if("takePartInOk".equals(action)){
+                Log.i("takePartInOk==","takePartInOk");
                 firstData(1);
             }
         }
     }
 
-
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if(myReceiver!=null){
+            getActivity().unregisterReceiver(myReceiver);
+        }
+    }
 }

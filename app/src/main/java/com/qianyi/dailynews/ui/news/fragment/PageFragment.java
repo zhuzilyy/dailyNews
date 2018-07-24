@@ -249,12 +249,12 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
                                 customLoadingDialog.dismiss();
                               //  Log.i("ttt", "s" + s);
 
-//                                getActivity().runOnUiThread(new Runnable() {
-//                                    @Override
-//                                    public void run() {
-//                                        Toast.makeText(mActivity, ""+s, Toast.LENGTH_SHORT).show();
-//                                    }
-//                                });
+                                getActivity().runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(mActivity, ""+s, Toast.LENGTH_SHORT).show();
+                                    }
+                                });
                                 Gson gson = new Gson();
                                 NewsContentBean contentBean = gson.fromJson(s, NewsContentBean.class);
                                 if (contentBean != null) {
