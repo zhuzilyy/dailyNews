@@ -11,12 +11,11 @@
         android:layout_height="wrap_content">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    <com.qianyi.dailynews.ui.video.view.MyJCVideoPlayerStandard
-        android:id="@+id/player"
-        android:layout_width="match_parent"
-        android:layout_height="210dp"
-        />
+        android:layout_height="200dp">
+        <WebView
+            android:id="@+id/wv_webview"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"/>
         <ImageView
             android:id="@+id/iv_back"
             android:layout_marginTop="10dp"
@@ -25,6 +24,13 @@
             android:scaleType="fitCenter"
             android:layout_width="20dp"
             android:layout_height="wrap_content" />
+
+    <com.qianyi.dailynews.ui.video.view.MyJCVideoPlayerStandard
+        android:visibility="gone"
+        android:id="@+id/player"
+        android:layout_width="match_parent"
+        android:layout_height="210dp"
+        />
     </RelativeLayout>
         <TextView
             android:id="@+id/tv_desc"

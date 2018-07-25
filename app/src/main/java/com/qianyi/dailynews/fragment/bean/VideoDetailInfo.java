@@ -14,6 +14,15 @@ public class VideoDetailInfo {
     private String description;
     private String publishDate;
     private String url;
+    private List<String> videoUrls;
+    public List<String> getVideoUrls() {
+        return videoUrls;
+    }
+
+    public void setVideoUrls(List<String> videoUrls) {
+        this.videoUrls = videoUrls;
+    }
+
     public String getTitle() {
         return title;
     }
