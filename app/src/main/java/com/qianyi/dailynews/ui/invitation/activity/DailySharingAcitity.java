@@ -108,6 +108,7 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
     @BindView(R.id.tvtime2) public TextView tvtime2;
     @BindView(R.id.tvtime3) public TextView tvtime3;
     @BindView(R.id.ll_time) public LinearLayout ll_time;
+    @BindView(R.id.tv_reward_time) public TextView tv_reward_time;
     private Handler handler= new Handler();
     private int time;
     private List<ImageView> shareImageList;
@@ -169,6 +170,7 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
                     time=Integer.parseInt(lastTime);
                     if(time>0){
                         ll_time.setVisibility(View.VISIBLE);
+                        tv_reward_time.setVisibility(View.VISIBLE);
                         handler.postDelayed(runnable, 1000);
                         btn_share.setEnabled(false);
                         btn_share.setTextColor(Color.parseColor("#999999"));

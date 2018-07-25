@@ -82,7 +82,7 @@ public class HighRebateAdapter extends BaseAdapter {
             if("0".equals(status)){
 
             }else if("1".equals(status) || "4".equals(status)){
-                registerHolder.tv_register.setText("待上传截图");
+                registerHolder.tv_register.setText("任务中");
             }else {
                 if("2".equals(status)){
 
@@ -114,12 +114,12 @@ public class HighRebateAdapter extends BaseAdapter {
             moneyHolder.tv_title.setText(fanLiInfo.getTitle());
             moneyHolder.tv_cash.setText(fanLiInfo.getCash()+"元");
             moneyHolder.tv_rate.setText(fanLiInfo.getDescription());
-            moneyHolder.tv_time.setText(cal(Integer.parseInt(fanLiInfo.getTime())));
+            moneyHolder.tv_time.setText("投资拿返利");
             String status= fanLiInfo.getStatus();
             if("0".equals(status)){
 
             }else if("1".equals(status) || "4".equals(status)){
-                moneyHolder.tv_time.setText("待上传截图");
+                moneyHolder.tv_time.setText("任务中");
             }else {
                 if("2".equals(status)){
 

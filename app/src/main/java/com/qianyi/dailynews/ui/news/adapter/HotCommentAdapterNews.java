@@ -97,7 +97,7 @@ public class HotCommentAdapterNews extends BaseAdapter {
         TextView comm_level2_more=convertView.findViewById(R.id.comm_level2_more);
 
         //一级评论
-        Glide.with(mContext).load(commentRes.getHeadPortrait()).placeholder(R.mipmap.headportrait_icon).into(head);
+        Glide.with(mContext).load(commentRes.getHeadPortrait()).placeholder(R.mipmap.touxiang2).into(head);
         name.setText(commentRes.getName()==null?commentRes.getUserName():commentRes.getUserName());
         content.setText(commentRes.getComment());
         time.setText(commentRes.getTime());
