@@ -117,7 +117,7 @@ public class WithdrawalsActivity extends BaseActivity implements View.OnClickLis
         textViews.add(tv_80yuan);
         textViews.add(tv_100yuan);
         textViews.add(tv_1000yuan);
-        getMoney();
+        //getMoney();
         getUserInfo();
     }
 
@@ -129,6 +129,8 @@ public class WithdrawalsActivity extends BaseActivity implements View.OnClickLis
                     JSONObject jsonObject=new JSONObject(s);
                     JSONObject data = jsonObject.getJSONObject("data");
                     oneyuan= data.getBoolean("waitingWithdraw");
+                    balance = data.getString("balance");
+                    doubleBalance=Double.parseDouble(balance);
                     if (oneyuan){
                         bg_oneYuan.setBackgroundResource(R.mipmap.unpacket_icon);
                     }

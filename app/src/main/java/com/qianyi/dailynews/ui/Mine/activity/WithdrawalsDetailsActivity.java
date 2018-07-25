@@ -54,6 +54,7 @@ public class WithdrawalsDetailsActivity extends BaseActivity {
         if (intent!=null){
             withdrawalMoney=intent.getStringExtra("withdrawalMoney");
             balance=intent.getStringExtra("balance");
+            Log.i("tag",balance);
             tv_withdrawalMoney.setText(withdrawalMoney);
             tv_wechatMoney.setText(withdrawalMoney);
             tv_balance.setText(balance);
@@ -96,7 +97,7 @@ public class WithdrawalsDetailsActivity extends BaseActivity {
     }
     private void getMoney() {
         customLoadingDialog.show();
-        ApiMine.withdrawalMoney(ApiConstant.WITHDRAWAL_MONEY, userId, new RequestCallBack<String>() {
+        ApiMine.withdrawalMoney(ApiConstant.GET_USER_INFO, userId, new RequestCallBack<String>() {
             @Override
             public void onSuccess(Call call, final Response response, final String s) {
                 customLoadingDialog.dismiss();
@@ -105,9 +106,10 @@ public class WithdrawalsDetailsActivity extends BaseActivity {
                     public void run() {
                         try {
                             JSONObject jsonObject=new JSONObject(s);
-                            balance = jsonObject.getString("data");
+                            JSONObject data = jsonObject.getJSONObject("data");
+                            balance = data.getString("balance");
                             doubleBalance=Double.parseDouble(balance);
-                            tv_balance.setText(balance);
+                            tv_balance.setText(balance+"元");
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
