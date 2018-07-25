@@ -27,39 +27,19 @@ public class WebviewActivity extends BaseActivity {
     WebView wv_webview;
     @BindView(R.id.pb_webview)
     ProgressBar pb_webview;
-    private WebSettings settings;
+    private WebSettings webSettings;
     @Override
     protected void initViews() {
         BaseActivity.addActivity(this);
-        settings=wv_webview.getSettings();
-       /* Intent intent=getIntent();
+        Intent intent=getIntent();
         if (intent!=null){
             String title=intent.getStringExtra("title");
             String url=intent.getStringExtra("url");
             tv_title.setText(title);
             webSettings=wv_webview.getSettings();
             WebviewUtil.setWebview(wv_webview, webSettings);
-            wv_webview.loadUrl("http://www.365yg.com/b3bac586-c961-4c6f-975b-4627bd0641c3");
-        }*/
-
-        settings.setLoadWithOverviewMode(true);
-        settings.setBuiltInZoomControls(true);
-        settings.setJavaScriptEnabled(true);
-        settings.setUseWideViewPort(true);
-        settings.setSupportZoom(true);
-        settings.setJavaScriptCanOpenWindowsAutomatically(true);
-        settings.setCacheMode(WebSettings.LOAD_DEFAULT);
-        settings.setGeolocationEnabled(true);
-        settings.setDomStorageEnabled(true);
-        settings.setDatabaseEnabled(true);
-        settings.setUseWideViewPort(true); // 关键点
-        settings.setAllowFileAccess(true); // 允许访问文件
-        settings.setSupportZoom(true); // 支持缩放
-        settings.setLoadWithOverviewMode(true);
-        settings.setPluginState(WebSettings.PluginState.ON);
-        settings.setCacheMode(WebSettings.LOAD_NO_CACHE); // 不加载缓存内容
-        wv_webview.loadUrl("http://minisite.letv.com/tuiguang/index.shtml?typeFrom=jrtt&cid=4&autoplay=1&vid=31069175");
-
+            wv_webview.loadUrl(url);
+        }
     }
 
     @Override
@@ -77,6 +57,7 @@ public class WebviewActivity extends BaseActivity {
     protected void initListener() {
 
     }
+
     @Override
     protected void setStatusBarColor() {
 
@@ -101,31 +82,6 @@ public class WebviewActivity extends BaseActivity {
             case R.id.iv_back:
                 finish();
                 break;
-        }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        try {
-            if (wv_webview != null) {
-                wv_webview.onResume();
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        try {
-            if (wv_webview != null) {
-                wv_webview.onPause();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 }
