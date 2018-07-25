@@ -23,6 +23,7 @@ import com.qianyi.dailynews.callback.RequestCallBack;
 import com.qianyi.dailynews.dialog.CustomLoadingDialog;
 import com.qianyi.dailynews.fragment.bean.VideoBean;
 import com.qianyi.dailynews.fragment.bean.VideoInfo;
+import com.qianyi.dailynews.ui.WebviewActivity;
 import com.qianyi.dailynews.ui.video.VideoPlayingActivity;
 import com.qianyi.dailynews.utils.Utils;
 import com.qianyi.dailynews.views.PullToRefreshView;
@@ -187,11 +188,13 @@ public class VideoFragment extends BaseFragment implements PullToRefreshView.OnH
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent=new Intent(getActivity(),VideoPlayingActivity.class);
                 VideoInfo videoInfo = infoList.get(i);
-                intent.putExtra("videoUrl",videoInfo.getUrl());
+                intent.putExtra("videoUrl",videoInfo.getVideoUrls().get(0));
                 intent.putExtra("viewCount",videoInfo.getViewCount());
                 intent.putExtra("title",videoInfo.getTitle());
                 startActivity(intent);
                 addWatchNum(videoInfo.getId(),i);
+              /*  Intent intent=new Intent(getActivity(),WebviewActivity.class);
+                startActivity(intent);*/
             }
         });
     }

@@ -2,15 +2,15 @@ package com.qianyi.dailynews.ui.video;
 
 import android.content.Intent;
 import android.os.Build;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
@@ -23,6 +23,7 @@ import com.qianyi.dailynews.dialog.CustomLoadingDialog;
 import com.qianyi.dailynews.fragment.bean.VideoDetailBean;
 import com.qianyi.dailynews.fragment.bean.VideoDetailInfo;
 import com.qianyi.dailynews.fragment.bean.VideoInfo;
+import com.qianyi.dailynews.ui.WebviewActivity;
 import com.qianyi.dailynews.ui.video.adapter.RecommendAdapter;
 import com.qianyi.dailynews.ui.video.view.MyJCVideoPlayerStandard;
 import com.qianyi.dailynews.ui.video.view.MyUserActionStandard;
@@ -54,11 +55,14 @@ public class VideoPlayingActivity extends BaseActivity {
     RelativeLayout no_data_rl;
     @BindView(R.id.no_internet_rl)
     RelativeLayout no_internet_rl;
+    @BindView(R.id.wv_webview)
+    WebView wv_webview;
     private RecommendAdapter recommendAdapter;
     private Intent intent;
     private String videoUrl,viewCount,title,videoId;
     private List<VideoDetailInfo> infoList;
     private CustomLoadingDialog customLoadingDialog;
+    private WebSettings settings;
     @Override
     protected void initViews() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -95,13 +99,36 @@ public class VideoPlayingActivity extends BaseActivity {
         tv_desc.setText(title);
         tv_viewCount.setText(viewCount+"次播放");
         Glide.with(this).load(R.mipmap.video_holder).into(videoPlayerStandard.thumbImageView);
-        JCVideoPlayer.setJcUserAction(new MyUserActionStandard());
-        videoPlayerStandard.setUp(videoUrl
+        initWebview();
+        /*JCVideoPlayer.setJcUserAction(new MyUserActionStandard());
+        videoPlayerStandard.setUp("blob:http://www.365yg.com/b3bac586-c961-4c6f-975b-4627bd0641c3"
                 ,JCVideoPlayerStandard.SCREEN_LAYOUT_NORMAL,"");
-        videoPlayerStandard.startVideo();
+        videoPlayerStandard.startVideo();*/
         getData();
 
     }
+
+    private void initWebview() {
+        settings=wv_webview.getSettings();
+        settings.setLoadWithOverviewMode(true);
+        settings.setBuiltInZoomControls(true);
+        settings.setJavaScriptEnabled(true);
+        settings.setUseWideViewPort(true);
+        settings.setSupportZoom(true);
+        settings.setJavaScriptCanOpenWindowsAutomatically(true);
+        settings.setCacheMode(WebSettings.LOAD_DEFAULT);
+        settings.setGeolocationEnabled(true);
+        settings.setDomStorageEnabled(true);
+        settings.setDatabaseEnabled(true);
+        settings.setUseWideViewPort(true); // 关键点
+        settings.setAllowFileAccess(true); // 允许访问文件
+        settings.setSupportZoom(true); // 支持缩放
+        settings.setLoadWithOverviewMode(true);
+        settings.setPluginState(WebSettings.PluginState.ON);
+        settings.setCacheMode(WebSettings.LOAD_NO_CACHE); // 不加载缓存内容
+        wv_webview.loadUrl(videoUrl);
+    }
+
     //获取数据
     private void getData() {
         customLoadingDialog.show();
@@ -148,13 +175,20 @@ public class VideoPlayingActivity extends BaseActivity {
         lv_recommend.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent=new Intent(VideoPlayingActivity.this,VideoPlayingActivity.class);
+                VideoDetailInfo videoDetailInfo = infoList.get(i);
+                String url = videoDetailInfo.getVideoUrls().get(0);
+                String viewCount = videoDetailInfo.getViewCount();
+                String title = videoDetailInfo.getTitle();
+                tv_desc.setText(title);
+                tv_viewCount.setText(viewCount+"次播放");
+                wv_webview.loadUrl(url);
+              /*  Intent intent=new Intent(VideoPlayingActivity.this,VideoPlayingActivity.class);
                 VideoDetailInfo videoDetailInfo = infoList.get(i);
                 intent.putExtra("videoUrl",videoDetailInfo.getUrl());
                 intent.putExtra("viewCount",videoDetailInfo.getViewCount());
                 intent.putExtra("title",videoDetailInfo.getTitle());
                 startActivity(intent);
-                finish();
+                finish();*/
             }
         });
     }
@@ -167,6 +201,13 @@ public class VideoPlayingActivity extends BaseActivity {
     protected void onPause() {
         super.onPause();
         JCVideoPlayer.releaseAllVideos();
+        try {
+            if (wv_webview != null) {
+                wv_webview.onPause();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -185,6 +226,18 @@ public class VideoPlayingActivity extends BaseActivity {
             case R.id.reload:
                 getData();
                 break;
+        }
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        try {
+            if (wv_webview != null) {
+                wv_webview.onResume();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
