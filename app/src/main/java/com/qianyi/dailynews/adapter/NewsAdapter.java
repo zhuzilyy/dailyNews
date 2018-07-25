@@ -2,8 +2,10 @@ package com.qianyi.dailynews.adapter;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,10 +17,21 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
 import com.qianyi.dailynews.R;
+import com.qianyi.dailynews.api.ApiConstant;
+import com.qianyi.dailynews.api.ApiNews;
+import com.qianyi.dailynews.callback.RequestCallBack;
+import com.qianyi.dailynews.ui.news.activity.NewsDetailsActivity;
 import com.qianyi.dailynews.ui.news.bean.NewsBean;
+import com.qianyi.dailynews.utils.SPUtils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.List;
 import java.util.Random;
+
+import okhttp3.Call;
+import okhttp3.Response;
 
 /**
  * Created by Administrator on 2018/5/5.
@@ -229,28 +242,32 @@ public class NewsAdapter extends BaseAdapter {
                    vv.findViewById(R.id.button1).setOnClickListener(new View.OnClickListener() {
                        @Override
                        public void onClick(View v) {
-                           deleteNewsOne(newsBeans.get(i).getId());
+                           deleteNews(newsBeans.get(i).getId());
+                          // deleteNewsOne(newsBeans.get(i).getId());
                            dialog.dismiss();
                        }
                    });
                    vv.findViewById(R.id.button2).setOnClickListener(new View.OnClickListener() {
                        @Override
                        public void onClick(View v) {
-                           deleteNewsOne(newsBeans.get(i).getId());
+                           deleteNews(newsBeans.get(i).getId());
+                           // deleteNewsOne(newsBeans.get(i).getId());
                            dialog.dismiss();
                        }
                    });
                    vv.findViewById(R.id.button3).setOnClickListener(new View.OnClickListener() {
                        @Override
                        public void onClick(View v) {
-                           deleteNewsOne(newsBeans.get(i).getId());
+                           deleteNews(newsBeans.get(i).getId());
+                           // deleteNewsOne(newsBeans.get(i).getId());
                            dialog.dismiss();
                        }
                    });
                    vv.findViewById(R.id.button4).setOnClickListener(new View.OnClickListener() {
                        @Override
                        public void onClick(View v) {
-                           deleteNewsOne(newsBeans.get(i).getId());
+                           deleteNews(newsBeans.get(i).getId());
+                           //deleteNewsOne(newsBeans.get(i).getId());
                            dialog.dismiss();
                        }
                    });
@@ -396,6 +413,40 @@ public class NewsAdapter extends BaseAdapter {
         }
 
         return view;
+    }
+
+    /***
+     * 后台删除新闻
+     * @param id
+     */
+    private void deleteNews(String id) {
+
+        String userid = (String) SPUtils.get(context,"user_id","");
+        if(TextUtils.isEmpty(userid)){
+            return;
+        }
+        ApiNews.deleteNews(ApiConstant.deleteNews, userid, id, new RequestCallBack<String>() {
+            @Override
+            public void onSuccess(Call call, Response response, String s) {
+                Log.i("sss",s);
+                try {
+                    JSONObject jsonObject = new JSONObject(s);
+                    String code = jsonObject.getString("code");
+                    if("0000".equals(code)){
+                        //删除成功
+                        context.sendBroadcast(new Intent("deleteNewsOk"));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onEror(Call call, int statusCode, Exception e) {
+                Log.i("sss",e.getMessage());
+            }
+        });
+
     }
 
     //新闻holder无图的

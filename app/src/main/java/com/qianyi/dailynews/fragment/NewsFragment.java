@@ -211,7 +211,6 @@ public class NewsFragment extends BaseFragment implements View.OnClickListener {
                 });
             }
         });
-
     }
 
     @Override
@@ -288,7 +287,6 @@ public class NewsFragment extends BaseFragment implements View.OnClickListener {
         if (TextUtils.isEmpty(userid)) {
             return;
         }
-
         ApiNews.GetNewsAward(ApiConstant.NEWS_REWARD, userid, new RequestCallBack<String>() {
             @Override
             public void onSuccess(Call call, Response response, String s) {

@@ -57,6 +57,7 @@ import com.qianyi.dailynews.ui.news.views.MySingListView;
 import com.qianyi.dailynews.ui.news.views.NoScrollWebView;
 import com.qianyi.dailynews.utils.RegUtil;
 import com.qianyi.dailynews.utils.SPUtils;
+import com.qianyi.dailynews.utils.SoundUtils;
 import com.qianyi.dailynews.utils.WebviewUtil;
 import com.qianyi.dailynews.utils.WhiteBgBitmapUtil;
 import com.sina.weibo.sdk.api.WebpageObject;
@@ -715,7 +716,8 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
                 if("1".equals(isRed)){
                         getReward2("1");
                         //金币哗啦哗啦的声音
-                        playSound(R.raw.mm);
+                      //  playSound(R.raw.mm);
+                    SoundUtils.playSoundByMedia(R.raw.mm);
                 }else {
                     //金币新闻[大于25就结束]
 
@@ -726,7 +728,8 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
 
                         getReward2("0");
                         //金币哗啦哗啦的声音
-                        playSound(R.raw.mm);
+                       // playSound(R.raw.mm);
+                        SoundUtils.playSoundByMedia(R.raw.mm);
                         //动画
                         CoinAnimator(1,iv_getReward);
                         try {

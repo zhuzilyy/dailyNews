@@ -45,12 +45,14 @@ public abstract class LazyloadFragment extends Fragment {
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        Log.i("{}{}{}{}{}}","[][]="+isVisibleToUser+"");
+
         //isVisibleToUser这个boolean值表示:该Fragment的UI 用户是否可见，获取该标志记录下来
         if(isVisibleToUser){
+            Log.i("&&&***()()()[][][]","该Fragment的UI 用户可见-------++++++++++++++----------");
             isVisible = true;
             isCanLoadData();
         }else{
+            Log.i("&&&***()()()[][][]","该Fragment的UI 用户不可见----------------------");
             isVisible = false;
         }
 
@@ -60,6 +62,7 @@ public abstract class LazyloadFragment extends Fragment {
     private void isCanLoadData(){
         //所以条件是view初始化完成并且对用户可见
         if(isInitView && isVisible ){
+           // Toast.makeText(mActivity, "加载了弗雷----------------------", Toast.LENGTH_SHORT).show();
             lazyLoad();
             //防止重复加载数据
             isInitView = false;

@@ -2,8 +2,10 @@ package com.qianyi.dailynews.ui.news.fragment;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
@@ -69,6 +71,7 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
     public PageFragment() {
         super();
     }
+    public MyReceiver myReceiver;
 
     @Override
     public void onStart() {
@@ -90,6 +93,11 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
 
     @Override
     public void init() {
+
+        myReceiver=  new MyReceiver();
+        IntentFilter filter=new IntentFilter("deleteNewsOk");
+        getActivity().registerReceiver(myReceiver,filter);
+
         listview = rootView.findViewById(R.id.listview);
         mPullToRefreshView = rootView.findViewById(R.id.pulltorefreshView);
         iv_newPeople_del = rootView.findViewById(R.id.iv_newPeople_del);
@@ -204,7 +212,7 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
 
     @Override
     public void lazyLoad() {
-       // Toast.makeText(mActivity, "777777777777777777888888888888888888889999999999999999999", Toast.LENGTH_SHORT).show();
+    //    Toast.makeText(mActivity, "lazyLoad()", Toast.LENGTH_SHORT).show();
         bigList.clear();
         newsAdapter.notifyDataSetChanged();
         firstData(NewsFragment.CurrentNewsTitle);
@@ -232,29 +240,18 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
                     @Override
                     public void run() {
                         String userid = (String) SPUtils.get(MyApplication.getApplication(), "user_id", "");
-//                        Log.i("tag", "url" + ApiConstant.NEWS_CONTENTS);
-//                        Log.i("tag", userid + "==userid==");
-//                        Log.i("tag", MyApplication.newsTypeRes.get(position).getCatId() + "==getCatId==");
-//                        Log.i("tag", page + "==page==");
-//                        Log.i("tag", userid + "==userid==");
-//                        Logger.i("url" + ApiConstant.NEWS_CONTENTS);
-//                        Logger.i(userid + "==userid==");
-//                        Logger.i(MyApplication.newsTypeRes.get(position).getCatId() + "==getCatId==");
-//                        Logger.i(page + "==page==");
-//                        Logger.i(userid + "==userid==");
-
                         ApiNews.GetNewsContent(ApiConstant.NEWS_CONTENTS, userid, MyApplication.newsTypeRes.get(NewsFragment.CurrentNewsTitle).getCatId(), page, 12, page, 3, new RequestCallBack<String>() {
                             @Override
                             public void onSuccess(Call call, Response response, final String s) {
                                 customLoadingDialog.dismiss();
                               //  Log.i("ttt", "s" + s);
 
-                                getActivity().runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        Toast.makeText(mActivity, ""+s, Toast.LENGTH_SHORT).show();
-                                    }
-                                });
+//                                getActivity().runOnUiThread(new Runnable() {
+//                                    @Override
+//                                    public void run() {
+//                                        Toast.makeText(mActivity, ""+s, Toast.LENGTH_SHORT).show();
+//                                    }
+//                                });
                                 Gson gson = new Gson();
                                 NewsContentBean contentBean = gson.fromJson(s, NewsContentBean.class);
                                 if (contentBean != null) {
@@ -516,6 +513,18 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
             newsBeanList.add(newsBean);
         }
         return newsBeanList;
+    }
+
+
+    public class MyReceiver extends BroadcastReceiver{
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+           String action = intent.getAction();
+           if("deleteNewsOk".equals(action)){
+               firstData(1);
+           }
+        }
     }
 
 

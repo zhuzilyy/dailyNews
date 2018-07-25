@@ -145,6 +145,19 @@ public class ApiNews {
         params.put("userId",userId);
         OkHttpManager.getInstance().postRequest(url,params,callback);
     }
+
+    /**
+     * 删除新闻
+     * @param callback
+     */
+    public static void deleteNews(String url,String userid,String newsId, RequestCallBack<String> callback){
+        Map<String,String> params=new HashMap<>();
+        params.put("id",newsId);
+        params.put("userId",userid);
+        OkHttpManager.getInstance().postRequest(url,params,callback);
+    }
+
+
     //=======以下辛振宇=================================================================
 
 }
