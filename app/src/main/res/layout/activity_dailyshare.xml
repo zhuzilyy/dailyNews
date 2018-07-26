@@ -106,10 +106,12 @@
             android:gravity="center"
             >
             <TextView
+                android:id="@+id/tv_reward_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="距离下次奖励"
                 android:textSize="16sp"
+                android:visibility="invisible"
                 android:textColor="@color/black"
                 />
            <!-- <TextView
