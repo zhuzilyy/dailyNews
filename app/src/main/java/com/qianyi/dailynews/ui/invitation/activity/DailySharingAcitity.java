@@ -135,7 +135,6 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
         ll_QQ=view_share.findViewById(R.id.ll_QQ);
         ll_wechat=view_share.findViewById(R.id.ll_wechat);
         ll_weibo=view_share.findViewById(R.id.ll_weibo);
-
         ll_friendCircle.setOnClickListener(this);
         ll_QQ.setOnClickListener(this);
         ll_wechat.setOnClickListener(this);

@@ -2,6 +2,7 @@ package com.qianyi.dailynews.ui.news.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -88,6 +89,7 @@ public class HotCommentAdapterNews extends BaseAdapter {
         TextView time=convertView.findViewById(R.id.newsComm_time);
         TextView content=convertView.findViewById(R.id.newsComm_content);
         LinearLayout ll_SecondComm=convertView.findViewById(R.id.ll_SecondComm);
+        final ImageView newsComm_zan_iv = convertView.findViewById(R.id.newsComm_zan_iv);
 
         TextView comm_write_tv=convertView.findViewById(R.id.comm_write_tv);
         TextView comm_level2_title01=convertView.findViewById(R.id.comm_level2_title01);
@@ -98,7 +100,7 @@ public class HotCommentAdapterNews extends BaseAdapter {
 
         //一级评论
         Glide.with(mContext).load(commentRes.getHeadPortrait()).placeholder(R.mipmap.touxiang2).into(head);
-        name.setText(commentRes.getName()==null?commentRes.getUserName():commentRes.getUserName());
+        name.setText(commentRes.getName()==null?commentRes.getUserName():commentRes.getName());
         content.setText(commentRes.getComment());
         time.setText(commentRes.getTime());
         zan_tv.setText(commentRes.getLike());
@@ -122,6 +124,9 @@ public class HotCommentAdapterNews extends BaseAdapter {
                             String code=jsonObject.getString("code");
                             if("0000".equals(code)){
                                 zan_tv.setText((Integer.parseInt(zan_tv.getText().toString().trim())+1)+"");
+                                zan_tv.setTextColor(Color.parseColor("#ff0000"));
+                                newsComm_zan_iv.setImageResource(R.mipmap.houshou);
+
                             }else if("0008".equals(code)){
                                 Toast.makeText(mContext, "您已点过赞了", Toast.LENGTH_SHORT).show();
                             }

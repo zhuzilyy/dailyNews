@@ -41,9 +41,9 @@
                     android:id="@+id/newsComm_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="double_y"
+                    android:text="老地方级领导交付"
                     android:textColor="@color/black"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
 
                     />
                 <!--点赞-->
@@ -62,7 +62,7 @@
                         android:layout_height="wrap_content"
                         android:text="10"
                         android:textSize="14sp"
-                        android:textColor="@color/red"
+                        android:textColor="@color/gray"
                         />
                     <ImageView
                         android:id="@+id/newsComm_zan_iv"
@@ -80,8 +80,8 @@
                 android:layout_marginTop="@dimen/dp_5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/gray"
-                android:textSize="14sp"
+                android:textColor="@color/black"
+                android:textSize="16sp"
                 android:layout_marginRight="@dimen/dp_15"
                 android:text="家里的几个老师几个老师就废了设计费是就废了设计费解放路上解放路是解放路上解放路解放路上解放路是就废了设计费放假了设计费附件四垃圾分类副经理级放假了积分放假了文件积分可是米饭"
                 />
