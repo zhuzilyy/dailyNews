@@ -236,6 +236,18 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
                 }
             });
         }
+        news_webview.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                //view.loadUrl(url);
+                return false;
+            }
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                news_webview.loadUrl("javascript:" + jsStr );
+            }
+        });
         mTencent = Tencent.createInstance(APP_ID,getApplicationContext());
     }
 
