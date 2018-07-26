@@ -7,10 +7,10 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:text="加载更多！"
+        android:text="查看全部评论！"
         android:gravity="center"
         android:textSize="14sp"
-        android:textColor="@color/black"
+        android:textColor="@color/red"
         />
 
 </RelativeLayout>
