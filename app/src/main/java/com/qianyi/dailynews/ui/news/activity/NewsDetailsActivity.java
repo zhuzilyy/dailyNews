@@ -253,6 +253,7 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
             public void onSuccess(Call call, Response response, String s) {
                 Log.i("ss",s);
                 try {
+
                     JSONObject jsonObject = new JSONObject(s);
                     String code = jsonObject.getString("code");
                     if("0000".equals(code)){
