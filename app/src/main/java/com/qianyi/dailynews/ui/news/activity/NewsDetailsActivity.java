@@ -249,6 +249,7 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
+
                 news_webview.loadUrl("javascript:" + jsStr );
             }
         });
