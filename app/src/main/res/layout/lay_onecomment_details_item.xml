@@ -22,7 +22,7 @@
                 android:id="@+id/newsComm_head"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
-                android:src="@mipmap/headportrait_icon"
+                android:src="@mipmap/touxiang2"
                 app:riv_corner_radius="30dp"
                 android:layout_centerHorizontal="true"
                 />

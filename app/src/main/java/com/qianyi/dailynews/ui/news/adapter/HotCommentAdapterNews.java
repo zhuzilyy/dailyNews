@@ -104,6 +104,12 @@ public class HotCommentAdapterNews extends BaseAdapter {
         content.setText(commentRes.getComment());
         time.setText(commentRes.getTime());
         zan_tv.setText(commentRes.getLike());
+        if("true".equals(commentRes.getIlike())){
+            newsComm_zan_iv.setImageResource(R.mipmap.houshou);
+            zan_tv.setTextColor(Color.parseColor("#ff0000"));
+        }
+
+
 
 
         //点赞
