@@ -282,8 +282,6 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
                                 String balance = data.getString("balance");
                                 String earnings = data.getString("earnings");
                                 String invite_code = data.getString("invite_code");
-
-
                                 SPUtils.put(getActivity(), "user_id", user_id);
                                 SPUtils.put(getActivity(), "phone", phone);
                                 SPUtils.put(getActivity(), "head_portrait", head_portrait);

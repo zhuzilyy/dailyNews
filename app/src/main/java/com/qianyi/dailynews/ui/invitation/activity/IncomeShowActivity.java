@@ -26,6 +26,7 @@ import com.qianyi.dailynews.dialog.CustomLoadingDialog;
 import com.qianyi.dailynews.ui.Mine.activity.TaskCenterActivity;
 import com.qianyi.dailynews.utils.SPUtils;
 import com.qianyi.dailynews.utils.WhiteBgBitmapUtil;
+import com.qianyi.dailynews.wxapi.WXEntryActivity;
 import com.sina.weibo.sdk.api.WebpageObject;
 import com.sina.weibo.sdk.api.WeiboMultiMessage;
 import com.sina.weibo.sdk.share.WbShareCallback;
@@ -209,6 +210,7 @@ public class IncomeShowActivity extends BaseActivity implements View.OnClickList
         @Override
         public void onComplete(Object response) {
             //分享成功
+            dialyShareSuccess();
         }
         @Override
         public void onError(UiError uiError) {
@@ -220,12 +222,37 @@ public class IncomeShowActivity extends BaseActivity implements View.OnClickList
         }
     }
 
+    //日常任务分享完成
+    private void dialyShareSuccess() {
+        userId= (String) SPUtils.get(IncomeShowActivity.this,"user_id","");
+        ApiMine.dailyMissionShare(ApiConstant.DAILY_MISSION_SHARE, userId, new RequestCallBack<String>() {
+            @Override
+            public void onSuccess(Call call, Response response, final String s) {
+                try {
+                    JSONObject jsonObject=new JSONObject(s);
+                    String code = jsonObject.getString("code");
+                    if (code.equals("SUCCESS")){
+                        Intent intent=new Intent();
+                        intent.setAction("com.action.share.success");
+                        sendBroadcast(intent);
+                        finish();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            @Override
+            public void onEror(Call call, int statusCode, Exception e) {
+
+            }
+        });
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Tencent.onActivityResultData(requestCode, resultCode, data, new ShareUiListener());
     }
-
     private void shareFriendCircle() {
         String my_invite_code= (String) SPUtils.get(IncomeShowActivity.this,"my_invite_code","");
         WXWebpageObject webpage = new WXWebpageObject();
@@ -387,7 +414,8 @@ public class IncomeShowActivity extends BaseActivity implements View.OnClickList
     //微博分享以后的回调
     @Override
     public void onWbShareSuccess() {
-
+        //分享成功
+        dialyShareSuccess();
     }
     @Override
     public void onWbShareCancel() {

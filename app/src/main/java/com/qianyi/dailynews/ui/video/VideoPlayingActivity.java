@@ -2,6 +2,7 @@ package com.qianyi.dailynews.ui.video;
 
 import android.content.Intent;
 import android.os.Build;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -57,6 +58,8 @@ public class VideoPlayingActivity extends BaseActivity {
     RelativeLayout no_internet_rl;
     @BindView(R.id.wv_webview)
     WebView wv_webview;
+    @BindView(R.id.tv_title)
+    TextView tv_title;
     private RecommendAdapter recommendAdapter;
     private Intent intent;
     private String videoUrl,viewCount,title,videoId;
@@ -66,7 +69,7 @@ public class VideoPlayingActivity extends BaseActivity {
     @Override
     protected void initViews() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            setTranslucentStatus();
+            //setTranslucentStatus();
         }
         customLoadingDialog=new CustomLoadingDialog(this);
         intent=getIntent();
@@ -85,6 +88,7 @@ public class VideoPlayingActivity extends BaseActivity {
             no_data_rl.setVisibility(View.GONE);
             no_internet_rl.setVisibility(View.VISIBLE);
         }
+        tv_title.setText("视频详情");
     }
     //沉浸式管理
     private void setTranslucentStatus() {

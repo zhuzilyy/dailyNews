@@ -248,7 +248,6 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
         });
         mTencent = Tencent.createInstance(APP_ID,getApplicationContext());
     }
-
     /***
      * 到详情界面先调阅读新闻接口
      * @param newsId

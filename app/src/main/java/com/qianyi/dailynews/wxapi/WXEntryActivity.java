@@ -87,7 +87,7 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
                     Toast.makeText(WXEntryActivity.this, "分享成功", Toast.LENGTH_LONG).show();
                     if (ApiConstant.SHARE_TAG.equals("dailyShare")){
                         shareSuccess();
-                    }else if(ApiConstant.SHARE_TAG.equals("taskCenterShare")){
+                    }else if(ApiConstant.SHARE_TAG.equals("taskCenterShare")||ApiConstant.SHARE_TAG.equals("incomeShare")){
                         dialyShareSuccess();
                     }else if(ApiConstant.SHARE_TAG.equals("greenHandMission")){
                         greenHandMissionShare();
