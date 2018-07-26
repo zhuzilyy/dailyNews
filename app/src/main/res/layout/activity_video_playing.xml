@@ -4,6 +4,7 @@
     android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <include layout="@layout/layout_title"/>
     <LinearLayout
         android:background="@color/white"
         android:orientation="vertical"
@@ -17,6 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="200dp"/>
         <ImageView
+            android:visibility="gone"
             android:id="@+id/iv_back"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="20dp"
