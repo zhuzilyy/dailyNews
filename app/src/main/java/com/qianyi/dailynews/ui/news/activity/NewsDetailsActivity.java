@@ -204,55 +204,39 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
             WebSettings webSettings2 = bottom_web.getSettings();
             WebviewUtil.setWebview(bottom_web,webSettings2);
             bottom_web.loadUrl(urlStr);
-            filterWebview();
+            try {
+                InputStream in = getAssets().open("guolv.js");
+                byte buff[] = new byte[1024];
+                ByteArrayOutputStream fromFile = new ByteArrayOutputStream();
+                do {
+                    int numRead = in.read(buff);
+                    if (numRead <= 0) {
+                        break;
+                    }
+                    fromFile.write(buff, 0, numRead);
+                } while (true);
+                jsStr = fromFile.toString();
+                in.close();
+                fromFile.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
+            bottom_web.setWebViewClient(new WebViewClient() {
+                @Override
+                public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                    //view.loadUrl(url);
+                    return false;
+                }
+                @Override
+                public void onPageFinished(WebView view, String url) {
+                    super.onPageFinished(view, url);
+                    bottom_web.loadUrl("javascript:" + jsStr );
+                }
+            });
         }
         mTencent = Tencent.createInstance(APP_ID,getApplicationContext());
-    }
-    //加载过滤的js
-    private void filterWebview() {
-        try {
-            InputStream in = getAssets().open("guolv.js");
-            byte buff[] = new byte[1024];
-            ByteArrayOutputStream fromFile = new ByteArrayOutputStream();
-            do {
-                int numRead = in.read(buff);
-                if (numRead <= 0) {
-                    break;
-                }
-                fromFile.write(buff, 0, numRead);
-            } while (true);
-            jsStr = fromFile.toString();
-            in.close();
-            fromFile.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        bottom_web.setWebViewClient(new WebViewClient() {
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                //view.loadUrl(url);
-                return false;
-            }
-            @Override
-            public void onPageFinished(WebView view, String url) {
-                super.onPageFinished(view, url);
-                bottom_web.loadUrl("javascript:" + jsStr );
-            }
-        });
-
-        news_webview.setWebViewClient(new WebViewClient() {
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                //view.loadUrl(url);
-                return false;
-            }
-            @Override
-            public void onPageFinished(WebView view, String url) {
-                super.onPageFinished(view, url);
-
-                news_webview.loadUrl("javascript:" + jsStr );
-            }
-        });
     }
 
     /***
@@ -269,6 +253,7 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
             public void onSuccess(Call call, Response response, String s) {
                 Log.i("ss",s);
                 try {
+
                     JSONObject jsonObject = new JSONObject(s);
                     String code = jsonObject.getString("code");
                     if("0000".equals(code)){
