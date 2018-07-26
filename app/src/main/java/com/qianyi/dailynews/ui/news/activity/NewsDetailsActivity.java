@@ -235,8 +235,6 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
                     bottom_web.loadUrl("javascript:" + jsStr );
                 }
             });
-
-
         }
         mTencent = Tencent.createInstance(APP_ID,getApplicationContext());
     }
