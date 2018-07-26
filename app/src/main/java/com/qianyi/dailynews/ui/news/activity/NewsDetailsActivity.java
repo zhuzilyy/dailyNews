@@ -24,6 +24,7 @@ import android.view.animation.LinearInterpolator;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -78,6 +79,9 @@ import com.tencent.tauth.UiError;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
@@ -156,6 +160,7 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
     private boolean readMore=false;
     private static final String APP_ID = "101488066"; //获取的APPID
     private Tencent mTencent;
+    private String jsStr = "";
     @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void initViews() {
@@ -199,6 +204,39 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
             WebSettings webSettings2 = bottom_web.getSettings();
             WebviewUtil.setWebview(bottom_web,webSettings2);
             bottom_web.loadUrl(urlStr);
+            try {
+                InputStream in = getAssets().open("guolv.js");
+                byte buff[] = new byte[1024];
+                ByteArrayOutputStream fromFile = new ByteArrayOutputStream();
+                do {
+                    int numRead = in.read(buff);
+                    if (numRead <= 0) {
+                        break;
+                    }
+                    fromFile.write(buff, 0, numRead);
+                } while (true);
+                jsStr = fromFile.toString();
+                in.close();
+                fromFile.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
+            bottom_web.setWebViewClient(new WebViewClient() {
+                @Override
+                public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                    //view.loadUrl(url);
+                    return false;
+                }
+                @Override
+                public void onPageFinished(WebView view, String url) {
+                    super.onPageFinished(view, url);
+                    bottom_web.loadUrl("javascript:" + jsStr );
+                }
+            });
+
+
         }
         mTencent = Tencent.createInstance(APP_ID,getApplicationContext());
     }

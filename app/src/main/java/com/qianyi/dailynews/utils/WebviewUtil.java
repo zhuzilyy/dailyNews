@@ -28,7 +28,12 @@ public class WebviewUtil {
 				//view.loadUrl(url);
 				return false;
 			}
-	       });
+				@Override
+				public void onPageFinished(WebView view, String url) {
+					super.onPageFinished(view, url);
+
+				}
+			});
 	        webView.setOnKeyListener(new OnKeyListener() {
 				@Override
 				public boolean onKey(View v, int keyCode, KeyEvent event) {
