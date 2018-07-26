@@ -2,6 +2,7 @@ package com.qianyi.dailynews.ui.news.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,6 +24,7 @@ import com.qianyi.dailynews.callback.RequestCallBack;
 import com.qianyi.dailynews.ui.news.activity.OneCommDetailsActivity;
 import com.qianyi.dailynews.ui.news.bean.CommentBean;
 import com.qianyi.dailynews.utils.SPUtils;
+import com.qianyi.dailynews.views.CircleImageView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -78,9 +80,9 @@ public class AllCommentAdapter extends BaseAdapter {
 
 
         convertView= LayoutInflater.from(mContext).inflate(R.layout.lay_hotcomment_item,null);
-        RoundedImageView head=convertView.findViewById(R.id.newsComm_head);
+        CircleImageView head=convertView.findViewById(R.id.newsComm_head);
         final TextView zan_tv=convertView.findViewById(R.id.newsComm_zan_tv);
-        ImageView zan_iv=convertView.findViewById(R.id.newsComm_zan_iv);
+        final ImageView zan_iv=convertView.findViewById(R.id.newsComm_zan_iv);
         LinearLayout zan_ll=convertView.findViewById(R.id.newsComm_zan_ll);
         TextView name=convertView.findViewById(R.id.newsComm_name);
         TextView time=convertView.findViewById(R.id.newsComm_time);
@@ -97,11 +99,17 @@ public class AllCommentAdapter extends BaseAdapter {
         TextView comm_level2_more=convertView.findViewById(R.id.comm_level2_more);
 
         //一级评论
-        Glide.with(mContext).load(commentRes.getHeadPortrait()).placeholder(R.mipmap.headportrait_icon).into(head);
+        Glide.with(mContext).load(commentRes.getHeadPortrait()).placeholder(R.mipmap.touxiang2).into(head);
         name.setText(commentRes.getName()==null?commentRes.getUserName():commentRes.getName());
         content.setText(commentRes.getComment());
         time.setText(commentRes.getTime());
         zan_tv.setText(commentRes.getLike());
+
+        if("true".equals(commentRes.getIlike())){
+            zan_iv.setImageResource(R.mipmap.houshou);
+            zan_tv.setTextColor(Color.parseColor("#ff0000"));
+        }
+
 
         //点赞
         zan_ll.setOnClickListener(new View.OnClickListener() {
@@ -121,6 +129,8 @@ public class AllCommentAdapter extends BaseAdapter {
                             String code=jsonObject.getString("code");
                             if("0000".equals(code)){
                                 zan_tv.setText((Integer.parseInt(zan_tv.getText().toString().trim())+1)+"");
+                                zan_iv.setImageResource(R.mipmap.houshou);
+                                zan_tv.setTextColor(Color.parseColor("#ff0000"));
                             }else if("0008".equals(code)){
                                 Toast.makeText(mContext, "您已点过赞了", Toast.LENGTH_SHORT).show();
                             }
@@ -152,14 +162,14 @@ public class AllCommentAdapter extends BaseAdapter {
             }
 
             if(item01!=null){
-                comm_level2_title01.setText(item01.getUserName());
+                comm_level2_title01.setText(item01.getName()==null?item01.getUserName():item01.getName());
                 comm_level2_content01.setText(item01.getComment());
             }else {
                 comm_level2_title01.setVisibility(View.GONE);
                 comm_level2_content01.setVisibility(View.GONE);
             }
             if(item02!=null){
-                comm_level2_title02.setText(item02.getUserName());
+                comm_level2_title02.setText(item02.getName()==null?item02.getUserName():item02.getName());
                 comm_level2_content02.setText(item02.getComment());
             }else {
                 comm_level2_title02.setVisibility(View.GONE);

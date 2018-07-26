@@ -17,12 +17,12 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             >
-            <com.makeramen.roundedimageview.RoundedImageView
+            <com.qianyi.dailynews.views.CircleImageView
                 android:id="@+id/newsComm_head"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
-                android:src="@mipmap/touxiang2"
                 app:riv_corner_radius="30dp"
+                android:src="@mipmap/touxiang2"
                 android:layout_centerHorizontal="true"
                 />
 
@@ -48,6 +48,7 @@
                     />
                 <!--点赞-->
                 <LinearLayout
+                    android:padding="5dp"
                     android:id="@+id/newsComm_zan_ll"
                     android:layout_marginRight="@dimen/dp_20"
                     android:layout_alignParentRight="true"

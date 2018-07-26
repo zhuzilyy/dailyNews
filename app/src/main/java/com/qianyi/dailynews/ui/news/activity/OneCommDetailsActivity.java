@@ -1,5 +1,6 @@
 package com.qianyi.dailynews.ui.news.activity;
 
+import android.graphics.Color;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
@@ -28,6 +29,7 @@ import com.qianyi.dailynews.ui.news.bean.CommentBean;
 import com.qianyi.dailynews.ui.news.bean.OneNewsBean;
 import com.qianyi.dailynews.ui.news.views.KeyMapDailog;
 import com.qianyi.dailynews.utils.SPUtils;
+import com.qianyi.dailynews.views.CircleImageView;
 import com.qianyi.dailynews.views.PullToRefreshView;
 
 import org.json.JSONException;
@@ -262,9 +264,9 @@ public class OneCommDetailsActivity extends BaseActivity implements PullToRefres
     private void setNewsComm(OneNewsBean.OneNewsData newsData) {
         head= LayoutInflater.from(OneCommDetailsActivity.this).inflate(R.layout.lay_onecomment_head,null);
 
-        RoundedImageView touxiang=head.findViewById(R.id.newsComm_head);
+        CircleImageView touxiang=head.findViewById(R.id.newsComm_head);
         final TextView zan_tv=head.findViewById(R.id.newsComm_zan_tv);
-        ImageView zan_iv=head.findViewById(R.id.newsComm_zan_iv);
+        final ImageView zan_iv=head.findViewById(R.id.newsComm_zan_iv);
         LinearLayout zan_ll=head.findViewById(R.id.newsComm_zan_ll);
         TextView name=head.findViewById(R.id.newsComm_name);
         TextView time=head.findViewById(R.id.newsComm_time);
@@ -272,11 +274,17 @@ public class OneCommDetailsActivity extends BaseActivity implements PullToRefres
         LinearLayout ll_SecondComm=head.findViewById(R.id.ll_SecondComm);
 
         //一级评论
-        Glide.with(OneCommDetailsActivity.this).load(newsData.getHeadPortrait()).placeholder(R.mipmap.headportrait_icon).into(touxiang);
+        Glide.with(OneCommDetailsActivity.this).load(newsData.getHeadPortrait()).placeholder(R.mipmap.touxiang2).into(touxiang);
         name.setText(newsData.getName()==null?newsData.getUserName():newsData.getName());
         content.setText(newsData.getComment());
         time.setText(newsData.getTime());
         zan_tv.setText(newsData.getLike());
+
+        if("true".equals(newsData.getIlike())){
+            zan_iv.setImageResource(R.mipmap.houshou);
+            zan_tv.setTextColor(Color.parseColor("#ff0000"));
+        }
+
 
         //点赞
         zan_ll.setOnClickListener(new View.OnClickListener() {
@@ -297,6 +305,8 @@ public class OneCommDetailsActivity extends BaseActivity implements PullToRefres
                             String code=jsonObject.getString("code");
                             if("0000".equals(code)){
                                 zan_tv.setText((Integer.parseInt(zan_tv.getText().toString().trim())+1)+"");
+                                zan_iv.setImageResource(R.mipmap.houshou);
+                                zan_tv.setTextColor(Color.parseColor("#ff0000"));
                             }else if("0008".equals(code)){
                                 Toast.makeText(OneCommDetailsActivity.this, "您已点过赞了", Toast.LENGTH_SHORT).show();
                             }

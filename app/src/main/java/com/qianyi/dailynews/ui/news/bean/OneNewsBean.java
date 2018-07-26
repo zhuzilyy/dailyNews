@@ -158,7 +158,24 @@ public class OneNewsBean {
             private String name;
             private String userName;
             private String comment;
+            private String headPortrait;
+            private String time;
 
+            public String getHeadPortrait() {
+                return headPortrait;
+            }
+
+            public void setHeadPortrait(String headPortrait) {
+                this.headPortrait = headPortrait;
+            }
+
+            public String getTime() {
+                return time;
+            }
+
+            public void setTime(String time) {
+                this.time = time;
+            }
         }
 
 
