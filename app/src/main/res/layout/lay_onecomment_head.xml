@@ -20,12 +20,12 @@
             android:layout_height="match_parent"
             android:layout_weight="1.5"
             >
-            <com.makeramen.roundedimageview.RoundedImageView
+            <com.qianyi.dailynews.views.CircleImageView
 
                 android:id="@+id/newsComm_head"
                 android:layout_width="55dp"
                 android:layout_height="55dp"
-                android:src="@mipmap/touxiang2"
+
                 app:riv_corner_radius="30dp"
                 android:layout_centerHorizontal="true"
                 />

@@ -1,6 +1,7 @@
 package com.qianyi.dailynews.ui.news.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import com.bumptech.glide.Glide;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.qianyi.dailynews.R;
 import com.qianyi.dailynews.ui.news.bean.OneNewsBean;
+import com.qianyi.dailynews.views.CircleImageView;
 
 import java.util.List;
 
@@ -68,9 +70,11 @@ public class OneCommentAdapter extends BaseAdapter {
         }
 
 
+        if(!TextUtils.isEmpty(item.getHeadPortrait())){
+            //一级评论
+            Glide.with(mContext).load(item.getHeadPortrait()).into(holder.head);
+        }
 
-        //一级评论
-        //Glide.with(mContext).load(item.).placeholder(R.mipmap.headportrait_icon).into(head);
         holder.name.setText(item.getName()==null?item.getUserName():item.getName());
         holder.content.setText(item.getComment());
 //        holder.time.setText(item.getTime());
@@ -81,7 +85,7 @@ public class OneCommentAdapter extends BaseAdapter {
     }
 
     class viewHolder{
-        RoundedImageView head;
+        CircleImageView head;
         TextView name;
         TextView content;
         TextView time;

@@ -18,7 +18,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             >
-            <com.makeramen.roundedimageview.RoundedImageView
+            <com.qianyi.dailynews.views.CircleImageView
                 android:id="@+id/newsComm_head"
                 android:layout_width="45dp"
                 android:layout_height="45dp"

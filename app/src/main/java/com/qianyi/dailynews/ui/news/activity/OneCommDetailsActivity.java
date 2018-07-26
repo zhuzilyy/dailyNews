@@ -29,6 +29,7 @@ import com.qianyi.dailynews.ui.news.bean.CommentBean;
 import com.qianyi.dailynews.ui.news.bean.OneNewsBean;
 import com.qianyi.dailynews.ui.news.views.KeyMapDailog;
 import com.qianyi.dailynews.utils.SPUtils;
+import com.qianyi.dailynews.views.CircleImageView;
 import com.qianyi.dailynews.views.PullToRefreshView;
 
 import org.json.JSONException;
@@ -263,7 +264,7 @@ public class OneCommDetailsActivity extends BaseActivity implements PullToRefres
     private void setNewsComm(OneNewsBean.OneNewsData newsData) {
         head= LayoutInflater.from(OneCommDetailsActivity.this).inflate(R.layout.lay_onecomment_head,null);
 
-        RoundedImageView touxiang=head.findViewById(R.id.newsComm_head);
+        CircleImageView touxiang=head.findViewById(R.id.newsComm_head);
         final TextView zan_tv=head.findViewById(R.id.newsComm_zan_tv);
         final ImageView zan_iv=head.findViewById(R.id.newsComm_zan_iv);
         LinearLayout zan_ll=head.findViewById(R.id.newsComm_zan_ll);
