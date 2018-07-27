@@ -56,7 +56,7 @@ public class EasyMoneyTaskAdapter extends BaseAdapter {
         }else{
             viewHolder= (ViewHolder) view.getTag();
         }
-        Glide.with(context).load(info.getLogo()).placeholder(R.mipmap.logo).into(viewHolder.mine_head);
+        Glide.with(context).load(info.getImg()).placeholder(R.mipmap.logo).into(viewHolder.mine_head);
         viewHolder.tv_title.setText(info.getTitle());
         viewHolder.tv_reader.setText("有效阅读人数"+ info.getCnt()+"人");
         viewHolder.tv_money.setText("已赚"+info.getRewards()+"金币");

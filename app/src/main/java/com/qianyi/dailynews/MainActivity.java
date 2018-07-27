@@ -97,8 +97,8 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
                         .setInactiveIcon(ContextCompat.getDrawable(MainActivity.this,R.mipmap.news_icon)))
                 .addItem(new BottomNavigationItem(R.mipmap.choosevideo_icon,"视频")
                         .setInactiveIcon(ContextCompat.getDrawable(MainActivity.this,R.mipmap.video_icon)))
-                .addItem(new BottomNavigationItem(R.mipmap.redpack_icon,"邀请")
-                        .setInactiveIcon(ContextCompat.getDrawable(MainActivity.this,R.mipmap.redpack_icon)))
+                .addItem(new BottomNavigationItem(R.mipmap.yaoqing_icon,"邀请")
+                        .setInactiveIcon(ContextCompat.getDrawable(MainActivity.this,R.mipmap.yaoqing_icon)))
                 .addItem(new BottomNavigationItem(R.mipmap.my_icon,"我的")
                         .setInactiveIcon(ContextCompat.getDrawable(MainActivity.this,R.mipmap.nonemy_icon)))
                 .setFirstSelectedPosition(0)//设置默认选择的按钮
