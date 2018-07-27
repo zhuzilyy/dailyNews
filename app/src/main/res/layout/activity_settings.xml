@@ -11,6 +11,7 @@
     <include layout="@layout/layout_title"/>
     <!--手机号-->
     <RelativeLayout
+        android:background="@color/white"
         android:layout_width="match_parent"
         android:paddingRight="@dimen/dp_15"
         android:paddingLeft="@dimen/dp_10"
@@ -45,6 +46,7 @@
         android:background="@color/light_gray5"/>
     <!--绑定微信-->
     <RelativeLayout
+        android:background="@color/white"
         android:layout_width="match_parent"
         android:paddingRight="@dimen/dp_15"
         android:paddingLeft="@dimen/dp_10"
@@ -79,13 +81,13 @@
         android:background="@color/light_gray5"/>
     <!--修改密码-->
     <RelativeLayout
+        android:background="@color/white"
         android:id="@+id/re_ModifyPassword"
         android:layout_width="match_parent"
         android:paddingRight="@dimen/dp_15"
         android:paddingLeft="@dimen/dp_10"
         android:layout_height="55dp">
         <TextView
-
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="修改密码"

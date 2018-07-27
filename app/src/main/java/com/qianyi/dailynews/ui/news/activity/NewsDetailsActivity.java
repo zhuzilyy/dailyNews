@@ -221,6 +221,7 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
             bottom_web.setWebViewClient(new WebViewClient() {
                 @Override
                 public boolean shouldOverrideUrlLoading(WebView view, String url) {
