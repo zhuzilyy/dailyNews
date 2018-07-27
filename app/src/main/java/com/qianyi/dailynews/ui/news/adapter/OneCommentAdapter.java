@@ -75,7 +75,26 @@ public class OneCommentAdapter extends BaseAdapter {
             Glide.with(mContext).load(item.getHeadPortrait()).into(holder.head);
         }
 
-        holder.name.setText(item.getName()==null?item.getUserName():item.getName());
+      //  holder.name.setText(item.getName()==null?item.getUserName():item.getName());
+
+        if(TextUtils.isEmpty(item.getName())){
+            String phonenum = item.getUserName();
+            if(!TextUtils.isEmpty(phonenum) && phonenum.length() > 6 ){
+                StringBuilder sb  =new StringBuilder();
+                for (int i = 0; i < phonenum.length(); i++) {
+                    char c = phonenum.charAt(i);
+                    if (i >= 3 && i <= 6) {
+                        sb.append('*');
+                    } else {
+                        sb.append(c);
+                    }
+                }
+                holder.name.setText(sb.toString());
+            }
+        }else {
+            holder.name.setText(item.getName());
+        }
+
         holder.content.setText(item.getComment());
 //        holder.time.setText(item.getTime());
 //        holder.zan_tv.setText(item.getLike());

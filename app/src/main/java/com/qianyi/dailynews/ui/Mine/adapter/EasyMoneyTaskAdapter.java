@@ -65,7 +65,8 @@ public class EasyMoneyTaskAdapter extends BaseAdapter {
             viewHolder.tv_state.setTextColor(Color.parseColor("#ff5645"));
             viewHolder.tv_state.setText("分享中");
         }else if("1".equals(status)){
-            viewHolder.tv_state.setText("分享结束");
+            viewHolder.tv_state.setText("已结束");
+            viewHolder.tv_state.setTextColor(Color.parseColor("#999999"));
         }
         return view;
     }
