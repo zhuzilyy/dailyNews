@@ -17,7 +17,7 @@ public class ApiConstant {
     public static final String BASE_URL="http://47.104.73.127:8080/news-0.0.1";
     public static final String DAILY_SHARE_URL="http://47.104.73.127:8080/share/everyday/info.html?id=";
     public static final String DOWN_SHARE_URL="http://47.104.73.127:8080/download/download.html";
-    public static final String LIANJIE_URL="http://mrsb.qianyiwangluo.com";
+    public static final String LIANJIE_URL="http://47.104.73.127:8080/download/download.html";
     public static final String INCOME_SHOW="http://47.104.73.127:8080/share/index.html?id=";
     public static final String QQ_SHARE_LOGO="http://47.104.73.127:8080/share/share_logo.png";
     public static String SHARE_TAG="";
@@ -123,6 +123,8 @@ public class ApiConstant {
     public static final String  MESSAGE_LIST= BASE_URL+"/api/message/page";
     //消息红点
     public static final String  MESSAGE_DOT= BASE_URL+"/api/message/redot";
+    //微信发送验证码
+    public static final String  WX_CONFIRM_CODE= BASE_URL+"/api/wx/sendCaptcha";
     /*//邀请规则
     public static final String  INVITE_WEBVIEW= BASE_URL+"/api/user/getOfficial?type=INVITE";
     //签到规则

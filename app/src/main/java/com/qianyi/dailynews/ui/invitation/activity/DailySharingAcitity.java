@@ -170,7 +170,7 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
                     if(time>0){
                         ll_time.setVisibility(View.VISIBLE);
                         tv_reward_time.setVisibility(View.VISIBLE);
-                        handler.postDelayed(runnable, 1000);
+                        handler.post(runnable);
                         btn_share.setEnabled(false);
                         btn_share.setTextColor(Color.parseColor("#999999"));
                     }else {
@@ -197,7 +197,6 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
     Runnable runnable = new Runnable() {
         @Override
         public void run() {
-            time--;
             String formatLongToTimeStr = formatLongToTimeStr((long) time);
             String[] split = formatLongToTimeStr.split("：");
             for (int i = 0; i < split.length; i++) {
@@ -219,6 +218,7 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
                 }
             }
             if(time>0){
+                time--;
                 handler.postDelayed(this, 1000);
             }
         }

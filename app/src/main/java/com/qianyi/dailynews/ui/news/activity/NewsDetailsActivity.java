@@ -83,6 +83,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Type;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -204,25 +206,32 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
             WebSettings webSettings2 = bottom_web.getSettings();
             WebviewUtil.setWebview(bottom_web,webSettings2);
             bottom_web.loadUrl(urlStr);
-            try {
-                InputStream in = getAssets().open("guolv.js");
-                byte buff[] = new byte[1024];
-                ByteArrayOutputStream fromFile = new ByteArrayOutputStream();
-                do {
-                    int numRead = in.read(buff);
-                    if (numRead <= 0) {
-                        break;
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        URL url = new URL("http://meirisubao.cqlianbei.com/js/toutiao.js");
+                        // 打开该URL对应的资源的输入流
+                        InputStream in = url.openStream();
+                        //InputStream in = getAssets().open("guolv.js");
+                        byte buff[] = new byte[1024];
+                        ByteArrayOutputStream fromFile = new ByteArrayOutputStream();
+                        do {
+                            int numRead = in.read(buff);
+                            if (numRead <= 0) {
+                                break;
+                            }
+                            fromFile.write(buff, 0, numRead);
+                        } while (true);
+                        jsStr = fromFile.toString();
+                        //jsStr= "http://meirisubao.cqlianbei.com/js/toutiao.js\"";
+                        in.close();
+                        fromFile.close();
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-                    fromFile.write(buff, 0, numRead);
-                } while (true);
-                jsStr = fromFile.toString();
-              //jsStr= "http://meirisubao.cqlianbei.com/js/toutiao.js\"";
-                in.close();
-                fromFile.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
+                }
+            }).start();
             bottom_web.setWebViewClient(new WebViewClient() {
                 @Override
                 public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -233,6 +242,7 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
                 public void onPageFinished(WebView view, String url) {
                     super.onPageFinished(view, url);
                     bottom_web.loadUrl("javascript:" + jsStr );
+                    //bottom_web.loadUrl("http://meirisubao.cqlianbei.com/js/toutiao.js");
                 }
             });
         }
@@ -245,8 +255,8 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
-
                 news_webview.loadUrl("javascript:" + jsStr );
+                //news_webview.loadUrl("http://meirisubao.cqlianbei.com/js/toutiao.js");
             }
         });
         mTencent = Tencent.createInstance(APP_ID,getApplicationContext());

@@ -773,7 +773,7 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
         WXWebpageObject webpage = new WXWebpageObject();
         webpage.webpageUrl = ApiConstant.DOWN_SHARE_URL;
         WXMediaMessage msg = new WXMediaMessage(webpage);
-        msg.title = "每日速报";
+        msg.title = "看资讯送零花，立马可提现，你也快来领吧！填我邀请码"+my_invite_code;
         msg.description = "看资讯送零花，立马可提现，你也快来领吧！填我邀请码"+my_invite_code;
         Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.mipmap.logo);
         Bitmap bitmap = WhiteBgBitmapUtil.drawableBitmapOnWhiteBg(getActivity(), bmp);

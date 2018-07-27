@@ -81,6 +81,14 @@ public class ApiAccount {
         params.put("newPasswd",newPasswd);
         OkHttpManager.getInstance().postRequest(url,params,callback);
     }
+    /***
+     * 微信发送验证码
+     */
+    public static void wxConfirmCode(String url,String phone,RequestCallBack<String> callback) {
+        Map<String,String> params=new HashMap<>();
+        params.put("phone",phone);
+        OkHttpManager.getInstance().postRequest(url,params,callback);
+    }
 
 
     /***
