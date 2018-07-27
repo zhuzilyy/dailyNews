@@ -50,22 +50,27 @@
         <!--主界面-->
         <activity android:name=".MainActivity"
             android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait"
             />
         <!--注册-->
         <activity android:name=".ui.account.activity.RegisterActivity"
             android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait"
             />
         <!--提现-->
         <activity android:name=".ui.Mine.activity.WithdrawalsActivity"
             android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait"
             />
         <!--忘记密码-->
         <activity android:name=".ui.account.activity.ForgetPwdActivity"
             android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait"
             />
         <!--上传截图-->
         <activity android:name=".ui.Mine.activity.UploadScreenshotsActivity"
             android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait"
             />
         <!--WebView 页面-->
         <activity android:name=".ui.WebviewActivity"
@@ -127,6 +132,7 @@
         <!--视频播放-->
         <activity android:name=".ui.video.VideoPlayingActivity"
             android:alwaysRetainTaskState="true"
+            android:screenOrientation="portrait"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:exported="false"
             android:hardwareAccelerated="true"
@@ -271,6 +277,7 @@
         <activity
             android:name="com.tencent.tauth.AuthActivity"
             android:noHistory="true"
+            android:screenOrientation="portrait"
             android:launchMode="singleTask" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -282,6 +289,7 @@
 
         <activity
             android:name="com.tencent.connect.common.AssistActivity"
+            android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:configChanges="orientation|keyboardHidden|screenSize" />
     </application>

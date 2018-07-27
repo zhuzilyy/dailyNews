@@ -168,6 +168,7 @@
             android:layout_height="60dp"
             android:layout_alignParentRight="true"
             android:padding="@dimen/dp_20"
+            android:visibility="gone"
             android:src="@mipmap/delete" />
 
         <ImageView

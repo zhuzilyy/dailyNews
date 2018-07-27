@@ -233,7 +233,7 @@ public class NewsFragment extends BaseFragment implements View.OnClickListener {
             case R.id.re_newPeople:
                 //注册好礼
                 showNewPeopleGift();
-                re_newPeople.setVisibility(View.GONE);
+               // re_newPeople.setVisibility(View.GONE);
                 break;
             default:
                 break;
@@ -256,6 +256,7 @@ public class NewsFragment extends BaseFragment implements View.OnClickListener {
             @Override
             public void onClick(View view) {
                 dialog.dismiss();
+                re_newPeople.setVisibility(View.VISIBLE);
             }
         });
 
@@ -271,6 +272,7 @@ public class NewsFragment extends BaseFragment implements View.OnClickListener {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getActivity(), RegisterActivity.class));
+                re_newPeople.setVisibility(View.VISIBLE);
                 dialog.dismiss();
             }
         });
@@ -353,6 +355,10 @@ public class NewsFragment extends BaseFragment implements View.OnClickListener {
             if("registerOk".equals(action)){
                 //注册成功，注册送好礼就消失
                 re_newPeople.setVisibility(View.GONE);
+            }
+            if("com.action.quit".equals(action)){
+               //退出登录
+                re_newPeople.setVisibility(View.VISIBLE);
             }
 
         }

@@ -12,6 +12,4 @@
         android:textSize="14sp"
         android:textColor="@color/red"
         />
-
-
 </RelativeLayout>

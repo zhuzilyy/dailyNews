@@ -216,6 +216,7 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
                     fromFile.write(buff, 0, numRead);
                 } while (true);
                 jsStr = fromFile.toString();
+              //jsStr= "http://meirisubao.cqlianbei.com/js/toutiao.js\"";
                 in.close();
                 fromFile.close();
             } catch (IOException e) {
@@ -243,6 +244,7 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
+
                 news_webview.loadUrl("javascript:" + jsStr );
             }
         });
