@@ -566,7 +566,8 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
         final Bundle params = new Bundle();
         params.putInt(QQShare.SHARE_TO_QQ_KEY_TYPE, QQShare.SHARE_TO_QQ_TYPE_DEFAULT);//分享的类型
         params.putString(QQShare.SHARE_TO_QQ_TITLE, "每日速报");//分享标题
-        params.putString(QQShare.SHARE_TO_QQ_SUMMARY,"看资讯送零花，立马可提现，你也快来领吧！填我邀请码"+my_invite_code);//要分享的内容摘要
+        //params.putString(QQShare.SHARE_TO_QQ_SUMMARY,"看资讯送零花，立马可提现，你也快来领吧！填我邀请码"+my_invite_code);//要分享的内容摘要
+        params.putString(QQShare.SHARE_TO_QQ_SUMMARY,"我最近再玩【每日速报】APP, 读资讯就能赚钱，内容丰富又搞笑，轻轻松松赚零花,当日提现，立马到账，一起来试试吧");
         params.putString(QQShare.SHARE_TO_QQ_TARGET_URL,ApiConstant.DOWN_SHARE_URL);//内容地址
         params.putString(QQShare.SHARE_TO_QQ_IMAGE_URL,ApiConstant.QQ_SHARE_LOGO);//分享的图片URL
         params.putString(QQShare.SHARE_TO_QQ_APP_NAME, "每日速报");//应用名称

@@ -54,7 +54,6 @@ public class WithdrawalsDetailsActivity extends BaseActivity {
         if (intent!=null){
             withdrawalMoney=intent.getStringExtra("withdrawalMoney");
             balance=intent.getStringExtra("balance");
-            Log.i("tag",balance);
             tv_withdrawalMoney.setText(withdrawalMoney);
             tv_wechatMoney.setText(withdrawalMoney);
             tv_balance.setText(balance);
