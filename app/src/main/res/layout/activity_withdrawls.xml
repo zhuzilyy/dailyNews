@@ -337,7 +337,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="体现/金币说明 "
+            android:text="提现/金币说明 "
             android:textSize="16sp"
             android:textColor="@color/white"
             />
