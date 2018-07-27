@@ -100,7 +100,24 @@ public class AllCommentAdapter extends BaseAdapter {
 
         //一级评论
         Glide.with(mContext).load(commentRes.getHeadPortrait()).placeholder(R.mipmap.touxiang2).into(head);
-        name.setText(commentRes.getName()==null?commentRes.getUserName():commentRes.getName());
+       // name.setText(commentRes.getName()==null?commentRes.getUserName():commentRes.getName());
+        if(TextUtils.isEmpty(commentRes.getName())){
+            String phonenum = commentRes.getUserName();
+            if(!TextUtils.isEmpty(phonenum) && phonenum.length() > 6 ){
+                StringBuilder sb  =new StringBuilder();
+                for (int i = 0; i < phonenum.length(); i++) {
+                    char c = phonenum.charAt(i);
+                    if (i >= 3 && i <= 6) {
+                        sb.append('*');
+                    } else {
+                        sb.append(c);
+                    }
+                }
+                name.setText(sb.toString());
+            }
+        }else {
+            name.setText(commentRes.getName());
+        }
         content.setText(commentRes.getComment());
         time.setText(commentRes.getTime());
         zan_tv.setText(commentRes.getLike());
@@ -162,14 +179,48 @@ public class AllCommentAdapter extends BaseAdapter {
             }
 
             if(item01!=null){
-                comm_level2_title01.setText(item01.getName()==null?item01.getUserName():item01.getName());
+              //  comm_level2_title01.setText(item01.getName()==null?item01.getUserName():item01.getName());
+                if(TextUtils.isEmpty(item01.getName())){
+                    String phonenum = item01.getUserName();
+                    if(!TextUtils.isEmpty(phonenum) && phonenum.length() > 6 ){
+                        StringBuilder sb  =new StringBuilder();
+                        for (int i = 0; i < phonenum.length(); i++) {
+                            char c = phonenum.charAt(i);
+                            if (i >= 3 && i <= 6) {
+                                sb.append('*');
+                            } else {
+                                sb.append(c);
+                            }
+                        }
+                        comm_level2_title01.setText(sb.toString());
+                    }
+                }else {
+                    comm_level2_title01.setText(item01.getName());
+                }
                 comm_level2_content01.setText(item01.getComment());
             }else {
                 comm_level2_title01.setVisibility(View.GONE);
                 comm_level2_content01.setVisibility(View.GONE);
             }
             if(item02!=null){
-                comm_level2_title02.setText(item02.getName()==null?item02.getUserName():item02.getName());
+                //comm_level2_title02.setText(item02.getName()==null?item02.getUserName():item02.getName());
+                if(TextUtils.isEmpty(item02.getName())){
+                    String phonenum = item02.getUserName();
+                    if(!TextUtils.isEmpty(phonenum) && phonenum.length() > 6 ){
+                        StringBuilder sb  =new StringBuilder();
+                        for (int i = 0; i < phonenum.length(); i++) {
+                            char c = phonenum.charAt(i);
+                            if (i >= 3 && i <= 6) {
+                                sb.append('*');
+                            } else {
+                                sb.append(c);
+                            }
+                        }
+                        comm_level2_title02.setText(sb.toString());
+                    }
+                }else {
+                    comm_level2_title02.setText(item01.getName());
+                }
                 comm_level2_content02.setText(item02.getComment());
             }else {
                 comm_level2_title02.setVisibility(View.GONE);

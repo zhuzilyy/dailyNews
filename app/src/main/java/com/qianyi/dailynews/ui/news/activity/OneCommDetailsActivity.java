@@ -275,7 +275,25 @@ public class OneCommDetailsActivity extends BaseActivity implements PullToRefres
 
         //一级评论
         Glide.with(OneCommDetailsActivity.this).load(newsData.getHeadPortrait()).placeholder(R.mipmap.touxiang2).into(touxiang);
-        name.setText(newsData.getName()==null?newsData.getUserName():newsData.getName());
+     //   name.setText(newsData.getName()==null?newsData.getUserName():newsData.getName());
+        if(TextUtils.isEmpty(newsData.getName())){
+            String phonenum = newsData.getUserName();
+            if(!TextUtils.isEmpty(phonenum) && phonenum.length() > 6 ){
+                StringBuilder sb  =new StringBuilder();
+                for (int i = 0; i < phonenum.length(); i++) {
+                    char c = phonenum.charAt(i);
+                    if (i >= 3 && i <= 6) {
+                        sb.append('*');
+                    } else {
+                        sb.append(c);
+                    }
+                }
+                name.setText(sb.toString());
+            }
+        }else {
+            name.setText(newsData.getName());
+        }
+
         content.setText(newsData.getComment());
         time.setText(newsData.getTime());
         zan_tv.setText(newsData.getLike());

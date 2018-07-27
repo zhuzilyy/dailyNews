@@ -15,7 +15,7 @@
             android:layout_height="50dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="20dp"
-            android:src="@mipmap/logo"
+
             app:riv_border_color="@color/light_gray4"
             app:riv_border_width="@dimen/dp_2"
             app:riv_corner_radius="33dp" />

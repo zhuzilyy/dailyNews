@@ -18,6 +18,26 @@ public class FanLiInfo {
     private String gold;
     private String mkId;
 
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
+
+    public String getCut() {
+        return cut;
+    }
+
+    public void setCut(String cut) {
+        this.cut = cut;
+    }
+
+    private String img;
+    private String cut;
+    private String flag;
+
     public String getMkId() {
         return mkId;
     }
@@ -51,7 +71,6 @@ public class FanLiInfo {
     }
 
     private String cnt;
-    private String flag;
 
 
 

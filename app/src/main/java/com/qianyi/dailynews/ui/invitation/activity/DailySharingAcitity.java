@@ -109,8 +109,8 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
     @BindView(R.id.tvtime3) public TextView tvtime3;
     @BindView(R.id.ll_time) public LinearLayout ll_time;
     @BindView(R.id.tv_reward_time) public TextView tv_reward_time;
-    private Handler handler= new Handler();
-    private int time;
+    //private Handler handler= new Handler();
+    private long time;
     private List<ImageView> shareImageList;
     @Override
     protected void initViews() {
@@ -148,6 +148,8 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
         IntentFilter intentFilter=new IntentFilter();
         intentFilter.addAction("com.action.share.success");
         registerReceiver(myReceiver,intentFilter);
+
+        handler.postDelayed(runnable, 1000);
     }
     @Override
     protected void initData() {
@@ -170,13 +172,21 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
                     if(time>0){
                         ll_time.setVisibility(View.VISIBLE);
                         tv_reward_time.setVisibility(View.VISIBLE);
-                        handler.post(runnable);
+//                        runOnUiThread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                //分享倒计时
+//                                handler.postDelayed(runnable, 1000);
+//                            }
+//                        });
+
                         btn_share.setEnabled(false);
                         btn_share.setTextColor(Color.parseColor("#999999"));
                     }else {
                         btn_share.setEnabled(true);
                         btn_share.setTextColor(Color.parseColor("#ffffff"));
                     }
+
                     //设置分享的图片的颜色
                     int intCount=Integer.parseInt(count);
                     for (int i = 0; i <5-intCount ; i++) {
@@ -194,31 +204,30 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
     }
 
 
+    Handler handler = new Handler();
+
     Runnable runnable = new Runnable() {
         @Override
         public void run() {
-            String formatLongToTimeStr = formatLongToTimeStr((long) time);
+            if(time<=0){
+                return;
+            }
+            time--;
+            String formatLongToTimeStr = formatLongToTimeStr(time);
             String[] split = formatLongToTimeStr.split("：");
             for (int i = 0; i < split.length; i++) {
                 if(i==0){
-                    if (!TextUtils.isEmpty(split[0])){
-                        tvtime1.setText(split[0]+"小时");
-                    }
+                    tvtime1.setText(split[0]+"小时");
                 }
                 if(i==1){
-                    if (!TextUtils.isEmpty(split[2])){
-                        tvtime2.setText(split[1]+"分钟");
-                    }
+                    tvtime2.setText(split[1]+"分钟");
                 }
                 if(i==2){
-                    if (!TextUtils.isEmpty(split[1])){
-                        tvtime3.setText(split[2]+"秒");
-                    }
-
+                    tvtime3.setText(split[2]+"秒");
                 }
+
             }
             if(time>0){
-                time--;
                 handler.postDelayed(this, 1000);
             }
         }
@@ -242,7 +251,6 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
         return strtime;
 
     }
-
 
 
 
