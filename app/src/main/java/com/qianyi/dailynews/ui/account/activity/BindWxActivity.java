@@ -166,6 +166,7 @@ public class BindWxActivity extends BaseActivity implements View.OnClickListener
                    @Override
                    public void run() {
                        try {
+
                            JSONObject jsonObject=new JSONObject(s);
                            String code = jsonObject.getString("code");
                            String return_msg = jsonObject.getString("return_msg");
