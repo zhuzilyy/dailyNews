@@ -7,9 +7,11 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -81,19 +83,30 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
 
         bar.setMode(BottomNavigationBar.MODE_FIXED);
         bar.setInActiveColor("#808080");
+        bar.setActiveColor("#ff5645");
+/*
         bar.setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_DEFAULT);
         bar.addItem(new BottomNavigationItem(getResources().getDrawable(R.mipmap.choosenews_icon),"首页").setActiveColorResource(R.color.main_red))
                 .addItem(new BottomNavigationItem(getResources().getDrawable(R.mipmap.choosevideo_icon),"视频").setActiveColorResource(R.color.main_red))
-                .addItem(new BottomNavigationItem(getResources().getDrawable(R.mipmap.yaoqing_icon),"邀请").setActiveColorResource(R.color.main_red))
+                .addItem(new BottomNavigationItem(getResources().getDrawable(R.mipmap.redpack_icon),"邀请").setActiveColorResource(R.color.main_red))
                 .addItem(new BottomNavigationItem(getResources().getDrawable(R.mipmap.nonemy_icon),"我的").setActiveColorResource(R.color.main_red))
                 .setFirstSelectedPosition(0).initialise();
+*/
+        bar.addItem(new BottomNavigationItem(R.mipmap.choosenews_icon,"首页")
+                        .setInactiveIcon(ContextCompat.getDrawable(MainActivity.this,R.mipmap.news_icon)))
+                .addItem(new BottomNavigationItem(R.mipmap.choosevideo_icon,"视频")
+                        .setInactiveIcon(ContextCompat.getDrawable(MainActivity.this,R.mipmap.video_icon)))
+                .addItem(new BottomNavigationItem(R.mipmap.redpack_icon,"邀请")
+                        .setInactiveIcon(ContextCompat.getDrawable(MainActivity.this,R.mipmap.redpack_icon)))
+                .addItem(new BottomNavigationItem(R.mipmap.my_icon,"我的")
+                        .setInactiveIcon(ContextCompat.getDrawable(MainActivity.this,R.mipmap.nonemy_icon)))
+                .setFirstSelectedPosition(0)//设置默认选择的按钮
+                .initialise();//所有的设置需在调用该方法前完成
+
+
+
         bar.setTabSelectedListener(this);
-
-
         WbSdk.install(this,new AuthInfo(this, ApiConstant.APP_KEY_WEIBO, ApiConstant.REDIRECT_URL, ApiConstant.SCOPE));
-
-
-
     }
     @Override
     protected void initData() {

@@ -732,7 +732,7 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
         // 设置 Bitmap 类型的图片到视频对象里         设置缩略图。 注意：最终压缩过的缩略图大小不得超过 32kb。
         mediaObject.setThumbImage(bitmap);
         mediaObject.actionUrl = ApiConstant.DAILY_SHARE_URL+userId;
-        mediaObject.defaultText = "任务中心的晒收入分享";
+        mediaObject.defaultText = "看新闻还能赚钱~赶快抓住机会试试呀，填我邀请码"+my_invite_code;
         WeiboMultiMessage message = new WeiboMultiMessage();
         message.mediaObject = mediaObject;
         shareHandler.shareMessage(message, false);
