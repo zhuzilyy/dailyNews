@@ -56,6 +56,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
     @Override
     protected void initViews() {
 
+
         //注册广播邀请
         myReceiver=new MyReceiver();
         IntentFilter intentFilter=new IntentFilter();
