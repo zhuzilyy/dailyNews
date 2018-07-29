@@ -148,8 +148,6 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
         IntentFilter intentFilter=new IntentFilter();
         intentFilter.addAction("com.action.share.success");
         registerReceiver(myReceiver,intentFilter);
-
-        handler.postDelayed(runnable, 1000);
     }
     @Override
     protected void initData() {
@@ -157,6 +155,7 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
         getData();
     }
     private void getData() {
+        handler.postDelayed(runnable, 1000);
         ApiInvite.sharePre(ApiConstant.SHARE_PRE, userId, new RequestCallBack<String>() {
             @Override
             public void onSuccess(Call call, Response response, final String s) {
@@ -180,7 +179,7 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
 //                            }
 //                        });
 
-                        btn_share.setEnabled(false);
+                        //btn_share.setEnabled(false);
                         btn_share.setTextColor(Color.parseColor("#999999"));
                     }else {
                         btn_share.setEnabled(true);
@@ -619,7 +618,6 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
     @Override
     protected void onResume() {
         super.onResume();
-        getData();
     }
 
     class MyReceiver extends BroadcastReceiver{
@@ -627,6 +625,9 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
             if (action.equals("com.action.share.success")){
+                if (handler!=null){
+                    handler.removeCallbacks(runnable);
+                }
                 getData();
             }
         }

@@ -166,12 +166,11 @@ public class BindWxActivity extends BaseActivity implements View.OnClickListener
                    @Override
                    public void run() {
                        try {
-
                            JSONObject jsonObject=new JSONObject(s);
-                           String code = jsonObject.getString("code");
+                           String code = jsonObject.getString("return_code");
                            String return_msg = jsonObject.getString("return_msg");
-                           ToastUtils.show(BindWxActivity.this,return_msg);
-                           if (code.equals(ApiConstant.SUCCESS_CODE)){
+                           ToastUtils.show(BindWxActivity.this,"成功");
+                           if (code.equals(ApiConstant.SUCCESS)){
                                JSONObject data = jsonObject.getJSONObject("data");
                                String user_id=data.getString("user_id");
                                String phone=data.getString("phone");

@@ -64,6 +64,12 @@ public class WriteInvitationActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 String codeOfFriend = ed_invatation.getText().toString().trim();
+                String my_invite_code = (String) SPUtils.get(WriteInvitationActivity.this, "my_invite_code", "");
+                String phone = (String) SPUtils.get(WriteInvitationActivity.this, "phone", "");
+                if (codeOfFriend.equals(my_invite_code)||codeOfFriend.equals(phone)) {
+                    Toast.makeText(WriteInvitationActivity.this, "不能填写本人邀请码", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 if (!TextUtils.isEmpty(codeOfFriend)) {
                     writeInvatiCode(codeOfFriend);
                 }
@@ -84,7 +90,6 @@ public class WriteInvitationActivity extends BaseActivity {
         if (TextUtils.isEmpty(userid)) {
             return;
         }
-
         ApiInvite.writeCode(ApiConstant.WRITE_CODE, userid, codeOfFriend, new RequestCallBack<String>() {
             @Override
             public void onSuccess(Call call, Response response, String s) {
@@ -101,6 +106,7 @@ public class WriteInvitationActivity extends BaseActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+
             }
             @Override
             public void onEror(Call call, int statusCode, Exception e) {
