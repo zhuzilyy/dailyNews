@@ -8,6 +8,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -30,6 +31,9 @@ import com.qianyi.dailynews.ui.video.view.MyJCVideoPlayerStandard;
 import com.qianyi.dailynews.ui.video.view.MyUserActionStandard;
 import com.qianyi.dailynews.utils.Utils;
 
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.List;
 
 import butterknife.BindView;
@@ -66,6 +70,7 @@ public class VideoPlayingActivity extends BaseActivity {
     private List<VideoDetailInfo> infoList;
     private CustomLoadingDialog customLoadingDialog;
     private WebSettings settings;
+    private String jsStr;
     @Override
     protected void initViews() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -131,6 +136,47 @@ public class VideoPlayingActivity extends BaseActivity {
         settings.setPluginState(WebSettings.PluginState.ON);
         settings.setCacheMode(WebSettings.LOAD_NO_CACHE); // 不加载缓存内容
         wv_webview.loadUrl(videoUrl);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    URL url = new URL("http://meirisubao.cqlianbei.com/js/toutiao.js");
+                    // 打开该URL对应的资源的输入流
+                    InputStream in = url.openStream();
+                    //InputStream in = getAssets().open("guolv.js");
+                    byte buff[] = new byte[1024];
+                    ByteArrayOutputStream fromFile = new ByteArrayOutputStream();
+                    do {
+                        int numRead = in.read(buff);
+                        if (numRead <= 0) {
+                            break;
+                        }
+                        fromFile.write(buff, 0, numRead);
+                    } while (true);
+                    jsStr = fromFile.toString();
+                    //jsStr= "http://meirisubao.cqlianbei.com/js/toutiao.js\"";
+                    in.close();
+                    fromFile.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+
+        wv_webview.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                //view.loadUrl(url);
+                return false;
+            }
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                wv_webview.loadUrl("javascript:" + jsStr );
+            }
+        });
+
+
     }
 
     //获取数据

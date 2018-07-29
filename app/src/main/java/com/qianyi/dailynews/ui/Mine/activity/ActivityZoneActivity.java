@@ -213,10 +213,11 @@ public class ActivityZoneActivity extends BaseActivity {
 
     //分享到朋友圈
     private void shareFriendCircle() {
+        String my_invite_code= (String) SPUtils.get(this,"my_invite_code","");
         WXWebpageObject webpage = new WXWebpageObject();
         webpage.webpageUrl = ApiConstant.DOWN_SHARE_URL;
         WXMediaMessage msg = new WXMediaMessage(webpage);
-        msg.title = "每日速报";
+        msg.title = "看新闻还能赚钱~赶快抓住机会试试呀，填我邀请码"+my_invite_code;
         msg.description = "每日速报是一款基于数据挖掘的推荐引擎产品，它为用户推荐有价值的、个性化的信息，提供连接人与信息的新型服务。";
         Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.mipmap.logo);
         Bitmap bitmap = WhiteBgBitmapUtil.drawableBitmapOnWhiteBg(this, bmp);
@@ -233,7 +234,6 @@ public class ActivityZoneActivity extends BaseActivity {
     public static String buildTransaction(final String type) {
         return (type == null) ? String.valueOf(System.currentTimeMillis()) : type + System.currentTimeMillis();
     }
-
     @Override
     protected void onResume() {
         super.onResume();

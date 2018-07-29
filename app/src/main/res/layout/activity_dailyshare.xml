@@ -154,7 +154,6 @@
                     android:text=""
                     android:textColor="@color/black"
                     android:textSize="16sp" />
-
                 <TextView
                     android:id="@+id/tvtime3"
                     android:layout_width="wrap_content"

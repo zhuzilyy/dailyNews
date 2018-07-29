@@ -51,6 +51,7 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
     private CustomLoadingDialog customLoadingDialog;
     private String openid, unionid, nickname, headimgurl,language,city,province,country,user_id,missionWxBind;
     private int sex;
+    private boolean bindWx;
 
     @Override
     protected void initViews() {
@@ -83,10 +84,10 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
                     JSONObject jsonObject=new JSONObject(s);
                     JSONObject data = jsonObject.getJSONObject("data");
                     String newer_mission = data.getString("newer_mission");
+                    bindWx = data.getBoolean("bindwx");
                     String[] missionArr=newer_mission.split("\\|");
-
                     missionWxBind = missionArr[0];
-                    if (missionWxBind.equals("1")){
+                    if (missionWxBind.equals("1")||bindWx){
                         btn_bind.setText("已绑定");
                         btn_bind.setTextColor(Color.parseColor("#ffffff"));
                         btn_bind.setBackgroundResource(R.drawable.bg_wx_bind_finish);
@@ -135,7 +136,7 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
                 break;
             //微信绑定
             case R.id.btn_bind:
-                if (missionWxBind.equals("1")){
+                if (missionWxBind.equals("1")||bindWx){
                     return;
                 }
                 initWx();

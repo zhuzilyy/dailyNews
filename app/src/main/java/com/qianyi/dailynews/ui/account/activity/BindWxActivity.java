@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,6 +15,7 @@ import com.qianyi.dailynews.api.ApiConstant;
 import com.qianyi.dailynews.base.BaseActivity;
 import com.qianyi.dailynews.callback.RequestCallBack;
 import com.qianyi.dailynews.dialog.CustomLoadingDialog;
+import com.qianyi.dailynews.utils.ListActivity;
 import com.qianyi.dailynews.utils.SPUtils;
 import com.qianyi.dailynews.utils.ToastUtils;
 import com.qianyi.dailynews.views.ClearEditText;
@@ -46,6 +48,8 @@ public class BindWxActivity extends BaseActivity implements View.OnClickListener
     ClearEditText et_confirmPwd;
     @BindView(R.id.et_inviteCode)
     ClearEditText et_inviteCode;
+    @BindView(R.id.ll_doublePwd)
+    LinearLayout ll_doublePwd;
     private MyCountDownTimer timer;
     private CustomLoadingDialog customLoadingDialog;
     private String user_id,openid, nickname,language, city, province, country, headimgurl, unionid,gender;
@@ -53,6 +57,7 @@ public class BindWxActivity extends BaseActivity implements View.OnClickListener
     private int sex;
     @Override
     protected void initViews() {
+        ListActivity.list3.add(this);
         customLoadingDialog=new CustomLoadingDialog(this);
         tv_title.setText("绑定手机");
         user_id= (String) SPUtils.get(BindWxActivity.this,"user_id","");
@@ -128,17 +133,19 @@ public class BindWxActivity extends BaseActivity implements View.OnClickListener
                     ToastUtils.show(BindWxActivity.this,"请输入验证码");
                     return;
                 }
-                if (TextUtils.isEmpty(pwd)){
-                    ToastUtils.show(BindWxActivity.this,"密码不能为空");
-                    return;
-                }
-                if (pwd.length()<6){
-                    ToastUtils.show(BindWxActivity.this,"密码长度不能小于6位");
-                    return;
-                }
-                if (!pwd.equals(confirmPwd)){
-                    ToastUtils.show(BindWxActivity.this,"两次密码不一致");
-                    return;
+                if (ll_doublePwd.getVisibility()==View.VISIBLE){
+                    if (TextUtils.isEmpty(pwd)){
+                        ToastUtils.show(BindWxActivity.this,"密码不能为空");
+                        return;
+                    }
+                    if (pwd.length()<6){
+                        ToastUtils.show(BindWxActivity.this,"密码长度不能小于6位");
+                        return;
+                    }
+                    if (!pwd.equals(confirmPwd)){
+                        ToastUtils.show(BindWxActivity.this,"两次密码不一致");
+                        return;
+                    }
                 }
                 bindPhone(account,pwd,confrimCode,inviteCode);
                 break;
@@ -150,37 +157,6 @@ public class BindWxActivity extends BaseActivity implements View.OnClickListener
     //注册
 
     private void bindPhone(final String account, final String pwd, String confrimCode, String inviteCode) {
-       /* customLoadingDialog.show();
-        ApiAccount.register(ApiConstant.REGISTER, account, pwd, confrimCode, inviteCode, new RequestCallBack<String>() {
-            @Override
-            public void onSuccess(Call call, Response response, final String s) {
-              //  customLoadingDialog.dismiss();
-                runOnUiThread(new Runnable() {
-                   @Override
-                   public void run() {
-                       try {
-                           JSONObject jsonObject=new JSONObject(s);
-                           String code = jsonObject.getString("code");
-                           String return_msg = jsonObject.getString("return_msg");
-                           ToastUtils.show(BindWxActivity.this,return_msg);
-                           if (code.equals(ApiConstant.SUCCESS_CODE)){
-                               //jumpActivity(RegisterActivity.this,LoginActivity.class);
-                               sendBroadcast(new Intent("registerOk"));
-                               AutoLogin(account,pwd);
-                               finish();
-                           }
-                       } catch (JSONException e) {
-                           e.printStackTrace();
-                       }
-                   }
-               });
-            }
-            @Override
-            public void onEror(Call call, int statusCode, Exception e) {
-                customLoadingDialog.dismiss();
-                ToastUtils.show(BindWxActivity.this,"网络错误");
-            }
-        });*/
        customLoadingDialog.show();
        ApiAccount.bindPhone(ApiConstant.BIND_PHONE, user_id, account, pwd, confrimCode, inviteCode, openid, nickname, gender, language, city, province, country, headimgurl, unionid, new RequestCallBack<String>() {
            @Override
@@ -191,14 +167,34 @@ public class BindWxActivity extends BaseActivity implements View.OnClickListener
                    public void run() {
                        try {
                            JSONObject jsonObject=new JSONObject(s);
-                           String code = jsonObject.getString("code");
+                           String code = jsonObject.getString("return_code");
                            String return_msg = jsonObject.getString("return_msg");
-                           ToastUtils.show(BindWxActivity.this,return_msg);
-                           if (code.equals(ApiConstant.SUCCESS_CODE)){
-                               //jumpActivity(RegisterActivity.this,LoginActivity.class);
-                               sendBroadcast(new Intent("registerOk"));
-                               AutoLogin(account,pwd);
-                               finish();
+                           ToastUtils.show(BindWxActivity.this,"成功");
+                           if (code.equals(ApiConstant.SUCCESS)){
+                               JSONObject data = jsonObject.getJSONObject("data");
+                               String user_id=data.getString("user_id");
+                               String phone=data.getString("phone");
+                               String head_portrait=data.getString("head_portrait");
+                               String gold=data.getString("gold");
+                               String my_invite_code=data.getString("my_invite_code");
+                               String balance=data.getString("balance");
+                               String earnings=data.getString("earnings");
+                               String invite_code=data.getString("invite_code");
+                               String name=data.getString("name");
+                               boolean oneyuan=data.getBoolean("oneyuan");
+                               SPUtils.put(BindWxActivity.this,"user_id",user_id);
+                               SPUtils.put(BindWxActivity.this,"phone",phone);
+                               SPUtils.put(BindWxActivity.this,"head_portrait",head_portrait);
+                               SPUtils.put(BindWxActivity.this,"gold",gold);
+                               SPUtils.put(BindWxActivity.this,"my_invite_code",my_invite_code);
+                               SPUtils.put(BindWxActivity.this,"balance",balance);
+                               SPUtils.put(BindWxActivity.this,"earnings",earnings);
+                               SPUtils.put(BindWxActivity.this,"invite_code",invite_code);
+                               SPUtils.put(BindWxActivity.this,"oneyuan",oneyuan);
+                               SPUtils.put(BindWxActivity.this,"name",name);
+                               Intent intent=new Intent();
+                               intent.setAction("com.action.login.success");
+                               ListActivity.close3();
                            }
                        } catch (JSONException e) {
                            e.printStackTrace();
@@ -208,6 +204,7 @@ public class BindWxActivity extends BaseActivity implements View.OnClickListener
            }
            @Override
            public void onEror(Call call, int statusCode, Exception e) {
+               Log.i("tag",e.getMessage());
                customLoadingDialog.dismiss();
                ToastUtils.show(BindWxActivity.this,"网络错误");
            }
@@ -224,7 +221,6 @@ public class BindWxActivity extends BaseActivity implements View.OnClickListener
      */
     //登录的方法
     private void AutoLogin(String account, String pwd) {
-      //  customLoadingDialog.show();
         ApiAccount.login(ApiConstant.LOGIN, account, pwd, new RequestCallBack<String>() {
             @Override
             public void onSuccess(final Call call, Response response, final String s) {
@@ -285,7 +281,7 @@ public class BindWxActivity extends BaseActivity implements View.OnClickListener
     //获取验证码
     private void getConfirmCode(String phoneNumber) {
         customLoadingDialog.show();
-        ApiAccount.getConfirmCode(ApiConstant.CONFIRMCODE, phoneNumber, new RequestCallBack<String>() {
+        ApiAccount.getConfirmCode(ApiConstant.WX_CONFIRM_CODE, phoneNumber, new RequestCallBack<String>() {
             @Override
             public void onSuccess(Call call, final Response response, final String s) {
                 customLoadingDialog.dismiss();
@@ -295,7 +291,13 @@ public class BindWxActivity extends BaseActivity implements View.OnClickListener
                         try {
                             JSONObject jsonObject=new JSONObject(s);
                             String return_msg=jsonObject.getString("return_msg");
-                            ToastUtils.show(BindWxActivity.this,return_msg);
+                            boolean isBindWx=jsonObject.getBoolean("data");
+                            Toast.makeText(BindWxActivity.this, return_msg, Toast.LENGTH_SHORT).show();
+                            if (isBindWx){
+                                ll_doublePwd.setVisibility(View.GONE);
+                            }else{
+                                ll_doublePwd.setVisibility(View.VISIBLE);
+                            }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

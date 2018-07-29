@@ -258,7 +258,7 @@ public class IncomeShowActivity extends BaseActivity implements View.OnClickList
         WXWebpageObject webpage = new WXWebpageObject();
         webpage.webpageUrl = ApiConstant.INCOME_SHOW+userId;
         WXMediaMessage msg = new WXMediaMessage(webpage);
-        msg.title = "每日速报";
+        msg.title = "看新闻还能赚钱~赶快抓住机会试试呀，填我邀请码"+my_invite_code;
         msg.description = "看新闻还能赚钱~赶快抓住机会试试呀，填我邀请码"+my_invite_code;
         Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.mipmap.logo);
         Bitmap bitmap = WhiteBgBitmapUtil.drawableBitmapOnWhiteBg(this, bmp);

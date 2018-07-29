@@ -9,6 +9,7 @@ import java.util.List;
 public class ListActivity extends Activity {
 	public static List<Activity> list=new ArrayList<Activity>();
 	public static List<Activity> list2=new ArrayList<Activity>();
+	public static List<Activity> list3=new ArrayList<Activity>();
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -20,6 +21,11 @@ public class ListActivity extends Activity {
 	}
 	public static void close2(){
 		for (Activity a : list2) {
+			a.finish();
+		}
+	}
+	public static void close3(){
+		for (Activity a : list3) {
 			a.finish();
 		}
 	}
