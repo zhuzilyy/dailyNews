@@ -332,7 +332,7 @@
         android:orientation="vertical"
         android:paddingLeft="35dp"
         android:layout_marginBottom="24dp"
-       android:layout_alignParentBottom="true"
+        android:layout_alignParentBottom="true"
 
 
         >
