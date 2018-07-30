@@ -50,6 +50,9 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     @BindView(R.id.et_inviteCode)
     ClearEditText et_inviteCode;
     private MyCountDownTimer timer;
+    @BindView(R.id.btn_getCode)
+    Button btn_getCode;
+
     private CustomLoadingDialog customLoadingDialog;
     @Override
     protected void initViews() {
@@ -89,8 +92,8 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 String phoneNumber = et_account.getText().toString().trim();
                 if (!TextUtils.isEmpty(phoneNumber)) {
                     if (phoneNumber.matches("^[1][3467589][0-9]{9}$")) {
-                        timer = new MyCountDownTimer(60000, 1000, (Button) view);
-                        timer.start();
+//                        timer = new MyCountDownTimer(60000, 1000, (Button) view);
+//                        timer.start();
                         // 向服务器请求验证码
                         getConfirmCode(phoneNumber);
                     } else {
@@ -253,7 +256,15 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                         try {
                             JSONObject jsonObject=new JSONObject(s);
                             String return_msg=jsonObject.getString("return_msg");
-                            ToastUtils.show(RegisterActivity.this,return_msg);
+                            if("0000".equals(jsonObject.getString("code"))){
+                                ToastUtils.show(RegisterActivity.this,return_msg);
+                                timer = new MyCountDownTimer(60000, 1000, btn_getCode);
+                                timer.start();
+                            }else {
+                                ToastUtils.show(RegisterActivity.this,return_msg);
+                            }
+
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

@@ -58,12 +58,15 @@
             android:textColor="@color/black"
             />
         <TextView
+
+
             android:id="@+id/news001_posttime"
             android:layout_marginLeft="@dimen/dp_10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=""
             android:textSize="12sp"
+            android:visibility="gone"
             android:textColor="@color/black"
             />
         <TextView
