@@ -172,7 +172,9 @@ public class VideoPlayingActivity extends BaseActivity {
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
-                wv_webview.loadUrl("javascript:" + jsStr );
+                if (!TextUtils.isEmpty(jsStr)&&wv_webview!=null){
+                    wv_webview.loadUrl("javascript:" + jsStr );
+                }
             }
         });
 
