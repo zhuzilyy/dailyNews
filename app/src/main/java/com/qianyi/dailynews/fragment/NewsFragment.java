@@ -29,6 +29,7 @@ import com.qianyi.dailynews.application.MyApplication;
 import com.qianyi.dailynews.base.BaseFragment;
 import com.qianyi.dailynews.callback.RequestCallBack;
 import com.qianyi.dailynews.ui.account.activity.RegisterActivity;
+import com.qianyi.dailynews.ui.account.activity.SplashActivity;
 import com.qianyi.dailynews.ui.news.activity.SearchActivity;
 import com.qianyi.dailynews.ui.news.adapter.FmPagerAdapter;
 import com.qianyi.dailynews.ui.news.bean.NewsTitleBean;
@@ -109,13 +110,18 @@ public class NewsFragment extends BaseFragment implements View.OnClickListener {
         //获取红包奖励数
         getRedPackage();
 
+
         //--------显示是否显示新手状态----------
         String userid = (String) SPUtils.get(getActivity(),"user_id","");
         if(TextUtils.isEmpty(userid)){
             //没有登录就没有注册
             re_newPeople.setVisibility(View.VISIBLE);
         }
-
+        boolean isFirst = (boolean) SPUtils.get(getActivity(), "isFirst", true);
+        if (isFirst){
+            showNewPeopleGift();
+            SPUtils.put(getActivity(),"isFirst",false);
+        }
     }
 
 
@@ -206,7 +212,6 @@ public class NewsFragment extends BaseFragment implements View.OnClickListener {
                     @Override
                     public void run() {
                         Toast.makeText(mActivity, "NewsFragment ===  onEror", Toast.LENGTH_SHORT).show();
-
                     }
                 });
             }

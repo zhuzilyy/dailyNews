@@ -52,7 +52,6 @@ public class MyPagerAdapter extends PagerAdapter {
                 Intent intent=new Intent(context, MainActivity.class);
                 context.startActivity(intent);
                 ((WelcomeActiity)context).finish();
-                SPUtils.put(context,"isFirst",false);
             }
         });
 
