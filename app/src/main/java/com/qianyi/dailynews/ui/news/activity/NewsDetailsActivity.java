@@ -1016,7 +1016,7 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
         WXWebpageObject webpage = new WXWebpageObject();
         webpage.webpageUrl = urlStr;
         WXMediaMessage msg = new WXMediaMessage(webpage);
-        msg.title =  "每日速报";
+        msg.title = contentStr;
         msg.description =contentStr;
         Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.mipmap.logo);
         Bitmap bitmap = WhiteBgBitmapUtil.drawableBitmapOnWhiteBg(this, bmp);

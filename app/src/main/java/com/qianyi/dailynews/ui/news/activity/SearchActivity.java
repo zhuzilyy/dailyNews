@@ -123,9 +123,10 @@ public class SearchActivity extends BaseActivity {
                     final Intent intent=new Intent(SearchActivity.this,SearchWebviewActivity.class);
                     intent.putExtra("hotWord",hotWord);
                     startActivity(intent);
-                    if (tag.equals("mission")){
+                    mission();
+                    /*if (tag.equals("mission")){
                         mission();
-                    }
+                    }*/
                    /* try {
                         uri = Uri.parse("http://www.baidu.com/s?&ie=utf-8&oe=UTF-8&wd=" + URLEncoder.encode(st,"UTF-8"));
                     } catch (UnsupportedEncodingException e1) {
@@ -172,9 +173,10 @@ public class SearchActivity extends BaseActivity {
                     }
                 };
                 timer.schedule(task, 0);*/
-                if (tag.equals("mission")){
+                mission();
+               /* if (tag.equals("mission")){
                     mission();
-                }
+                }*/
 
             }
         });

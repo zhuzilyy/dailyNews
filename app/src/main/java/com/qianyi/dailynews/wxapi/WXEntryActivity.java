@@ -94,12 +94,6 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
                     }
                     break;
                 case BaseResp.ErrCode.ERR_USER_CANCEL:
-                    if (ApiConstant.SHARE_TAG.equals("dailyShare")){
-                        Intent intent=new Intent();
-                        intent.setAction("com.action.share.success");
-                        sendBroadcast(intent);
-                    }
-
                     //分享取消
                     Toast.makeText(WXEntryActivity.this, "分享取消", Toast.LENGTH_LONG).show();
                     break;

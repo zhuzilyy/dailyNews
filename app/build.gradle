@@ -90,4 +90,5 @@ dependencies {
     //友盟统计
     compile 'com.umeng.analytics:analytics:latest.integration'
     // compile 'com.umeng.sdk:analytics:latest.integration'
+    implementation project(':snapupdowntimerview')
 }
