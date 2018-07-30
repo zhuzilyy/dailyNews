@@ -270,8 +270,8 @@ public class MakeMoneyEasilyDetailActivity extends BaseActivity implements View.
         WXWebpageObject webpage = new WXWebpageObject();
         webpage.webpageUrl = "http://www.gaokaoygzy.cn/download";
         WXMediaMessage msg = new WXMediaMessage(webpage);
-        msg.title = "每日速报";
-        msg.description = "每日速报";
+        msg.title = "我最近在玩【每日速报】APP, 读资讯就能赚钱，内容丰富又搞笑，轻轻松松赚零花,当日提现，立马到账，一起来试试吧！";
+        msg.description = "我最近在玩【每日速报】APP, 读资讯就能赚钱，内容丰富又搞笑，轻轻松松赚零花,当日提现，立马到账，一起来试试吧！";
         Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.mipmap.logo);
         Bitmap bitmap = WhiteBgBitmapUtil.drawableBitmapOnWhiteBg(this, bmp);
         Bitmap thumbBmp = Bitmap.createScaledBitmap(bitmap, 200, 200, true);
@@ -293,7 +293,7 @@ public class MakeMoneyEasilyDetailActivity extends BaseActivity implements View.
         WXWebpageObject webpage = new WXWebpageObject();
         webpage.webpageUrl = ShareUrl;
         WXMediaMessage msg = new WXMediaMessage(webpage);
-        msg.title = "每日速报";
+        msg.title = "我最近在玩【每日速报】APP, 读资讯就能赚钱，内容丰富又搞笑，轻轻松松赚零花,当日提现，立马到账，一起来试试吧！";
         msg.description = "每日速报";
         Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.mipmap.logo);
         Bitmap bitmap = WhiteBgBitmapUtil.drawableBitmapOnWhiteBg(this, bmp);
