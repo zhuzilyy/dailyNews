@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:text="方法一, 请使用另一台手机上的微信直接扫描此二维码,提现会转账至扫码微信账户。" />
+            android:text="方法一：打开微信搜索并关注“每日速报”公众号" />
 
         <TextView
             android:layout_width="match_parent"
@@ -35,14 +35,14 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
-            android:text="方法二, 把此界面截图发送到另一台手机的微信,使用自己的微信扫描此二维码关注公众号。" />
+            android:text="方法二：截屏并保存当前页面，扫描下方二维码关注公众号" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
-            android:text="注：长按图片识别不能关注,需要使用微信扫一扫识别" />
+            android:text="注：关注【每日速报】公众号将获取验证码，当前提现金额将会转入提供验证码的微信账户中，请确认提现验证码，如输入来历不明验证码导致转账错误，后果自行承担。建议使用个人微信进行提现" />
 
         <ImageView
             android:layout_width="90dp"

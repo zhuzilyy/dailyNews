@@ -152,7 +152,12 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                        try {
                            JSONObject jsonObject=new JSONObject(s);
                            String code = jsonObject.getString("code");
-                           String return_msg = jsonObject.getString("return_msg");
+                           String return_msg;
+                           if (code.equals("FAIL")){
+                               return_msg= jsonObject.getString("data");
+                           }else{
+                               return_msg= jsonObject.getString("return_msg");
+                           }
                            ToastUtils.show(RegisterActivity.this,return_msg);
                            if (code.equals(ApiConstant.SUCCESS_CODE)){
                                //jumpActivity(RegisterActivity.this,LoginActivity.class);

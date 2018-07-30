@@ -30,7 +30,7 @@ public class SearchWebviewActivity extends BaseActivity {
     @Override
     protected void initViews() {
         Intent intent=getIntent();
-        tv_title.setText("搜索");
+        tv_title.setText("详情");
         if (intent!=null){
             String hotWord=intent.getStringExtra("hotWord");
             String url="https://www.baidu.com/s?wd="+hotWord;

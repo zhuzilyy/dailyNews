@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/light_gray5"
     android:orientation="vertical"
     android:id="@+id/ll_share"
@@ -133,6 +133,7 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:visibility="gone"
                     android:id="@+id/tvtime1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -144,6 +145,7 @@
                     android:textSize="16sp" />
 
                 <TextView
+                    android:visibility="gone"
                     android:id="@+id/tvtime2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -155,6 +157,7 @@
                     android:textColor="@color/black"
                     android:textSize="16sp" />
                 <TextView
+                    android:visibility="gone"
                     android:id="@+id/tvtime3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -165,6 +168,13 @@
                     android:textColor="@color/black"
                     android:text=""
                     android:textSize="16sp" />
+                <com.aesion.snapupdowntimerview.SnapUpCountDownTimerView
+                    android:id="@+id/RushBuyCountDownTimerView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    app:viewSize="20"
+                    />
 
             </LinearLayout>
 

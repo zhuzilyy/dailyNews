@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <LinearLayout
+        android:background="@color/white"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -78,7 +79,7 @@
             android:gravity="center_vertical"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="16sp"
-            android:text="1、每日速报为什么会给用户发钱"
+            android:text="2、每日速报为什么会给用户发钱"
             android:layout_width="match_parent"
             android:layout_height="35dp" />
         <RadioGroup

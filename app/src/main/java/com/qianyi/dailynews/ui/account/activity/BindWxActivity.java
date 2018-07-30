@@ -169,7 +169,11 @@ public class BindWxActivity extends BaseActivity implements View.OnClickListener
                            JSONObject jsonObject=new JSONObject(s);
                            String code = jsonObject.getString("return_code");
                            String return_msg = jsonObject.getString("return_msg");
-                           ToastUtils.show(BindWxActivity.this,"成功");
+                           if (code.equals("SUCCESS")){
+                               ToastUtils.show(BindWxActivity.this,"绑定成功");
+                           }else{
+                               Toast.makeText(BindWxActivity.this, return_msg, Toast.LENGTH_SHORT).show();
+                           }
                            if (code.equals(ApiConstant.SUCCESS)){
                                JSONObject data = jsonObject.getJSONObject("data");
                                String user_id=data.getString("user_id");

@@ -25,6 +25,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.aesion.snapupdowntimerview.SnapUpCountDownTimerView;
 import com.qianyi.dailynews.R;
 import com.qianyi.dailynews.api.ApiConstant;
 import com.qianyi.dailynews.api.ApiInvite;
@@ -34,6 +35,8 @@ import com.qianyi.dailynews.dialog.CustomLoadingDialog;
 import com.qianyi.dailynews.ui.Mine.activity.TaskCenterActivity;
 import com.qianyi.dailynews.utils.SPUtils;
 import com.qianyi.dailynews.utils.WhiteBgBitmapUtil;
+import com.qianyi.dailynews.views.MyCountDownTimer;
+import com.qianyi.dailynews.views.ShareCountDownTimer;
 import com.qianyi.dailynews.wxapi.WXEntryActivity;
 import com.sina.weibo.sdk.api.WebpageObject;
 import com.sina.weibo.sdk.api.WeiboMultiMessage;
@@ -103,15 +106,16 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
     private static final String APP_ID = "101488066"; //获取的APPID
     private Tencent mTencent;
     private String count;
-    private  CountDownTimer timer;
     @BindView(R.id.tvtime1) public TextView tvtime1;
     @BindView(R.id.tvtime2) public TextView tvtime2;
     @BindView(R.id.tvtime3) public TextView tvtime3;
     @BindView(R.id.ll_time) public LinearLayout ll_time;
     @BindView(R.id.tv_reward_time) public TextView tv_reward_time;
-    //private Handler handler= new Handler();
+    @BindView(R.id.RushBuyCountDownTimerView)
+    SnapUpCountDownTimerView RushBuyCountDownTimerView;
     private long time;
     private List<ImageView> shareImageList;
+    private ShareCountDownTimer timer;
     @Override
     protected void initViews() {
         shareImageList=new ArrayList<>();
@@ -155,7 +159,7 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
         getData();
     }
     private void getData() {
-        handler.postDelayed(runnable, 1000);
+        //handler.postDelayed(runnable, 1000);
         ApiInvite.sharePre(ApiConstant.SHARE_PRE, userId, new RequestCallBack<String>() {
             @Override
             public void onSuccess(Call call, Response response, final String s) {
@@ -171,15 +175,25 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
                     if(time>0){
                         ll_time.setVisibility(View.VISIBLE);
                         tv_reward_time.setVisibility(View.VISIBLE);
-//                        runOnUiThread(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                //分享倒计时
-//                                handler.postDelayed(runnable, 1000);
-//                            }
-//                        });
-
-                        //btn_share.setEnabled(false);
+                        String formatLongToTimeStr = formatLongToTimeStr(time);
+                        String[] split = formatLongToTimeStr.split("：");
+                        String hour = "",minute="",second="";
+                        for (int i = 0; i < split.length; i++) {
+                            if(i==0){
+                                hour=split[0];
+                            }
+                            if(i==1){
+                                minute=split[1];
+                            }
+                            if(i==2){
+                                second=split[2];
+                            }
+                        }
+                        int intHour = Integer.parseInt(hour);
+                        int intMinute = Integer.parseInt(minute);
+                        int intSecond = Integer.parseInt(second);
+                        RushBuyCountDownTimerView.setTime(intHour,intMinute,intSecond);
+                        RushBuyCountDownTimerView.start();
                         btn_share.setTextColor(Color.parseColor("#999999"));
                     }else {
                         btn_share.setEnabled(true);
@@ -202,36 +216,6 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
         });
     }
 
-
-    Handler handler = new Handler();
-
-    Runnable runnable = new Runnable() {
-        @Override
-        public void run() {
-            if(time<=0){
-                return;
-            }
-            time--;
-            String formatLongToTimeStr = formatLongToTimeStr(time);
-            String[] split = formatLongToTimeStr.split("：");
-            for (int i = 0; i < split.length; i++) {
-                if(i==0){
-                    tvtime1.setText(split[0]+"小时");
-                }
-                if(i==1){
-                    tvtime2.setText(split[1]+"分钟");
-                }
-                if(i==2){
-                    tvtime3.setText(split[2]+"秒");
-                }
-
-            }
-            if(time>0){
-                handler.postDelayed(this, 1000);
-            }
-        }
-    };
-
     public  String formatLongToTimeStr(Long l) {
         int hour = 0;
         int minute = 0;
@@ -249,44 +233,6 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
         String strtime = hour+"："+minute+"："+second;
         return strtime;
 
-    }
-
-
-
-    /***
-     * 进行倒计时
-     * @param tv_intervel
-     * @param lastTime
-     */
-    private void startTime(final TextView tv_intervel, String lastTime) {
-
-        if(!TextUtils.isEmpty(lastTime)){
-            int time2 = Integer.parseInt(lastTime);
-
-            if(time2>0){
-                btn_share.setEnabled(false);
-                btn_share.setTextColor(Color.parseColor("#999999"));
-            }
-
-            if(time2>0){
-                /** 倒计时一次1秒 */
-                timer = new CountDownTimer(time2*1000, 1000) {
-                    @Override
-                    public void onTick(long millisUntilFinished) {
-                        // TODO Auto-generated method stub
-                        if(tv_intervel!=null){
-                            tv_intervel.setText("还剩"+(millisUntilFinished/1000)+"秒");
-                        }
-                    }
-                    @Override
-                    public void onFinish() {
-                        tv_intervel.setText("还剩0秒");
-                        btn_share.setEnabled(true);
-                        btn_share.setTextColor(Color.parseColor("#ffffff"));
-                    }
-                }.start();
-            }
-        }
     }
 
     @Override
@@ -412,31 +358,6 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
         shareWebPage();
     }
     private void shareWebPage() {
-      /*  WebpageObject mediaObj =new WebpageObject();
-        //创建文本消息对象
-        TextObject textObject =new TextObject();
-        textObject.text= "你分享内容的描述"+"分享网页的话加上网络地址";
-
-        textObject.title= "哈哈哈哈哈哈";
-
-        //创建图片消息对象，如果只分享文字和网页就不用加图片
-
-        WeiboMultiMessage message =new WeiboMultiMessage();
-
-        ImageObject imageObject =new ImageObject();
-
-        // 设置 Bitmap 类型的图片到视频对象里        设置缩略图。 注意：最终压缩过的缩略图大小 不得超过 32kb。
-
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources() , R.drawable.test);
-
-        imageObject.setImageObject(bitmap);
-
-        message.textObject= textObject;
-
-        message.imageObject= imageObject;
-
-        message.mediaObject= mediaObj;*/
-
         String my_invite_code= (String) SPUtils.get(DailySharingAcitity.this,"my_invite_code","");
         WebpageObject mediaObject = new WebpageObject();
         mediaObject.identify = Utility.generateGUID();
@@ -566,15 +487,12 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        handler.removeCallbacks(runnable);
         if (myReceiver!=null){
             unregisterReceiver(myReceiver);
         }
-        if(timer!=null){
-            timer.cancel();
+        if (RushBuyCountDownTimerView!=null){
+            RushBuyCountDownTimerView.stop();
         }
-
-
     }
     //分享的回调
     @Override
@@ -619,15 +537,14 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
     protected void onResume() {
         super.onResume();
     }
-
     class MyReceiver extends BroadcastReceiver{
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
             if (action.equals("com.action.share.success")){
-                if (handler!=null){
+               /* if (handler!=null){
                     handler.removeCallbacks(runnable);
-                }
+                }*/
                 getData();
             }
         }
