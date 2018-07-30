@@ -87,7 +87,7 @@ public class WithdrawalsActivity extends BaseActivity implements View.OnClickLis
         customLoadingDialog=new CustomLoadingDialog(this);
        //-------------------------------
         currentMoney= (String) SPUtils.get(this,"user_id","");
-        tv_currentMoney.setText(currentMoney);
+        tv_currentMoney.setText("当前现金余额：20元");
 
     }
     private void getMoney() {

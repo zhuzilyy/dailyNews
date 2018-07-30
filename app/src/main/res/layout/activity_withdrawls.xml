@@ -52,10 +52,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="当前现金余额：20"
-                    android:layout_marginTop="35dp"
-                    android:layout_marginLeft="20dp"
-                    android:textColor="@color/orange"
-                    android:textSize="16sp"
+                    android:layout_marginTop="38dp"
+                    android:layout_marginLeft="25dp"
+                    android:textColor="@color/red"
+                    android:textSize="18sp"
                     />
                 <!--1,30,50提现-->
                 <LinearLayout
