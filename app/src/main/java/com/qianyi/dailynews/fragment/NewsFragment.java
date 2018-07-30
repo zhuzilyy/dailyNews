@@ -122,9 +122,6 @@ public class NewsFragment extends BaseFragment implements View.OnClickListener {
             showNewPeopleGift();
             SPUtils.put(getActivity(),"isFirst",false);
         }
-
-
-
     }
 
 
