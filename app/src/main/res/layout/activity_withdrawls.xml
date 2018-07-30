@@ -55,7 +55,7 @@
                     android:layout_marginTop="38dp"
                     android:layout_marginLeft="25dp"
                     android:textColor="@color/red"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     />
                 <!--1,30,50提现-->
                 <LinearLayout

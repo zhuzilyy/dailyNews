@@ -71,7 +71,8 @@ public class WithdrawalsActivity extends BaseActivity implements View.OnClickLis
     private double doubleBalance;
     private CustomLoadingDialog customLoadingDialog;
     private boolean oneyuan;
-    @BindView(R.id.tv_currentMoney) public TextView tv_currentMoney;
+    @BindView(R.id.tv_currentMoney)
+    public TextView tv_currentMoney;
     private String currentMoney;
 
     @Override
@@ -136,6 +137,7 @@ public class WithdrawalsActivity extends BaseActivity implements View.OnClickLis
                     JSONObject data = jsonObject.getJSONObject("data");
                     oneyuan= data.getBoolean("waitingWithdraw");
                     balance = data.getString("balance");
+                    tv_currentMoney.setText("当前现金余额"+balance+"元");
                     doubleBalance=Double.parseDouble(balance);
                     if (oneyuan){
                         bg_oneYuan.setBackgroundResource(R.mipmap.unpacket_icon);
