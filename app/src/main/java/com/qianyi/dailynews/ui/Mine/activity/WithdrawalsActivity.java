@@ -71,6 +71,9 @@ public class WithdrawalsActivity extends BaseActivity implements View.OnClickLis
     private double doubleBalance;
     private CustomLoadingDialog customLoadingDialog;
     private boolean oneyuan;
+    @BindView(R.id.tv_currentMoney) public TextView tv_currentMoney;
+    private String currentMoney;
+
     @Override
     protected void initViews() {
         ListActivity.list.add(this);
@@ -82,6 +85,9 @@ public class WithdrawalsActivity extends BaseActivity implements View.OnClickLis
         });
         userId= (String) SPUtils.get(this,"user_id","");
         customLoadingDialog=new CustomLoadingDialog(this);
+       //-------------------------------
+        currentMoney= (String) SPUtils.get(this,"user_id","");
+        tv_currentMoney.setText(currentMoney);
 
     }
     private void getMoney() {

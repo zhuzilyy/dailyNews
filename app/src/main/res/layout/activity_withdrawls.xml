@@ -1,368 +1,364 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:orientation="vertical"
     android:layout_height="match_parent"
     android:background="@mipmap/withdraw_bg"
-    >
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    >
-    <!--title-->
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="45dp">
-        <ImageView
-            android:id="@+id/back"
-            android:scaleType="fitCenter"
-            android:layout_width="wrap_content"
-            android:layout_height="20dp"
-            android:src="@mipmap/back"
-            android:layout_centerVertical="true"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="提现"
-            android:textSize="20sp"
-            android:textColor="@color/white"
-            android:layout_centerInParent="true"
-            />
+    android:orientation="vertical">
 
-    </RelativeLayout>
-    <RelativeLayout
-        android:id="@+id/re_"
-        android:layout_marginTop="35dp"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="25dp"
-        android:layout_marginRight="25dp"
-        android:layout_marginBottom="110dp"
-        android:orientation="vertical"
-        android:background="@mipmap/tixian_bg"
-        >
-        <LinearLayout
+        android:orientation="vertical">
+        <!--title-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp">
+
+            <ImageView
+                android:id="@+id/back"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+                android:scaleType="fitCenter"
+                android:src="@mipmap/back" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="提现"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/re_"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            >
-            <!--1,30,50提现-->
+            android:layout_marginBottom="110dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
+            android:layout_marginTop="35dp"
+            android:background="@mipmap/tixian_bg"
+            android:orientation="vertical">
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:orientation="horizontal"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:layout_marginTop="50dp"
-                >
-                <!--1元-->
-                <LinearLayout
-                    android:id="@+id/ll_01yuan"
-                    android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/tv_currentMoney"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_weight="1"
-                    >
-                    <RelativeLayout
-                        android:id="@+id/bg_oneYuan"
-                        android:layout_width="match_parent"
-                        android:layout_height="80dp"
-                        android:background="@mipmap/packet_icon"
-                        >
+                    android:text="当前现金余额：20"
+                    android:layout_marginTop="35dp"
+                    android:layout_marginLeft="20dp"
+                    android:textColor="@color/orange"
+                    android:textSize="16sp"
+                    />
+                <!--1,30,50提现-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp">
+                    <!--1元-->
+                    <LinearLayout
+                        android:id="@+id/ll_01yuan"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <RelativeLayout
+                            android:id="@+id/bg_oneYuan"
+                            android:layout_width="match_parent"
+                            android:layout_height="80dp"
+                            android:background="@mipmap/packet_icon">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentBottom="true"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginBottom="20dp"
+                                android:text="1元"
+                                android:textColor="@color/white" />
+                        </RelativeLayout>
+
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:id="@+id/tv_01yuan"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp_10"
+                            android:background="@drawable/selector_tixian_bg"
+                            android:enabled="false"
+                            android:gravity="center"
+                            android:paddingBottom="3dp"
+                            android:paddingTop="3dp"
                             android:text="1元"
-                            android:layout_alignParentBottom="true"
-                            android:layout_centerHorizontal="true"
-                            android:layout_marginBottom="20dp"
-                            android:textColor="@color/white"
-                            />
-                    </RelativeLayout>
-                    <TextView
-                        android:enabled="false"
-                        android:id="@+id/tv_01yuan"
-                        android:layout_marginTop="@dimen/dp_10"
-                        android:background="@drawable/selector_tixian_bg"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/gray"
-                        android:gravity="center"
-                        android:text="1元"
-                        android:paddingTop="3dp"
-                        android:paddingBottom="3dp"
+                            android:textColor="@color/gray"
 
-                        android:textSize="16sp"
-                        />
-                </LinearLayout>
-                <!--30元-->
-                <LinearLayout
-                    android:id="@+id/ll_30yuan"
-                    android:layout_marginRight="15dp"
-                    android:layout_marginLeft="15dp"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_weight="1"
-                    >
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="80dp"
-                        android:background="@mipmap/packet_icon"
-                        >
+                            android:textSize="16sp" />
+                    </LinearLayout>
+                    <!--30元-->
+                    <LinearLayout
+                        android:id="@+id/ll_30yuan"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="80dp"
+                            android:background="@mipmap/packet_icon">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentBottom="true"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginBottom="20dp"
+                                android:text="30元"
+                                android:textColor="@color/white" />
+                        </RelativeLayout>
+
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:id="@+id/tv_30yuan"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp_10"
+                            android:background="@drawable/selector_tixian_bg"
+                            android:enabled="false"
+                            android:gravity="center"
+                            android:paddingBottom="3dp"
+                            android:paddingTop="3dp"
                             android:text="30元"
-                            android:layout_alignParentBottom="true"
-                            android:layout_centerHorizontal="true"
-                            android:layout_marginBottom="20dp"
-                            android:textColor="@color/white"
-                            />
-                    </RelativeLayout>
-                    <TextView
-                        android:enabled="false"
-                        android:id="@+id/tv_30yuan"
-                        android:layout_marginTop="@dimen/dp_10"
-                        android:background="@drawable/selector_tixian_bg"
-                        android:paddingTop="3dp"
-                        android:paddingBottom="3dp"
-                        android:layout_width="match_parent"
+                            android:textColor="@color/gray"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+                    <!--50元-->
+                    <LinearLayout
+                        android:id="@+id/ll_50yuan"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/gray"
-                        android:gravity="center"
-                        android:text="30元"
-                        android:textSize="16sp"
-                        />
-                </LinearLayout>
-                <!--50元-->
-                <LinearLayout
-                    android:id="@+id/ll_50yuan"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_weight="1"
-                    >
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="80dp"
-                        android:background="@mipmap/packet_icon"
-                        >
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="80dp"
+                            android:background="@mipmap/packet_icon">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentBottom="true"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginBottom="20dp"
+                                android:text="50元"
+                                android:textColor="@color/white" />
+                        </RelativeLayout>
+
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:id="@+id/tv_50yuan"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp_10"
+                            android:background="@drawable/selector_tixian_bg"
+                            android:enabled="false"
+                            android:gravity="center"
+                            android:paddingBottom="3dp"
+                            android:paddingTop="3dp"
                             android:text="50元"
-                            android:layout_alignParentBottom="true"
-                            android:layout_centerHorizontal="true"
-                            android:layout_marginBottom="20dp"
-                            android:textColor="@color/white"
-                            />
-                    </RelativeLayout>
-                    <TextView
-                        android:id="@+id/tv_50yuan"
-                        android:enabled="false"
-                        android:layout_width="match_parent"
-                        android:layout_marginTop="@dimen/dp_10"
-                        android:background="@drawable/selector_tixian_bg"
-                        android:paddingTop="3dp"
-                        android:paddingBottom="3dp"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/gray"
-                        android:gravity="center"
-                        android:text="50元"
-                        android:textSize="16sp"
-                        />
+                            android:textColor="@color/gray"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+
+
                 </LinearLayout>
-
-
-            </LinearLayout>
-            <!--80,100,1000提现-->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:orientation="horizontal"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:layout_marginTop="15dp"
-                >
-                <!--80元-->
+                <!--80,100,1000提现-->
                 <LinearLayout
-                    android:id="@+id/ll_80yuan"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_weight="1"
-                    >
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="80dp"
-                        android:background="@mipmap/packet_icon"
-                        >
-                        <TextView
+                    android:layout_marginTop="15dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp">
+                    <!--80元-->
+                    <LinearLayout
+                        android:id="@+id/ll_80yuan"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
 
-                            android:layout_width="wrap_content"
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="80dp"
+                            android:background="@mipmap/packet_icon">
+
+                            <TextView
+
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentBottom="true"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginBottom="20dp"
+                                android:text="80元"
+                                android:textColor="@color/white" />
+                        </RelativeLayout>
+
+                        <TextView
+                            android:id="@+id/tv_80yuan"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp_10"
+                            android:background="@drawable/selector_tixian_bg"
+                            android:enabled="false"
+                            android:gravity="center"
+                            android:paddingBottom="3dp"
+                            android:paddingTop="3dp"
                             android:text="80元"
-                            android:layout_alignParentBottom="true"
-                            android:layout_centerHorizontal="true"
-                            android:layout_marginBottom="20dp"
-                            android:textColor="@color/white"
-                            />
-                    </RelativeLayout>
-                    <TextView
-                        android:id="@+id/tv_80yuan"
-                        android:layout_width="match_parent"
+                            android:textColor="@color/gray"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+                    <!--100元-->
+                    <LinearLayout
+                        android:id="@+id/ll_100yuan"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/gray"
-                        android:enabled="false"
-                        android:gravity="center"
-                        android:text="80元"
-                        android:layout_marginTop="@dimen/dp_10"
-                        android:background="@drawable/selector_tixian_bg"
-                        android:paddingTop="3dp"
-                        android:paddingBottom="3dp"
-                        android:textSize="16sp"
-                        />
-                </LinearLayout>
-                <!--100元-->
-                <LinearLayout
-                    android:id="@+id/ll_100yuan"
-                    android:layout_marginRight="15dp"
-                    android:layout_marginLeft="15dp"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_weight="1"
-                    >
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="80dp"
-                        android:background="@mipmap/packet_icon"
-                        >
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="80dp"
+                            android:background="@mipmap/packet_icon">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentBottom="true"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginBottom="20dp"
+                                android:text="100元"
+                                android:textColor="@color/white" />
+                        </RelativeLayout>
+
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:id="@+id/tv_100yuan"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp_10"
+                            android:background="@drawable/selector_tixian_bg"
+                            android:enabled="false"
+                            android:gravity="center"
+                            android:paddingBottom="3dp"
+                            android:paddingTop="3dp"
                             android:text="100元"
-                            android:layout_alignParentBottom="true"
-                            android:layout_centerHorizontal="true"
-                            android:layout_marginBottom="20dp"
-                            android:textColor="@color/white"
-                            />
-                    </RelativeLayout>
-                    <TextView
-                        android:id="@+id/tv_100yuan"
-                        android:layout_width="match_parent"
+                            android:textColor="@color/gray"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+                    <!--1000元-->
+                    <LinearLayout
+                        android:id="@+id/ll_1000yuan"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/gray"
-                        android:gravity="center"
-                        android:text="100元"
-                        android:enabled="false"
-                        android:layout_marginTop="@dimen/dp_10"
-                        android:background="@drawable/selector_tixian_bg"
-                        android:paddingTop="3dp"
-                        android:paddingBottom="3dp"
-                        android:textSize="16sp"
-                        />
-                </LinearLayout>
-                <!--1000元-->
-                <LinearLayout
-                    android:id="@+id/ll_1000yuan"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_weight="1"
-                    >
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="80dp"
-                        android:background="@mipmap/packet_icon"
-                        >
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="80dp"
+                            android:background="@mipmap/packet_icon">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentBottom="true"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginBottom="20dp"
+                                android:text="1000元"
+                                android:textColor="@color/white" />
+                        </RelativeLayout>
+
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:id="@+id/tv_1000yuan"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp_10"
+                            android:background="@drawable/selector_tixian_bg"
+                            android:enabled="false"
+                            android:gravity="center"
+                            android:paddingBottom="3dp"
+                            android:paddingTop="3dp"
                             android:text="1000元"
-                            android:layout_alignParentBottom="true"
-                            android:layout_centerHorizontal="true"
-                            android:layout_marginBottom="20dp"
-                            android:textColor="@color/white"
-                            />
-                    </RelativeLayout>
-                    <TextView
-                        android:id="@+id/tv_1000yuan"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/gray"
-                        android:gravity="center"
-                        android:text="1000元"
-                        android:layout_marginTop="@dimen/dp_10"
-                        android:enabled="false"
-                        android:background="@drawable/selector_tixian_bg"
-                        android:paddingTop="3dp"
-                        android:paddingBottom="3dp"
-                        android:textSize="16sp"
-                        />
+                            android:textColor="@color/gray"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+
+
                 </LinearLayout>
-
-
             </LinearLayout>
-        </LinearLayout>
-        <Button
-            android:id="@+id/btn_tixian"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:background="@drawable/shape_coner30_red"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
-            android:text="立即提现"
-            android:textSize="16sp"
-            android:layout_alignParentBottom="true"
-            android:textColor="@color/white"
-            android:layout_marginBottom="18dp"
-            />
-    </RelativeLayout>
-</LinearLayout>
+
+            <Button
+                android:id="@+id/btn_tixian"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="18dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:background="@drawable/shape_coner30_red"
+                android:text="立即提现"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+        </RelativeLayout>
+    </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="24dp"
         android:orientation="vertical"
         android:paddingLeft="35dp"
-        android:layout_marginBottom="24dp"
-        android:layout_alignParentBottom="true"
 
 
         >
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="提现/金币说明 "
-            android:textSize="16sp"
             android:textColor="@color/white"
-            />
+            android:textSize="16sp" />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="1.1000金币 = 1元"
-            android:textSize="14sp"
             android:textColor="@color/white"
-            />
+            android:textSize="14sp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="2.金币每天早上6点会自动转换为现金 "
-            android:textSize="14sp"
             android:textColor="@color/white"
-            />
-
+            android:textSize="14sp" />
 
 
     </LinearLayout>
-
-
-
 </RelativeLayout>
