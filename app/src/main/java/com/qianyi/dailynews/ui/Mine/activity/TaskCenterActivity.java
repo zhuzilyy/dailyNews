@@ -865,6 +865,7 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
                     JSONObject jsonObject=new JSONObject(s);
                     String return_msg = jsonObject.getString("return_msg");
                     Toast.makeText(TaskCenterActivity.this, return_msg, Toast.LENGTH_SHORT).show();
+                    getUesrInfo();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

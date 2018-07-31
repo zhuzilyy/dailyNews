@@ -177,8 +177,6 @@ public class VideoPlayingActivity extends BaseActivity {
                 }
             }
         });
-
-
     }
 
     //获取数据
