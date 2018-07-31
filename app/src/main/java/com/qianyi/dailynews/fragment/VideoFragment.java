@@ -94,6 +94,7 @@ public class VideoFragment extends BaseFragment implements PullToRefreshView.OnH
         ApiVideo.getVideoList(ApiConstant.VIDEO_LIST, page, ApiConstant.PAGE_SIZE, new RequestCallBack<String>() {
             @Override
             public void onSuccess(Call call, Response response, final String s) {
+                Log.i("tag",s);
                 customLoadingDialog.dismiss();
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
@@ -188,7 +189,10 @@ public class VideoFragment extends BaseFragment implements PullToRefreshView.OnH
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent=new Intent(getActivity(),VideoPlayingActivity.class);
                 VideoInfo videoInfo = infoList.get(i);
-                intent.putExtra("videoUrl",videoInfo.getVideoUrls().get(0));
+                List<String> videoUrls = videoInfo.getVideoUrls();
+                if (videoUrls!=null && videoUrls.size()!=0){
+                    intent.putExtra("videoUrl",videoUrls.get(0));
+                }
                 intent.putExtra("viewCount",videoInfo.getViewCount());
                 intent.putExtra("title",videoInfo.getTitle());
                 startActivity(intent);
