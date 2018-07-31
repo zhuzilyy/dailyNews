@@ -38,6 +38,7 @@ import com.google.gson.Gson;
 import com.qianyi.dailynews.R;
 import com.qianyi.dailynews.adapter.NewsAdapter;
 import com.qianyi.dailynews.api.ApiConstant;
+import com.qianyi.dailynews.api.ApiMine;
 import com.qianyi.dailynews.api.ApiNews;
 import com.qianyi.dailynews.application.MyApplication;
 import com.qianyi.dailynews.base.BaseActivity;
@@ -47,6 +48,7 @@ import com.qianyi.dailynews.fragment.NewsFragment;
 import com.qianyi.dailynews.ui.Mine.activity.SettingsActivity;
 import com.qianyi.dailynews.ui.WebviewActivity;
 import com.qianyi.dailynews.ui.account.activity.LoginActivity;
+import com.qianyi.dailynews.ui.invitation.activity.DailySharingAcitity;
 import com.qianyi.dailynews.ui.news.adapter.HotCommentAdapterNews;
 import com.qianyi.dailynews.ui.news.adapter.NewsDetailsAdapter;
 import com.qianyi.dailynews.ui.news.bean.CommPublishBean;
@@ -61,8 +63,10 @@ import com.qianyi.dailynews.utils.SPUtils;
 import com.qianyi.dailynews.utils.SoundUtils;
 import com.qianyi.dailynews.utils.WebviewUtil;
 import com.qianyi.dailynews.utils.WhiteBgBitmapUtil;
+import com.qianyi.dailynews.wxapi.WXEntryActivity;
 import com.sina.weibo.sdk.api.WebpageObject;
 import com.sina.weibo.sdk.api.WeiboMultiMessage;
+import com.sina.weibo.sdk.share.WbShareCallback;
 import com.sina.weibo.sdk.share.WbShareHandler;
 import com.sina.weibo.sdk.statistic.WBAgent;
 import com.sina.weibo.sdk.utils.Utility;
@@ -99,7 +103,7 @@ import okhttp3.Response;
  * Created by Administrator on 2018/5/29.
  */
 
-public class NewsDetailsActivity extends BaseActivity implements View.OnClickListener {
+public class NewsDetailsActivity extends BaseActivity implements View.OnClickListener , WbShareCallback {
     @BindView(R.id.iv_back) public ImageView back;
     @BindView(R.id.tv_title) public TextView title;
     @BindView(R.id.tv_money2) public TextView tv_money2;
@@ -236,6 +240,7 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
                 @Override
                 public boolean shouldOverrideUrlLoading(WebView view, String url) {
                     //view.loadUrl(url);
+
                     return false;
                 }
                 @Override
@@ -659,20 +664,39 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
             R.id.ll_wechat,R.id.ll_friendCircle,R.id.ll_QQ,R.id.ll_weibo})
     @Override
     public void onClick(View view) {
+        String userId = (String) SPUtils.get(NewsDetailsActivity.this,"user_id","");
         switch(view.getId()){
             case R.id.ll_wechat:
+                if(TextUtils.isEmpty(userId)){
+                    showLogin();
+                    return;
+                }
+                ApiConstant.SHARE_TAG="newsShare";
                 //微信分享
                 shareFriends();
                 break;
             case R.id.ll_friendCircle:
+                if(TextUtils.isEmpty(userId)){
+                    showLogin();
+                    return;
+                }
+                ApiConstant.SHARE_TAG="newsShare";
                 //朋友圈分享
                 shareFriendCircle();
                 break;
             case R.id.ll_QQ:
+                if(TextUtils.isEmpty(userId)){
+                    showLogin();
+                    return;
+                }
                 shareQQ();
                 //QQ分享
                 break;
             case R.id.ll_weibo:
+                if(TextUtils.isEmpty(userId)){
+                    showLogin();
+                    return;
+                }
                 //微博分享
                 shareWeiBo();
                 break;
@@ -698,9 +722,7 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
 
                 break;
             case R.id.re_comm:
-
-                String userid = (String) SPUtils.get(NewsDetailsActivity.this,"user_id","");
-                if(TextUtils.isEmpty(userid)){
+                if(TextUtils.isEmpty(userId)){
                     showLogin();
                     return;
                 }
@@ -723,6 +745,19 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
         params.putString(QQShare.SHARE_TO_QQ_APP_NAME, "每日速报");//应用名称
         mTencent.shareToQQ(this, params, new ShareUiListener());
     }
+    @Override
+    public void onWbShareSuccess() {
+        newsShareSuccess();
+    }
+    @Override
+    public void onWbShareCancel() {
+
+    }
+
+    @Override
+    public void onWbShareFail() {
+
+    }
     /**
      * 自定义监听器实现IUiListener，需要3个方法
      * onComplete完成 onError错误 onCancel取消
@@ -730,7 +765,7 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
     private class ShareUiListener implements IUiListener {
         @Override
         public void onComplete(Object response) {
-
+            newsShareSuccess();
         }
         @Override
         public void onError(UiError uiError) {
@@ -741,6 +776,20 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
             //分享取消
 
         }
+    }
+    //新闻分享成功
+    private void newsShareSuccess() {
+        String userId = (String) SPUtils.get(NewsDetailsActivity.this,"user_id","");
+        ApiMine.greenHandMissionShare(ApiConstant.SHARE_AFTER, userId,"N", new RequestCallBack<String>() {
+            @Override
+            public void onSuccess(Call call, Response response, final String s) {
+
+            }
+            @Override
+            public void onEror(Call call, int statusCode, Exception e) {
+                Log.i("tag",e.getMessage());
+            }
+        });
     }
 
     private void showLogin() {
@@ -1108,6 +1157,10 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
     protected void onDestroy() {
         super.onDestroy();
         timer.cancel();
-
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Tencent.onActivityResultData(requestCode,resultCode,data,new ShareUiListener());
     }
 }

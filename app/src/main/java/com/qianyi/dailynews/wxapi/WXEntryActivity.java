@@ -91,6 +91,8 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
                         dialyShareSuccess();
                     }else if(ApiConstant.SHARE_TAG.equals("greenHandMission")){
                         greenHandMissionShare();
+                    }else if(ApiConstant.SHARE_TAG.equals("newsShare")){
+                        newsShareSuccess();
                     }
                     break;
                 case BaseResp.ErrCode.ERR_USER_CANCEL:
@@ -106,6 +108,21 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
         }
         finish();
     }
+    //新闻分享成功
+    private void newsShareSuccess() {
+        userId= (String) SPUtils.get(WXEntryActivity.this,"user_id","");
+        ApiMine.greenHandMissionShare(ApiConstant.SHARE_AFTER, userId,"N", new RequestCallBack<String>() {
+            @Override
+            public void onSuccess(Call call, Response response, final String s) {
+
+            }
+            @Override
+            public void onEror(Call call, int statusCode, Exception e) {
+                Log.i("tag",e.getMessage());
+            }
+        });
+    }
+
     //新手任务的分享
     private void greenHandMissionShare() {
         userId= (String) SPUtils.get(WXEntryActivity.this,"user_id","");
@@ -159,7 +176,7 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
     //分享成功
     private void shareSuccess() {
         userId= (String) SPUtils.get(WXEntryActivity.this,"user_id","");
-        ApiInvite.shareAfter(ApiConstant.SHARE_AFTER, userId, new RequestCallBack<String>() {
+        ApiInvite.shareDailyShareAfter(ApiConstant.SHARE_DAILYSHARE_AFTER, userId, "Y",new RequestCallBack<String>() {
             @Override
             public void onSuccess(Call call, Response response, final String s) {
                 try {

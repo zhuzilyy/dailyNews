@@ -79,8 +79,10 @@ public class ApiConstant {
     public static final String  TUDI_LIST= BASE_URL+"/api/news/tudiList";
     //每日分享前调用
     public static final String  SHARE_PRE= BASE_URL+"/api/share/init";
+    public static final String  SHARE_DAILYSHARE_PRE= BASE_URL+"/api/dayshare/init";
     //每日分享后调用
     public static final String  SHARE_AFTER= BASE_URL+"/api/share/success";
+    public static final String  SHARE_DAILYSHARE_AFTER= BASE_URL+"/api/dayshare/success";
     //晒收入
     public static final String  ISHARE_INCOME= BASE_URL+"/api/show/income";
     //高额返利列表
