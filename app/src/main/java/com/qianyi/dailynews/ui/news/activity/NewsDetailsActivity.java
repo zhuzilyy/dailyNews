@@ -241,7 +241,10 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
                 @Override
                 public void onPageFinished(WebView view, String url) {
                     super.onPageFinished(view, url);
-                    bottom_web.loadUrl("javascript:" + jsStr );
+                    if(!TextUtils.isEmpty(jsStr)&&bottom_web!=null){
+                        bottom_web.loadUrl("javascript:" + jsStr );
+                    }
+
                     //bottom_web.loadUrl("http://meirisubao.cqlianbei.com/js/toutiao.js");
                 }
             });
@@ -255,7 +258,10 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
-                news_webview.loadUrl("javascript:" + jsStr );
+                if(!TextUtils.isEmpty(jsStr)&&news_webview!=null){
+                    news_webview.loadUrl("javascript:" + jsStr );
+                }
+
                 //news_webview.loadUrl("http://meirisubao.cqlianbei.com/js/toutiao.js");
             }
         });
