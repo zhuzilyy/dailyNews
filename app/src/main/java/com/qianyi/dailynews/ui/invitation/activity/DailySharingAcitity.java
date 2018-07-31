@@ -160,7 +160,7 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
     }
     private void getData() {
         //handler.postDelayed(runnable, 1000);
-        ApiInvite.sharePre(ApiConstant.SHARE_PRE, userId, new RequestCallBack<String>() {
+        ApiInvite.sharePre(ApiConstant.SHARE_DAILYSHARE_PRE, userId, new RequestCallBack<String>() {
             @Override
             public void onSuccess(Call call, Response response, final String s) {
                 customLoadingDialog.dismiss();
@@ -513,7 +513,7 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
     }
     //分享成功
     private void shareSuccess() {
-        ApiInvite.shareAfter(ApiConstant.SHARE_AFTER, userId, new RequestCallBack<String>() {
+        ApiInvite.shareDailyShareAfter(ApiConstant.SHARE_DAILYSHARE_AFTER, userId,"Y", new RequestCallBack<String>() {
             @Override
             public void onSuccess(Call call, Response response, final String s) {
                 try {

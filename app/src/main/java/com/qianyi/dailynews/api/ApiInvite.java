@@ -63,6 +63,16 @@ public class ApiInvite {
         params.put("userId",userId);
         OkHttpManager.getInstance().postRequest(url,params,callback);
     }
+    /**
+     * 每日分享分享成功之后调用
+     * @param callback
+     */
+    public static void shareDailyShareAfter(String url,String userId,String fo,RequestCallBack<String> callback){
+        Map<String,String> params=new HashMap<>();
+        params.put("userId",userId);
+        params.put("fo","Y");
+        OkHttpManager.getInstance().postRequest(url,params,callback);
+    }
 
 
 
