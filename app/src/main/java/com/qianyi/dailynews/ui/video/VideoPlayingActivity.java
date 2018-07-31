@@ -226,7 +226,11 @@ public class VideoPlayingActivity extends BaseActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 VideoDetailInfo videoDetailInfo = infoList.get(i);
-                String url = videoDetailInfo.getVideoUrls().get(0);
+                List<String> videoUrls = videoDetailInfo.getVideoUrls();
+                String url="";
+                if (videoUrls!=null && videoUrls.size()!=0){
+                     url = videoDetailInfo.getVideoUrls().get(0);
+                }
                 String viewCount = videoDetailInfo.getViewCount();
                 String title = videoDetailInfo.getTitle();
                 tv_desc.setText(title);
