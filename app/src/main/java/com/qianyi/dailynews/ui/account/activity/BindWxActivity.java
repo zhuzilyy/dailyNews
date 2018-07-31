@@ -39,6 +39,7 @@ public class BindWxActivity extends BaseActivity implements View.OnClickListener
     @BindView(R.id.tv_title)
     public TextView tv_title;
     @BindView(R.id.et_account)
+
     ClearEditText et_account;
     @BindView(R.id.register_code_cet)
     ClearEditText et_confirmCode;
