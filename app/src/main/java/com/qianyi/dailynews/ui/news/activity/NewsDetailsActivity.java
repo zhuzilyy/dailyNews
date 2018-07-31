@@ -240,6 +240,7 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
                 @Override
                 public boolean shouldOverrideUrlLoading(WebView view, String url) {
                     //view.loadUrl(url);
+
                     return false;
                 }
                 @Override
