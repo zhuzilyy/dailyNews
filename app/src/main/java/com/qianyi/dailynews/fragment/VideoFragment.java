@@ -198,7 +198,7 @@ public class VideoFragment extends BaseFragment implements PullToRefreshView.OnH
                 startActivity(intent);
                 addWatchNum(videoInfo.getId(),i);
               /*  Intent intent=new Intent(getActivity(),WebviewActivity.class);
-                startActivity(intent);*/
+                 startActivity(intent);*/
             }
         });
     }
