@@ -322,7 +322,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                             JSONObject data = jsonObject.getJSONObject("data");
                             String phone=data.getString("phone");
                             String user_id=data.getString("user_id");
-                            SPUtils.put(LoginActivity.this,"user_id",user_id);
                             Toast.makeText(LoginActivity.this, return_msg, Toast.LENGTH_SHORT).show();
                             if (code.equals(ApiConstant.SUCCESS_CODE)){
                                 //绑定过手机号
@@ -339,6 +338,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                                     SPUtils.put(LoginActivity.this,"balance",balance);
                                     SPUtils.put(LoginActivity.this,"earnings",earnings);
                                     SPUtils.put(LoginActivity.this,"invite_code",invite_code);
+                                    SPUtils.put(LoginActivity.this,"user_id",user_id);
                                     Intent intent=new Intent();
                                     intent.setAction("com.action.login.success");
                                     sendBroadcast(intent);
@@ -355,6 +355,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                                     intent.putExtra("country",country);
                                     intent.putExtra("headimgurl",headimgurl);
                                     intent.putExtra("unionid",unionid);
+                                    intent.putExtra("userId",user_id);
                                     startActivity(intent);
                                 }
                             }
