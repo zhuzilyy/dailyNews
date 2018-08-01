@@ -70,7 +70,7 @@ public class WithdrawalsActivity extends BaseActivity implements View.OnClickLis
     private List<TextView> textViews = new ArrayList<>();
     private double doubleBalance;
     private CustomLoadingDialog customLoadingDialog;
-    private boolean oneyuan;
+    private boolean waitingOneyuan,oneYuan;
     @BindView(R.id.tv_currentMoney)
     public TextView tv_currentMoney;
     private String currentMoney;
@@ -135,11 +135,12 @@ public class WithdrawalsActivity extends BaseActivity implements View.OnClickLis
                 try {
                     JSONObject jsonObject=new JSONObject(s);
                     JSONObject data = jsonObject.getJSONObject("data");
-                    oneyuan= data.getBoolean("waitingWithdraw");
+                    waitingOneyuan= data.getBoolean("waitingWithdraw");
+                    oneYuan= data.getBoolean("oneyuan");
                     balance = data.getString("balance");
                     tv_currentMoney.setText("当前现金余额"+balance+"元");
                     doubleBalance=Double.parseDouble(balance);
-                    if (oneyuan){
+                    if (waitingOneyuan||oneYuan){
                         bg_oneYuan.setBackgroundResource(R.mipmap.unpacket_icon);
                     }
                 } catch (JSONException e) {
@@ -174,7 +175,7 @@ public class WithdrawalsActivity extends BaseActivity implements View.OnClickLis
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ll_01yuan:
-                if (oneyuan){
+                if (oneYuan||waitingOneyuan){
                     Toast.makeText(this, "1元提现只能提现一次", Toast.LENGTH_SHORT).show();
                     return;
                 }

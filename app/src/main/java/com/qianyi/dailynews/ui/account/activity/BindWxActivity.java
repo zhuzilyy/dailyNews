@@ -61,7 +61,6 @@ public class BindWxActivity extends BaseActivity implements View.OnClickListener
         ListActivity.list3.add(this);
         customLoadingDialog=new CustomLoadingDialog(this);
         tv_title.setText("绑定手机");
-        user_id= (String) SPUtils.get(BindWxActivity.this,"user_id","");
         intent=getIntent();
         if (intent!=null){
             openid = intent.getStringExtra("openid");
@@ -73,6 +72,7 @@ public class BindWxActivity extends BaseActivity implements View.OnClickListener
             country = intent.getStringExtra("country");
             headimgurl = intent.getStringExtra("headimgurl");
             unionid = intent.getStringExtra("unionid");
+            user_id = intent.getStringExtra("userId");
             if (sex==0){
                 gender="女";
             }else{
