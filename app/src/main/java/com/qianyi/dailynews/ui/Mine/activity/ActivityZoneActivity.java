@@ -53,7 +53,6 @@ public class ActivityZoneActivity extends BaseActivity {
     TextView tv_readState;
     @BindView(R.id.tv_searchState)
     TextView tv_searchState;
-
     @BindView(R.id.tv_sign)
     TextView tv_sign;
     @BindView(R.id.tv_share)
@@ -67,6 +66,7 @@ public class ActivityZoneActivity extends BaseActivity {
     private int count;
     private MyReceiver myReceiver;
     private IWXAPI mWxApi;
+    private String tag;
     @Override
     protected void initViews() {
         ListActivity.list2.add(this);
@@ -76,12 +76,10 @@ public class ActivityZoneActivity extends BaseActivity {
         mWxApi = WXAPIFactory.createWXAPI(this, ApiConstant.APP_ID, false);
         // 将该app注册到微信
         mWxApi.registerApp(ApiConstant.APP_ID);
-
         myReceiver=new MyReceiver();
         IntentFilter intentFilter=new IntentFilter();
         intentFilter.addAction("com.action.search.mission");
         registerReceiver(myReceiver,intentFilter);
-
         IntentFilter intentFilterShare=new IntentFilter();
         intentFilterShare.addAction("com.action.wechat");
         registerReceiver(myReceiver,intentFilterShare);
@@ -89,6 +87,11 @@ public class ActivityZoneActivity extends BaseActivity {
         IntentFilter intentFilterGreenHand=new IntentFilter();
         intentFilterGreenHand.addAction("com.action.greend.hand.share.success");
         registerReceiver(myReceiver,intentFilterGreenHand);
+        Intent intent=getIntent();
+        if (intent!=null){
+            tag=intent.getStringExtra("tag");
+            Log.i("tag",tag);
+        }
     }
     @Override
     protected void initData() {
@@ -177,7 +180,11 @@ public class ActivityZoneActivity extends BaseActivity {
                 if (sign.equals("1")){
                     return;
                 }
-                finish();
+                if (tag.equals("withdrawalDetail")){
+                    jumpActivity(ActivityZoneActivity.this,TaskCenterActivity.class);
+                }else{
+                    finish();
+                }
                 break;
             case R.id.tv_shareState:
                 if (share.equals("1")){

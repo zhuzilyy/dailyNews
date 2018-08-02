@@ -229,6 +229,12 @@ public class WithdrawalsActivity extends BaseActivity implements View.OnClickLis
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getUserInfo();
+    }
+
     private void showWithdrawals(TextView tv){
         for (int i = 0; i <textViews.size() ; i++) {
             if(tv!=textViews.get(i)){

@@ -198,6 +198,7 @@ public class WithdrawalsDetailsActivity extends BaseActivity {
             public void onYesClick() {
                 quitDialog.dismiss();
                 Intent intent=new Intent(WithdrawalsDetailsActivity.this, ActivityZoneActivity.class);
+                intent.putExtra("tag","withdrawalDetail");
                 startActivity(intent);
             }
         });
