@@ -186,6 +186,8 @@ public class ApiConstant {
     public static final String  takePartInUrl= BASE_URL+"/api/makeMoney/takePartIn";
     //删除新闻
     public static final String  deleteNews= BASE_URL+"/api/news/removeNews";
+    //增加阅读次数
+    public static final String  addViewCount= BASE_URL+"/api/news/addViewCount";
 
 
 
