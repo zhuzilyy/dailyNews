@@ -199,6 +199,7 @@ public class BindWxActivity extends BaseActivity implements View.OnClickListener
                                SPUtils.put(BindWxActivity.this,"name",name);
                                Intent intent=new Intent();
                                intent.setAction("com.action.login.success");
+                               sendBroadcast(new Intent("loginOk"));
                                ListActivity.close3();
                            }
                        } catch (JSONException e) {

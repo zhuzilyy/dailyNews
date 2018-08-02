@@ -170,6 +170,7 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
     @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void initViews() {
+
         mWxApi = WXAPIFactory.createWXAPI(this, ApiConstant.APP_ID, false);
         // 将该app注册到微信
         mWxApi.registerApp(ApiConstant.APP_ID);
@@ -180,6 +181,13 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
         if(contentStr.length()>51){
             contentStr=contentStr.substring(0,50);
         }
+
+        if(!TextUtils.isEmpty(newsId)){
+            //阅读次数
+            addViewCount(newsId);
+        }
+
+
         redMoney=getIntent().getStringExtra("redMoney");
         subTitle=getIntent().getStringExtra("title");
         ifread=getIntent().getStringExtra("ifread");
@@ -272,6 +280,25 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
         });
         mTencent = Tencent.createInstance(APP_ID,getApplicationContext());
     }
+
+    /***
+     * 增加阅读次数
+     * @param newsId
+     */
+    private void addViewCount(String newsId) {
+        ApiNews.addViewCount(ApiConstant.addViewCount, newsId, new RequestCallBack<String>() {
+            @Override
+            public void onSuccess(Call call, Response response, String s) {
+                Log.i("ss",s);
+            }
+
+            @Override
+            public void onEror(Call call, int statusCode, Exception e) {
+                Log.i("ss",e.getMessage());
+            }
+        });
+    }
+
     /***
      * 到详情界面先调阅读新闻接口
      * @param newsId

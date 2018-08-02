@@ -341,6 +341,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                                     SPUtils.put(LoginActivity.this,"user_id",user_id);
                                     Intent intent=new Intent();
                                     intent.setAction("com.action.login.success");
+                                    sendBroadcast(new Intent("loginOk"));
                                     sendBroadcast(intent);
                                     finish();
                                     //没绑定过手机跳转到绑定手机的界面
