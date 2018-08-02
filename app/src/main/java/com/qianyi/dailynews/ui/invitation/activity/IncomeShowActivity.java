@@ -53,6 +53,8 @@ import butterknife.OnClick;
 import okhttp3.Call;
 import okhttp3.Response;
 
+import static com.qianyi.dailynews.utils.SPUtils.get;
+
 /**
  * Created by Administrator on 2018/6/12.
  */
@@ -105,7 +107,6 @@ public class IncomeShowActivity extends BaseActivity implements View.OnClickList
 
         customLoadingDialog=new CustomLoadingDialog(this);
         userId= (String) SPUtils.get(this,"user_id","");
-
 
     }
     @Override
@@ -235,7 +236,6 @@ public class IncomeShowActivity extends BaseActivity implements View.OnClickList
                         Intent intent=new Intent();
                         intent.setAction("com.action.share.success");
                         sendBroadcast(intent);
-                        finish();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -285,39 +285,16 @@ public class IncomeShowActivity extends BaseActivity implements View.OnClickList
         shareWebPage();
     }
     private void shareWebPage() {
-      /*  WebpageObject mediaObj =new WebpageObject();
-        //创建文本消息对象
-        TextObject textObject =new TextObject();
-        textObject.text= "你分享内容的描述"+"分享网页的话加上网络地址";
-
-        textObject.title= "哈哈哈哈哈哈";
-
-        //创建图片消息对象，如果只分享文字和网页就不用加图片
-
-        WeiboMultiMessage message =new WeiboMultiMessage();
-
-        ImageObject imageObject =new ImageObject();
-
-        // 设置 Bitmap 类型的图片到视频对象里        设置缩略图。 注意：最终压缩过的缩略图大小 不得超过 32kb。
-
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources() , R.drawable.test);
-
-        imageObject.setImageObject(bitmap);
-
-        message.textObject= textObject;
-
-        message.imageObject= imageObject;
-
-        message.mediaObject= mediaObj;*/
         String my_invite_code= (String) SPUtils.get(IncomeShowActivity.this,"my_invite_code","");
         WebpageObject mediaObject = new WebpageObject();
         mediaObject.identify = Utility.generateGUID();
         mediaObject.title = "每日速报";
         mediaObject.description = "看新闻还能赚钱~赶快抓住机会试试呀，填我邀请码"+my_invite_code;
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.logo);
-
+        Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.mipmap.logo);
+        Bitmap bitmap = WhiteBgBitmapUtil.drawableBitmapOnWhiteBg(IncomeShowActivity.this, bmp);
+        Bitmap thumbBmp = Bitmap.createScaledBitmap(bitmap, 200, 200, true);
         // 设置 Bitmap 类型的图片到视频对象里         设置缩略图。 注意：最终压缩过的缩略图大小不得超过 32kb。
-        mediaObject.setThumbImage(bitmap);
+        mediaObject.setThumbImage(thumbBmp);
         mediaObject.actionUrl = ApiConstant.INCOME_SHOW+userId;
         mediaObject.defaultText = "晒收入分享";
         WeiboMultiMessage message = new WeiboMultiMessage();

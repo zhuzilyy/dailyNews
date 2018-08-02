@@ -8,7 +8,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -30,12 +29,9 @@ import com.qianyi.dailynews.base.BaseActivity;
 import com.qianyi.dailynews.callback.RequestCallBack;
 import com.qianyi.dailynews.dialog.CustomLoadingDialog;
 import com.qianyi.dailynews.ui.Mine.bean.SignBean;
-import com.qianyi.dailynews.ui.invitation.activity.DailySharingAcitity;
 import com.qianyi.dailynews.ui.invitation.activity.IncomeShowActivity;
-import com.qianyi.dailynews.utils.ListActivity;
 import com.qianyi.dailynews.utils.SPUtils;
 import com.qianyi.dailynews.utils.WhiteBgBitmapUtil;
-import com.qianyi.dailynews.wxapi.WXEntryActivity;
 import com.sina.weibo.sdk.api.WebpageObject;
 import com.sina.weibo.sdk.api.WeiboMultiMessage;
 import com.sina.weibo.sdk.share.WbShareCallback;
@@ -540,8 +536,6 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
                     return;
                 }
                 shwoSharePw();
-
-                //晒收入
                //jumpActivity(TaskCenterActivity.this, IncomeShowActivity.class);
                 break;
             case R.id.btn_commentAward:
@@ -704,39 +698,16 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
         shareWebPage();
     }
     private void shareWebPage() {
-      /*  WebpageObject mediaObj =new WebpageObject();
-        //创建文本消息对象
-        TextObject textObject =new TextObject();
-        textObject.text= "你分享内容的描述"+"分享网页的话加上网络地址";
-
-        textObject.title= "哈哈哈哈哈哈";
-
-        //创建图片消息对象，如果只分享文字和网页就不用加图片
-
-        WeiboMultiMessage message =new WeiboMultiMessage();
-
-        ImageObject imageObject =new ImageObject();
-
-        // 设置 Bitmap 类型的图片到视频对象里        设置缩略图。 注意：最终压缩过的缩略图大小 不得超过 32kb。
-
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources() , R.drawable.test);
-
-        imageObject.setImageObject(bitmap);
-
-        message.textObject= textObject;
-
-        message.imageObject= imageObject;
-
-        message.mediaObject= mediaObj;*/
         String my_invite_code= (String) SPUtils.get(this,"my_invite_code","");
         WebpageObject mediaObject = new WebpageObject();
         mediaObject.identify = Utility.generateGUID();
         mediaObject.title = "每日速报";
         mediaObject.description = "这里阅读就有收益哦，我已经提现了,快来一起阅读吧";
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.logo);
-
+        Bitmap bmp = WhiteBgBitmapUtil.drawableBitmapOnWhiteBg(TaskCenterActivity.this, bitmap);
+        Bitmap thumbBmp = Bitmap.createScaledBitmap(bmp, 200, 200, true);
         // 设置 Bitmap 类型的图片到视频对象里         设置缩略图。 注意：最终压缩过的缩略图大小不得超过 32kb。
-        mediaObject.setThumbImage(bitmap);
+        mediaObject.setThumbImage(thumbBmp);
         mediaObject.actionUrl = ApiConstant.INCOME_SHOW+userId;
         mediaObject.defaultText = "这里阅读就有收益哦，我已经提现了,快来一起阅读吧";
         WeiboMultiMessage message = new WeiboMultiMessage();

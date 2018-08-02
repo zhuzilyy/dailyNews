@@ -321,7 +321,7 @@ public class DailySharingAcitity extends BaseActivity implements View.OnClickLis
         @Override
         public void onCancel() {
             //分享取消
-            Toast.makeText(DailySharingAcitity.this, "onCancel", Toast.LENGTH_SHORT).show();
+            Toast.makeText(DailySharingAcitity.this, "分享取消", Toast.LENGTH_SHORT).show();
 
         }
     }

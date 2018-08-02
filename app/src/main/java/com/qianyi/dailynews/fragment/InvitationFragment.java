@@ -503,6 +503,7 @@ public class InvitationFragment extends BaseFragment implements View.OnClickList
                 }
                 //晒收入
                 Intent intent3=new Intent(getActivity(), IncomeShowActivity.class);
+                intent3.putExtra("tag","invite");
                 startActivity(intent3);
                 break;
             case R.id.ll_WakeUpFriends:
