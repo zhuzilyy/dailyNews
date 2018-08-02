@@ -32,6 +32,7 @@ import com.qianyi.dailynews.dialog.CustomLoadingDialog;
 import com.qianyi.dailynews.ui.Mine.bean.SignBean;
 import com.qianyi.dailynews.ui.invitation.activity.DailySharingAcitity;
 import com.qianyi.dailynews.ui.invitation.activity.IncomeShowActivity;
+import com.qianyi.dailynews.utils.ListActivity;
 import com.qianyi.dailynews.utils.SPUtils;
 import com.qianyi.dailynews.utils.WhiteBgBitmapUtil;
 import com.qianyi.dailynews.wxapi.WXEntryActivity;
@@ -489,7 +490,9 @@ public class TaskCenterActivity extends BaseActivity implements View.OnClickList
                     return;
                 }
                 //去完成提现
-                jumpActivity(this,ActivityZoneActivity.class);
+                intent=new Intent(this,ActivityZoneActivity.class);
+                intent.putExtra("tag","taskCenter");
+                startActivity(intent);
                 break;
             case R.id.btn_Questionnaire:
                 if (!mission3.equals("0")){
