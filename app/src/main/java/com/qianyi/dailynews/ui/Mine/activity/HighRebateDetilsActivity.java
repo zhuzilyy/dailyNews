@@ -258,7 +258,6 @@ public class HighRebateDetilsActivity extends BaseActivity implements View.OnCli
             moneyNum_tv.setText("+"+info.getCash()+"元");
             moneyDes_tv.setText(info.getExposition());
             Glide.with(HighRebateDetilsActivity.this).load(info.getLogo()).into(moneyLogo_iv);
-
            // webview.loadUrl(info.getIntroduce());
             webview.loadDataWithBaseURL(null, info.getIntroduce(), "text/html" , "utf-8", null);
 
