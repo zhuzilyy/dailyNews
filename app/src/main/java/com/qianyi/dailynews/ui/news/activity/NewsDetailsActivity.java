@@ -209,8 +209,12 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
         }
         //计时
         startTimer();
-
-      //  tv_money.setText("+"+NewsFragment.Gold);
+        fliterJs();
+        mTencent = Tencent.createInstance(APP_ID,getApplicationContext());
+    }
+    //注入js
+    private void fliterJs() {
+        //  tv_money.setText("+"+NewsFragment.Gold);
         if(!TextUtils.isEmpty(urlStr)){
             webSettings = news_webview.getSettings();
             WebviewUtil.setWebview(news_webview,webSettings);
@@ -260,6 +264,14 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
 
                     //bottom_web.loadUrl("http://meirisubao.cqlianbei.com/js/toutiao.js");
                 }
+
+                @Override
+                public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                    super.onPageStarted(view, url, favicon);
+                    if(!TextUtils.isEmpty(jsStr)&&bottom_web!=null){
+                        bottom_web.loadUrl("javascript:" + jsStr );
+                    }
+                }
             });
         }
         news_webview.setWebViewClient(new WebViewClient() {
@@ -277,8 +289,15 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
 
                 //news_webview.loadUrl("http://meirisubao.cqlianbei.com/js/toutiao.js");
             }
+
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                super.onPageStarted(view, url, favicon);
+                if(!TextUtils.isEmpty(jsStr)&&news_webview!=null){
+                    news_webview.loadUrl("javascript:" + jsStr );
+                }
+            }
         });
-        mTencent = Tencent.createInstance(APP_ID,getApplicationContext());
     }
 
     /***
@@ -671,7 +690,7 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
     protected void setStatusBarColor() {
 
     }
-    private void loadingWebview(WebView news_webview) {
+    private void loadingWebview(final WebView news_webview) {
         news_webview.setWebChromeClient(new WebChromeClient() {
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
@@ -682,7 +701,12 @@ public class NewsDetailsActivity extends BaseActivity implements View.OnClickLis
                         pb_webview.setVisibility(View.GONE);
                         tv_news_more.setVisibility(View.VISIBLE);
                     }
-
+                }
+                if(!TextUtils.isEmpty(jsStr) && news_webview!=null){
+                    news_webview.loadUrl("javascript:" + jsStr );
+                }
+                if(!TextUtils.isEmpty(jsStr)&&bottom_web!=null){
+                    bottom_web.loadUrl("javascript:" + jsStr );
                 }
             }
         });

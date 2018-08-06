@@ -184,6 +184,8 @@
         <!--新闻详情界面-->
         <activity android:name=".ui.news.activity.NewsDetailsActivity"
             android:screenOrientation="portrait"
+            android:excludeFromRecents="true"
+            android:launchMode="singleTask"
             />
         <!--调查问卷-->
         <activity

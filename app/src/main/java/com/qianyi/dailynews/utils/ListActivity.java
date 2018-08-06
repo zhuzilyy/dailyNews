@@ -10,6 +10,7 @@ public class ListActivity extends Activity {
 	public static List<Activity> list=new ArrayList<Activity>();
 	public static List<Activity> list2=new ArrayList<Activity>();
 	public static List<Activity> list3=new ArrayList<Activity>();
+	public static List<Activity> allActivity=new ArrayList<Activity>();
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -29,5 +30,9 @@ public class ListActivity extends Activity {
 			a.finish();
 		}
 	}
-
+	public static void closeAll(){
+		for (Activity a : allActivity) {
+			a.finish();
+		}
+	}
 }
