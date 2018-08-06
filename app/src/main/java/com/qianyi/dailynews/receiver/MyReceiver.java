@@ -32,37 +32,6 @@ public class MyReceiver extends BroadcastReceiver {
         Bundle bundle = intent.getExtras();
         //Log.d(TAG, "[MyReceiver] onReceive - " + intent.getAction() + ", extras: " + printBundle(bundle));
 		Log.i("tag", "00"+bundle.getString(JPushInterface.EXTRA_EXTRA));
-		String jsonNotification = bundle.getString(JPushInterface.EXTRA_EXTRA);
-		String bodyNotification="";
-		String titleNotification="";
-		String newsIdNotification="";
-		String createTimeNotification="";
-		String typeNotification="";
-		String urlNotification="";
-		JSONObject jsonObjectNotification=null;
-		JSONObject extraNotification=null;
-		try {
-			if (TextUtils.isEmpty(jsonNotification)){
-				return;
-			}
-			jsonObjectNotification=new JSONObject(jsonNotification);
-			extraNotification=jsonObjectNotification.getJSONObject("extra");
-			typeNotification=extraNotification.getString("type");
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-		if (typeNotification.equals("1")){
-			try {
-				bodyNotification=extraNotification.getString("body");
-				titleNotification=extraNotification.getString("title");
-				newsIdNotification=extraNotification.getString("newsId");
-				createTimeNotification=extraNotification.getString("createTime");
-				urlNotification=extraNotification.getString("url");
-			} catch (JSONException e) {
-				e.printStackTrace();
-			}
-		}
-		showCustomerNotification(context,bodyNotification,titleNotification,newsIdNotification,urlNotification);
         if (JPushInterface.ACTION_REGISTRATION_ID.equals(intent.getAction())) {
             String regId = bundle.getString(JPushInterface.EXTRA_REGISTRATION_ID);
             Log.i("tag", "[MyReceiver] 接收Registration Id : " + regId);
@@ -75,6 +44,37 @@ public class MyReceiver extends BroadcastReceiver {
             Log.d(TAG, "[MyReceiver] 接收到推送下来的通知");
             int notifactionId = bundle.getInt(JPushInterface.EXTRA_NOTIFICATION_ID);
             Log.i("tag", "33[MyReceiver] 接收到推送下来的通知的ID: " + notifactionId);
+			String jsonNotification = bundle.getString(JPushInterface.EXTRA_EXTRA);
+			String bodyNotification="";
+			String titleNotification="";
+			String newsIdNotification="";
+			String createTimeNotification="";
+			String typeNotification="";
+			String urlNotification="";
+			JSONObject jsonObjectNotification=null;
+			JSONObject extraNotification=null;
+			try {
+				if (TextUtils.isEmpty(jsonNotification)){
+					return;
+				}
+				jsonObjectNotification=new JSONObject(jsonNotification);
+				extraNotification=jsonObjectNotification.getJSONObject("extra");
+				typeNotification=extraNotification.getString("type");
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+			if (typeNotification.equals("1")){
+				try {
+					bodyNotification=extraNotification.getString("body");
+					titleNotification=extraNotification.getString("title");
+					newsIdNotification=extraNotification.getString("newsId");
+					createTimeNotification=extraNotification.getString("createTime");
+					urlNotification=extraNotification.getString("url");
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}
+			//showCustomerNotification(context,bodyNotification,titleNotification,newsIdNotification,urlNotification);
         } else if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(intent.getAction())) {
             Log.d(TAG, "[MyReceiver] 用户点击打开了");
             String json = bundle.getString(JPushInterface.EXTRA_EXTRA);
@@ -165,9 +165,10 @@ public class MyReceiver extends BroadcastReceiver {
 		intents[1].putExtra("des", title);
 		intents[1].putExtra("redMoney", "0");
 		intents[1].putExtra("isRed", "1");*/
+		int notifyId = (int) System.currentTimeMillis();
 		PendingIntent resultPendingIntent = PendingIntent.getActivity( context, 0, intentNewsDetail, PendingIntent.FLAG_UPDATE_CURRENT);
 		builder.setContentIntent(resultPendingIntent);
-		manager.notify(1,builder.build());
+		manager.notify(notifyId,builder.build());
 
 
 
