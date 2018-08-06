@@ -527,6 +527,11 @@ public class PageFragment extends LazyloadFragment implements PullToRefreshView.
         }
     }
 
-
-
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (myReceiver!=null){
+            getActivity().unregisterReceiver(myReceiver);
+        }
+    }
 }
