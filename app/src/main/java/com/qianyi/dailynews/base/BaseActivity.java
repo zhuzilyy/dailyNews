@@ -82,7 +82,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         //加载布局
         getResLayout();
         unbinder= ButterKnife.bind(this);
-        //ListActivity.list.add(this);
+        ListActivity.allActivity.add(this);
         //初始化控件
         initViews();
         //初始化数据
@@ -141,7 +141,9 @@ public abstract class BaseActivity extends AppCompatActivity {
                     }
                 },2000); // 如果2秒钟内没有按下返回键，则启动定时器取消掉刚才执行的任务
             } else {
+                //System.exit(0);
                // moveTaskToBack(true);
+                ListActivity.closeAll();
                 finish();
             }
         }else {
