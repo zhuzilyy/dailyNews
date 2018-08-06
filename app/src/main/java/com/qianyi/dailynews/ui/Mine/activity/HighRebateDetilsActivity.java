@@ -259,7 +259,8 @@ public class HighRebateDetilsActivity extends BaseActivity implements View.OnCli
             moneyDes_tv.setText(info.getExposition());
             Glide.with(HighRebateDetilsActivity.this).load(info.getLogo()).into(moneyLogo_iv);
 
-            webview.loadUrl(info.getUrl());
+           // webview.loadUrl(info.getIntroduce());
+            webview.loadDataWithBaseURL(null, info.getIntroduce(), "text/html" , "utf-8", null);
 
             moneyType2_tv.setText(info.getRewardsType());
             moneyLeft_tv.setText(info.getParticipantsNum());
