@@ -79,6 +79,7 @@ public class MakeMoneyEasilyDetailActivity extends BaseActivity implements View.
     private String id;
     private String token;
     private String ShareUrl;
+    private String SharTtitle;
 
 
     @Override
@@ -93,6 +94,8 @@ public class MakeMoneyEasilyDetailActivity extends BaseActivity implements View.
         id=getIntent().getStringExtra("id");
         title.setText("");
         gold=getIntent().getStringExtra("gold");
+
+        SharTtitle=  getIntent().getStringExtra("shareTitle");
         if(!TextUtils.isEmpty(gold)){
             tv_gold.setText("每好友阅读+"+gold+"金币");
         }
@@ -201,7 +204,10 @@ public class MakeMoneyEasilyDetailActivity extends BaseActivity implements View.
         switch (view.getId()) {
             case R.id.tv_shareNow:
                // shwoSharePw();
-                shareFriendCircle();
+                if(!TextUtils.isEmpty(SharTtitle)){
+                    shareFriendCircle();
+                }
+
                 break;
             case R.id.btn_share:
                 shwoSharePw();
@@ -293,7 +299,7 @@ public class MakeMoneyEasilyDetailActivity extends BaseActivity implements View.
         WXWebpageObject webpage = new WXWebpageObject();
         webpage.webpageUrl = ShareUrl;
         WXMediaMessage msg = new WXMediaMessage(webpage);
-        msg.title = "我最近在玩【每日速报】APP, 读资讯就能赚钱，内容丰富又搞笑，轻轻松松赚零花,当日提现，立马到账，一起来试试吧！";
+        msg.title = SharTtitle;
         msg.description = "每日速报";
         Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.mipmap.logo);
         Bitmap bitmap = WhiteBgBitmapUtil.drawableBitmapOnWhiteBg(this, bmp);
