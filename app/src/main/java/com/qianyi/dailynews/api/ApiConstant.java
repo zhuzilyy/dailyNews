@@ -14,12 +14,22 @@ public class ApiConstant {
                     + "friendships_groups_read,friendships_groups_write,statuses_to_me_read,"
                     + "follow_app_official_microblog," + "invitation_write";
 
-    public static final String BASE_URL="http://47.104.73.127:8080/news-0.0.1";
-    public static final String DAILY_SHARE_URL="http://47.104.73.127:8080/share/everyday/info.html?id=";
-    public static final String DOWN_SHARE_URL="http://47.104.73.127:8080/download/download.html";
-    public static final String LIANJIE_URL="http://47.104.73.127:8080/download/download.html";
-    public static final String INCOME_SHOW="http://47.104.73.127:8080/share/index.html?id=";
-    public static final String QQ_SHARE_LOGO="http://47.104.73.127:8080/share/share_logo.png";
+ // public static final String BASE_URL="http://47.104.73.127:8080/news-0.0.1";
+    public static final String BASE_URL="http://mrsb.cqlianbei.com/";
+//    public static final String DAILY_SHARE_URL="http://47.104.73.127:8080/share/everyday/info.html?id=";
+      public static final String DAILY_SHARE_URL="http://mrsb.cqlianbei.com/share/everyday/info.html?id=";
+//    public static final String DOWN_SHARE_URL="http://47.104.73.127:8080/download/download.html";
+
+      public static final String DOWN_SHARE_URL="http://http://mrsb.cqlianbei.com/download/download.html";
+//    public static final String LIANJIE_URL="http://47.104.73.127:8080/download/download.html";
+
+        public static final String LIANJIE_URL="http://mrsb.cqlianbei.com/download/download.html";
+//    public static final String INCOME_SHOW="http://47.104.73.127:8080/share/index.html?id=";
+
+        public static final String INCOME_SHOW="http://mrsb.cqlianbei.com/share/index.html?id=";
+//    public static final String QQ_SHARE_LOGO="http://47.104.73.127:8080/share/share_logo.png";
+
+        public static final String QQ_SHARE_LOGO="http://mrsb.cqlianbei.com/share/share_logo.png";
     public static String SHARE_TAG="";
 
     public static final String PAGE_SIZE="10";
