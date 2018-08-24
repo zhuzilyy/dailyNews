@@ -38,7 +38,6 @@ public class CustomLoadingDialog extends Dialog {
         setCanceledOnTouchOutside(false);
         setCancelable(true);
     }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +52,4 @@ public class CustomLoadingDialog extends Dialog {
             }
         });
     }
-
-
 }

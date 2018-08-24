@@ -64,7 +64,6 @@ public class SelfDialog extends Dialog {
         setContentView(R.layout.free_exercise_sure_dialog_layout);
         //按空白处不能取消动画
         setCanceledOnTouchOutside(true);
-
         //初始化界面控件
         initView();
         //初始化界面数据

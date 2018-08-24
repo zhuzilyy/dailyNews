@@ -2,6 +2,7 @@ package com.qianyi.dailynews.utils;
 
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
+import android.graphics.BitmapFactory;
 import android.util.Base64;
 
 import java.io.ByteArrayOutputStream;
@@ -22,7 +23,6 @@ public class BitmapToBase64 {
 			if (bitmap != null) {
 				baos = new ByteArrayOutputStream();
 				bitmap.compress(CompressFormat.JPEG, 100, baos);
-
 				baos.flush();
 				baos.close();
 
@@ -42,5 +42,10 @@ public class BitmapToBase64 {
 			}
 		}
 		return result;
+	}
+	//base64转化成bitmap
+	public static Bitmap base64ToBitmap(String base64Data) {
+		byte[] bytes = Base64.decode(base64Data, Base64.DEFAULT);
+		return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
 	}
 }

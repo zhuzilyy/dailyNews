@@ -41,13 +41,11 @@ public class AccountDetailsActivity extends BaseActivity implements View.OnClick
         tv_right.setText("提现状态");
         title.setText("账户明细");
         tv_right.setVisibility(View.VISIBLE);
-
         myPageAdapter = new MyPageAdapter(getSupportFragmentManager());
         ArrayList<Fragment> datas = new ArrayList<Fragment>();
         datas.add(new GoldCoinFragment());
         datas.add(new WithdrawalsFragment());
         myPageAdapter.setData(datas);
-
         ArrayList<String> titles = new ArrayList<String>();
         titles.add("金币");
         titles.add("提现");

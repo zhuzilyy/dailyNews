@@ -7,7 +7,9 @@ import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationCompat;
 import android.text.TextUtils;
 import android.util.Log;
@@ -185,6 +187,7 @@ public class MyReceiver extends BroadcastReceiver {
 	}
 
 	// 打印�?���?intent extra 数据
+		@RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
 		private static String printBundle(Bundle bundle) {
 			StringBuilder sb = new StringBuilder();
 			for (String key : bundle.keySet()) {
